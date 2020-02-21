@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import {APP_BASE_HREF} from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -19,6 +20,6 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
     ]) ],
   declarations: [ AppComponent, MenuComponent, AccountCreateComponent, AccountListComponent, AccountDetailsComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [AccountService]
+  providers: [{provide: APP_BASE_HREF, useValue : '/' },AccountService]
 })
 export class AppModule { }
