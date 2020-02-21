@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-account-details',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private accountService: AccountService
+  ) { }
 
   ngOnInit() {
   }

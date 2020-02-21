@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root' //TODO para q?
 })
 export class AccountService {
-  accounts[];
+  //accounts[];
 
   constructor() { }
 
   ceateAccount(account){
-    this.accounts.push(account);
+   // this.accounts.push(account);
   }
 
   deleteAccount(account){
@@ -17,6 +17,6 @@ export class AccountService {
   }
 
   getAccounts(){
-    return this.accounts;
+  //  return this.accounts;
   }
 }
