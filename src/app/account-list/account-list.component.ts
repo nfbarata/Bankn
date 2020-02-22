@@ -13,4 +13,7 @@ export class AccountListComponent implements OnInit {
   ngOnInit() {
   }
 
+  open(){
+    
+  }
 }
