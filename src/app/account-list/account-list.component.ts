@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { accounts } from '../accounts';
 
 @Component({
   selector: 'app-account-list',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account-list.component.css']
 })
 export class AccountListComponent implements OnInit {
-
+  accounts = accounts;
   constructor() { }
 
   ngOnInit() {

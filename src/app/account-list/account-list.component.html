@@ -1,1 +1,15 @@
-accout list
+<h2>Accounts</h2>
+
+<div *ngFor="let accout of accounts">
+  <h3>
+      <a [title]="accout.name + ' details'">
+      {{ accout.name }}
+    </a>
+  </h3>
+  <p *ngIf="accout.description">
+    Description: {{ accout.description }}
+  </p>
+  <button (click)="open()">
+    Open
+  </button>
+</div>
