@@ -1,4 +1,4 @@
-export class AccountMovement {
+export class Transaction {
   id;//uuid
   description;
   value;
