@@ -10,8 +10,8 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
     TransactionRoutingModule
   ],
   declarations: [
-
-    
-  TransactionListComponent]
+    TransactionListComponent
+  ],
+  exports: []
 })
 export class TransactionModule { }
