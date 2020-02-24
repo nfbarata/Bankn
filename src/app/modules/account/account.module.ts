@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+//import { CommonModule } from '@angular/common';
 
 //import { routing } from './account.routing'
 import { AccountsRoutingModule } from './accounts-routing.module'
@@ -10,11 +12,10 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
 
 @NgModule({
   imports: [
-    CommonModule,
+    BrowserModule,
+    FormsModule, ReactiveFormsModule,
+  //  CommonModule,
     AccountsRoutingModule
-  ],
-  exports: [
-    
   ],
   declarations: [ AccountCreateComponent, AccountListComponent, AccountDetailsComponent ],
   providers : [AccountService]
