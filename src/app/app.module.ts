@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';//from erro
 
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './shared/components/menu/menu.component';
 import { HomeComponent } from './shared/components/home/home.component';
@@ -13,7 +13,7 @@ import { HomeComponent } from './shared/components/home/home.component';
   imports:      [ 
     BrowserModule, 
     FormsModule, ReactiveFormsModule,
-    routing
+    AppRoutingModule
      ],
   declarations: [ AppComponent, MenuComponent, HomeComponent ],
   bootstrap: [ AppComponent ],
