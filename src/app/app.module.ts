@@ -10,7 +10,7 @@ import {APP_BASE_HREF} from '@angular/common';
 //import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu.component';
+import { MenuComponent } from './shared/components/menu/menu.component';
 import { AccountService } from './services/account.service';
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountListComponent } from './account-list/account-list.component';
