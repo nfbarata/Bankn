@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { routing } from './account.routing'
 
-import { AccountService } from '/shared/services/account.service';
+import { AccountService } from '../../shared/services/account.service';
 
 @NgModule({
   imports: [
