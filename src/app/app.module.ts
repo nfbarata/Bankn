@@ -10,6 +10,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { HomeComponent } from './shared/components/home/home.component';
 
 import { AccountService } from './shared/services/account.service';
+import { FileService } from './shared/services/file.service';
 
 @NgModule({
   imports:      [ 
@@ -23,6 +24,7 @@ import { AccountService } from './shared/services/account.service';
   bootstrap: [ AppComponent ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' }, 
-    AccountService]
+    AccountService, FileService
+  ]
 })
 export class AppModule { }
