@@ -16,8 +16,4 @@ export class AccountListComponent implements OnInit {
   ngOnInit() {
     this.accounts = this.accountService.getAccounts();
   }
-
-  open(){
-    
-  }
 }

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class AccountService {
   accounts = [
-{
+  {
     id: 1,
     name: 'Phone XL',
     price: 799,
@@ -23,7 +23,6 @@ export class AccountService {
     price: 299,
     description: ''
   }
-
   ];
 
   constructor() { }

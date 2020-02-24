@@ -9,7 +9,12 @@
   <p *ngIf="accout.description">
     Description: {{ accout.description }}
   </p>
-  <button (click)="open()">
+  <button [routerLink]="['/account',account.id]">
     Open
+  </button>
+</div>
+<div>
+  <button [routerLink]="['/account-create']">
+    Create
   </button>
 </div>

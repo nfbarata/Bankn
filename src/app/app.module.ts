@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import {APP_BASE_HREF} from '@angular/common';
 
 //import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -19,11 +19,12 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
 @NgModule({
   imports:      [ 
     BrowserModule, 
-    FormsModule,
+    FormsModule, ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: AccountListComponent },
       { path: 'accounts', component: AccountListComponent },
       { path: 'accounts/:accountId', component: AccountDetailsComponent },
+      { path: 'account-create', component: AccountCreateComponent },
     ]),
     //NgbModule
     //BsDropdownModule.forRoot(),
