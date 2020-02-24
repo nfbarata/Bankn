@@ -23,7 +23,7 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
     RouterModule.forRoot([
       { path: '', component: AccountListComponent },
       { path: 'accounts', component: AccountListComponent },
-      { path: 'account', component: AccountDetailsComponent },
+      { path: 'accounts/:accountId', component: AccountDetailsComponent },
     ]),
     //NgbModule
     //BsDropdownModule.forRoot(),

@@ -1,1 +1,8 @@
-account details
+<h2>Account Details</h2>
+
+<div *ngIf="account">
+  <h3>{{ account.name }}</h3>
+  <h4>{{ account.price | currency }}</h4>
+  <p>{{ account.description }}</p>
+
+</div>
