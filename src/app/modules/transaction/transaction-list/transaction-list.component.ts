@@ -21,6 +21,5 @@ export class TransactionListComponent implements OnInit {
   ngOnInit() {   
     this.accounts = this.accountService.getAccounts();//TODO take from input
     this.transactions = this.accountService.getTransactions(this.accounts);
-    console.log(JSON.stringify(this.transactions));
   }
 }
