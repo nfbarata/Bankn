@@ -11,7 +11,7 @@ import {APP_BASE_HREF} from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
-import { AccountService } from './account.service';
+import { AccountService } from './services/account.service';
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
