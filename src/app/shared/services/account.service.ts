@@ -35,7 +35,8 @@ export class AccountService {
     var transactions : Transation[] = [];
     accounts.forEach(account => {
     //TODO order
-      transactions.push(account.getTransactions());
+      //transactions.push(account.getTransactions());
+      transactions.push(account.transactions);
     });
     return transactions;
   }

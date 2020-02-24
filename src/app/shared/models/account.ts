@@ -18,9 +18,9 @@ export class Account {
     this.id = uuid;
   }
 
-  public getTransactions() : Transaction[] {
+  getTransactions() : Transaction[] {
     return this.transactions;
-  }
+  };
 }
 
 
