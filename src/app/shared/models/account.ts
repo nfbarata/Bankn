@@ -1,4 +1,5 @@
 import { Dinero } from 'dinero.js';
+import  { Transation } from "./transaction";
 
 export class Account {
 
@@ -6,7 +7,7 @@ export class Account {
   name : string;
   //type
   //arquived
-  transactions = [];
+  transactions : Transaction[] = [];
   referenceValue:Dinero;
   referenceDate:Date;
   description:string;
@@ -17,7 +18,7 @@ export class Account {
     this.id = uuid;
   }
 
-  public getTransactions(){
+  getTransactions() : Transaction[] {
     return this.transactions;
   }
 }
