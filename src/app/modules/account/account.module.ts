@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+//import { BrowserModule } from '@angular/platform-browser';
+//import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { AccountsRoutingModule } from './account-routing.module'
@@ -13,8 +13,8 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
 @NgModule({
   imports: [
     CommonModule,
-    BrowserModule,
-    FormsModule, ReactiveFormsModule,
+    //BrowserModule,
+    //FormsModule, ReactiveFormsModule,
     AccountsRoutingModule
   ],
   declarations: [ 
