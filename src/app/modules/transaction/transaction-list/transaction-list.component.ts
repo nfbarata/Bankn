@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../shared/services/account.service';
+import  { Account } from "../../../shared/models/account";
+import  { Transaction } from "../../../shared/models/account";
 
 @Component({
   selector: 'app-transaction-list',
@@ -7,13 +9,16 @@ import { AccountService } from '../../../shared/services/account.service';
   styleUrls: ['./transaction-list.component.css']
 })
 export class TransactionListComponent implements OnInit {
-  accounts = [];
+
+  /*@Input() */accounts : Account[];
+  transactions : Transaction[] = [];
+
   constructor(
     private accountService: AccountService
   ) { }
 
   ngOnInit() {
-    this.accounts = this.accountService.getAccounts();
+    this.accounts = this.accountService.getAccounts();//TODO take from input
+    this.transactions = this.accountService.getTransactions(this.accounts);
   }
-
 }

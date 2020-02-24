@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
+import { uuid } from 'uuid';
+import { environment } from '../../../environments/environment';
+
+import  { Account } from "../models/account";
+import  { Transation } from "../models/transaction";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  accounts = [];
+  
+  accounts : Account[] = environment.accounts;
 
   constructor() { }
 
   createAccount(account){
+    console.log(uuid())
     this.accounts.push(account);
   }
 
@@ -16,20 +23,20 @@ export class AccountService {
     //this.accounts.
   }
 
-  getAccounts(){
+  getAccounts() : Account[]{
     return this.accounts;
   }
 
-  getAccount(id){
+  getAccount(id) : Account{
     return this.accounts[+id];
   }
 
-  getTransactions(accounts){
-    var transactions = [];
-    for(var account : accounts){
-      //TODO order
-      transactions.push(account.transactions);
-    }
+  getTransactions(accounts : Account[]) : Transation[] {
+    var transactions : Transation[] = [];
+    accounts.forEach(account => {
+    //TODO order
+      transactions.push(account.getTransactions());
+    });
     return transactions;
   }
 }
