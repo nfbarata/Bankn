@@ -7,7 +7,7 @@ import {APP_BASE_HREF} from '@angular/common';
 //import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 //import { TooltipModule } from 'ngx-bootstrap/tooltip';
 //import { ModalModule } from 'ngx-bootstrap/modal';
-//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -23,7 +23,7 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
     RouterModule.forRoot([
       { path: '', component: AccountListComponent },    
     ]),
-    //NgModule
+    NgbModule
     //BsDropdownModule.forRoot(),
     //TooltipModule.forRoot(),
     //ModalModule.forRoot()
