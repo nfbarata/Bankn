@@ -36,7 +36,9 @@ export class AccountService {
     accounts.forEach(account => {
     //TODO order
       //transactions.push(account.getTransactions());
-      transactions.push(account.transactions);
+      account.transactions.forEach(transaction => {
+        transactions.push(transaction);
+      });
     });
     return transactions;
   }

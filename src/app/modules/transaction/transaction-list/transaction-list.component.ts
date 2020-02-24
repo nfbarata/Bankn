@@ -11,7 +11,7 @@ import  { Transaction } from "../../../shared/models/transaction";
 export class TransactionListComponent implements OnInit {
 
   /*@Input() */accounts : Account[];
-  transactions : Transaction[] = [];
+  transactions : Transaction[];
 
   constructor(
     private accountService: AccountService
@@ -21,6 +21,6 @@ export class TransactionListComponent implements OnInit {
   ngOnInit() {   
     this.accounts = this.accountService.getAccounts();//TODO take from input
     this.transactions = this.accountService.getTransactions(this.accounts);
-    console.log(this.transactions.length);
+    console.log(JSON.stringify(this.transactions));
   }
 }
