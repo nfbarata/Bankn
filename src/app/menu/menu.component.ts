@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { accounts } from '../accounts';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,10 +7,13 @@ import { accounts } from '../accounts';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-  accounts = accounts;
-  constructor() { }
+  accounts = [];
+  constructor(
+    private accountService: AccountService
+  ) { }
 
   ngOnInit() {
+    this.accounts = this.accountService.getAccounts();  
   }
 
 }
