@@ -23,7 +23,7 @@ export class FileService {
     document.body.removeChild(dwldLink);
 }
 
-ConvertToCSV(objArray, headerList) {
+convertToCSV(objArray, headerList) {
       let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
       let str = '';
       let row = 'S.No,';
