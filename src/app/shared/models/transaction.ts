@@ -3,19 +3,19 @@ import  { Account } from "./account";
 
 export class Transaction {
   
-  id:String;//uuid
+  private id:String;//uuid
   
-  value:Dinero;
-  date:Date;
+  private value:Dinero;
+  private date:Date;
 
   //type;  despesa/receita/transfer
   //account:Account;
-  toAccount : Account;
+  private toAccount : Account;
 
-  entity:string;//fromAccount
-  category:string;
+  private entity:string;//fromAccount
+  private category:string;
 
-  description:string;
+  private description:string;
 
   //receipt;
 
@@ -23,8 +23,12 @@ export class Transaction {
     this.id = uuid;
   }
 
-  public getValue(){
+  public getValue():Dinero{
     return this.value;
+  }
+
+  getDate():Date{
+    return this.date;
   }
 }
 
