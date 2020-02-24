@@ -23,4 +23,13 @@ export class AccountService {
   getAccount(id){
     return this.accounts[+id];
   }
+
+  getTransactions(accounts){
+    var transactions = [];
+    for(var account : accounts){
+      //TODO order
+      transactions.push(account.transactions);
+    }
+    return transactions;
+  }
 }

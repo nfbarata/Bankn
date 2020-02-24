@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../../../shared/services/account.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./transaction-list.component.css']
 })
 export class TransactionListComponent implements OnInit {
-
-  constructor() { }
+  accounts = [];
+  constructor(
+    private accountService: AccountService
+  ) { }
 
   ngOnInit() {
+    this.accounts = this.accountService.getAccounts();
   }
 
 }
