@@ -1,5 +1,5 @@
 import { Dinero } from 'dinero.js';
-import  { Transation } from "./transaction";
+import  { Transaction } from "./transaction";
 
 export class Account {
 
@@ -18,7 +18,7 @@ export class Account {
     this.id = uuid;
   }
 
-  getTransactions() : Transaction[] {
+  public getTransactions() : Transaction[] {
     return this.transactions;
   }
 }
