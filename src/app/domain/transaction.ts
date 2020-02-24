@@ -1,7 +1,18 @@
 export class Transaction {
   id;//uuid
-  description;
+  
   value;
-  currency;
+  date;
+
+  //type;  despesa/receita/transfer
+  accout;
+  toAccout;
+
+  entity;//fromAccount
+  category;
+
+  description;
+
+  //receipt;
 }
 
