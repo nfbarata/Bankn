@@ -1,13 +1,13 @@
 <h2>Accounts</h2>
 
-<div *ngFor="let accout of accounts">
+<div *ngFor="let account of accounts">
   <h3>
-      <a [title]="accout.name + ' details'">
-      {{ accout.name }}
+      <a [title]="account.name + ' details'">
+      {{ account.name }}
     </a>
   </h3>
-  <p *ngIf="accout.description">
-    Description: {{ accout.description }}
+  <p *ngIf="account.description">
+    Description: {{ account.description }}
   </p>
   <button [routerLink]="['/account',account.id]">
     Open
