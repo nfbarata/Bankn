@@ -4,9 +4,10 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import {APP_BASE_HREF} from '@angular/common';
 
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ModalModule } from 'ngx-bootstrap/modal';
+//import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+//import { TooltipModule } from 'ngx-bootstrap/tooltip';
+//import { ModalModule } from 'ngx-bootstrap/modal';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -20,11 +21,12 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
     BrowserModule, 
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: AccountListComponent },
+      { path: '', component: AccountListComponent },    
     ]),
-    BsDropdownModule.forRoot(),
-    TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    //NgModule
+    //BsDropdownModule.forRoot(),
+    //TooltipModule.forRoot(),
+    //ModalModule.forRoot()
      ],
   declarations: [ AppComponent, MenuComponent, AccountCreateComponent, AccountListComponent, AccountDetailsComponent ],
   bootstrap:    [ AppComponent ],
