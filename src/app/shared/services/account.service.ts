@@ -38,7 +38,7 @@ export class AccountService {
     console.error("account not found:"+accountId);
   }
 
-  getTransactions(accounts : Account[]) : Transation[] {
+  getTransactions(accounts : Account[]) : Transaction[] {
     var transactions : Transaction[] = [];
     accounts.forEach(account => {
     //TODO order
@@ -48,7 +48,7 @@ export class AccountService {
       });
     });
     var points = [40, 100, 1, 5, 25, 10];
-    transactions.sort(this.compareTransaction);
+    transactions = transactions.sort(this.compareTransaction);
     return transactions;
   }
 
