@@ -16,12 +16,11 @@ export class TransactionListComponent implements OnInit {
   constructor(
     private accountService: AccountService
   ) { 
+  }
+
+  ngOnInit() {   
     this.accounts = this.accountService.getAccounts();//TODO take from input
     this.transactions = this.accountService.getTransactions(this.accounts);
     console.log(this.transactions.length);
-  }
-
-  ngOnInit() {
-    
   }
 }
