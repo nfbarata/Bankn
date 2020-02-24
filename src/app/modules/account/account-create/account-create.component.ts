@@ -3,7 +3,7 @@ import { FormBuilder  } from '@angular/forms';
 import { AccountService } from '/app/shared/services/account.service';
 
 @Component({
-  selector: 'app-account-create',
+  selector: 'account-create',
   templateUrl: './account-create.component.html',
   styleUrls: ['./account-create.component.css']
 })
@@ -20,7 +20,7 @@ export class AccountCreateComponent implements OnInit {
       name: '',
       address: ''
     });
-    }
+  }
 
   ngOnInit() {
   }

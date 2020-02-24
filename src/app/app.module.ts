@@ -13,7 +13,7 @@ import { HomeComponent } from './shared/components/home/home.component';
     BrowserModule, 
     FormsModule, ReactiveFormsModule,
     AppRoutingModule
-     ],
+  ],
   declarations: [ AppComponent, MenuComponent, HomeComponent ],
   bootstrap: [ AppComponent ],
   providers: [{provide: APP_BASE_HREF, useValue : '/' }]

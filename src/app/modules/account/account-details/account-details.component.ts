@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AccountService } from '/app/shared/services/account.service';
 
 @Component({
-  selector: 'app-account-details',
+  selector: 'account-details',
   templateUrl: './account-details.component.html',
   styleUrls: ['./account-details.component.css']
 })
