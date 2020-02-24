@@ -7,9 +7,9 @@ import { AccountListComponent } from './account-list/account-list.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'accounts'  }, // default route of the module
-  { path: 'accounts', component: AccountListComponent },
-  { path: 'accounts/:accountId', component: AccountDetailsComponent },
+  //{ path: '', redirectTo: 'accounts'  }, // default route of the module
+  { path: '', component: AccountListComponent },
+  { path: ':accountId', component: AccountDetailsComponent },
   { path: 'account-create', component: AccountCreateComponent },
 ]
 
