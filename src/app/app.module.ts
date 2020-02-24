@@ -16,6 +16,7 @@ import { FileService } from './shared/services/file.service';
 import localeEn from '@angular/common/locales/en';
 import localeFr from '@angular/common/locales/fr';
 import localePt from '@angular/common/locales/pt';
+import { MenuSideComponent } from './shared/components/menu-side/menu-side.component';
 
 registerLocaleData(localeEn, 'en-EN');
 registerLocaleData(localePt, 'pt-PT');
@@ -27,7 +28,7 @@ registerLocaleData(localePt, 'pt-PT');
     AppRoutingModule
   ],
   declarations: [ 
-    AppComponent, MenuComponent, HomeComponent,
+    AppComponent, MenuComponent, HomeComponent, MenuSideComponent,
   ],
   bootstrap: [ AppComponent ],
   providers: [
