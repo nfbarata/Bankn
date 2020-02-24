@@ -6,11 +6,11 @@ export const routes: Routes = [
   { path: 'content', component: ContentComponent },
   {
     path: 'accounts',
-    loadChildren: './accounts/account.module#AccountModule',
+    loadChildren: './modules/accounts/account.module#AccountModule',
   },
   {
     path: 'transactions',
-    loadChildren: './transactions/transaction.module#TransactionModule',
+    loadChildren: './modules/transactions/transaction.module#TransactionModule',
   }
 ]
 
