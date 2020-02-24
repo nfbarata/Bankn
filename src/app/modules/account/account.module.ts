@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { AccountsRoutingModule } from './account-routing.module'
+
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
@@ -11,9 +12,9 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
 
 @NgModule({
   imports: [
+    CommonModule,
     BrowserModule,
     FormsModule, ReactiveFormsModule,
-    CommonModule,
     AccountsRoutingModule
   ],
   declarations: [ 
@@ -21,6 +22,7 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
     AccountListComponent, 
     AccountDetailsComponent 
   ],
+  exports: []
   //providers : [AccountService]
 })
 export class AccountModule { }
