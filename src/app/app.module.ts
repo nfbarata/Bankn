@@ -7,6 +7,7 @@ import { APP_BASE_HREF } from '@angular/common';//from erro
 import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './shared/components/menu/menu.component';
+import { HomeComponent } from './shared/components/home/home.component';
 
 @NgModule({
   imports:      [ 
@@ -14,7 +15,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
     FormsModule, ReactiveFormsModule,
     routing
      ],
-  declarations: [ AppComponent, MenuComponent ],
+  declarations: [ AppComponent, MenuComponent, HomeComponent ],
   bootstrap: [ AppComponent ],
   providers: [{provide: APP_BASE_HREF, useValue : '/' }]
 })
