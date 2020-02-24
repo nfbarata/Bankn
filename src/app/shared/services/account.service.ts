@@ -40,19 +40,17 @@ export class AccountService {
 
   getTransactions(accounts : Account[]) : Transaction[] {
     var transactions : Transaction[] = [];
+    //TODO selected accounts
     accounts.forEach(account => {
-    //TODO order
-      //transactions.push(account.getTransactions());
       account.transactions.forEach(transaction => {
         transactions.push(transaction);
       });
     });
-    var points = [40, 100, 1, 5, 25, 10];
     transactions = transactions.sort(this.compareTransaction);
     return transactions;
   }
 
   compareTransaction(a:Transaction,b:Transaction){
-    return a.getDate()-b.getDate();
+    return a.date-b.date;
   }
 }

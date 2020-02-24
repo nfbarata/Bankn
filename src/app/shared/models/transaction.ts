@@ -23,7 +23,7 @@ export class Transaction {
     this.id = uuid;
   }
 
-  public getValue():Dinero{
+  getValue():Dinero{
     return this.value;
   }
 
