@@ -27,8 +27,13 @@ export class AccountService {
     return this.accounts;
   }
 
-  getAccount(id) : Account{
-    return this.accounts[+id];
+  getAccount(accountId) : Account{
+    returnAccount : Account;
+    for (let i = 0; i < this.accounts.length; i++) {
+      if (this.accounts[i].id == accountId) 
+        return this.accounts[i];
+    }
+    console.error("account not found:"+accountId);
   }
 
   getTransactions(accounts : Account[]) : Transation[] {

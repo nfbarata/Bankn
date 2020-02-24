@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-//import { Input } from '@angular/input';
+
 import { AccountService } from '../../../shared/services/account.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { AccountService } from '../../../shared/services/account.service';
   styleUrls: ['./account-details.component.css']
 })
 export class AccountDetailsComponent implements OnInit {
-  //@Input() account;
+  //@Input() accountId;
   account;
 
   constructor(
@@ -19,12 +19,22 @@ export class AccountDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.account = this.accountService.getAccount(params.get('accountId'));
+      this.setAccount(params.get('accountId'));
     });
   }
 
-  addToCart(product) {
-    //this.accountService.addToCart(product);
-    //window.alert('Your product has been added to the cart!');
+  ngOnChange(changes: SimpleChanges){
+    const currentItem: SimpleChange = changes.item;
+    console.log('prev value: ', currentItem.previousValue);
+    console.log('got item: ', currentItem.currentValue);
+    if(currentItem.currentValue){
+      //this.scannedUPC = changes.item.currentValue.upc;
+    }
+    //this.suppliedQuantity = 0;
+  }
+
+  setAccount(accountId){
+    console.log(accountId);
+    this.account = this.accountService.getAccount(accountId);
   }
 }
