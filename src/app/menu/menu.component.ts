@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { accounts } from '../accounts';
 
 @Component({
   selector: 'app-menu',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-
+  accounts = accounts;
   constructor() { }
 
   ngOnInit() {

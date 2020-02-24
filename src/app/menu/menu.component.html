@@ -10,7 +10,7 @@
           Accounts
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" [routerLink]="['/account']">Account X</a>
+          <a class="dropdown-item" *ngFor="let account of accounts" [routerLink]="'/account/'+account.id">{{ account.name }}</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" [routerLink]="['/accounts']">Manage</a>
         </div>
