@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/transactions']">Transactions</a>
+        <a class="nav-link" [routerLink]="['/transactions']" i18n="@@menu-transaction">Transactions</a>
       </li>
       <li class="nav-item active dropdown"> 
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -16,19 +16,19 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" *ngFor="let account of accounts" [routerLink]="['/accounts',account.id]">{{ account.name }}</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" [routerLink]="['/accounts']">Manage</a>
+          <a class="dropdown-item" [routerLink]="['/accounts']" i18n="@@menu-manage">Manage</a>
         </div>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Charts</a>
+        <a class="nav-link" href="#" i18n="@@menu-charts">Charts</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Help</a>
+        <a class="nav-link" href="#" i18n="@@menu-help">Help</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" i18n="@@menu-search">Search</button>
     </form>
   </div>
 </nav>
