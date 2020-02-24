@@ -6,6 +6,7 @@ import {APP_BASE_HREF} from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './shared/components/menu/menu.component';
+import { AccountModule } from './modules/account/account.module';
 
 @NgModule({
   imports:      [ 
@@ -17,10 +18,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
       { path: 'accounts/:accountId', component: AccountDetailsComponent },
       { path: 'account-create', component: AccountCreateComponent },
     ]),
-    //NgbModule
-    //BsDropdownModule.forRoot(),
-    //TooltipModule.forRoot(),
-    //ModalModule.forRoot()
+    AccountModule
      ],
   declarations: [ AppComponent, MenuComponent, AccountCreateComponent, AccountListComponent, AccountDetailsComponent ],
   bootstrap:    [ AppComponent ],
