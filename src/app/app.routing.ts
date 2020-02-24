@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router'
 import { ModuleWithProviders } from '@angular/core'
+import { HomeComponent } from './shared/components/home/home.component';
 
 export const routes: Routes = [
   //{ path: '', pathMatch: 'full', redirectTo: 'content' },
