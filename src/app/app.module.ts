@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import {APP_BASE_HREF} from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';//from erro
 
+import { routing } from './app.routing';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './shared/components/menu/menu.component';
 
@@ -11,12 +12,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
   imports:      [ 
     BrowserModule, 
     FormsModule, ReactiveFormsModule,
-    /*RouterModule.forRoot([
-      { path: '', component: AccountListComponent },
-      { path: 'accounts', component: AccountListComponent },
-      { path: 'accounts/:accountId', component: AccountDetailsComponent },
-      { path: 'account-create', component: AccountCreateComponent },
-    ])*/
+    routing
      ],
   declarations: [ AppComponent, MenuComponent ],
   bootstrap: [ AppComponent ],
