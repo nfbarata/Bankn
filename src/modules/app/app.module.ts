@@ -10,6 +10,7 @@ registerLocaleData(localeEn, 'en-EN');
 registerLocaleData(localePt, 'pt-PT');
 
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { AccountService } from '../../services/account.service';
 import { FileService } from '../../services/file.service';
@@ -23,7 +24,7 @@ import { HomeComponent } from './home/home.component';
   imports: [ 
     BrowserModule, 
     FormsModule, ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule, SharedModule
   ],
   exports: [
   ],
