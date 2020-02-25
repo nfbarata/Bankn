@@ -28,7 +28,7 @@ registerLocaleData(localePt, 'pt-PT');
     AppRoutingModule
   ],
   declarations: [ 
-    AppComponent, MenuComponent, HomeComponent, MenuSideComponent, AccountCreateComponent, AccountSelectComponent
+    AppComponent, MenuComponent, HomeComponent, MenuSideComponent, AccountCreateCardComponent, AccountSelectCardComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [
