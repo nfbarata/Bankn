@@ -23,10 +23,6 @@ export class MenuComponent implements OnInit {
     this.accountService.toggleAccount(account);
   }
 
-  onOpen(){
-    this.fileService.fileToUpload
-  }
-
   onSaveAs(){
     this.fileService.downloadFile(this.accountService.getAccounts());
   }

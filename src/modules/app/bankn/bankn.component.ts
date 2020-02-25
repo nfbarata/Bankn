@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AccountService } from '../../../services/account.service';
+import { FileService } from '../../../services/file.service';
+import  { Account } from "../../../models/account";
 
 @Component({
   selector: 'bankn',
@@ -7,4 +10,13 @@ import { Component } from '@angular/core';
 })
 export class BanknComponent  {
   name = 'Angular';
+
+  constructor(
+    private accountService: AccountService,
+    private fileService: FileService
+  ) { }
+
+  onOpen(){
+    this.fileService.fileToUpload
+  }
 }
