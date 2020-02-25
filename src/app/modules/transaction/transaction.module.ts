@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { TransactionRoutingModule } from './transaction-routing.module';
 
+
 import { TransactionListComponent } from './transaction-list/transaction-list.component'
+import { AccountSelectCardComponent } from '../../shared/components/account-select-card/account-select-card.component'
 
 @NgModule({
   imports: [
@@ -11,7 +13,8 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
     TransactionRoutingModule
   ],
   declarations: [
-    TransactionListComponent
+    TransactionListComponent,
+    AccountSelectCardComponent
   ],
   exports: []
 })
