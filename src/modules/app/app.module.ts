@@ -9,7 +9,7 @@ import localePt from '@angular/common/locales/pt';
 registerLocaleData(localeEn, 'en-EN');
 registerLocaleData(localePt, 'pt-PT');
 
-import { AppRoutingModule } from './ap-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AccountService } from '../services/account.service';
 import { FileService } from '../services/file.service';
