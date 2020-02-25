@@ -36,4 +36,4 @@ import { HomeComponent } from './components/home/home.component';
     AccountService, FileService
   ]
 })
-export class BanknModule { }
+export class AppModule { }
