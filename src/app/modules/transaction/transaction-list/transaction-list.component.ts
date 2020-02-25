@@ -10,7 +10,6 @@ import  { Transaction } from "../../../shared/models/transaction";
 })
 export class TransactionListComponent implements OnInit {
 
-  /*@Input() */accounts : Account[];
   transactions : Transaction[];
 
   constructor(
@@ -20,14 +19,14 @@ export class TransactionListComponent implements OnInit {
   }
 
   ngOnInit() {   
-    this.accounts = this.accountService.getAccounts();//TODO take from input
-    this.transactions = this.accountService.getTransactions(this.accounts);
+
+    this.transactions = this.accountService.getTransactions(this.accountService.getSelectedAccounts());
     this.accountService.accountSelectionChange.subscribe(()=>{
       console.log("event catched");
       this.zone.run(()=>{
         console.log("event zoned");
       
-        this.transactions = this.accountService.getTransactions(this.accounts);
+        this.transactions = this.accountService.getTransactions(this.accountService.getSelectedAccounts());
       })
     });
   }
