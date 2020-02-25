@@ -8,25 +8,26 @@ export class FileService {
 
   constructor() { }
 
-  getJson(callback){
+  parseFile(callback){
     var output:String = "";
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       // Great success! All the File APIs are supported.
       //Only plain text
-      //if (!this.fileToUpload.type.match('plain')) 
-      //  continue;
+      if (!this.fileToUpload.type.match('plain')){
+        alert('The File APIs are not fully supported in this browser.');
+      }else{
+        var picReader = new FileReader();
 
-      var picReader = new FileReader();
+        picReader.addEventListener("load", function(event) {
+            var textFile = event.target;
+            console.log(textFile.result);
+            var object = JSON.parse(textFile.result);
+            callback(object);
+        });
 
-      picReader.addEventListener("load", function(event) {
-          var textFile = event.target;
-          console.log(textFile.result);
-          var object = JSON.parse(textFile.result);
-          callback(object);
-      });
-
-      //Read the text file
-      picReader.readAsText(this.fileToUpload);
+        //Read the text file
+        picReader.readAsText(this.fileToUpload);
+      }
     } else {
       alert('The File APIs are not fully supported in this browser.');
     }

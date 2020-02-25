@@ -22,7 +22,7 @@ export class AccountService {
     while (this.accounts.length > 0) {
       this.accounts.pop();
     }
-    //fil
+    //fill
     accounts.forEach(account => {
       this.accounts.push(account);
     });
