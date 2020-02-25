@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Account } from "../models/account";
 
 @Injectable()
 export class FileService {
@@ -31,6 +32,23 @@ export class FileService {
     }
   }
 
+  downloadJson(accounts:Account[], filename='bankn.json'){
+    var output = JSON.stringify(accounts);
+    let blob = new Blob(['\ufeff' + output], { type: 'application/json;charset=utf-8;' });
+    let dwldLink = document.createElement("a");
+    let url = URL.createObjectURL(blob);
+    let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+    if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+        dwldLink.setAttribute("target", "_blank");
+    }
+    dwldLink.setAttribute("href", url);
+    dwldLink.setAttribute("download", filename);
+    dwldLink.style.visibility = "hidden";
+    document.body.appendChild(dwldLink);
+    dwldLink.click();
+    document.body.removeChild(dwldLink);
+  }
+
   downloadFile(data, headerList, filename='data') : void {
     let csvData = this.convertToCSV(data, headerList);
     console.log(csvData)
@@ -47,27 +65,27 @@ export class FileService {
     document.body.appendChild(dwldLink);
     dwldLink.click();
     document.body.removeChild(dwldLink);
-}
+  }
 
-convertToCSV(objArray, headerList) : String {
-      let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-      let str = '';
-      let row = 'S.No,';
+  convertToCSV(objArray, headerList) : String {
+    let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    let str = '';
+    let row = 'S.No,';
 
-      for (let index in headerList) {
-          row += headerList[index] + ',';
-      }
-      row = row.slice(0, -1);
-      str += row + '\r\n';
-      for (let i = 0; i < array.length; i++) {
-          let line = (i+1)+'';
-          for (let index in headerList) {
-            let head = headerList[index];
+    for (let index in headerList) {
+        row += headerList[index] + ',';
+    }
+    row = row.slice(0, -1);
+    str += row + '\r\n';
+    for (let i = 0; i < array.length; i++) {
+        let line = (i+1)+'';
+        for (let index in headerList) {
+          let head = headerList[index];
 
-              line += ',' + array[i][head];
-          }
-          str += line + '\r\n';
-      }
-      return str;
+            line += ',' + array[i][head];
+        }
+        str += line + '\r\n';
+    }
+    return str;
   }
 }

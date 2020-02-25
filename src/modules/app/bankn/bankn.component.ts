@@ -17,6 +17,8 @@ export class BanknComponent  {
   ) { }
 
   onOpen(){
-    console.log(this.fileService.getJson());
+    console.log(this.fileService.getJson((accounts:Account[])=>{
+      AccountService.import(accounts);
+    }));
   }
 }

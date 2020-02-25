@@ -17,12 +17,16 @@ export class AccountService {
 
   constructor() { }
 
-  import(json){
+  import(accounts:Account[]){
     //clear
     while (this.accounts.length > 0) {
       this.accounts.pop();
     }
-    
+    //fil
+    accounts.forEach(account => {
+      this.accounts.push(account);
+    });
+    this.accountsChange.emit();
   }
 
   createAccount(account:Account){

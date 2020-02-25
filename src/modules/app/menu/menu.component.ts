@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
   }
 
   onSaveAs(){
-    this.fileService.downloadFile(this.accountService.getAccounts());
+    this.fileService.downloadJson(this.accountService.getAccounts());
   }
   //onexport account to csv
 }
