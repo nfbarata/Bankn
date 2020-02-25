@@ -34,7 +34,7 @@ export class AccountDetailsComponent implements OnInit {
   }
 
   setAccount(accountId){
-    console.log(accountId);
     this.account = this.accountService.getAccount(accountId);
   }
+  
 }
