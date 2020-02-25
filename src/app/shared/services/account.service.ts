@@ -11,7 +11,6 @@ import  { Transaction } from "../models/transaction";
 export class AccountService {
   
   private accounts : Account[] = environment.accounts;
-  private selectedAccounts : Account[];
 
   constructor() { }
 
@@ -55,17 +54,18 @@ export class AccountService {
     return a.date-b.date;
   }
 
-  selectAccount(account:Account){
-    for (let i = 0; i < this.accounts.length; i++) {
-      if (this.accounts[i].id == account.id) 
-        return;//already selected
-    }
-    this.selectedAccounts.push(account);
+  toggleAccount(accountId:String){
+    var account : Account = this.getAccount(accountId);
+    account.selected = !account.selected;
   }
 
-  unselectAccount(account:Account){
-    this.selectedAccounts = this.selectedAccounts.filter(function(selectedAccount){
-       return selectedAccount.id != account.id;
-    });
+  selectAccount(accountId){
+    var account : Account = this.getAccount(accountId);
+    account.selected = true;
+  }
+
+  unselectAccount(accountId){
+    var account : Account = this.getAccount(accountId);
+    account.selected = false;
   }
 }

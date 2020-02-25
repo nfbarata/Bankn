@@ -16,4 +16,7 @@ export class MenuComponent implements OnInit {
     this.accounts = this.accountService.getAccounts();  
   }
 
+  onAccountClick(accountId:String){
+    this.accountService.toggleAccount(accountId);
+  }
 }

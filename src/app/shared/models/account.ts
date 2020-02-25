@@ -14,6 +14,8 @@ export class Account {
   currency;
   //exclude orçamentos
 
+  selectd:Boolean;
+
   constructor(uuid:string) {
     this.id = uuid;
   }
