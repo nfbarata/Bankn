@@ -11,6 +11,7 @@ import  { Transaction } from "../models/transaction";
 export class AccountService {
   
   private accounts : Account[] = environment.accounts;
+  private selectedAccounts : Account[];
 
   constructor() { }
 
@@ -52,5 +53,19 @@ export class AccountService {
 
   compareTransaction(a:Transaction,b:Transaction){
     return a.date-b.date;
+  }
+
+  selectAccount(account:Account){
+    for (let i = 0; i < this.accounts.length; i++) {
+      if (this.accounts[i].id == account.id) 
+        return;//already selected
+    }
+    this.selectedAccounts.push(account);
+  }
+
+  unselectAccount(account:Account){
+    this.selectedAccounts = this.selectedAccounts.filter(function(selectedAccount){
+       return selectedAccount.id != account.id;
+    });
   }
 }
