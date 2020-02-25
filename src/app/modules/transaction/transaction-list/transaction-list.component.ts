@@ -21,5 +21,9 @@ export class TransactionListComponent implements OnInit {
   ngOnInit() {   
     this.accounts = this.accountService.getAccounts();//TODO take from input
     this.transactions = this.accountService.getTransactions(this.accounts);
+    this.accountService.accountSelectionChange.subscribe(()=>{
+      console.log("event catched");
+      this.transactions = this.accountService.getTransactions(this.accounts);
+    });
   }
 }

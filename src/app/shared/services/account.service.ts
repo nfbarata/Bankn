@@ -1,3 +1,4 @@
+import { Output, EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { uuid } from 'uuid';
 import { environment } from '../../../environments/environment';
@@ -9,6 +10,7 @@ import  { Transaction } from "../models/transaction";
   providedIn: 'root'
 })
 export class AccountService {
+  @Output() accountSelectionChange: EventEmitter<any> = new EventEmitter();
   
   private accounts : Account[] = environment.accounts;
 
@@ -38,10 +40,18 @@ export class AccountService {
     console.error("account not found:"+accountId);
   }
 
+  getSelectedAccounts() : Account[]{
+    var accounts : Account[] = [];
+    accounts.forEach(account => {
+      if(account.selected)
+        accounts.push(account);
+    });
+    return accounts;
+  }
+
   getTransactions(accounts : Account[]) : Transaction[] {
     var transactions : Transaction[] = [];
-    //TODO selected accounts
-    accounts.forEach(account => {
+    this.getSelectedAccounts().forEach(account => {
       account.transactions.forEach(transaction => {
         transactions.push(transaction);
       });
@@ -57,15 +67,18 @@ export class AccountService {
   toggleAccount(accountId:String){
     var account : Account = this.getAccount(accountId);
     account.selected = !account.selected;
+    this.accountSelectionChange.emit();
   }
 
   selectAccount(accountId){
     var account : Account = this.getAccount(accountId);
     account.selected = true;
+    this.accountSelectionChange.emit();
   }
 
   unselectAccount(accountId){
     var account : Account = this.getAccount(accountId);
     account.selected = false;
+    this.accountSelectionChange.emit();
   }
 }
