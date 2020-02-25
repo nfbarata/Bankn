@@ -17,6 +17,14 @@ export class AccountService {
 
   constructor() { }
 
+  import(json){
+    //clear
+    while (this.accounts.length > 0) {
+      this.accounts.pop();
+    }
+    
+  }
+
   createAccount(account:Account){
     console.log(uuid());
     this.accounts.push(account);

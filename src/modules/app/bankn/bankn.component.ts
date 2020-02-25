@@ -17,6 +17,6 @@ export class BanknComponent  {
   ) { }
 
   onOpen(){
-    this.fileService.fileToUpload
+    console.log(this.fileService.getJson());
   }
 }

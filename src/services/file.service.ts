@@ -7,6 +7,30 @@ export class FileService {
 
   constructor() { }
 
+  getJson(callback){
+    var output:String = "";
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // Great success! All the File APIs are supported.
+      //Only plain text
+      //if (!this.fileToUpload.type.match('plain')) 
+      //  continue;
+
+      var picReader = new FileReader();
+
+      picReader.addEventListener("load", function(event) {
+          var textFile = event.target;
+          console.log(textFile.result);
+          var object = JSON.parse(textFile.result);
+          callback(object);
+      });
+
+      //Read the text file
+      picReader.readAsText(this.fileToUpload);
+    } else {
+      alert('The File APIs are not fully supported in this browser.');
+    }
+  }
+
   downloadFile(data, headerList, filename='data') : void {
     let csvData = this.convertToCSV(data, headerList);
     console.log(csvData)
