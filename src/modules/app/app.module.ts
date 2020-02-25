@@ -11,8 +11,8 @@ registerLocaleData(localePt, 'pt-PT');
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { AccountService } from '../services/account.service';
-import { FileService } from '../services/file.service';
+import { AccountService } from '../../services/account.service';
+import { FileService } from '../../services/file.service';
 
 import { BanknComponent } from './bankn/bankn.component';
 import { MenuComponent } from './menu/menu.component';
