@@ -4,6 +4,7 @@ export const environment = {
     {
       id:1,
       name:"conta teste 1",
+      selected : false,
       transactions : [
         {
           id:11,
@@ -22,6 +23,7 @@ export const environment = {
     {
       id:2,
       name:"conta teste 2",
+      selected : false,
       transactions :[
         {
           id:21,
