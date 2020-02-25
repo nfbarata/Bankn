@@ -15,8 +15,6 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './shared/components/menu/menu.component';
 import { MenuSideComponent } from './shared/components/menu-side/menu-side.component';
 import { HomeComponent } from './shared/components/home/home.component';
-import { AccountSelectCardComponent } from './shared/components/account-select-card/account-select-card.component';
-import { AccountCreateCardComponent } from './shared/components/account-create-card/account-create-card.component';
 
 registerLocaleData(localeEn, 'en-EN');
 registerLocaleData(localePt, 'pt-PT');
@@ -28,10 +26,9 @@ registerLocaleData(localePt, 'pt-PT');
     AppRoutingModule
   ],
   exports: [
-    AccountCreateCardComponent, AccountSelectCardComponent
   ],
   declarations: [ 
-    AppComponent, MenuComponent, HomeComponent, MenuSideComponent, AccountCreateCardComponent, AccountSelectCardComponent
+    AppComponent, MenuComponent, HomeComponent, MenuSideComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [
