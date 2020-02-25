@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../../shared/services/account.service';
-import  { Account } from "../../../shared/models/account";
-import  { Transaction } from "../../../shared/models/transaction";
+import { AccountService } from '../../../services/account.service';
+import  { Account } from "../../../models/account";
+import  { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: 'app-transaction-list',

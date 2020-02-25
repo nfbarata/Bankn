@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder  } from '@angular/forms';
-import { AccountService } from '../../../shared/services/account.service';
+import { AccountService } from '../../../services/account.service';
 
 @Component({
   selector: 'account-create',

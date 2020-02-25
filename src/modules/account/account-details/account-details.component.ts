@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { AccountService } from '../../../shared/services/account.service';
+import { AccountService } from '../../../services/account.service';
 
 @Component({
   selector: 'account-details',

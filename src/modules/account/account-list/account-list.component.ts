@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../../shared/services/account.service';
+import { AccountService } from '../../../services/account.service';
 
 @Component({
   selector: 'account-list',

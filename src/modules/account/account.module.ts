@@ -8,7 +8,6 @@ import { AccountsRoutingModule } from './account-routing.module'
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
-import { AccountSelectComponent } from './account-select/account-select.component';
 //import { AccountService } from '../../shared/services/account.service';
 
 @NgModule({
