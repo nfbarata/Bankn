@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../services/account.service';
+import  { Account } from "../../../models/account";
 
 @Component({
   selector: 'account-list',
@@ -15,5 +16,9 @@ export class AccountListComponent implements OnInit {
 
   ngOnInit() {
     this.accounts = this.accountService.getAccounts();
+  }
+
+  onDelete(account:Account){
+    this.accountService.deleteAccount(account.id);
   }
 }

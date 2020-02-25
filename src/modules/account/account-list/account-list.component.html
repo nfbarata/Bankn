@@ -12,6 +12,9 @@
   <button [routerLink]="['/accounts',account.id]">
     Open
   </button>
+  <button (click)="onDelete(account)">
+    delete
+  </button>
 </div>
 <div>
   <button [routerLink]="['/account-create']">
