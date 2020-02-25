@@ -10,7 +10,7 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
   imports: [
     CommonModule,
     TransactionRoutingModule,
-    SharModule
+    SharedModule
   ],
   declarations: [
     TransactionListComponent
