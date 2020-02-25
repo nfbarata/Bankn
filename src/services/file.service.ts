@@ -15,7 +15,7 @@ export class FileService {
       // Great success! All the File APIs are supported.
       //Only plain text
       if (!this.fileToUpload.type.match(this.fileType)){
-        alert(this.fileToUpload.type);
+        alert("Invalid file formar");//i18n
       }else{
         var picReader = new FileReader();
 
@@ -30,7 +30,7 @@ export class FileService {
         picReader.readAsText(this.fileToUpload);
       }
     } else {
-      alert('The File APIs are not fully supported in this browser.');
+      alert('The File APIs are not fully supported in this browser.');//i18n
     }
   }
 
