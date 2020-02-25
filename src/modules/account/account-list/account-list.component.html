@@ -9,7 +9,7 @@
   <p *ngIf="account.description">
     Description: {{ account.description }}
   </p>
-  <button [routerLink]="['/accounts',account.id]">
+  <button [routerLink]="['/accounts/account',account.id]">
     Open
   </button>
   <button (click)="onDelete(account)">
@@ -17,7 +17,7 @@
   </button>
 </div>
 <div>
-  <button [routerLink]="['/accounts/account-create']">
+  <button [routerLink]="['/accounts/account']">
     Create
   </button>
 </div>

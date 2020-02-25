@@ -8,8 +8,8 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
 const routes: Routes = [
   //{ path: '', redirectTo: 'accounts'  }, // default route of the module
   { path: '', component: AccountListComponent },
-  { path: ':accountId', component: AccountDetailsComponent },
-  { path: 'account-create', component: AccountCreateComponent },
+  { path: 'account/:accountId', component: AccountDetailsComponent },
+  { path: 'account', component: AccountCreateComponent },
 ]
 
 @NgModule({
