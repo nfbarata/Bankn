@@ -11,6 +11,7 @@ import  { Transaction } from "../../../shared/models/transaction";
 export class TransactionListComponent implements OnInit {
 
   accounts: Transaction[]=[];
+  selectedAccounts: Transaction[]=[];
   transactions : Transaction[] = [];
 
   constructor(
@@ -26,8 +27,8 @@ export class TransactionListComponent implements OnInit {
   }
 
   refreshTransactions(){
-    this.accounts = this.accountService.getSelectedAccounts(); 
-    this.transactions = this.accountService.getTransactions(this.accounts);
+    this.accounts = this.accountService.getAccounts();
+    this.selectedAccounts = this.accountService.getSelectedAccounts(); 
+    this.transactions = this.accountService.getTransactions(this.selectedAccounts);
   }
-
 }
