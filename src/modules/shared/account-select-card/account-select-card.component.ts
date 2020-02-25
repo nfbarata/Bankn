@@ -34,7 +34,7 @@ export class AccountSelectCardComponent implements OnInit {
     accounts.forEach(account => {
       this.items.push({
         id : "asc"+account.id,
-        account_id : account.id,
+        account : account,
         name : account.name,
         selected : account.selected
       });
@@ -44,9 +44,9 @@ export class AccountSelectCardComponent implements OnInit {
   onAccountsSelected(){
     this.items.forEach(item => {
       if(item.selected){
-        this.accountService.selectAccountId(item.account_id);
+        this.accountService.selectAccount(item.account);
       }else{
-        this.accountService.unselectAccountId(item.account_id);
+        this.accountService.unselectAccountId(item.account);
       }
     });
   }
