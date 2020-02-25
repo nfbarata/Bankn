@@ -20,7 +20,7 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
   declarations: [ 
     AccountCreateComponent, 
     AccountListComponent, 
-    AccountDetailsComponent, AccountSelectComponent 
+    AccountDetailsComponent,  
   ],
   exports: []
   //providers : [AccountService]
