@@ -3,13 +3,5 @@
      No accounts created
   </div>
   <div class="card-body">
-      <div *ngFor="let account of accounts">
-        <div class="custom-control custom-checkbox my-1 mr-sm-2">
-          <input type="checkbox" class="custom-control-input" id="{{account.id}}">
-          <label class="custom-control-label" for="customControlInline">{{ account.name }} </label>
-        </div>
-      </div>
-      <br>
-    <a class="btn btn-primary" (click)="onAccountsSelected()" i81n>Ok</a>
   </div>
 </div>

@@ -43,6 +43,7 @@ export class AccountSelectCardComponent implements OnInit {
 
   onAccountsSelected(){
     this.items.forEach(item => {
+      console.log(item.selected);
       if(item.selected){
         this.accountService.selectAccount(item.account);
       }else{
