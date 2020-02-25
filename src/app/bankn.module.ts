@@ -36,4 +36,4 @@ registerLocaleData(localePt, 'pt-PT');
     AccountService, FileService
   ]
 })
-export class AppModule { }
+export class BanknModule { }

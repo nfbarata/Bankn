@@ -3,7 +3,7 @@ import { AccountService } from '../../services/account.service';
 import  { Account } from "../../shared/models/account";
 
 @Component({
-  selector: 'app-menu',
+  selector: 'bankn-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
