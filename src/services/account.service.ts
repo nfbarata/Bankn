@@ -30,7 +30,6 @@ export class AccountService {
   }
 
   createAccount(account:Account){
-    console.log(uuid());
     this.accounts.push(account);
     this.accountsChange.emit();
   }
