@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../shared/services/account.service';
+import  { Accounts } from "../../../shared/models/account";
 import  { Transaction } from "../../../shared/models/transaction";
 
 @Component({
@@ -9,6 +10,7 @@ import  { Transaction } from "../../../shared/models/transaction";
 })
 export class TransactionListComponent implements OnInit {
 
+  accounts: Transaction[]=[];
   transactions : Transaction[] = [];
 
   constructor(
@@ -24,7 +26,8 @@ export class TransactionListComponent implements OnInit {
   }
 
   refreshTransactions(){
-    this.transactions = this.accountService.getSelectedAccountsTransactions();
+    this.accounts = this.accountService.getSelectedAccounts(); 
+    this.transactions = this.accountService.getTransactions(this.accounts);
   }
 
 }
