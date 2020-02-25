@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../services/account.service';
+import { FileService } from '../../../services/file.service';
 import  { Account } from "../../../models/account";
 
 @Component({
@@ -10,7 +11,8 @@ import  { Account } from "../../../models/account";
 export class MenuComponent implements OnInit {
   accounts = [];
   constructor(
-    private accountService: AccountService
+    private accountService: AccountService,
+    private fileService: FileService
   ) { }
 
   ngOnInit() {
@@ -19,5 +21,13 @@ export class MenuComponent implements OnInit {
 
   onAccountClick(account:Account){
     this.accountService.toggleAccount(account);
+  }
+
+  onOpen(){
+
+  }
+
+  onSaveAs(){
+    this.fileService.downloadFile(this.accountService.getAccounts());
   }
 }

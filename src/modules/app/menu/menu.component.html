@@ -7,6 +7,17 @@
   <a class="navbar-brand" [routerLink]="['/']">bankn</a>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+      <li class="nav-item active dropdown"> 
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" i18n>
+          File
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" (click)="onOpen()" i18n>Open...</a>
+          <a class="dropdown-item" (click)="onSaveAs()"i18n>Save as...</a>
+        </div>
+      </li>
+
       <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/transactions']" i18n="@@menu-transactions">Transactions</a>
       </li>
