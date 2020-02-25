@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FileService } from '../../../services/file.service';
 
 @Component({
   selector: 'file-upload',
@@ -7,15 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FileUploadComponent implements OnInit {
 
-  fileToUpload: File = null;
+  //fileToUpload: File = null;
   
-  constructor() { }
+  constructor(
+     private fileService: FileService
+  ) { }
 
   ngOnInit() {
   }
 
   handleFileInput(files: FileList) {
-      this.fileToUpload = files.item(0);
-      
+    this.fileService.fileToUpload = files.item(0);
   }
 }

@@ -24,12 +24,11 @@ export class MenuComponent implements OnInit {
   }
 
   onOpen(){
-    
+    this.fileService.fileToUpload
   }
 
   onSaveAs(){
     this.fileService.downloadFile(this.accountService.getAccounts());
   }
-
   //onexport account to csv
 }

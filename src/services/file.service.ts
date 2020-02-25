@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class FileService {
 
+  fileToUpload: File = null;
+
   constructor() { }
 
   downloadFile(data, headerList, filename='data') : void {
