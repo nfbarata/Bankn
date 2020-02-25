@@ -1,6 +1,6 @@
 <h2 i18n>Transactions</h2>
-<!--account-create-card></account-create-card->
-<account-select-card></account-select-card>
+<!--account-create-card></account-create-card-->
+<account-select-card [hidden]="selectedAccounts.length>0"></account-select-card>
 
 <div *ngFor="let transaction of transactions">
   <h3>
