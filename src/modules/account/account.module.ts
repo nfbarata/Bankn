@@ -8,7 +8,6 @@ import { AccountsRoutingModule } from './account-routing.module'
 import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
-//import { AccountService } from '../../shared/services/account.service';
 
 @NgModule({
   imports: [
@@ -20,7 +19,7 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
   declarations: [ 
     AccountCreateComponent, 
     AccountListComponent, 
-    AccountDetailsComponent,  
+    AccountDetailsComponent 
   ],
   exports: []
   //providers : [AccountService]
