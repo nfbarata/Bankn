@@ -9,6 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './shared/components/menu/menu.component';
 import { HomeComponent } from './shared/components/home/home.component';
+import { AccountSelectComponent } from './shared/components/account-select/account-select.component';
+import { AccountCreateComponent } from './shared/components/account-create/account-create.component';
+
 
 import { AccountService } from './shared/services/account.service';
 import { FileService } from './shared/services/file.service';
