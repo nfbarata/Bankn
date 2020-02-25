@@ -42,8 +42,8 @@ export class AccountSelectCardComponent implements OnInit {
   }
 
   onAccountsSelected(){
-    this.items.forEach(item => {
-      console.log(item.selected);
+    var items = Array.from(this.items);
+    items.forEach(item => {
       if(item.selected){
         this.accountService.selectAccount(item.account);
       }else{
@@ -52,7 +52,7 @@ export class AccountSelectCardComponent implements OnInit {
     });
   }
 
-  onCheck(item, e){
-    item.selected= e.target.checked;
+  onCheck(selectedItem, e){
+    selectedItem.selected = e.target.checked;
   }
 }
