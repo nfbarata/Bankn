@@ -13,10 +13,10 @@ import { FileService } from './shared/services/file.service';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './shared/components/menu/menu.component';
-import { HomeComponent } from './shared/components/home/home.component';
-import { AccountSelectComponent } from './shared/components/account-select/account-select.component';
-import { AccountCreateComponent } from './shared/components/account-create/account-create.component';
 import { MenuSideComponent } from './shared/components/menu-side/menu-side.component';
+import { HomeComponent } from './shared/components/home/home.component';
+import { AccountSelectCardComponent } from './shared/components/account-select/account-select-card.component';
+import { AccountCreateCardComponent } from './shared/components/account-create/account-create-card.component';
 
 registerLocaleData(localeEn, 'en-EN');
 registerLocaleData(localePt, 'pt-PT');

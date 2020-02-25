@@ -3,11 +3,11 @@ import { AccountService } from '../../services/account.service';
 import  { Account } from "../../models/account";
 
 @Component({
-  selector: 'account-select',
-  templateUrl: './account-select.component.html',
-  styleUrls: ['./account-select.component.css']
+  selector: 'account-select-card',
+  templateUrl: './account-select-card.component.html',
+  styleUrls: ['./account-select-card.component.css']
 })
-export class AccountSelectComponent implements OnInit {
+export class AccountSelectCardComponent implements OnInit {
 
   items: any[] = [];
 

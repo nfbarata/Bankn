@@ -3,11 +3,11 @@ import { AccountService } from '../../services/account.service';
 import  { Account } from "../../models/account";
 
 @Component({
-  selector: 'account-create',
-  templateUrl: './account-create.component.html',
-  styleUrls: ['./account-create.component.css']
+  selector: 'account-create-card',
+  templateUrl: './account-create-card.component.html',
+  styleUrls: ['./account-create-card.component.css']
 })
-export class AccountCreateComponent implements OnInit {
+export class AccountCreateCardComponent implements OnInit {
 
   constructor(
     private accountService: AccountService
