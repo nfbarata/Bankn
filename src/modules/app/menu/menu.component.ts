@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
   }
 
   onOpen(){
-
+    
   }
 
   onSaveAs(){
