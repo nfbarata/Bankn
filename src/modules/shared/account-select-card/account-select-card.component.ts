@@ -23,7 +23,7 @@ export class AccountSelectCardComponent implements OnInit {
   }
 
   refreshAccounts(){
-    var accounts:[Account] = this.accountService.getAccounts()
+    var accounts:Account[] = this.accountService.getAccounts()
     ;
     while (this.items.length > 0) {
       this.items.pop();
