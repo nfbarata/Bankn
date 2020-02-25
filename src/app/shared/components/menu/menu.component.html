@@ -10,16 +10,19 @@
         <a class="nav-link" [routerLink]="['/transactions']" i18n="@@menu-transactions">Transactions</a>
       </li>
       <li class="nav-item active dropdown"> 
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" i18n="@@menu-accounts">
           Accounts
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" *ngFor="let account of accounts" [routerLink]="['/accounts',account.id]">
+          <!-- hack to prevent inside clicks to close menu-->
+          <form>
+          <div class="dropdown-item" *ngFor="let account of accounts">
             <div class="custom-control custom-checkbox my-1 mr-sm-2">
-              <input type="checkbox" class="custom-control-input" id="customControlInline">
+              <input type="checkbox" class="custom-control-input" id="{{account.id}}">
               <label class="custom-control-label" for="customControlInline">{{ account.name }} </label>
             </div>
-          </a>
+          </div>
+          </form>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" [routerLink]="['/accounts']" i18n="@@menu-manage">Manage</a>
         </div>
