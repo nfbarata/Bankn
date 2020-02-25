@@ -19,7 +19,10 @@ export class AccountSelectCardComponent implements OnInit {
     this.refreshAccounts();
     this.accountService.accountsChange.subscribe(()=>{
       this.refreshAccounts();
-    });  
+    });
+    this.accountService.accountSelectionChange.subscribe(()=>{
+      this.refreshAccounts();
+    });
   }
 
   refreshAccounts(){
@@ -35,17 +38,21 @@ export class AccountSelectCardComponent implements OnInit {
         name : account.name,
         selected : account.selected
       });
+      console.log(account.selected);
     });
   }
 
   onAccountsSelected(){
     this.items.forEach(item => {
-      console.log(item);
       if(item.selected){
         this.accountService.selectAccountId(item.account_id);
       }else{
         this.accountService.unselectAccountId(item.account_id);
       }
     });
+  }
+
+  onCheck(item, e){
+    item.selected= e.target.checked;
   }
 }
