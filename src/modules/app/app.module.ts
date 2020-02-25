@@ -23,7 +23,7 @@ import { HomeComponent } from './home/home.component';
   imports: [ 
     BrowserModule, 
     FormsModule, ReactiveFormsModule,
-    BanknRoutingModule
+    AppRoutingModule
   ],
   exports: [
   ],
