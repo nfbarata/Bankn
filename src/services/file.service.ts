@@ -5,6 +5,7 @@ import { Account } from "../models/account";
 export class FileService {
 
   fileToUpload: File = null;
+  fileType:String = 'application/json';
 
   constructor() { }
 
@@ -13,8 +14,8 @@ export class FileService {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       // Great success! All the File APIs are supported.
       //Only plain text
-      if (!this.fileToUpload.type.match('plain')){
-        alert('The File APIs are not fully supported in this browser.');
+      if (!this.fileToUpload.type.match(this.fileType)){
+        alert(this.fileToUpload.type);
       }else{
         var picReader = new FileReader();
 
@@ -35,7 +36,7 @@ export class FileService {
 
   downloadJson(accounts:Account[], filename='bankn.json'){
     var output = JSON.stringify(accounts);
-    let blob = new Blob(['\ufeff' + output], { type: 'application/json;charset=utf-8;' });
+    let blob = new Blob(['\ufeff' + output], { type: this.fileType+';charset=utf-8;' });
     let dwldLink = document.createElement("a");
     let url = URL.createObjectURL(blob);
     let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
