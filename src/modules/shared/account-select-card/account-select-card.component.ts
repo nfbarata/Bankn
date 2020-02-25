@@ -38,7 +38,6 @@ export class AccountSelectCardComponent implements OnInit {
         name : account.name,
         selected : account.selected
       });
-      console.log(account.selected);
     });
   }
 
