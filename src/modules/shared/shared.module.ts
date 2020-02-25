@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AccountSelectCardComponent } from './account-select-card/account-select-card.component';
 import { AccountCreateCardComponent } from './account-create-card/account-create-card.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import { AccountCreateCardComponent } from './account-create-card/account-create
     AccountCreateCardComponent, AccountSelectCardComponent
   ],
   declarations: [
-    AccountCreateCardComponent, AccountSelectCardComponent
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent
   ]
 })
 export class SharedModule { }
