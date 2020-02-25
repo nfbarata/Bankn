@@ -10,7 +10,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     CommonModule
   ],
   exports: [
-    AccountCreateCardComponent, AccountSelectCardComponent
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent
   ],
   declarations: [
     AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent
