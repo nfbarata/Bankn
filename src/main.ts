@@ -3,7 +3,7 @@ import './polyfills';
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { BanknModule } from './modules/bank/bankn.module';
+import { BanknModule } from './modules/bankn/bankn.module';
 
 platformBrowserDynamic().bootstrapModule(BanknModule).then(ref => {
   // Ensure Angular destroys itself on hot reloads.
