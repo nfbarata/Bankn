@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../services/account.service';
-import  { Account } from "../../models/account";
+import { AccountService } from '../../../services/account.service';
+import  { Account } from "../../../models/account";
 
 @Component({
   selector: 'account-create-card',
