@@ -22,10 +22,13 @@ registerLocaleData(localeEn, 'en-EN');
 registerLocaleData(localePt, 'pt-PT');
 
 @NgModule({
-  imports:      [ 
+  imports: [ 
     BrowserModule, 
     FormsModule, ReactiveFormsModule,
     AppRoutingModule
+  ],
+  exports: [
+    AccountCreateCardComponent, AccountSelectCardComponent
   ],
   declarations: [ 
     AppComponent, MenuComponent, HomeComponent, MenuSideComponent, AccountCreateCardComponent, AccountSelectCardComponent
