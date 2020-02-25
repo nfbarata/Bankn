@@ -1,9 +1,7 @@
-<div class="card text-white bg-info">
-  <div class="card-header" i18n>
-     No accounts selected
-  </div>
+<div class="card"  style="width: 25rem;">
   <div class="card-body">
-    
+    <h5 class="card-title" i18n>No accounts selected</h5>
+    <p class="card-text" i18n>Select accounts to see its transactions:</p>
     <div *ngFor="let item of items">
       
       <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -14,6 +12,6 @@
     </div>
 
     <br>
-    <a class="btn btn-primary" (click)="onAccountsSelected()" i81n>Ok</a>
+    <a class="btn btn-primary text-white" (click)="onAccountsSelected()" i81n>Ok</a>
   </div>
 </div>
