@@ -17,9 +17,9 @@ export class AccountSelectCardComponent implements OnInit {
 
   ngOnInit() {
     this.refreshAccounts();
-    this.accountService.accountsChange.subscribe(()=>{
+    /*this.accountService.accountsChange.subscribe(()=>{
       this.refreshAccounts();
-    });  
+    });*/  
   }
 
   refreshAccounts(){
@@ -45,5 +45,5 @@ export class AccountSelectCardComponent implements OnInit {
         this.accountService.unselectAccountId(item.id);
       }
     });
-  }
+  }*
 }
