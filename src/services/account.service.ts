@@ -94,8 +94,10 @@ export class AccountService {
   }
 
   selectAccount(account : Account){
-    account.selected = true;
-    this.accountSelectionChange.emit();
+    if(!account.selected){
+      account.selected = true;
+      this.accountSelectionChange.emit();
+    }
   }
 
   unselectAccountId(accountId){
@@ -104,7 +106,9 @@ export class AccountService {
   }
 
   unselectAccount(account : Account){
-    account.selected = false;
-    this.accountSelectionChange.emit();
+    if(account.selected){
+      account.selected = false;
+      this.accountSelectionChange.emit();
+    }
   }
 }
