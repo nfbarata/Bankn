@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../services/account.service';
+import  { Account } from "../../shared/models/account";
 
 @Component({
   selector: 'app-menu',
@@ -16,7 +17,7 @@ export class MenuComponent implements OnInit {
     this.accounts = this.accountService.getAccounts();  
   }
 
-  onAccountClick(accountId:String){
-    this.accountService.toggleAccount(accountId);
+  onAccountClick(account:Account){
+    this.accountService.toggleAccount(account);
   }
 }

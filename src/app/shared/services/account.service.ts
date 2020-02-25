@@ -42,11 +42,16 @@ export class AccountService {
 
   getSelectedAccounts() : Account[]{
     var accounts : Account[] = [];
-    accounts.forEach(account => {
+    this.accounts.forEach(account => {
       if(account.selected)
         accounts.push(account);
     });
     return accounts;
+  }
+
+  getSelectedAccountsTransactions() : Account[]{
+    var accounts : Account[] = this.getSelectedAccounts();
+    return this.getTransactions(accounts);
   }
 
   getTransactions(accounts : Account[]) : Transaction[] {
@@ -64,20 +69,34 @@ export class AccountService {
     return a.date-b.date;
   }
 
-  toggleAccount(accountId:String){
+  toggleAccountId(accountId:String){
     var account : Account = this.getAccount(accountId);
-    account.selected = !account.selected;
-    this.accountSelectionChange.emit();
+    this.toggleAccount(account);
   }
 
-  selectAccount(accountId){
+  toggleAccount(account : Account){
+    if(account.selected)
+      this.unselectAccount(account);
+    else
+      this.selectAccount(account);
+  }
+
+  selectAccountId(accountId){
     var account : Account = this.getAccount(accountId);
+    this.selectAccount(account);
+  }
+
+  selectAccount(account : Account){
     account.selected = true;
     this.accountSelectionChange.emit();
   }
 
-  unselectAccount(accountId){
+  unselectAccountId(accountId){
     var account : Account = this.getAccount(accountId);
+    this.unselectAccount(account);
+  }
+
+  unselectAccount(account : Account){
     account.selected = false;
     this.accountSelectionChange.emit();
   }

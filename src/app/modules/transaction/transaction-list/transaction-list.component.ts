@@ -1,6 +1,5 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../shared/services/account.service';
-import  { Account } from "../../../shared/models/account";
 import  { Transaction } from "../../../shared/models/transaction";
 
 @Component({
@@ -10,24 +9,22 @@ import  { Transaction } from "../../../shared/models/transaction";
 })
 export class TransactionListComponent implements OnInit {
 
-  transactions : Transaction[];
+  transactions : Transaction[] = [];
 
   constructor(
-    private accountService: AccountService,
-    private zone:NgZone
+    private accountService: AccountService
   ) { 
   }
 
   ngOnInit() {   
-
-    this.transactions = this.accountService.getTransactions(this.accountService.getSelectedAccounts());
+    this.refreshTransactions();
     this.accountService.accountSelectionChange.subscribe(()=>{
-      console.log("event catched");
-      this.zone.run(()=>{
-        console.log("event zoned");
-      
-        this.transactions = this.accountService.getTransactions(this.accountService.getSelectedAccounts());
-      })
+      this.refreshTransactions();
     });
   }
+
+  refreshTransactions(){
+    this.transactions = this.accountService.getSelectedAccountsTransactions();
+  }
+
 }
