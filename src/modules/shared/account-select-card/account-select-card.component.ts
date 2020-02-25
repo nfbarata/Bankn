@@ -46,7 +46,7 @@ export class AccountSelectCardComponent implements OnInit {
       if(item.selected){
         this.accountService.selectAccount(item.account);
       }else{
-        this.accountService.unselectAccountId(item.account);
+        this.accountService.unselectAccount(item.account);
       }
     });
   }
