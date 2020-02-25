@@ -16,5 +16,6 @@ export class FileUploadComponent implements OnInit {
 
   handleFileInput(files: FileList) {
       this.fileToUpload = files.item(0);
+      
   }
 }
