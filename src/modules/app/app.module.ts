@@ -11,13 +11,13 @@ registerLocaleData(localePt, 'pt-PT');
 
 import { BanknRoutingModule } from './bankn-routing.module';
 
-import { AccountService } from './shared/services/account.service';
-import { FileService } from './shared/services/file.service';
+import { AccountService } from '../services/account.service';
+import { FileService } from '../services/file.service';
 
-import { BanknComponent } from './components/bankn/bankn.component';
-import { MenuComponent } from './components/menu/menu.component';
-import { MenuSideComponent } from './components/menu-side/menu-side.component';
-import { HomeComponent } from './components/home/home.component';
+import { BanknComponent } from './bankn/bankn.component';
+import { MenuComponent } from './menu/menu.component';
+import { MenuSideComponent } from './menu-side/menu-side.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   imports: [ 
