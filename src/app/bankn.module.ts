@@ -14,7 +14,7 @@ import { BanknRoutingModule } from './bankn-routing.module';
 import { AccountService } from './shared/services/account.service';
 import { FileService } from './shared/services/file.service';
 
-import { BanknComponent } from './components/bankn.component';
+import { BanknComponent } from './components/bankn/bankn.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { MenuSideComponent } from './components/menu-side/menu-side.component';
 import { HomeComponent } from './components/home/home.component';
