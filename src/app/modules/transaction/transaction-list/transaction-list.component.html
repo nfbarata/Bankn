@@ -1,16 +1,5 @@
 <h2 i18n>Transactions</h2>
-<!-- ngif no account selected widget para seleccionar accounts -->
-<div [hidden]="accounts.length>0" class="card">
-  <div class="card-header">
-    No accounts created 
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-
+<account-create></account-create>
 <account-select></account-select>
 
 <div *ngFor="let transaction of transactions">

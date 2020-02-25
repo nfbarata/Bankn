@@ -11,7 +11,8 @@ import  { Transaction } from "../models/transaction";
 })
 export class AccountService {
   @Output() accountSelectionChange: EventEmitter<any> = new EventEmitter();
-  
+  @Output() accountsChange: EventEmitter<any> = new EventEmitter();
+
   private accounts : Account[] = environment.accounts;
 
   constructor() { }
@@ -19,12 +20,18 @@ export class AccountService {
   createAccount(account:Account){
     console.log(uuid());
     this.accounts.push(account);
+    this.accountsChange.emit();
   }
 
-  deleteAccount(accountId:String){
+  deleteAccountId(accountId:String){
     this.accounts = this.accounts.filter(function(account){
        return account.id != accountId;
     });
+    this.accountsChange.emit();
+  }
+
+  deleteAccount(account:Account){
+    this.deleteAccountId(account.id);
   }
 
   getAccounts() : Account[]{
@@ -49,7 +56,7 @@ export class AccountService {
     return accounts;
   }
 
-  getSelectedAccountsTransactions() : Account[]{
+  getSelectedAccountsTransactions() : Transaction[]{
     var accounts : Account[] = this.getSelectedAccounts();
     return this.getTransactions(accounts);
   }
