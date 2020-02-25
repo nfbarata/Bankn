@@ -7,8 +7,8 @@
     <div *ngFor="let item of items">
       
       <div class="custom-control custom-checkbox my-1 mr-sm-2">
-        <input class="custom-control-input" type="checkbox" id="as{{item.id}}" [checked]="item.selected">
-        <label class="custom-control-label" for="as{{item.id}}">{{ item.name }}</label>
+        <input class="custom-control-input" type="checkbox" id="{{item.id}}" [checked]="item.selected">
+        <label class="custom-control-label" for="{{item.id}}">{{ item.name }}</label>
       </div>
 
     </div>
