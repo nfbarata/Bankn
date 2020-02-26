@@ -1,4 +1,4 @@
-import { NgModule , LOCALE_ID } from '@angular/core';
+import { NgModule , LOCALE_ID, Injector  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';//from erro
@@ -20,7 +20,16 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuSideComponent } from './menu-side/menu-side.component';
 import { HomeComponent } from './home/home.component';
 
-/const lang = getUsersLocale('pt-PT');
+//TODO pass to object
+const lang = (function(defaultValue:String) {
+    if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
+      return defaultValue;
+    }
+    const wn = window.navigator as any;
+    let lang = wn.languages ? wn.languages[0] : defaultValue;
+    lang = lang || wn.language || wn.browserLanguage || wn.userLanguage;
+    return lang;
+})('pt-PT');
 
 @NgModule({
   imports: [ 
@@ -42,18 +51,10 @@ import { HomeComponent } from './home/home.component';
 })
 export class AppModule { 
 
-  constructor(){
-    console.log(this.getUsersLocale('en-UK'));
-  }
-
-  getUsersLocale(defaultValue: string): string {
-    if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
-      return defaultValue;
-    }
-    const wn = window.navigator as any;
-    let lang = wn.languages ? wn.languages[0] : defaultValue;
-    lang = lang || wn.language || wn.browserLanguage || wn.userLanguage;
-    return lang;
+  constructor(
+    private injector:Injector
+  ){
+    console.log(this.injector.get(LOCALE_ID));
   }
 }
 
