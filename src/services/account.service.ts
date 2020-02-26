@@ -2,7 +2,7 @@ import { Output, EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { uuid } from 'uuid';
 import { environment } from '../environments/environment';
-
+import { Dinero } from 'dinero.js';
 import  { Account } from "../models/account";
 import  { Transaction } from "../models/transaction";
 
