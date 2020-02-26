@@ -35,10 +35,15 @@ import { HomeComponent } from './home/home.component';
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' }, 
     AccountService, FileService,
-    { provide: LOCALE_ID, useValue: 'pt' }
+    { provide: LOCALE_ID, useValue: getUsersLocale('en-UK') }
   ]
 })
 export class AppModule { 
+
+  constructor(){
+    console.log(this.getUsersLocale('en-UK'));
+  }
+
   getUsersLocale(defaultValue: string): string {
     if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
       return defaultValue;
