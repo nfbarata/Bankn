@@ -23,20 +23,21 @@ export class AccountComponent implements OnInit {
     @Inject(LOCALE_ID) public locale: string
     ) { 
       var countryCode = locale.split("-")[0];
-      const countries        = require('country-data').countries,
-            currencies       = require('country-data').currencies,
-            regions          = require('country-data').regions,
-            languages        = require('country-data').languages,
-            callingCountries = require('country-data').callingCountries;
+      const countries        = require('country-data-list').countries,
+            currencies       = require('country-data-list').currencies,
+            regions          = require('country-data-list').regions,
+            languages        = require('country-data-list').languages,
+            callingCountries = require('country-data-list').callingCountries;
       this.currencies = countries.all.filter(function(country){
         return country.currencies.length>0;
       });
+      console.log(countries);
       var country;
       for (let i = 0; i < countries.all.length; i++) {
         if (countries.all[i].alpha2 == countryCode) 
-          country = countries[i];
+          country = countries.all[i];
       }
-      console.log("country: "+country);
+      console.log(country);
       this.accountForm = this.formBuilder.group({
           id:null,
           name:'',
