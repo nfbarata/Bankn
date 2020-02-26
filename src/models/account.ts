@@ -10,11 +10,11 @@ export class Account {
   transactions : Transaction[] = [];
   referenceValue:Dinero;
   referenceDate:Date;
-  description:string;
+  description:string = "";
   currency;
   //exclude orçamentos
 
-  selected:Boolean;
+  selected:Boolean = false;
 
   constructor(uuid:string) {
     this.id = uuid;

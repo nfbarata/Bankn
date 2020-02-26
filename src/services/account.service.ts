@@ -2,7 +2,7 @@ import { Output, EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { uuid } from 'uuid';
 import { environment } from '../environments/environment';
-
+import { Dinero } from 'dinero.js';
 import  { Account } from "../models/account";
 import  { Transaction } from "../models/transaction";
 
@@ -29,7 +29,14 @@ export class AccountService {
     this.accountsChange.emit();
   }
 
-  createAccount(account:Account){
+  createAccount(name:String, description:String, referenceValue:Dinero, referenceDate:Date){
+    var account : Account = new Account(uuid());
+    account.name = name;
+    account.description = description;
+    account.referenceValue = referenceValue;
+    account.referenceDate = referenceDate;
+    //currency
+    //selected
     this.accounts.push(account);
     this.accountsChange.emit();
   }
