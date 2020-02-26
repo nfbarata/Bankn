@@ -31,11 +31,7 @@ export class AccountComponent implements OnInit {
           description:''
         });
       console.log(locale);
-      const countries        = require('country-data').countries,
-            currencies       = require('country-data').currencies,
-            regions          = require('country-data').regions,
-            languages        = require('country-data').languages,
-            callingCountries = require('country-data').callingCountries;
+
       this.currencies = countries.all.filter(function(country){
         return country.currencies.length>0;
       });
