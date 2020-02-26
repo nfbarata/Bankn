@@ -13,6 +13,7 @@ import currencies from '../../../assets/currencies.json';
 export class AccountComponent implements OnInit {
 
   accountForm;
+  currencies;
 
   constructor(
     private accountService: AccountService,
@@ -28,6 +29,7 @@ export class AccountComponent implements OnInit {
           referenceDate:'',
           description:''
         });
+      this.currencies = currencies;
   }
 
   ngOnInit() {
