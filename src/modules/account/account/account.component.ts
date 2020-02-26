@@ -5,6 +5,12 @@ import { AccountService } from '../../../services/account.service';
 import  { Account } from "../../../models/account";
 //import currencies from '../../../assets/currencies.json';
 
+const countries        = require('country-data-list').countries,
+      currencies       = require('country-data-list').currencies,
+      regions          = require('country-data-list').regions,
+      languages        = require('country-data-list').languages,
+      callingCountries = require('country-data-list').callingCountries;
+
 @Component({
   selector: 'account',
   templateUrl: './account.component.html',
@@ -22,32 +28,30 @@ export class AccountComponent implements OnInit {
     private router: Router,
     @Inject(LOCALE_ID) public locale: string
     ) { 
-      var countryCode = locale.split("-")[0];
-      const countries        = require('country-data-list').countries,
-            currencies       = require('country-data-list').currencies,
-            regions          = require('country-data-list').regions,
-            languages        = require('country-data-list').languages,
-            callingCountries = require('country-data-list').callingCountries;
-      this.currencies = countries.all.filter(function(country){
-        return country.currencies.length>0;
-      });
-      console.log(countries);
-      var country;
-      for (let i = 0; i < countries.all.length; i++) {
-        if (countries.all[i].alpha2 == countryCode) 
-          country = countries.all[i];
-      }
-      console.log(country);
-      this.accountForm = this.formBuilder.group({
-          id:null,
-          name:'',
-          referenceValue:'',
-          referenceValueCurrency:'',
-          referenceDate:'',
-          description:''
+
+      var currency = null;
+      if(locale!=null && locale.split("-").length>0){
+        var countryCode = locale.split("-")[0].toUpperCase();
+        
+        this.currencies = countries.all.filter(function(country){
+          return country.currencies.length>0;
         });
-      
-      
+        var country;
+        for (let i = 0; i < this.currencies.length; i++) {
+          if (this.currencies[i].alpha2 == countryCode) 
+            country = this.currencies[i];
+        }
+        currency = country.currencies[0];
+      }
+      console.log(currency);
+      this.accountForm = this.formBuilder.group({
+        id:null,
+        name:'',
+        referenceValue:0,
+        referenceValueCurrency:currency,
+        referenceDate:'2000-1-1',
+        description:''
+      });
   }
 
   ngOnInit() {
