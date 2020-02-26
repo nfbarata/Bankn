@@ -34,11 +34,11 @@ export class AccountCreateComponent implements OnInit {
     this.accountService.createAccount(
       data.name,
       data.description,
-      new Dinero({
+      Dinero({
         ammount:data.referenceValue, 
         currency:'EUR'}),//TODO currecy
         Date.parse(data.referenceDate)
-      );
+    );
     this.createAccountForm.reset();
   }
 }
