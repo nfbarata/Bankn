@@ -11,7 +11,7 @@ export class Account {
   referenceValue:Dinero;
   referenceDate:Date;
   description:String = "";
-  currency;
+  //currency; inside referenceValue
   //exclude orçamentos
 
   selected:Boolean = false;

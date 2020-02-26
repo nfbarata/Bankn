@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { AccountService } from '../../../services/account.service';
 import  { Account } from "../../../models/account";
 
@@ -17,39 +17,56 @@ export class AccountComponent implements OnInit {
     private accountService: AccountService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     ) { 
-      this.createAccountForm = this.formBuilder.group({
-        id:null,
-        name:'',
-        referenceValue:'',
-        referenceDate:'',
-        description:''
-      });
+      
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(params:ParamMap => {
       var accountId:String = params.get('accountId');
       if(accountId==null || accountId.trim().length==0){
-
+        this.createAccountForm = this.formBuilder.group({
+          id:null,
+          name:'',
+          referenceValue:'',
+          referenceValueCurrency:'',
+          referenceDate:'',
+          description:''
+        });
       }else{
         var account:Account = this.accountService.getAccount(accountId);
-          
+        this.createAccountForm.id=account.id;
+        this.createAccountForm.name=account.name;
+        this.createAccountForm.referenceValue = account.referenceValue;
+        this.createAccountForm.referenceDate = account.referenceDate;
+        this.createAccountForm.description = account.description;
       } 
-      this.setAccount(params.get('accountId'));
     });
   }
 
   onSubmit(data) {
-    //https://github.com/sarahdayan/dinero.js
-    this.accountService.createAccount(
-      data.name,
-      data.description,
-      Dinero({
-        ammount:data.referenceValue, 
-        currency:'EUR'}),//TODO currecy
-        Date.parse(data.referenceDate)
-    );
+    if(data.id==null){
+      this.accountService.createAccount(
+        data.name,
+        data.description,
+        Dinero({
+          ammount:data.referenceValue, 
+          currency:'EUR'}),//TODO currecy
+          Date.parse(data.referenceDate)
+      );
+    }else{
+      this.accountService.updateAccount(
+        data.id,
+        data.name,
+        data.description,
+        Dinero({
+          ammount:data.referenceValue, 
+          currency:'EUR'}),//TODO currecy
+          Date.parse(data.referenceDate)
+      );
+    }
     this.createAccountForm.reset();
+    this.router.navigate(['/accounts']);
   }
 }

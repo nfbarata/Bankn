@@ -37,9 +37,21 @@ export class AccountService {
     account.description = description;
     account.referenceValue = referenceValue;
     account.referenceDate = referenceDate;
-    //currency
     //selected
     this.accounts.push(account);
+    this.accountsChange.emit();
+  }
+
+  updateAccount(
+    id:String,
+    name:String, 
+    description:String, referenceValue:Dinero, referenceDate:Date){
+
+    var account : Account = this.getAccount(id);
+    account.name = name;
+    account.description = description;
+    account.referenceValue = referenceValue;
+    account.referenceDate = referenceDate;
     this.accountsChange.emit();
   }
 
