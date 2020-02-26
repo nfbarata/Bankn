@@ -30,11 +30,13 @@ export class AccountCreateComponent implements OnInit {
   }
 
   onSubmit(data) {
-    // Process checkout data here
+    //https://github.com/sarahdayan/dinero.js
     this.accountService.createAccount(
       data.name,
       data.description,
-      new Dinero(),
+      new Dinero({
+        ammount:data.referenceValue, 
+        currency:'EUR'}),//TODO currecy
       data.referenceDate
       );
     this.createAccountForm.reset();
