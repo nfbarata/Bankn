@@ -40,7 +40,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dinero.js@1.6.0/build/umd/dinero.min.js"></script>
 
     <script>
-      getUsersLocale(defaultValue: string): string {
+      const lang = getUsersLocale(defaultValue: string): string {
     if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
       return defaultValue;
     }

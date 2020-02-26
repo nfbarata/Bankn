@@ -20,7 +20,7 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuSideComponent } from './menu-side/menu-side.component';
 import { HomeComponent } from './home/home.component';
 
-const lang = getUsersLocale('pt-PT');
+/const lang = getUsersLocale('pt-PT');
 
 @NgModule({
   imports: [ 
