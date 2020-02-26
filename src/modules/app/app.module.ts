@@ -20,6 +20,8 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuSideComponent } from './menu-side/menu-side.component';
 import { HomeComponent } from './home/home.component';
 
+const lang = getUsersLocale('pt-PT');
+
 @NgModule({
   imports: [ 
     BrowserModule, 
@@ -35,7 +37,7 @@ import { HomeComponent } from './home/home.component';
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' }, 
     AccountService, FileService,
-    { provide: LOCALE_ID, useValue: getUsersLocale('en-UK') }
+    { provide: LOCALE_ID, useValue: lang }
   ]
 })
 export class AppModule { 
