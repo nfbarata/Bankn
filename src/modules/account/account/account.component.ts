@@ -32,6 +32,12 @@ export class AccountComponent implements OnInit {
         });
       this.currencies = currencies;
       console.log(locale);
+      const countries        = require('country-data').countries,
+            currencies       = require('country-data').currencies,
+            regions          = require('country-data').regions,
+            languages        = require('country-data').languages,
+            callingCountries = require('country-data').callingCountries;
+        console.log(countries);
   }
 
   ngOnInit() {
