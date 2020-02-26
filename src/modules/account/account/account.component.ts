@@ -36,8 +36,9 @@ export class AccountComponent implements OnInit {
             regions          = require('country-data').regions,
             languages        = require('country-data').languages,
             callingCountries = require('country-data').callingCountries;
-
-      this.currencies = countries.all;
+      this.currencies = countries.all.filter(function(country){
+        return country.currencies.length>0;
+      });
       //currencies[0] ->
   }
 
