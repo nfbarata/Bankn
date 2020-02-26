@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { AccountService } from '../../../services/account.service';
+import  { Account } from "../../../models/account";
 
 @Component({
   selector: 'account-create',
@@ -16,20 +17,15 @@ export class AccountCreateComponent implements OnInit {
     private cartService: AccountService,
     private formBuilder: FormBuilder,
     ) { 
-      this.createAccountForm = this.formBuilder.group({
-      name: '',
-      address: ''
-    });
+      this.createAccountForm = this.formBuilder.group(new Account());
   }
 
   ngOnInit() {
   }
 
-  onSubmit(data) {
+  onSubmit(account) {
     // Process checkout data here
-    this.accountService.createAccount(data);
+    this.accountService.createAccount(account);
     this.createAccountForm.reset();
-
-    console.warn('Your order has been submitted', data);
   }
 }
