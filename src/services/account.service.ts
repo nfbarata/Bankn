@@ -1,6 +1,6 @@
 import { Output, EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { uuid } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../environments/environment';
 import { Dinero } from 'dinero.js';
 import  { Account } from "../models/account";
@@ -32,7 +32,7 @@ export class AccountService {
   createAccount(
     name:String, 
     description:String, referenceValue:Dinero, referenceDate:Date){
-    var account : Account = new Account(uuid());
+    var account : Account = new Account(uuidv4());
     account.name = name;
     account.description = description;
     account.referenceValue = referenceValue;
