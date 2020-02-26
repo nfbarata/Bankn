@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
 import { AccountService } from '../../../services/account.service';
 import  { Account } from "../../../models/account";
+import currencies from '../../../assets/currencies.json';
 
 @Component({
   selector: 'account',
