@@ -11,7 +11,7 @@ import  { Account } from "../../../models/account";
 })
 export class AccountComponent implements OnInit {
 
-  createAccountForm;
+  accountForm;
 
   constructor(
     private accountService: AccountService,
@@ -19,14 +19,7 @@ export class AccountComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     ) { 
-      
-  }
-
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      var accountId:String = params.get('accountId');
-      if(accountId==null || accountId.trim().length==0){
-        this.createAccountForm = this.formBuilder.group({
+      this.accountForm = this.formBuilder.group({
           id:null,
           name:'',
           referenceValue:'',
@@ -34,13 +27,22 @@ export class AccountComponent implements OnInit {
           referenceDate:'',
           description:''
         });
+  }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      var accountId:String = params.get('accountId');
+      console.log(accountId);
+      if(accountId==null || accountId.trim().length==0){
+        this.accountForm.reset();
       }else{
         var account:Account = this.accountService.getAccount(accountId);
-        this.createAccountForm.id=account.id;
-        this.createAccountForm.name=account.name;
-        this.createAccountForm.referenceValue = account.referenceValue;
-        this.createAccountForm.referenceDate = account.referenceDate;
-        this.createAccountForm.description = account.description;
+        this.accountForm.id=account.id;
+        this.accountForm.name=account.name;
+        this.accountForm.referenceValue = account.referenceValue;
+        this.accountForm.referenceDate = account.referenceDate;
+        this.accountForm.description = account.description;
+        console.log("setted");
       } 
     });
   }
@@ -66,7 +68,7 @@ export class AccountComponent implements OnInit {
           Date.parse(data.referenceDate)
       );
     }
-    this.createAccountForm.reset();
+    this.accountForm.reset();
     this.router.navigate(['/accounts']);
   }
 }
