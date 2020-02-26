@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule , LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';//from erro
@@ -34,9 +34,20 @@ import { HomeComponent } from './home/home.component';
   bootstrap: [ BanknComponent ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' }, 
-    AccountService, FileService
+    AccountService, FileService,
+    { provide: LOCALE_ID, useValue: 'pt' }
   ]
 })
 export class AppModule { 
-  
+  getUsersLocale(defaultValue: string): string {
+    if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
+      return defaultValue;
+    }
+    const wn = window.navigator as any;
+    let lang = wn.languages ? wn.languages[0] : defaultValue;
+    lang = lang || wn.language || wn.browserLanguage || wn.userLanguage;
+    return lang;
+  }
 }
+
+

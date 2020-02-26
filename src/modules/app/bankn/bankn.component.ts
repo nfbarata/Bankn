@@ -14,7 +14,9 @@ export class BanknComponent  {
   constructor(
     private accountService: AccountService,
     private fileService: FileService
-  ) { }
+  ) { 
+
+  }
 
   onOpen(){
     this.fileService.parseFile((accounts:Account[])=>{

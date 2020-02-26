@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
 import { AccountService } from '../../../services/account.service';
@@ -20,6 +20,7 @@ export class AccountComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    @Inject(LOCALE_ID) public locale: string
     ) { 
       this.accountForm = this.formBuilder.group({
           id:null,
@@ -30,6 +31,7 @@ export class AccountComponent implements OnInit {
           description:''
         });
       this.currencies = currencies;
+      console.log(locale);
   }
 
   ngOnInit() {
