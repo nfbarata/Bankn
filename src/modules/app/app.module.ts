@@ -1,4 +1,4 @@
-import { NgModule , LOCALE_ID, Injector  } from '@angular/core';
+import { NgModule , LOCALE_ID, Injector, Inject  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';//from erro
@@ -51,10 +51,12 @@ const lang = (function(defaultValue:String) {
 })
 export class AppModule { 
 
+  @Inject(LOCALE_ID) public locale: string
+  
   constructor(
     private injector:Injector
   ){
-    console.log(this.injector.get(LOCALE_ID));
+    //console.log(this.injector.get(LOCALE_ID));
   }
 }
 

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
 import { AccountService } from '../../../services/account.service';
 import  { Account } from "../../../models/account";
-import currencies from '../../../assets/currencies.json';
+//import currencies from '../../../assets/currencies.json';
 
 @Component({
   selector: 'account',
@@ -30,14 +30,15 @@ export class AccountComponent implements OnInit {
           referenceDate:'',
           description:''
         });
-      this.currencies = currencies;
       console.log(locale);
       const countries        = require('country-data').countries,
             currencies       = require('country-data').currencies,
             regions          = require('country-data').regions,
             languages        = require('country-data').languages,
             callingCountries = require('country-data').callingCountries;
-        console.log(countries);
+
+      this.currencies = countries.all;
+      //currencies[0] ->
   }
 
   ngOnInit() {
