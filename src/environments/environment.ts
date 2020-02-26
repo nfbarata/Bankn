@@ -10,7 +10,7 @@ export const environment = {
         currency:'EUR'
       },
       referenceDate : new Date(2000,1,1),
-      descripton:'',
+      description:'',
       transactions : [
         {
           id:11,
@@ -35,7 +35,7 @@ export const environment = {
         currency:'EUR'
       },
       referenceDate : new Date(2000,1,1),
-      descripton:'',
+      description:'',
       transactions :[
         {
           id:21,
