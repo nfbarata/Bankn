@@ -22,6 +22,21 @@ export class AccountComponent implements OnInit {
     private router: Router,
     @Inject(LOCALE_ID) public locale: string
     ) { 
+      var countryCode = locale.split("-")[0];
+      const countries        = require('country-data').countries,
+            currencies       = require('country-data').currencies,
+            regions          = require('country-data').regions,
+            languages        = require('country-data').languages,
+            callingCountries = require('country-data').callingCountries;
+      this.currencies = countries.all.filter(function(country){
+        return country.currencies.length>0;
+      });
+      var country;
+      for (let i = 0; i < countries.all.length; i++) {
+        if (countries.all[i].alpha2 == countryCode) 
+          country = countries[i];
+      }
+      console.log("country: "+country);
       this.accountForm = this.formBuilder.group({
           id:null,
           name:'',
@@ -30,12 +45,8 @@ export class AccountComponent implements OnInit {
           referenceDate:'',
           description:''
         });
-      console.log(locale);
-
-      this.currencies = countries.all.filter(function(country){
-        return country.currencies.length>0;
-      });
-      //currencies[0] ->
+      
+      
   }
 
   ngOnInit() {
