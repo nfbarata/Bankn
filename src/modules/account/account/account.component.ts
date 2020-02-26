@@ -19,6 +19,7 @@ const countries        = require('country-data-list').countries,
 export class AccountComponent implements OnInit {
 
   accountForm;
+  formData;
   currencies;
 
   constructor(
@@ -44,29 +45,33 @@ export class AccountComponent implements OnInit {
         currency = country.currencies[0];
       }
       console.log(currency);
-      this.accountForm = this.formBuilder.group({
+      this.formData = {
         id:null,
         name:'',
         referenceValue:0,
         referenceValueCurrency:currency,
         referenceDate:'2000-1-1',
         description:''
-      });
+      }
+      this.accountForm = this.formBuilder.group(this.formData);
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       var accountId:String = params.get('accountId');
-      console.log(accountId);
       if(accountId==null || accountId.trim().length==0){
         this.accountForm.reset();
       }else{
         var account:Account = this.accountService.getAccount(accountId);
-        this.accountForm.id=account.id;
-        this.accountForm.name=account.name;
-        this.accountForm.referenceValue = account.referenceValue;
-        this.accountForm.referenceDate = account.referenceDate;
-        this.accountForm.description = account.description;
+        this.formData = {
+          id:account.id,
+          name:account.name,
+          referenceValue:account.referenceValue.ammount,
+          referenceValueCurrency:account.referenceValue.currency,
+          referenceDate:account.referenceDate,
+          description:account.description
+        };
+        this.accountForm.setValue(this.formData);
         console.log("setted");
       } 
     });

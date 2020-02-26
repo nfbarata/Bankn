@@ -5,6 +5,12 @@ export const environment = {
       id:1,
       name:"conta teste 1",
       selected : false,
+      referenceValue : {
+        ammount:0,
+        currency:'EUR'
+      },
+      referenceDate : new Date(2000,1,1),
+      descripton:'',
       transactions : [
         {
           id:11,
@@ -24,6 +30,12 @@ export const environment = {
       id:2,
       name:"conta teste 2",
       selected : false,
+      referenceValue : {
+        ammount:0,
+        currency:'EUR'
+      },
+      referenceDate : new Date(2000,1,1),
+      descripton:'',
       transactions :[
         {
           id:21,
