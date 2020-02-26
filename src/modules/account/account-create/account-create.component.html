@@ -2,19 +2,34 @@
 
 <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit(createAccountForm.value)">
 
-  <div>
-    <label for="name">
+  <div class="form-group">
+    <label for="name" i18n>
       Name
     </label>
-    <input id="name" type="text" formControlName="name">
+    <input  class="form-control" id="name" type="text" formControlName="name">
   </div>
-
-  <div>
-    <label for="address">
-      Address
+  <div class="form-group">
+    <label for="name" i18n>
+      Value
     </label>
-    <input id="address" type="text" formControlName="address">
+    <input  class="form-control" id="name" type="text" formControlName="name">
+    <label for="name" i18n>
+      Date
+    </label>
+    <input  class="form-control" id="name" type="text" formControlName="name">
   </div>
-  <button class="button" type="submit">Create</button>
+<!-- 
+  reference value
+  reference date
+  description
+  currency
+-->
+  <div class="form-group">
+    <label for="description" i18n>
+      Description
+    </label>
+    <input  class="form-control" id="description" type="text" formControlName="description">
+  </div>
+  <button class="btn btn-primary" type="submit" i18n>Create</button>
 
 </form>
