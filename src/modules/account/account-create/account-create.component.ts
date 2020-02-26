@@ -23,7 +23,7 @@ export class AccountCreateComponent implements OnInit {
         referenceDate:'',
         description:''
       });
-      
+
   }
 
   ngOnInit() {
@@ -37,7 +37,7 @@ export class AccountCreateComponent implements OnInit {
       new Dinero({
         ammount:data.referenceValue, 
         currency:'EUR'}),//TODO currecy
-      data.referenceDate
+        Date.parse(data.referenceDate)
       );
     this.createAccountForm.reset();
   }

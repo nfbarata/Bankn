@@ -3,14 +3,14 @@ import  { Transaction } from "./transaction";
 
 export class Account {
 
-  id:string;//uuid
-  name : string;
+  id:String;//uuid
+  name : String;
   //type
   //arquived
   transactions : Transaction[] = [];
   referenceValue:Dinero;
   referenceDate:Date;
-  description:string = "";
+  description:String = "";
   currency;
   //exclude orçamentos
 

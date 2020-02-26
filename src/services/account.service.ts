@@ -29,7 +29,9 @@ export class AccountService {
     this.accountsChange.emit();
   }
 
-  createAccount(name:String, description:String, referenceValue:Dinero, referenceDate:Date){
+  createAccount(
+    name:String, 
+    description:String, referenceValue:Dinero, referenceDate:Date){
     var account : Account = new Account(uuid());
     account.name = name;
     account.description = description;
