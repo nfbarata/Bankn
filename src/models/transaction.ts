@@ -1,4 +1,3 @@
-import { Dinero } from 'dinero.js';
 import  { Account } from "./account";
 
 export class Transaction {
