@@ -78,7 +78,7 @@ export class AccountComponent implements OnInit {
         this.accountFormData = {
           id:account.id,
           name:account.name,
-          referenceValue:account.referenceValue.ammount,
+          referenceValue:account.referenceValue.amount,
           referenceCountry:account.referenceCountry,
           referenceDate:account.referenceDate,
           description:account.description
@@ -99,7 +99,7 @@ export class AccountComponent implements OnInit {
         data.name,
         data.description,
         Dinero({
-          ammount:data.referenceValue, 
+          amount:data.referenceValue, 
           currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.referenceCountry
@@ -110,7 +110,7 @@ export class AccountComponent implements OnInit {
         data.name,
         data.description,
         Dinero({
-          ammount:data.referenceValue, 
+          amount:data.referenceValue, 
           currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.refereceCountry
