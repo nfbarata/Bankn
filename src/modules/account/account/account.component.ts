@@ -107,7 +107,7 @@ export class AccountComponent implements OnInit {
     var date = new Date();
     date.setDate(data.referenceDay);
     date.setMonth(data.refernceMonth-1);
-    date.setFullYear(date.referenceYear);
+    date.setFullYear(data.referenceYear);
     if(data.id==null){
       this.accountService.createAccount(
         data.name,
