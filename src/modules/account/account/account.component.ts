@@ -91,7 +91,7 @@ export class AccountComponent implements OnInit {
   onSubmit(data) {
     var country;
     for (let i = 0; i < this.countries.length; i++) {
-      if (this.countries[i].alpha2 == data.referecenCountry) 
+      if (this.countries[i].alpha2 == data.referenceCountry) 
         country = this.countries[i];
     }
     if(data.id==null){
