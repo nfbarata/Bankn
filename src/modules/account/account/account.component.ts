@@ -101,12 +101,15 @@ export class AccountComponent implements OnInit {
       if (this.countries[i].alpha2 == data.referenceCountry) 
         country = this.countries[i];
     }
+    
     var currency = country.currencies[0];
     var referenceValue = Dinero({currency:currency});
     var value = data.referenceValue * Math.pow(10,referenceValue.getPrecision());
     var amount = Dinero({amount:value,currency:currency});
-    var date = new Date();
+    
+    var date = new Date(0);//clear hours/minutes/seconds
     date.setFullYear(data.referenceYear, data.referenceMonth-1, data.referenceDay);
+    
     if(data.id==null){
       this.accountService.createAccount(
         data.name,
