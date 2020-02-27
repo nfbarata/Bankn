@@ -19,7 +19,7 @@ export class MainComponent  {
   }
 
   onOpen(){
-    this.fileService.parseFile((bankn:Bankn)=>{
+    this.fileService.parseJsonFile((bankn:Bankn)=>{
       this.banknService.import(bankn);
     });
   }
