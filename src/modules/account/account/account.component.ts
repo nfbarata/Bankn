@@ -49,7 +49,9 @@ export class AccountComponent implements OnInit {
         name:null,
         referenceValue:null,
         referenceCountry:null,
-        referenceDate:null,
+        referenceDay:null,
+        referenceMonth:null,
+        referenceYear:null,
         description:null
       }
       this.accountForm = this.formBuilder.group(this.accountFormData);
@@ -64,7 +66,9 @@ export class AccountComponent implements OnInit {
           name:'',
           referenceValue:0,
           referenceCountry:this.defaultCountryCode,
-          referenceDate:'2000-1-1',
+          referenceDay:'1',
+          referenceMonth:'1',
+          referenceYear:'2000',
           description:''
         }
         this.accountForm.setValue(this.accountFormData);
@@ -81,7 +85,9 @@ export class AccountComponent implements OnInit {
           name:account.name,
           referenceValue:Dinero(account.referenceValue).toUnit(),
           referenceCountry:account.referenceCountry,
-          referenceDate:account.referenceDate,
+          referenceDay:account.referenceDate.getDate(),
+          referenceMonth:account.referenceDate.getMonth()+1,
+          referenceYear:account.referenceDate.getFullYear(),
           description:account.description
         };
         this.accountForm.setValue(this.accountFormData);
@@ -96,14 +102,18 @@ export class AccountComponent implements OnInit {
         country = this.countries[i];
     }
     var referenceValue = Dinero({currency:country.currencies[0]});
-    var amount = data.referenceValue * 10*referenceValue.getPrecision();
-
+    var value = data.referenceValue * 10*referenceValue.getPrecision();
+    var amount = Dinero({amount:amount,currency:country.currencies[0]});
+    var date = new Date();
+    date.setDate(data.referenceDay);
+    date.setMonth(data.refernceMonth-1);
+    date.setFullYear(date.referenceYear);
     if(data.id==null){
       this.accountService.createAccount(
         data.name,
         data.description,
-        Dinero({amount:amount,currency:country.currencies[0]}),
-        Date.parse(data.referenceDate),
+        amount,
+        date,
         data.referenceCountry
       );
     }else{
@@ -111,8 +121,8 @@ export class AccountComponent implements OnInit {
         data.id,
         data.name,
         data.description,
-        Dinero({amount:amount,currency:country.currencies[0]}),
-        Date.parse(data.referenceDate),
+        amount,
+        date,
         data.referenceCountry
       );
     }
