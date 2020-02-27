@@ -19,7 +19,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.refreshAccounts();
-    this.accountService.accountsChange.subscribe(()=>{
+    this.banknService.accountsChange.subscribe(()=>{
       this.refreshAccounts();
     });
   }
