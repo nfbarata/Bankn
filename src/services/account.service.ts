@@ -1,34 +1,17 @@
-import { Output, EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
-import { environment } from '../environments/environment';
 import { Dinero } from 'dinero.js';
-import  { Account } from "../models/account";
-import  { Transaction } from "../models/transaction";
+import { Account } from "../models/account";
+import { BanknService } from '../services/bankn.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  @Output() accountSelectionChange: EventEmitter<any> = new EventEmitter();
-  @Output() accountsChange: EventEmitter<any> = new EventEmitter();
 
-  private accounts : Account[] = environment.accounts;
-
-  constructor() { }
-
-  import(accounts:Account[]){
-    //clear
-    while (this.accounts.length > 0) {
-      this.accounts.pop();
-    }
-    //fill
-    accounts.forEach(account => {
-      console.log(account.referenceValue);
-      this.accounts.push(account);
-    });
-    this.accountsChange.emit();
-  }
+  constructor(
+    private banknService : BanknService
+  ) { }
 
   createAccount(
     name:String, 
@@ -43,8 +26,7 @@ export class AccountService {
     account.referenceDate = referenceDate;
     account.referenceCountry = referenceCountry;
     //selected
-    this.accounts.push(account);
-    this.accountsChange.emit();
+    this.banknService.addAccount(account);
   }
 
   updateAccount(
@@ -61,14 +43,11 @@ export class AccountService {
     account.referenceValue = referenceValue;
     account.referenceDate = referenceDate;
     account.referenceCountry = referenceCountry;
-    this.accountsChange.emit();
+    this.banknService.accountsChange.emit();
   }
 
   deleteAccountId(accountId:String){
-    this.accounts = this.accounts.filter(function(account){
-       return account.id != accountId;
-    });
-    this.accountsChange.emit();
+    this.banknService.deleteAccountId(accountId);
   }
 
   deleteAccount(account:Account){
@@ -76,45 +55,26 @@ export class AccountService {
   }
 
   getAccounts() : Account[]{
-    return this.accounts;
+    return this.banknService.getAccounts();
   }
 
   getAccount(accountId:String) : Account{
+    var accounts:Account = this.getAccounts();
     returnAccount : Account;
-    for (let i = 0; i < this.accounts.length; i++) {
-      if (this.accounts[i].id == accountId) 
-        return this.accounts[i];
+    for (let i = 0; i < accounts.length; i++) {
+      if (accounts[i].id == accountId) 
+        return accounts[i];
     }
     console.error("account not found:"+accountId);
   }
-
+  
   getSelectedAccounts() : Account[]{
     var accounts : Account[] = [];
-    this.accounts.forEach(account => {
+    this.banknService.getAccounts().forEach(account => {
       if(account.selected)
         accounts.push(account);
     });
     return accounts;
-  }
-
-  getSelectedAccountsTransactions() : Transaction[]{
-    var accounts : Account[] = this.getSelectedAccounts();
-    return this.getTransactions(accounts);
-  }
-
-  getTransactions(accounts : Account[]) : Transaction[] {
-    var transactions : Transaction[] = [];
-    this.getSelectedAccounts().forEach(account => {
-      account.transactions.forEach(transaction => {
-        transactions.push(transaction);
-      });
-    });
-    transactions = transactions.sort(this.compareTransaction);
-    return transactions;
-  }
-
-  compareTransaction(a:Transaction,b:Transaction){
-    return a.date-b.date;
   }
 
   toggleAccountId(accountId:String){
@@ -137,7 +97,7 @@ export class AccountService {
   selectAccount(account : Account){
     if(!account.selected){
       account.selected = true;
-      this.accountSelectionChange.emit();
+      this.banknService.accountSelectionChange.emit();
     }
   }
 
@@ -149,7 +109,7 @@ export class AccountService {
   unselectAccount(account : Account){
     if(account.selected){
       account.selected = false;
-      this.accountSelectionChange.emit();
+      this.banknService.accountSelectionChange.emit();
     }
   }
 }
