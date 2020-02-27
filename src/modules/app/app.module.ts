@@ -15,7 +15,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AccountService } from '../../services/account.service';
 import { FileService } from '../../services/file.service';
 
-import { BanknComponent } from './bankn/bankn.component';
+import { MainComponent } from './main/main.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuSideComponent } from './menu-side/menu-side.component';
 import { HomeComponent } from './home/home.component';
@@ -40,9 +40,9 @@ const lang = (function(defaultValue:String) {
   exports: [
   ],
   declarations: [ 
-    BanknComponent, MenuComponent, HomeComponent, MenuSideComponent
+    MainComponent, MenuComponent, HomeComponent, MenuSideComponent
   ],
-  bootstrap: [ BanknComponent ],
+  bootstrap: [ MainComponent ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' }, 
     AccountService, FileService,
