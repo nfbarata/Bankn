@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BanknService } from '../../../services/bankn.service';
 import { environment } from '../../../environments/environment';
 
@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './main.component.html',
   styleUrls: [ './main.component.css' ]
 })
-export class MainComponent  {
+export class MainComponent implements OnInit {
   name = 'bankn';
 
   constructor(
