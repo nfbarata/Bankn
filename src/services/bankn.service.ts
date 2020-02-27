@@ -1,6 +1,5 @@
-import { Output, EventEmitter, OnInit } from '@angular/core';
+import { Output } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
 import { Bankn } from "../models/bankn";
 import { Account } from "../models/account";
 import { EventsService} from "./events.service";
@@ -9,20 +8,14 @@ import { FileService} from "./file.service";
 @Injectable({
   providedIn:'root'
 })
-export class BanknService implements OnInit{
+export class BanknService {
 
-  private bankn : Bankn = environment.bankn;
+  private bankn : Bankn=null;
 
   constructor(
     private eventsService:EventsService,
     private fileService:FileService
-  ) { }
-
-  ngOnInit() {
-    //test environment has bankn pre-configured
-    if(this.bankn!=null)
-      this.eventsService.banknChange.emit();
-  }
+  ) {  }
 
   saveToFile():void{
     this.fileService.downloadJsonFile(this.bankn);
@@ -30,20 +23,28 @@ export class BanknService implements OnInit{
 
   loadFromFile(): void{
     this.fileService.parseJsonFile((bankn:Bankn)=>{
-      //clear (necessary? quickly...)
-      while (this.bankn.accounts.length > 0) {
+      this.loadFromJson(bankn);    
+    });
+  }
+
+  private clear():void{
+    if(this.bankn!=null){
+      //(necessary? quickly...)
+      while(this.bankn.accounts.length > 0) {
         while(this.bankn.accounts[this.bankn.accounts.length()-1].transactions.length>0){
             this.bankn.accounts[this.bankn.accounts.length()-1].transactions.pop();    
         }
         this.bankn.accounts.pop();
       }
-      //fill
-      this.bankn = bankn;
+    }
+  }
 
-      this.eventsService.banknChange.emit();
-      this.eventsService.accountsChange.emit();
-      this.eventsService.accountSelectionChange.emit();
-    });
+  loadFromJson(bankn:Bankn):void{
+    this.clear();
+    this.bankn = bankn;
+    this.eventsService.banknChange.emit();
+    this.eventsService.accountsChange.emit();
+    this.eventsService.accountSelectionChange.emit();
   }
 
   addAccount(account:Account):void{

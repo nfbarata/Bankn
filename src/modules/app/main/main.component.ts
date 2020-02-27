@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BanknService } from '../../../services/bankn.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'main',
@@ -13,6 +14,12 @@ export class MainComponent  {
     private banknService: BanknService,
   ) { 
 
+  }
+
+  ngOnInit(){
+    if(environment.bankn!=null){
+      this.banknService.loadFromJson(environment.json);
+    }
   }
 
   onOpen(){

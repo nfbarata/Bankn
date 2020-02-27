@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BanknService} from '../../../services/bankn.service'
-import { EventsService} from '../../../services/events.service'
+import { BanknService} from '../../../services/bankn.service';
+import { EventsService} from '../../../services/events.service';
 
 @Component({
   selector: 'home',
@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.eventsService.banknChange.subscribe(()=>{
       this.hasBankn=true;
+      console.log(this.hasBankn);
     });
   }
 
