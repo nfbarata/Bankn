@@ -68,6 +68,7 @@ export class AccountComponent implements OnInit {
           description:''
         }
         this.accountForm.setValue(this.accountFormData);
+        
       }else{
         var account:Account = this.accountService.getAccount(accountId);
         var country;
@@ -78,7 +79,7 @@ export class AccountComponent implements OnInit {
         this.accountFormData = {
           id:account.id,
           name:account.name,
-          referenceValue:account.referenceValue.toUnit(),
+          referenceValue:Dinero(account.referenceValue).toUnit(),
           referenceCountry:account.referenceCountry,
           referenceDate:account.referenceDate,
           description:account.description
@@ -94,11 +95,14 @@ export class AccountComponent implements OnInit {
       if (this.countries[i].alpha2 == data.referenceCountry) 
         country = this.countries[i];
     }
+    var referenceValue = Dinero({currency:country.currencies[0]});
+    var amount = data.referenceValue * 10*referenceValue.getPrecision();
+
     if(data.id==null){
       this.accountService.createAccount(
         data.name,
         data.description,
-        Dinero.fromUnit(data.referenceValue,{currency:country.currencies[0]}),
+        Dinero({amount:amount,currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.referenceCountry
       );
@@ -107,7 +111,7 @@ export class AccountComponent implements OnInit {
         data.id,
         data.name,
         data.description,
-        Dinero.fromUnit(data.referenceValue,{currency:country.currencies[0]}),
+        Dinero({amount:amount,currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.referenceCountry
       );
