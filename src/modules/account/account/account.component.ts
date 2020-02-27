@@ -48,7 +48,7 @@ export class AccountComponent implements OnInit {
         id:null,
         name:null,
         referenceValue:null,
-        referenceValueCurrency:null,
+        referenceCountry:null,
         referenceDate:null,
         description:null
       }
@@ -63,7 +63,7 @@ export class AccountComponent implements OnInit {
           id:null,
           name:'',
           referenceValue:0,
-          referenceValueCurrency:this.defaultCountryCode,
+          referenceCountry:this.defaultCountryCode,
           referenceDate:'2000-1-1',
           description:''
         }
@@ -79,7 +79,7 @@ export class AccountComponent implements OnInit {
           id:account.id,
           name:account.name,
           referenceValue:account.referenceValue.ammount,
-          referenceValueCurrency:account.referenceCountry,
+          referenceCountry:account.referenceCountry,
           referenceDate:account.referenceDate,
           description:account.description
         };
@@ -89,13 +89,18 @@ export class AccountComponent implements OnInit {
   }
 
   onSubmit(data) {
+    var country;
+    for (let i = 0; i < this.countries.length; i++) {
+      if (this.countries[i].alpha2 == data.referecenCountry) 
+        country = this.countries[i];
+    }
     if(data.id==null){
       this.accountService.createAccount(
         data.name,
         data.description,
         Dinero({
           ammount:data.referenceValue, 
-          currency:data.referenceValueCurrency}),
+          currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.referenceCountry
       );
@@ -106,7 +111,7 @@ export class AccountComponent implements OnInit {
         data.description,
         Dinero({
           ammount:data.referenceValue, 
-          currency:data.referenceValueCurrency}),
+          currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.refereceCountry
       );
