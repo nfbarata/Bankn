@@ -14,13 +14,15 @@ export class HomeComponent implements OnInit {
   constructor(
     private banknService:BanknService,
     private eventsService:EventsService
-  ) { }
-
-  ngOnInit() {
+  ) { 
+    console.log("subs");
     this.eventsService.banknChange.subscribe(()=>{
       this.hasBankn=true;
       console.log(this.hasBankn);
     });
   }
 
+  ngOnInit() {
+    
+  }
 }
