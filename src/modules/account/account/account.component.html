@@ -1,7 +1,6 @@
-<h2>Account Creation</h2>
 
 <form [formGroup]="accountForm" (ngSubmit)="onSubmit(accountForm.value)">
-
+  <h2>{{formData.id==null?'Account creation':'Account edit'}}</h2>
   <div class="form-group">
     <label for="name" i18n>
       Name
@@ -17,7 +16,7 @@
       Value
     </small>
     <select class="form-control">
-      <option *ngFor="let currency of currencies" [selected]="referenceValueCurrency" [ngValue]="currency.currencies[0]">{{currency.name}} - {{currency.currencies[0]}}</option>
+      <option *ngFor="let currency of currencies" [selected]="defaultCurrency" value="{{currency.currencies[0]}}">{{currency.name}} - {{currency.currencies[0]}}</option>
     </select>
     <small id="passwordHelpBlock" class="form-text text-muted">
       Currency
@@ -36,6 +35,5 @@
     </label>
     <input  class="form-control" id="description" type="text" formControlName="description">
   </div>
-  <button class="btn btn-primary" type="submit" i18n>Create</button>
-
+  <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
 </form>

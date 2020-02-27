@@ -21,6 +21,7 @@ export class AccountComponent implements OnInit {
   accountForm;
   formData;
   currencies;
+  defaultCurrency:String='null';
 
   constructor(
     private accountService: AccountService,
@@ -29,8 +30,6 @@ export class AccountComponent implements OnInit {
     private router: Router,
     @Inject(LOCALE_ID) public locale: string
     ) { 
-
-      var currency = null;
       if(locale!=null && locale.split("-").length>0){
         var countryCode = locale.split("-")[0].toUpperCase();
         
@@ -42,16 +41,16 @@ export class AccountComponent implements OnInit {
           if (this.currencies[i].alpha2 == countryCode) 
             country = this.currencies[i];
         }
-        currency = country.currencies[0];
+        this.defaultCurrency = country.currencies[0];
       }
-      console.log(currency);
+      console.log("default currency: "+this.defaultCurrency);
       this.formData = {
         id:null,
-        name:'',
-        referenceValue:0,
-        referenceValueCurrency:currency,
-        referenceDate:'2000-1-1',
-        description:''
+        name:null,
+        referenceValue:null,
+        referenceValueCurrency:null,
+        referenceDate:null,
+        description:null
       }
       this.accountForm = this.formBuilder.group(this.formData);
   }
@@ -59,8 +58,17 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       var accountId:String = params.get('accountId');
+      console.log(accountId);
       if(accountId==null || accountId.trim().length==0){
-        this.accountForm.reset();
+        this.formData = {
+          id:null,
+          name:'',
+          referenceValue:0,
+          referenceValueCurrency:this.defaultCurrency,
+          referenceDate:'2000-1-1',
+          description:''
+        }
+        this.accountForm.setValue(this.formData);
       }else{
         var account:Account = this.accountService.getAccount(accountId);
         this.formData = {
@@ -72,7 +80,6 @@ export class AccountComponent implements OnInit {
           description:account.description
         };
         this.accountForm.setValue(this.formData);
-        console.log("setted");
       } 
     });
   }
@@ -84,7 +91,7 @@ export class AccountComponent implements OnInit {
         data.description,
         Dinero({
           ammount:data.referenceValue, 
-          currency:'EUR'}),//TODO currecy
+          currency:data.referenceValueCurrency}),
           Date.parse(data.referenceDate)
       );
     }else{
@@ -94,7 +101,7 @@ export class AccountComponent implements OnInit {
         data.description,
         Dinero({
           ammount:data.referenceValue, 
-          currency:'EUR'}),//TODO currecy
+          currency:data.referenceValueCurrency}),
           Date.parse(data.referenceDate)
       );
     }
