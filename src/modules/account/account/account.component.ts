@@ -96,23 +96,25 @@ export class AccountComponent implements OnInit {
   }
 
   onSubmit(data) {
+    var currency = country.currencies[0];
     var country;
     for (let i = 0; i < this.countries.length; i++) {
       if (this.countries[i].alpha2 == data.referenceCountry) 
         country = this.countries[i];
     }
-    var referenceValue = Dinero({currency:country.currencies[0]});
+    var referenceValue = Dinero({currency:currency});
     var value = data.referenceValue * Math.pow(10,referenceValue.getPrecision());
-    var amount = Dinero({amount:value,currency:country.currencies[0]});
+    console.log(value);
+    var amount = Dinero({amount:value,currency:currency});
+    console.log(amount);
     var date = new Date();
     date.setFullYear(data.referenceYear, data.referenceMonth-1, data.referenceDay);
-    console.log(date);
     console.log(amount);
     if(data.id==null){
       this.accountService.createAccount(
         data.name,
         data.description,
-        amount,
+        amount.toJson(),
         date,
         data.referenceCountry
       );
@@ -121,7 +123,7 @@ export class AccountComponent implements OnInit {
         data.id,
         data.name,
         data.description,
-        amount,
+        amount.toJson(),
         date,
         data.referenceCountry
       );
