@@ -102,7 +102,7 @@ export class AccountComponent implements OnInit {
         country = this.countries[i];
     }
     var referenceValue = Dinero({currency:country.currencies[0]});
-    var value = data.referenceValue * 10*referenceValue.getPrecision();
+    var value = data.referenceValue * 10^referenceValue.getPrecision();
     var amount = Dinero({amount:value,currency:country.currencies[0]});
     var date = new Date();
     date.setFullYear(data.referenceYear, data.refernceMonth-1, data.referenceDay);
