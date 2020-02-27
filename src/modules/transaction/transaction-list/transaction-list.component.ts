@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { BanknService } from '../../../services/bankn.service';
 import { AccountService } from '../../../services/account.service';
-import  { Account } from "../../../models/account";
-import  { Transaction } from "../../../models/transaction";
+import { Account } from "../../../models/account";
+import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: 'app-transaction-list',
@@ -15,6 +16,7 @@ export class TransactionListComponent implements OnInit {
   accounts : Account[] = [];
 
   constructor(
+    private banknService: BanknService,
     private accountService: AccountService
   ) { 
   }
@@ -22,7 +24,7 @@ export class TransactionListComponent implements OnInit {
   ngOnInit() {
     this.accounts = this.accountService.getAccounts();   
     this.refreshTransactions();
-    this.accountService.accountSelectionChange.subscribe(()=>{
+    this.banknService.accountSelectionChange.subscribe(()=>{
       this.refreshTransactions();
     });
   }

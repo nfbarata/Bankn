@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BanknService } from '../../../services/bankn.service';
 import { AccountService } from '../../../services/account.service';
-import  { Account } from "../../../models/account";
+import { Account } from "../../../models/account";
 
 @Component({
   selector: 'account-list',
@@ -11,12 +12,13 @@ export class AccountListComponent implements OnInit {
   accounts = [];
 
   constructor(
+    private banknService: BanknService,
     private accountService: AccountService
   ) { }
 
   ngOnInit() {
     this.refreshAccounts();
-    this.accountService.accountsChange.subscribe(()=>{
+    this.banknService.accountsChange.subscribe(()=>{
       this.refreshAccounts();
     });
   }
