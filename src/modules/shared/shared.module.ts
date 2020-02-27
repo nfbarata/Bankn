@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AccountSelectCardComponent } from './account-select-card/account-select-card.component';
 import { AccountCreateCardComponent } from './account-create-card/account-create-card.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { FileOpenCardComponent } from './file-open-card/file-open-card.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent
   ],
   declarations: [
-    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent
   ]
 })
 export class SharedModule { }
