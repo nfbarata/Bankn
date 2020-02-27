@@ -6,7 +6,6 @@ import { AccountsRoutingModule } from './account-routing.module'
 
 import { AccountComponent } from './account/account.component';
 import { AccountListComponent } from './account-list/account-list.component';
-import { AccountDetailsComponent } from './account-details/account-details.component';
 
 @NgModule({
   imports: [
@@ -16,8 +15,7 @@ import { AccountDetailsComponent } from './account-details/account-details.compo
   ],
   declarations: [ 
     AccountComponent, 
-    AccountListComponent, 
-    AccountDetailsComponent 
+    AccountListComponent
   ],
   exports: []
   //providers : [AccountService]
