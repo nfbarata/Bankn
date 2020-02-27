@@ -9,6 +9,7 @@ export const environment = {
         ammount:0,
         currency:'EUR'
       },
+      referenceCountry:'PT',
       referenceDate : new Date(2000,1,1),
       description:'aaa',
       transactions : [
@@ -30,6 +31,7 @@ export const environment = {
       id:2,
       name:"conta teste 2",
       selected : false,
+      referenceCountry:'PT',
       referenceValue : {
         ammount:0,
         currency:'EUR'

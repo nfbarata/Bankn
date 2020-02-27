@@ -31,12 +31,16 @@ export class AccountService {
 
   createAccount(
     name:String, 
-    description:String, referenceValue:Dinero, referenceDate:Date){
+    description:String, 
+    referenceValue:Dinero, 
+    referenceDate:Date,
+    referenceCountry:String){
     var account : Account = new Account(uuidv4());
     account.name = name;
     account.description = description;
     account.referenceValue = referenceValue;
     account.referenceDate = referenceDate;
+    account.referenceCountry = referenceCountry;
     //selected
     this.accounts.push(account);
     this.accountsChange.emit();
@@ -45,13 +49,17 @@ export class AccountService {
   updateAccount(
     id:String,
     name:String, 
-    description:String, referenceValue:Dinero, referenceDate:Date){
+    description:String, 
+    referenceValue:Dinero, 
+    referenceDate:Date,
+    referenceCountry:String){
 
     var account : Account = this.getAccount(id);
     account.name = name;
     account.description = description;
     account.referenceValue = referenceValue;
     account.referenceDate = referenceDate;
+    account.referenceCountry = referenceCountry;
     this.accountsChange.emit();
   }
 

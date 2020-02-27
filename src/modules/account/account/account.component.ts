@@ -19,7 +19,7 @@ const countries        = require('country-data-list').countries,
 export class AccountComponent implements OnInit {
 
   accountForm;
-  formData;
+  accountFormData;
   countries;
   defaultCountryCode:String='null';
 
@@ -44,7 +44,7 @@ export class AccountComponent implements OnInit {
         var defaultCurrency = country.currencies[0];*/
       }
       console.log("default countryCode: "+this.defaultCountryCode);
-      this.formData = {
+      this.accountFormData = {
         id:null,
         name:null,
         referenceValue:null,
@@ -52,14 +52,14 @@ export class AccountComponent implements OnInit {
         referenceDate:null,
         description:null
       }
-      this.accountForm = this.formBuilder.group(this.formData);
+      this.accountForm = this.formBuilder.group(this.accountFormData);
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       var accountId:String = params.get('accountId');
       if(accountId==null || accountId.trim().length==0){
-        this.formData = {
+        this.accountFormData = {
           id:null,
           name:'',
           referenceValue:0,
@@ -67,7 +67,7 @@ export class AccountComponent implements OnInit {
           referenceDate:'2000-1-1',
           description:''
         }
-        this.accountForm.setValue(this.formData);
+        this.accountForm.setValue(this.accountFormData);
       }else{
         var account:Account = this.accountService.getAccount(accountId);
         var country;
@@ -75,15 +75,15 @@ export class AccountComponent implements OnInit {
           if (this.countries[i].currencies[0] == account.referenceValue.currency) 
             country = this.countries[i];
         }
-        this.formData = {
+        this.accountFormData = {
           id:account.id,
           name:account.name,
           referenceValue:account.referenceValue.ammount,
-          referenceValueCurrency:country.alpha2,
+          referenceValueCurrency:account.referenceCountry,
           referenceDate:account.referenceDate,
           description:account.description
         };
-        this.accountForm.setValue(this.formData);
+        this.accountForm.setValue(this.accountFormData);
       } 
     });
   }
@@ -96,7 +96,8 @@ export class AccountComponent implements OnInit {
         Dinero({
           ammount:data.referenceValue, 
           currency:data.referenceValueCurrency}),
-          Date.parse(data.referenceDate)
+        Date.parse(data.referenceDate),
+        data.referenceCountry
       );
     }else{
       this.accountService.updateAccount(
@@ -106,7 +107,8 @@ export class AccountComponent implements OnInit {
         Dinero({
           ammount:data.referenceValue, 
           currency:data.referenceValueCurrency}),
-          Date.parse(data.referenceDate)
+        Date.parse(data.referenceDate),
+        data.refereceCountry
       );
     }
     this.accountForm.reset();
