@@ -99,7 +99,7 @@ export class AccountComponent implements OnInit {
         data.name,
         data.description,
         Dinero({
-          amount:data.referenceValue, 
+          amount:parseInt(data.referenceValue), 
           currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.referenceCountry
@@ -110,7 +110,7 @@ export class AccountComponent implements OnInit {
         data.name,
         data.description,
         Dinero({
-          amount:data.referenceValue, 
+          amount:parseInt(data.referenceValue), 
           currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.refereceCountry

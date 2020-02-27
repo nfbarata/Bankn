@@ -6,7 +6,7 @@ export const environment = {
       name:"conta teste 1",
       selected : false,
       referenceValue : {
-        ammount:0,
+        amount:0,
         currency:'EUR'
       },
       referenceCountry:'PT',
@@ -33,7 +33,7 @@ export const environment = {
       selected : false,
       referenceCountry:'PT',
       referenceValue : {
-        ammount:0,
+        amount:0,
         currency:'EUR'
       },
       referenceDate : new Date(2000,1,1),
