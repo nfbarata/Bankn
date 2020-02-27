@@ -113,7 +113,7 @@ export class AccountComponent implements OnInit {
           amount:parseInt(data.referenceValue), 
           currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
-        data.refereceCountry
+        data.referenceCountry
       );
     }
     this.accountForm.reset();
