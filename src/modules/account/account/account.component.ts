@@ -104,8 +104,9 @@ export class AccountComponent implements OnInit {
     var referenceValue = Dinero({currency:country.currencies[0]});
     var value = data.referenceValue * 10^referenceValue.getPrecision();
     var amount = Dinero({amount:value,currency:country.currencies[0]});
-    var date = new Date();
-    date.setFullYear(data.referenceYear, data.refernceMonth-1, data.referenceDay);
+    var date = new Date().setFullYear(data.referenceYear, data.refernceMonth-1, data.referenceDay);
+    console.log(date);
+    console.log(amount);
     if(data.id==null){
       this.accountService.createAccount(
         data.name,
