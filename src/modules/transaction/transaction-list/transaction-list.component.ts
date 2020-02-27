@@ -12,13 +12,15 @@ export class TransactionListComponent implements OnInit {
 
   transactions : Transaction[] = [];
   selectedAccounts : Account[] = [];
+  accounts : Account[] = [];
 
   constructor(
     private accountService: AccountService
   ) { 
   }
 
-  ngOnInit() {   
+  ngOnInit() {
+    this.accounts = this.accountService.getAccounts();   
     this.refreshTransactions();
     this.accountService.accountSelectionChange.subscribe(()=>{
       this.refreshTransactions();
