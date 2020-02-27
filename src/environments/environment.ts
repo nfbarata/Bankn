@@ -8,7 +8,7 @@ export const environment = {
       referenceValue : {
         amount:0,
         currency:'EUR',
-        precision:2
+        precision:0
       },
       referenceCountry:'PT',
       referenceDate : new Date(2000,1,1),
@@ -36,7 +36,7 @@ export const environment = {
       referenceValue : {
         amount:0,
         currency:'EUR',
-        precision:2
+        precision:0
       },
       referenceDate : new Date(2000,1,1),
       description:'bbb',

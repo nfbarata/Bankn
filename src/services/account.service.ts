@@ -22,8 +22,11 @@ export class AccountService {
     while (this.accounts.length > 0) {
       this.accounts.pop();
     }
+    
     //fill
     accounts.forEach(account => {
+      account.referenceValue = Dinero(account.referenceValue);
+      console.log(account.referenceValue);
       this.accounts.push(account);
     });
     this.accountsChange.emit();

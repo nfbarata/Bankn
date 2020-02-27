@@ -78,7 +78,7 @@ export class AccountComponent implements OnInit {
         this.accountFormData = {
           id:account.id,
           name:account.name,
-          referenceValue:account.referenceValue.amount,
+          referenceValue:account.referenceValue.toUnit(),
           referenceCountry:account.referenceCountry,
           referenceDate:account.referenceDate,
           description:account.description
@@ -98,9 +98,7 @@ export class AccountComponent implements OnInit {
       this.accountService.createAccount(
         data.name,
         data.description,
-        Dinero({
-          amount:parseInt(data.referenceValue), 
-          currency:country.currencies[0]}),
+        Dinero.fromUnit(data.referenceValue,{currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.referenceCountry
       );
@@ -109,9 +107,7 @@ export class AccountComponent implements OnInit {
         data.id,
         data.name,
         data.description,
-        Dinero({
-          amount:parseInt(data.referenceValue), 
-          currency:country.currencies[0]}),
+        Dinero.fromUnit(data.referenceValue,{currency:country.currencies[0]}),
         Date.parse(data.referenceDate),
         data.referenceCountry
       );
