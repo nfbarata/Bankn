@@ -1,4 +1,4 @@
-import { Output, EventEmitter } from '@angular/core';
+import { Output, EventEmitter, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Bankn } from "../models/bankn";
@@ -9,7 +9,7 @@ import { FileService} from "./file.service";
 @Injectable({
   providedIn:'root'
 })
-export class BanknService {
+export class BanknService implements OnInit{
 
   private bankn : Bankn = environment.bankn;
 
@@ -17,6 +17,11 @@ export class BanknService {
     private eventsService:EventsService,
     private fileService:FileService
   ) { }
+
+  ngOnInit() {
+    if(this.bankn!=null)
+      this.eventsService.banknChange.emit();
+  }
 
   saveToFile():void{
     this.fileService.downloadJsonFile(this.bankn);
