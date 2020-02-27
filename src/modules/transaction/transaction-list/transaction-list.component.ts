@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BanknService } from '../../../services/bankn.service';
+import { EventsService } from '../../../services/events.service';
 import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
@@ -17,7 +17,7 @@ export class TransactionListComponent implements OnInit {
   accounts : Account[] = [];
 
   constructor(
-    private banknService: BanknService,
+    private eventsService: EventsService,
     private accountService: AccountService,
     private transactionService: TransactionService
   ) { 
@@ -26,7 +26,7 @@ export class TransactionListComponent implements OnInit {
   ngOnInit() {
     this.accounts = this.accountService.getAccounts();   
     this.refreshTransactions();
-    this.banknService.accountSelectionChange.subscribe(()=>{
+    this.eventsService.accountSelectionChange.subscribe(()=>{
       this.refreshTransactions();
     });
   }
