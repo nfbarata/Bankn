@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Dinero } from 'dinero.js';
 import { Account } from "../models/account";
 import { BanknService } from '../services/bankn.service';
+import { EventsService } from '../services/events.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { BanknService } from '../services/bankn.service';
 export class AccountService {
 
   constructor(
-    private banknService : BanknService
+    private banknService : BanknService,
+    private eventsService : EventsService
   ) { }
 
   createAccount(
@@ -43,7 +45,7 @@ export class AccountService {
     account.referenceValue = referenceValue;
     account.referenceDate = referenceDate;
     account.referenceCountry = referenceCountry;
-    this.banknService.accountsChange.emit();
+    this.eventsService.accountsChange.emit();
   }
 
   deleteAccountId(accountId:String){
@@ -59,7 +61,7 @@ export class AccountService {
   }
 
   getAccount(accountId:String) : Account{
-    var accounts:Account = this.getAccounts();
+    var accounts:Account[] = this.getAccounts();
     returnAccount : Account;
     for (let i = 0; i < accounts.length; i++) {
       if (accounts[i].id == accountId) 
@@ -97,7 +99,7 @@ export class AccountService {
   selectAccount(account : Account){
     if(!account.selected){
       account.selected = true;
-      this.banknService.accountSelectionChange.emit();
+      this.eventsService.accountSelectionChange.emit();
     }
   }
 
@@ -109,7 +111,7 @@ export class AccountService {
   unselectAccount(account : Account){
     if(account.selected){
       account.selected = false;
-      this.banknService.accountSelectionChange.emit();
+      this.eventsService.accountSelectionChange.emit();
     }
   }
 }

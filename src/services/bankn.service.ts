@@ -3,18 +3,18 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Bankn } from "../models/bankn";
 import { Account } from "../models/account";
+import { EventsService} from "./events.service";
 
 @Injectable({
   providedIn:'root'
 })
 export class BanknService {
-  @Output() banknChange:  EventEmitter<any> = new EventEmitter();
-  @Output() accountsChange: EventEmitter<any> = new EventEmitter();
-  @Output() accountSelectionChange: EventEmitter<any> = new EventEmitter();
 
   private bankn : Bankn = environment.bankn;
 
-  constructor() { }
+  constructor(
+    private eventsService:EventsService
+  ) { }
 
   import(bankn:Bankn){
     //clear (necessary? quickly...)
@@ -27,21 +27,21 @@ export class BanknService {
     //fill
     this.bankn = bankn;
 
-    this.banknChange.emit();
-    this.accountsChange.emit();
-    this.accountSelectionChange.emit();
+    this.eventsService.banknChange.emit();
+    this.eventsService.accountsChange.emit();
+    this.eventsService.accountSelectionChange.emit();
   }
 
   addAccount(account:Account):void{
     this.bankn.accounts.push(account);
-    this.accountsChange.emit();
+    this.eventsService.accountsChange.emit();
   }
 
   deleteAccountId(accountId:String){
     this.bankn.accounts = this.bankn.accounts.filter(function(account){
        return account.id != accountId;
     });
-    this.accountsChange.emit();
+    this.eventsService.accountsChange.emit();
   }
 
   getAccounts() : Account[]{
