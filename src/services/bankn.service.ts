@@ -61,7 +61,7 @@ export class BanknService {
 
   getAccounts() : Account[]{
     if(this.bankn==null)
-      return null;
+      return [];
     return this.bankn.accounts;
   }
 }
