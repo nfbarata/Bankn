@@ -58,7 +58,6 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       var accountId:String = params.get('accountId');
-      console.log(accountId);
       if(accountId==null || accountId.trim().length==0){
         this.formData = {
           id:null,
