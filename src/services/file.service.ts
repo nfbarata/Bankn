@@ -9,7 +9,7 @@ export class FileService {
 
   constructor() { }
 
-  parseFile(callback){
+  parseJsonFile(callback){
     var output:String = "";
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       // Great success! All the File APIs are supported.
@@ -34,8 +34,8 @@ export class FileService {
     }
   }
 
-  downloadJson(accounts:Account[], filename='bankn.json'){
-    var output = JSON.stringify(accounts);
+  downloadJsonFile(object:Object, filename='bankn.json'){
+    var output = JSON.stringify(object);
     let blob = new Blob(['\ufeff' + output], { type: this.fileType+';charset=utf-8;' });
     let dwldLink = document.createElement("a");
     let url = URL.createObjectURL(blob);
@@ -50,7 +50,7 @@ export class FileService {
     dwldLink.click();
     document.body.removeChild(dwldLink);
   }
-
+/*
   downloadFile(data, headerList, filename='data') : void {
     let csvData = this.convertToCSV(data, headerList);
     console.log(csvData)
@@ -90,4 +90,5 @@ export class FileService {
     }
     return str;
   }
+  */
 }
