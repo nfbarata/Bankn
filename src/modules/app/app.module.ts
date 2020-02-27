@@ -59,5 +59,3 @@ export class AppModule {
     //console.log(this.injector.get(LOCALE_ID));
   }
 }
-
-

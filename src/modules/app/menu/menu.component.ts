@@ -4,7 +4,7 @@ import { FileService } from '../../../services/file.service';
 import  { Account } from "../../../models/account";
 
 @Component({
-  selector: 'bankn-menu',
+  selector: 'main-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
