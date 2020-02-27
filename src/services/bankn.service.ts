@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 import { Bankn } from "../models/bankn";
 import { Account } from "../models/account";
 import { EventsService} from "./events.service";
+import { FileService} from "./file.service";
 
 @Injectable({
   providedIn:'root'
@@ -13,23 +14,30 @@ export class BanknService {
   private bankn : Bankn = environment.bankn;
 
   constructor(
-    private eventsService:EventsService
+    private eventsService:EventsService,
+    private fileService:FileService
   ) { }
 
-  import(bankn:Bankn){
-    //clear (necessary? quickly...)
-    while (this.bankn.accounts.length > 0) {
-      while(this.bankn.accounts[this.bankn.accounts.length()-1].transactions.length>0){
-          this.bankn.accounts[this.bankn.accounts.length()-1].transactions.pop();    
-      }
-      this.bankn.accounts.pop();
-    }
-    //fill
-    this.bankn = bankn;
+  saveToFile():void{
+    this.fileService.downloadJsonFile(this.bankn);
+  }
 
-    this.eventsService.banknChange.emit();
-    this.eventsService.accountsChange.emit();
-    this.eventsService.accountSelectionChange.emit();
+  loadFromFile(): void{
+    this.fileService.parseJsonFile((bankn:Bankn)=>{
+      //clear (necessary? quickly...)
+      while (this.bankn.accounts.length > 0) {
+        while(this.bankn.accounts[this.bankn.accounts.length()-1].transactions.length>0){
+            this.bankn.accounts[this.bankn.accounts.length()-1].transactions.pop();    
+        }
+        this.bankn.accounts.pop();
+      }
+      //fill
+      this.bankn = bankn;
+
+      this.eventsService.banknChange.emit();
+      this.eventsService.accountsChange.emit();
+      this.eventsService.accountSelectionChange.emit();
+    });
   }
 
   addAccount(account:Account):void{

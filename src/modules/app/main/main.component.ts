@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { BanknService } from '../../../services/bankn.service';
-import { FileService } from '../../../services/file.service';
-import { Bankn } from "../../../models/bankn";
 
 @Component({
   selector: 'main',
@@ -13,14 +11,11 @@ export class MainComponent  {
 
   constructor(
     private banknService: BanknService,
-    private fileService: FileService
   ) { 
 
   }
 
   onOpen(){
-    this.fileService.parseJsonFile((bankn:Bankn)=>{
-      this.banknService.import(bankn);
-    });
+    this.banknService.loadFromFile();
   }
 }

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../services/account.service';
 import { BanknService } from '../../../services/bankn.service';
 import { FileService } from '../../../services/file.service';
-import  { Account } from "../../../models/account";
+import { EventsService } from '../../../services/events.service';
+import { Account } from "../../../models/account";
 
 @Component({
   selector: 'main-menu',
@@ -14,12 +15,12 @@ export class MenuComponent implements OnInit {
   constructor(
     private banknService: BanknService,
     private accountService: AccountService,
-    private fileService: FileService
+    private eventsService: EventsService
   ) { }
 
   ngOnInit() {
     this.refreshAccounts();
-    this.banknService.accountsChange.subscribe(()=>{
+    this.eventsService.accountsChange.subscribe(()=>{
       this.refreshAccounts();
     });
   }
@@ -33,7 +34,7 @@ export class MenuComponent implements OnInit {
   }
 
   onSaveAs(){
-    this.fileService.downloadJsonFile(this.banknService.bankn);
+    this.banknService.saveToFile();
   }
   
   //onexport account to csv
