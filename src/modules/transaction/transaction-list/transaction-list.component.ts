@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BanknService } from '../../../services/bankn.service';
 import { AccountService } from '../../../services/account.service';
+import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
 import { Transaction } from "../../../models/transaction";
 
@@ -17,7 +18,8 @@ export class TransactionListComponent implements OnInit {
 
   constructor(
     private banknService: BanknService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private transactionService: TransactionService
   ) { 
   }
 
@@ -31,7 +33,7 @@ export class TransactionListComponent implements OnInit {
 
   refreshTransactions(){
     this.selectedAccounts = this.accountService.getSelectedAccounts();
-    this.transactions = this.accountService.getTransactions(this.selectedAccounts);
+    this.transactions = this.transactionService.getTransactions(this.selectedAccounts);
     //this.transactions = this.accountService.getSelectedAccountsTransactions();
   }
 }
