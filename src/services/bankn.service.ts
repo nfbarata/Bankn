@@ -19,6 +19,7 @@ export class BanknService implements OnInit{
   ) { }
 
   ngOnInit() {
+    //test environment has bankn pre-configured
     if(this.bankn!=null)
       this.eventsService.banknChange.emit();
   }
