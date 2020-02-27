@@ -20,8 +20,8 @@ export class AccountComponent implements OnInit {
 
   accountForm;
   formData;
-  currencies;
-  defaultCurrency:String='null';
+  countries;
+  defaultCountryCode:String='null';
 
   constructor(
     private accountService: AccountService,
@@ -31,19 +31,19 @@ export class AccountComponent implements OnInit {
     @Inject(LOCALE_ID) public locale: string
     ) { 
       if(locale!=null && locale.split("-").length>0){
-        var countryCode = locale.split("-")[0].toUpperCase();
+        this.defaultCountryCode = locale.split("-")[0].toUpperCase();
         
-        this.currencies = countries.all.filter(function(country){
+        this.countries = countries.all.filter(function(country){
           return country.currencies.length>0;
         });
-        var country;
+        /*var country;
         for (let i = 0; i < this.currencies.length; i++) {
-          if (this.currencies[i].alpha2 == countryCode) 
+          if (this.currencies[i].alpha2 == this.defaultCountryCode) 
             country = this.currencies[i];
         }
-        this.defaultCurrency = country.currencies[0];
+        var defaultCurrency = country.currencies[0];*/
       }
-      console.log("default currency: "+this.defaultCurrency);
+      console.log("default countryCode: "+this.defaultCountryCode);
       this.formData = {
         id:null,
         name:null,
@@ -63,18 +63,23 @@ export class AccountComponent implements OnInit {
           id:null,
           name:'',
           referenceValue:0,
-          referenceValueCurrency:this.defaultCurrency,
+          referenceValueCurrency:this.defaultCountryCode,
           referenceDate:'2000-1-1',
           description:''
         }
         this.accountForm.setValue(this.formData);
       }else{
         var account:Account = this.accountService.getAccount(accountId);
+        var country;
+        for (let i = 0; i < this.countries.length; i++) {
+          if (this.countries[i].currencies[0] == account.referenceValue.currency) 
+            country = this.countries[i];
+        }
         this.formData = {
           id:account.id,
           name:account.name,
           referenceValue:account.referenceValue.ammount,
-          referenceValueCurrency:account.referenceValue.currency,
+          referenceValueCurrency:country.alpha2,
           referenceDate:account.referenceDate,
           description:account.description
         };

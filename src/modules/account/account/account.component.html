@@ -16,7 +16,7 @@
       Value
     </small>
     <select class="form-control">
-      <option *ngFor="let currency of currencies" [selected]="formData.referenceValueCurrency" value="{{currency.currencies[0]}}">{{currency.name}} - {{currency.currencies[0]}}</option>
+      <option *ngFor="let country of countries" [selected]="formData.referenceValueCurrency" value="{{country.alpha2}}">{{country.name}} - {{country.currencies[0]}}</option>
     </select>
     <small id="passwordHelpBlock" class="form-text text-muted">
       Currency
