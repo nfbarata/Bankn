@@ -12,7 +12,7 @@ import { FileOpenCardComponent } from './file-open-card/file-open-card.component
     CommonModule, RouterModule
   ],
   exports: [
-    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent
   ],
   declarations: [
     AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent
