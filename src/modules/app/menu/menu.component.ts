@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../services/account.service';
+import { BanknService } from '../../../services/bankn.service';
 import { FileService } from '../../../services/file.service';
 import  { Account } from "../../../models/account";
 
@@ -11,6 +12,7 @@ import  { Account } from "../../../models/account";
 export class MenuComponent implements OnInit {
   accounts = [];
   constructor(
+    private banknService: BanknService,
     private accountService: AccountService,
     private fileService: FileService
   ) { }
@@ -31,7 +33,8 @@ export class MenuComponent implements OnInit {
   }
 
   onSaveAs(){
-    this.fileService.downloadJson(this.accountService.getAccounts());
+    this.fileService.downloadJsonFile(this.banknService.bankn);
   }
+  
   //onexport account to csv
 }
