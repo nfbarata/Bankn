@@ -1,5 +1,10 @@
 <h2 i18n>Welcome to bankn</h2>
 
-<file-open-card [hidden]="hasBankn"></file-open-card>
-
-<bankn-create-card [hidden]="hasBankn"></bankn-create-card>
+<div class="row" [hidden]="hasBankn">
+  <div class="col-sm-6">
+    <file-open-card [hidden]="hasBankn"></file-open-card>
+  </div>
+  <div class="col-sm-6">
+    <bankn-create-card [hidden]="hasBankn"></bankn-create-card>
+  </div>
+</div>
