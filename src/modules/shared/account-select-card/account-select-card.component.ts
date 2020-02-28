@@ -19,12 +19,8 @@ export class AccountSelectCardComponent implements OnInit {
 
   ngOnInit() {
     this.refreshAccounts();
-    this.eventsService.accountsChange.subscribe(()=>{
-      this.refreshAccounts();
-    });
-    this.eventsService.accountSelectionChange.subscribe(()=>{
-      this.refreshAccounts();
-    });
+    this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
+    this.eventsService.accountSelectionChange.subscribe(()=>this.refreshAccounts());
   }
 
   refreshAccounts(){

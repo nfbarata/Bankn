@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.refreshData();
-    this.eventsService.banknChange.subscribe(this.refreshData());
+    this.eventsService.banknChange.subscribe(()=>this.refreshData());
   }
 
   refreshData(){

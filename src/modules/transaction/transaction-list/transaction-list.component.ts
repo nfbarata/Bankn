@@ -26,9 +26,7 @@ export class TransactionListComponent implements OnInit {
   ngOnInit() {
     this.accounts = this.accountService.getAccounts();   
     this.refreshTransactions();
-    this.eventsService.accountSelectionChange.subscribe(()=>{
-      this.refreshTransactions();
-    });
+    this.eventsService.accountSelectionChange.subscribe(()=>this.refreshTransactions());
   }
 
   refreshTransactions(){
