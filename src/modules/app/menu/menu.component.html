@@ -15,7 +15,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" data-toggle="modal" data-target="#newModal" i18n>New</a>
           <a class="dropdown-item" data-toggle="modal" data-target="#uploadModal" i18n>Open...</a>
-          <a class="dropdown-item" (click)="onSaveAs()" [hidden]="hasBankn" i18n>Save as...</a>
+          <a class="dropdown-item" (click)="onSaveAs()" [hidden]="!hasBankn" i18n>Save as...</a>
         </div>
       </li>
 
