@@ -51,12 +51,8 @@ const lang = (function(defaultValue:String) {
   ]
 })
 export class AppModule { 
-
-  @Inject(LOCALE_ID) public locale: string
-  
+ 
   constructor(
     private injector:Injector
-  ){
-    //console.log(this.injector.get(LOCALE_ID));
-  }
+  ){  }
 }
