@@ -48,7 +48,7 @@ export class BanknService {
     return this.bankn!=null;
   }
 
-  fromJson(json):void{
+  fromJson(json){
     return new Bankn(
       json.name,
       this.accountService.fromJson(json.accounts),
