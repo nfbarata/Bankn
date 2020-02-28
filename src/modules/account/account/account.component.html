@@ -1,4 +1,5 @@
 <h2>{{accountFormData.id==null?'Account creation':'Account edit'}}</h2>
+<br>
 <form [formGroup]="accountForm" (ngSubmit)="onSubmit(accountForm.value)"> 
   <div class="form-group">
     <label for="name" i18n>
