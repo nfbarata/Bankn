@@ -1,15 +1,10 @@
-import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
+import { BanknService } from '../../../services/bankn.service';
 import { AccountService } from '../../../services/account.service';
-import  { Account } from "../../../models/account";
+import { Account } from "../../../models/account";
 //import currencies from '../../../assets/currencies.json';
-
-const countries        = require('country-data-list').countries,
-      currencies       = require('country-data-list').currencies,
-      regions          = require('country-data-list').regions,
-      languages        = require('country-data-list').languages,
-      callingCountries = require('country-data-list').callingCountries;
 
 @Component({
   selector: 'account',
@@ -21,29 +16,15 @@ export class AccountComponent implements OnInit {
   accountForm;
   accountFormData;
   countries;
-  defaultCountryCode:String='null';
-
+  
   constructor(
+    private banknService: BanknService,
     private accountService: AccountService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
-    @Inject(LOCALE_ID) public locale: string
+    private router: Router
     ) { 
-      if(locale!=null && locale.split("-").length>0){
-        this.defaultCountryCode = locale.split("-")[0].toUpperCase();
-        
-        this.countries = countries.all.filter(function(country){
-          return country.currencies.length>0;
-        });
-        /*var country;
-        for (let i = 0; i < this.currencies.length; i++) {
-          if (this.currencies[i].alpha2 == this.defaultCountryCode) 
-            country = this.currencies[i];
-        }
-        var defaultCurrency = country.currencies[0];*/
-      }
-      console.log("default countryCode: "+this.defaultCountryCode);
+
       this.accountFormData = {
         id:null,
         name:null,
@@ -65,7 +46,7 @@ export class AccountComponent implements OnInit {
           id:null,
           name:'',
           referenceValue:0,
-          referenceCountry:this.defaultCountryCode,
+          referenceCountry:this.banknService.getReferenceCountry(),
           referenceDay:'1',
           referenceMonth:'1',
           referenceYear:'2000',
