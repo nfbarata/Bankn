@@ -11,14 +11,15 @@ import { Account } from "../../../models/account";
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-  accounts = [];
+  
+  accounts:Account[] = [];
+  hasBankn:Boolean = false;
+
   constructor(
     private banknService: BanknService,
     private accountService: AccountService,
     private eventsService: EventsService
   ) { }
-
-  hasBankn:Boolean = false;
 
   ngOnInit() {
     this.refreshData();
