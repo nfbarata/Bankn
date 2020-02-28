@@ -4,14 +4,14 @@
   </div-->
   <div class="card-body">
     <h5 class="card-title" i18n>Create transaction</h5>
-    <p class="card-text" i18n>Create  new transactions to selected account</p>
+    <p class="card-text" i18n>Create a new transactions to selected account</p>
     <!--form [formGroup]="form" (ngSubmit)="onSubmit(form.value)"-->
       <div class="form-group">
         <select class="form-control" (change)="accountChangeHandler($event)"><!--formControlName="account">-->
           <option *ngFor="let account of accounts" [selected]="account.id==selectedAccount.id" value="{{account.id}}">{{account.name}}</option>
         </select>
       </div>
-      <a class="btn btn-primary text-white" [routerLink]="['/transactions/transaction/'+(newSelectedAccount!=null?newSelectedAccount:'')]" i81n>Import</a>
+      <a class="btn btn-secondary text-white" [routerLink]="['/transactions/transaction/'+(newSelectedAccount!=null?newSelectedAccount:'')]" i81n>Create</a>
 
     <!--/form-->
   </div>
