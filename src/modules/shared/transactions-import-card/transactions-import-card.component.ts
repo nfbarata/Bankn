@@ -11,20 +11,28 @@ import { Account } from "../../../models/account";
 export class TransactionsImportCardComponent implements OnInit {
   
   accounts:Account[] = [];
+  selectedAccount:Account=null;
 
   constructor(
-
     private accountService: AccountService,
     private eventsService: EventsService
   ) { }
 
   ngOnInit() {
     this.refreshData();
+    this.refreshSelectionData()
     this.eventsService.accountsChange.subscribe(this.refreshData());
+    this.eventsService.accountSelectionChange.subscribe(this.refreshSelectionData());
   }
 
   refreshData(){
     this.accounts = this.accountService.getAccounts(); 
   }
 
+  refreshSelectionData(){
+    this.selectedAccount = null;
+    var selectedAccounts = this.accountService.getSelectedAccounts();
+    if(selectedAccounts.length>0)
+      this.selectedAccount=selectedAccounts[0];
+  }
 }
