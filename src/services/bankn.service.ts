@@ -4,7 +4,6 @@ import { Bankn } from "../models/bankn";
 import { Account } from "../models/account";
 import { EventsService} from "./events.service";
 import { FileService} from "./file.service";
-import { AccountService} from "./account.service";
 
 const countries        = require('country-data-list').countries,
       currencies       = require('country-data-list').currencies,
