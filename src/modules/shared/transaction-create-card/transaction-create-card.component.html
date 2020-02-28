@@ -11,7 +11,7 @@
           <option *ngFor="let account of accounts" [selected]="account.id==selectedAccount.id" value="{{account.id}}">{{account.name}}</option>
         </select>
       </div>
-      <a class="btn btn-primary text-white" [routerLink]="['/transactions/import/'+(newSelectedAccount!=null?newSelectedAccount:'')]" i81n>Import</a>
+      <a class="btn btn-primary text-white" [routerLink]="['/transactions/transaction/'+(newSelectedAccount!=null?newSelectedAccount:'')]" i81n>Import</a>
 
     <!--/form-->
   </div>
