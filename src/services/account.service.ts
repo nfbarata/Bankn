@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
-import { Dinero } from 'dinero.js';
 import { Account } from "../models/account";
 import { BanknService } from '../services/bankn.service';
 import { EventsService } from '../services/events.service';
@@ -18,13 +17,13 @@ export class AccountService {
   createAccount(
     name:String, 
     description:String, 
-    referenceValue:Dinero, 
+    referenceAmount:Dinero, 
     referenceDate:Date,
     referenceCountry:String){
     var account : Account = new Account(this.createId());
     account.name = name;
     account.description = description;
-    account.referenceValue = referenceValue;
+    account.referenceAmount = referenceAmount;
     account.referenceDate = referenceDate;
     account.referenceCountry = referenceCountry;
     //selected
@@ -40,18 +39,34 @@ export class AccountService {
     }
   }
 
+  getCurrency(account:Account){
+    return account.referenceAmount.currency;
+  }
+
+  getPrecision(account:Account){
+    var reference = Dinero({currency:this.getCurrency(account)});
+    return reference.precision;
+  }
+
+  toDinero(account:Account, amount){
+    return Dinero({
+        amount:amount * Math.pow(10,this.getPrecision(account)),
+        currency:this.getCurrency(account)
+    });
+  }
+
   updateAccount(
     id:String,
     name:String, 
     description:String, 
-    referenceValue:Dinero, 
+    referenceAmount:Dinero, 
     referenceDate:Date,
     referenceCountry:String){
 
     var account : Account = this.getAccount(id);
     account.name = name;
     account.description = description;
-    account.referenceValue = referenceValue;
+    account.referenceAmount = referenceAmount;
     account.referenceDate = referenceDate;
     account.referenceCountry = referenceCountry;
     this.eventsService.accountsChange.emit();

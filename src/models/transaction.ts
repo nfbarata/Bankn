@@ -5,7 +5,7 @@ export class Transaction {
   
   private id:String;//uuid
   
-  private value:Dinero;
+  private amount;
   private date:Date;
 
   //type;  despesa/receita/transfer
@@ -23,8 +23,8 @@ export class Transaction {
     this.id = uuid;
   }
 
-  getValue():Dinero{
-    return this.value;
+  getAmount(){
+    return this.amount;
   }
 
   getDate():Date{

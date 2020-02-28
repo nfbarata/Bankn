@@ -27,7 +27,7 @@ export class AccountComponent implements OnInit {
       this.accountFormData = {
         id:null,
         name:null,
-        referenceValue:null,
+        referenceAmount:null,
         referenceCountry:null,
         referenceDay:null,
         referenceMonth:null,
@@ -45,7 +45,7 @@ export class AccountComponent implements OnInit {
         this.accountFormData = {
           id:null,
           name:'',
-          referenceValue:0,
+          referenceAmount:0,
           referenceCountry:this.banknService.getReferenceCountry(),
           referenceDay:'1',
           referenceMonth:'1',
@@ -58,13 +58,13 @@ export class AccountComponent implements OnInit {
         var account:Account = this.accountService.getAccount(accountId);
         var country;
         for (let i = 0; i < this.countries.length; i++) {
-          if (this.countries[i].currencies[0] == account.referenceValue.currency) 
+          if (this.countries[i].currencies[0] == account.referenceAmount.currency) 
             country = this.countries[i];
         }
         this.accountFormData = {
           id:account.id,
           name:account.name,
-          referenceValue:Dinero(account.referenceValue).toUnit(),
+          referenceAmount:Dinero(account.referenceAmount).toUnit(),
           referenceCountry:account.referenceCountry,
           referenceDay:account.referenceDate.getDate(),
           referenceMonth:account.referenceDate.getMonth()+1,

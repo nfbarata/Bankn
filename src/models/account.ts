@@ -8,7 +8,7 @@ export class Account {
   //type
   //arquived
   transactions : Transaction[] = [];
-  referenceValue:Object;//Dinero format
+  referenceAmount:Object;//Dinero format
   referenceCountry:String;
   referenceDate:Date;
   description:String = "";
