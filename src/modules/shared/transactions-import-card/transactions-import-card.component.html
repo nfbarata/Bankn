@@ -8,10 +8,10 @@
     <!--form [formGroup]="form" (ngSubmit)="onSubmit(form.value)"-->
       <div class="form-group">
         <select class="form-control" [value]="selectedAccount"><!--formControlName="account">-->
-          <option *ngFor="let account of accounts" [selected]="account.id==selectedAccount.id" [value]="account.id">{{account.name}}</option>
+          <option *ngFor="let account of accounts" [selected]="account.id==selectedAccount.id">{{account.name}}</option>
         </select>
       </div>
-      <a class="btn btn-primary text-white" [routerLink]="['/accounts/account/'+selectedAccount.id+'/import']" i81n>Import</a>
+      <a class="btn btn-primary text-white" [routerLink]="['/transactions/import/'+selectedAccount.id]" i81n>Import</a>
     <!--/form-->
   </div>
 </div>

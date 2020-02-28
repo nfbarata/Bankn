@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { TransactionRoutingModule } from './transaction-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
-import { TransactionListComponent } from './transaction-list/transaction-list.component'
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { TransactionImportComponent } from './transaction-import/transaction-import.component'
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
     SharedModule
   ],
   declarations: [
-    TransactionListComponent
+    TransactionListComponent,
+    TransactionImportComponent
   ],
   exports: []
 })
