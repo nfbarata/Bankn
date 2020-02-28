@@ -17,6 +17,40 @@ export class TransactionService {
     uidv4();
   }
 
+  toJson(transactions:Transaction[]){
+    var results = [];
+    transactions.forEach(transaction => {
+      results.push(new Transaction(
+        transaction.id,
+        transaction.amount.amount,//Dinero to value, compacted result
+        transaction.date,
+        transaction.toAccount,
+        transaction.entity,
+        transaction.category,
+        transaction.description
+      ));
+    });
+    return results;
+  }
+
+  fromJson(json, accountReferenceAmount:Dinero){
+    var results = [];
+    if(json!=null){
+      json.forEach(transaction => {
+        results.push(new Transaction(
+          transaction.id,
+          this.accountService.toDinero(accountReferenceAmount,transaction.amount.amount,//value to Dinero, speed
+          transaction.date,
+          transaction.toAccount,
+          transaction.entity,
+          transaction.category,
+          transaction.description
+        ));
+      });
+    }
+    return results;
+  }
+
   getSelectedAccountsTransactions() : Transaction[]{
     var accounts : Account[] = this.accountService.getSelectedAccounts();
     return this.getTransactions(accounts);

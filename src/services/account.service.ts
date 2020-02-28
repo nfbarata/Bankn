@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Account } from "../models/account";
 import { BanknService } from '../services/bankn.service';
 import { EventsService } from '../services/events.service';
+import { TransactionService } from '../services/transaction.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AccountService {
 
   constructor(
     private banknService : BanknService,
-    private eventsService : EventsService
+    private eventsService : EventsService,
+    private transactionService : TransactionService
   ) { }
 
   createAccount(
@@ -20,14 +22,53 @@ export class AccountService {
     referenceAmount:Dinero, 
     referenceDate:Date,
     referenceCountry:String){
-    var account : Account = new Account(this.createId());
-    account.name = name;
-    account.description = description;
-    account.referenceAmount = referenceAmount;
-    account.referenceDate = referenceDate;
-    account.referenceCountry = referenceCountry;
-    //selected
+    var account : Account = new Account(
+      this.createId(),
+      name,
+      description,
+      referenceAmount,
+      referenceDate,
+      referenceCountry,
+      null,
+      true
+    );
     this.banknService.addAccount(account);
+  }
+
+  toJson(accounts:Account[]){
+    var results = [];
+    accounts.forEach(account => {
+      results.push(new Account(
+        account.id,
+        account.name,
+        account.description,
+        account.referenceAmount,
+        account.referenceDate,
+        account.referenceCountry,
+        this.transactionService.toJson(account.transactions),
+        account.selected
+      ));
+    });
+    return results;
+  }
+
+  fromJson(json){
+    var results = [];
+    if(json!=null){
+      json.forEach(account => {
+        results.push(new Account(
+          account.id,
+          account.name,
+          account.description,
+          account.referenceAmount,
+          account.referenceDate,
+          account.referenceCountry,
+          this.transactionService.fromJson(account.transactions, account.referenceAmount),
+          account.selected
+        ));
+      });
+    }
+    return results;
   }
 
   private createId(){
@@ -39,20 +80,20 @@ export class AccountService {
     }
   }
 
-  getCurrency(account:Account){
-    return account.referenceAmount.currency;
+  getCurrency(accountReferenceAmount:Dinero){
+    return accountReferenceAmount.currency;
   }
 
-  getPrecision(account:Account){
+  getPrecision(accountReferenceAmount:Dinero){
     //TODO guardar este valor em memória
-    var reference = Dinero({currency:this.getCurrency(account)});
+    var reference = Dinero({currency:this.getCurrency(accountReferenceAmount)});
     return reference.getPrecision();
   }
 
-  toDinero(account:Account, amount){
+  toDinero(accountReferenceAmount:Dinero, amount){
     return Dinero({
-        amount:amount * Math.pow(10,this.getPrecision(account)),
-        currency:this.getCurrency(account)
+        amount:amount * Math.pow(10,this.getPrecision(accountReferenceAmount)),
+        currency:this.getCurrency(accountReferenceAmount)
     });
   }
 

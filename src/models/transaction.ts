@@ -1,4 +1,3 @@
-import { Dinero } from 'dinero.js';
 import  { Account } from "./account";
 
 export class Transaction {
@@ -10,7 +9,7 @@ export class Transaction {
 
   //type;  despesa/receita/transfer
   //account:Account;
-  private toAccount : Account;
+  private toAccount : string;
 
   private entity:string;//fromAccount
   private category:string;
@@ -19,11 +18,25 @@ export class Transaction {
 
   //receipt;
 
-  constructor(uuid:string) {
+  constructor(
+    uuid:string,
+    amount,
+    date:Date,
+    toAccount:string,
+    entity:string,
+    category:string,
+    description:string
+  ) {
     this.id = uuid;
+    this.amount = amount;
+    this.date = date;
+    this.toAccount = toAccount;
+    this.entity = entity;
+    this.category = category;
+    this.description = description;
   }
 
-  getAmount(){
+  getAmount():Dinero{
     return this.amount;
   }
 

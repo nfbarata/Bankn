@@ -4,6 +4,7 @@ import { Bankn } from "../models/bankn";
 import { Account } from "../models/account";
 import { EventsService} from "./events.service";
 import { FileService} from "./file.service";
+import { AccountService} from "./account.service";
 
 const countries        = require('country-data-list').countries,
       currencies       = require('country-data-list').currencies,
@@ -21,6 +22,7 @@ export class BanknService {
   defaultCountryCode:String='null';
 
   constructor(
+    private accountService:AccountService,
     private eventsService:EventsService,
     private fileService:FileService,
     @Inject(LOCALE_ID) public locale: string
@@ -46,30 +48,34 @@ export class BanknService {
     return this.bankn!=null;
   }
 
-  loadFromJson(bankn:Bankn):void{
-    this.clear();
-    
-    this.bankn = new Bankn();
-    if(bankn == null || bankn.referenceCountry==null)
-      this.bankn.referenceCountry = this.getDefaultCountryCode();
-    else
-      this.bankn.referenceCountry = bankn.referenceCountry;
-    if(bankn!= null&&bankn.accounts!=null)
-      this.bankn.accounts = bankn.accounts;
-
-    this.eventsService.banknChange.emit();
-    this.eventsService.accountsChange.emit();
-    this.eventsService.accountSelectionChange.emit();
+  fromJson(json):void{
+    return new Bankn(
+      json.name,
+      this.accountService.fromJson(json.accounts),
+      json.referenceCountry
+    );
   }
 
   loadFromFile(): void{
     this.fileService.parseJsonFile((bankn:Bankn)=>{
-      this.loadFromJson(bankn);    
+      this.clear();
+      this.bankn = this.fromJson(bankn);    
+      this.eventsService.banknChange.emit();
+      this.eventsService.accountsChange.emit();
+      this.eventsService.accountSelectionChange.emit();
     });
   }
 
   saveToFile():void{
-    this.fileService.downloadJsonFile(this.bankn);
+    this.fileService.downloadJsonFile(this.toJson());
+  }
+
+  toJson(){
+    new Bankn(
+      this.bankn.name,
+      this.accountService.toJson(this.bankn.accounts),
+      this.bankn.referenceCountry
+    )
   }
 
   update(name:String,referenceCountry:String):void{
