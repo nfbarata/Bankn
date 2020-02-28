@@ -36,5 +36,6 @@ export class TransactionsImportCardComponent implements OnInit {
     }else{
       this.selectedAccount=this.accounts[0];
     }
+    console.log(this.selectedAccount.id);
   }
 }

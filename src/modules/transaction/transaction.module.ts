@@ -17,6 +17,8 @@ import { TransactionImportComponent } from './transaction-import/transaction-imp
     TransactionListComponent,
     TransactionImportComponent
   ],
-  exports: []
+  exports: [
+    TransactionImportComponent
+  ]
 })
 export class TransactionModule { }
