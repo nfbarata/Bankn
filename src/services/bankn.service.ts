@@ -50,7 +50,7 @@ export class BanknService {
       this.bankn.referenceCountry = this.getDefaultCountryCode();
     else
       this.bankn.referenceCountry = bankn.referenceCountry;
-    if(bankn= null&&bankn.accounts!=null)
+    if(bankn!= null&&bankn.accounts!=null)
       this.bankn.accounts = bankn.accounts;
 
     this.eventsService.banknChange.emit();
