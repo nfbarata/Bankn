@@ -9,9 +9,9 @@
     <bankn-create-card [hidden]="hasBankn"></bankn-create-card>
   </div>
 </div>
-<div class="row" [hidden]="!hasBankn">
+<div class="row" [hidden]="!(hasBankn&&hasAccounts)">
   <div class="col-sm-6">
-    <transactions-import-card [hidden]="!hasBankn"></transactions-import-card>
+    <transactions-import-card [hidden]="!(hasBankn&&hasAccounts)"></transactions-import-card>
   </div>
   
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BanknService} from '../../../services/bankn.service';
+import { AccountService} from '../../../services/account.service';
 import { EventsService} from '../../../services/events.service';
 
 @Component({
@@ -10,10 +11,12 @@ import { EventsService} from '../../../services/events.service';
 export class HomeComponent implements OnInit {
 
   hasBankn:Boolean = false;
+  hasAccounts:Boolean = false;
 
   constructor(
+    private eventsService:EventsService,
     private banknService:BanknService,
-    private eventsService:EventsService
+    private accountService:AccountService,
   ) { 
     
   }
@@ -21,9 +24,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.refreshData();
     this.eventsService.banknChange.subscribe(()=>this.refreshData());
+    this.eventsService.accountsChange.subscribe(()=>this.refreshData());
   }
 
   refreshData(){
     this.hasBankn = this.banknService.initialized();
+    this.hasAccounts = this.accountService.getAccounts().length>0;
   }
 }

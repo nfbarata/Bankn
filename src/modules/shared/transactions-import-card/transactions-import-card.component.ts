@@ -31,7 +31,10 @@ export class TransactionsImportCardComponent implements OnInit {
 
   refreshSelectionData(){
     var selectedAccounts = this.accountService.getSelectedAccounts();
-    if(selectedAccounts.length>0)
+    if(selectedAccounts.length>0){
       this.selectedAccount=selectedAccounts[0];
+    }else{
+      this.selectedAccount=this.accounts[0];
+    }
   }
 }
