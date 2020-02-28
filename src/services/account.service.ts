@@ -21,7 +21,7 @@ export class AccountService {
     referenceValue:Dinero, 
     referenceDate:Date,
     referenceCountry:String){
-    var account : Account = new Account(uuidv4());
+    var account : Account = new Account(this.createId());
     account.name = name;
     account.description = description;
     account.referenceValue = referenceValue;
@@ -29,6 +29,15 @@ export class AccountService {
     account.referenceCountry = referenceCountry;
     //selected
     this.banknService.addAccount(account);
+  }
+
+  private createId(){
+    //return uuidv4();
+    var accounts:Account[] = this.getAccounts();
+    for (let i = 0; i < accounts.length; i++) {
+      if(accounts[i].id!=i)
+      return i;
+    }
   }
 
   updateAccount(

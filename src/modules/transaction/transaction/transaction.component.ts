@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'pp-transaction',
+  selector: 'transaction',
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.css']
 })

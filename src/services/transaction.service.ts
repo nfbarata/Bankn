@@ -14,6 +14,9 @@ export class TransactionService {
     private accountService : AccountService
   ) { }
 
+  createTransaction(){
+    uidv4();
+  }
 
   getSelectedAccountsTransactions() : Transaction[]{
     var accounts : Account[] = this.accountService.getSelectedAccounts();
