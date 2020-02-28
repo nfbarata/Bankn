@@ -1,10 +1,13 @@
-<p>
-bankn
-</p>
 
+<h2>{{formData.id==null?'bankn creation':'bankn edit'}}</h2>
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-  <select class="form-control" formControlName="referenceCountry">
-    <option *ngFor="let country of countries" [selected]="country.alpha2==formData.referenceCountry" [value]="country.alpha2">{{country.name}} - {{country.currencies[0]}}</option>
-  </select>
-  <button class="btn btn-primary" type="submit" i18n>{{accountFormData.id==null?'Create':'Ok'}}</button>
+  <div class="form-group">
+    <label for="name" i18n>
+      Default currency
+    </label>
+    <select class="form-control" formControlName="referenceCountry">
+      <option *ngFor="let country of countries" [selected]="country.alpha2==formData.referenceCountry" [value]="country.alpha2">{{country.name}} - {{country.currencies[0]}}</option>
+    </select>
+  </div>
+  <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
 </form>
