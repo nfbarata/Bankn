@@ -42,26 +42,30 @@ export class BanknService {
     
   }
 
-  getCountries(){
-    return this.countries;
-  }
+  loadFromJson(bankn:Bankn):void{
+    this.clear();
+    
+    this.bankn = new Bankn();
+    if(bankn.referenceCountry!=null)
+      this.bankn.referenceCountry = bankn.referenceCountry;
+    else
+      this.bankn.referenceCountry = this.getDefaultCountryCode();
+    if(bankn.accounts!=null)
+      this.bankn.accounts = bankn.accounts;
 
-  getDefaultCountryCode():String{
-    return this.defaultCountryCode;
-  }
-
-  getReferenceCountry(){
-    return this.bankn.referenceCountry;
-  }
-
-  saveToFile():void{
-    this.fileService.downloadJsonFile(this.bankn);
+    this.eventsService.banknChange.emit();
+    this.eventsService.accountsChange.emit();
+    this.eventsService.accountSelectionChange.emit();
   }
 
   loadFromFile(): void{
     this.fileService.parseJsonFile((bankn:Bankn)=>{
       this.loadFromJson(bankn);    
     });
+  }
+
+  saveToFile():void{
+    this.fileService.downloadJsonFile(this.bankn);
   }
 
   private clear():void{
@@ -74,14 +78,6 @@ export class BanknService {
         this.bankn.accounts.pop();
       }
     }
-  }
-
-  loadFromJson(bankn:Bankn):void{
-    this.clear();
-    this.bankn = bankn;
-    this.eventsService.banknChange.emit();
-    this.eventsService.accountsChange.emit();
-    this.eventsService.accountSelectionChange.emit();
   }
 
   addAccount(account:Account):void{
@@ -100,5 +96,17 @@ export class BanknService {
     if(this.bankn==null)
       return [];
     return this.bankn.accounts;
+  }
+
+  getCountries(){
+    return this.countries;
+  }
+
+  getDefaultCountryCode():String{
+    return this.defaultCountryCode;
+  }
+
+  getReferenceCountry(){
+    return this.bankn.referenceCountry;
   }
 }
