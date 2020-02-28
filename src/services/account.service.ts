@@ -71,12 +71,12 @@ export class AccountService {
     return results;
   }
 
-  private createId(){
+  private createId():String{
     //return uuidv4();
     var accounts:Account[] = this.getAccounts();
     for (let i = 0; i < accounts.length; i++) {
       if(accounts[i].id!=i)
-        return i;
+        return i.toString();
     }
   }
 
