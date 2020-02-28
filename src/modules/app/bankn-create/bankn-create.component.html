@@ -16,7 +16,7 @@
     <select class="form-control" formControlName="referenceCountry">
       <option *ngFor="let country of countries" [selected]="country.alpha2==formData.referenceCountry" [value]="country.alpha2">{{country.name}} - {{country.currencies[0]}}</option>
     </select>
-    <small id="passwordHelpBlock" class="form-text text-muted">
+    <small id="refereenceCountryHelpBlock" class="form-text text-muted">
       Used as default currency when creating accounts
     </small>
   </div>

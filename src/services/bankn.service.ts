@@ -46,11 +46,11 @@ export class BanknService {
     this.clear();
     
     this.bankn = new Bankn();
-    if(bankn.referenceCountry!=null)
-      this.bankn.referenceCountry = bankn.referenceCountry;
-    else
+    if(bankn == null || bankn.referenceCountry==null)
       this.bankn.referenceCountry = this.getDefaultCountryCode();
-    if(bankn.accounts!=null)
+    else
+      this.bankn.referenceCountry = bankn.referenceCountry;
+    if(bankn= null&&bankn.accounts!=null)
       this.bankn.accounts = bankn.accounts;
 
     this.eventsService.banknChange.emit();
