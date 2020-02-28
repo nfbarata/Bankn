@@ -25,13 +25,20 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit() {
     this.accounts = this.accountService.getAccounts();   
-    this.refreshTransactions();
-    this.eventsService.accountSelectionChange.subscribe(()=>this.refreshTransactions());
+    this.refreshData();
+    this.eventsService.accountSelectionChange.subscribe(()=>this.refreshData());
+    this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
   }
 
-  refreshTransactions(){
+  refreshData(){
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.transactions = this.transactionService.getTransactions(this.selectedAccounts);
     //this.transactions = this.accountService.getSelectedAccountsTransactions();
+  }
+
+  refreshAccounts(){
+    this.selectedAccounts = this.accountService.getSelectedAccounts();
+    this.accounts = this.accountService.getAccounts();
+
   }
 }
