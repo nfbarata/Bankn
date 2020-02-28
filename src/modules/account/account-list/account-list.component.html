@@ -1,26 +1,51 @@
 <h2>Accounts</h2>
-
-<div *ngFor="let account of accounts">
-  <h3>
-      <a [title]="account.name + ' details'">
-      {{ account.name }}
-    </a>
-  </h3>
-  <div *ngIf="account.description">
-    Description: {{ account.description }}
+<br>
+<div class="container">
+  <div class="row" class="col-12" *ngFor="let account of accounts">
+    <div class="col-sm">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h3>
+              <a [title]="account.name + ' details'">
+                {{ account.name }}
+              </a>
+            </h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div *ngIf="account.description">
+              Description: {{ account.description }}
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-">
+            <div class="container">
+              <div class="row">
+                <div class="col-6">
+                  <button class="btn btn-primary text-white" [routerLink]="['/accounts/account',account.id]">
+                    Open
+                  </button>
+                </div>
+                <div class="col-6">
+                  <button class="btn btn-danger text-white" (click)="onDelete(account)">
+                    delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
-  <br>
-  <button class="btn btn-primary text-white" [routerLink]="['/accounts/account',account.id]">
-    Open
-  </button>
-  <button class="btn btn-danger text-white" (click)="onDelete(account)">
-    delete
-  </button>
   <br>
 </div>
 <br>
-<div>
+<div class="row">
   <button class="btn btn-primary text-white" [routerLink]="['/accounts/account']">
-    Create
+    New
   </button>
 </div>

@@ -25,7 +25,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <!-- hack to prevent inside clicks to close -->
-          <a class="dropdown-item" [routerLink]="['/accounts/account']" i18n="@@menu-manage">Create</a>
+          <a class="dropdown-item" [routerLink]="['/accounts/account']" i18n="@@menu-manage">N</a>
           <div class="dropdown-divider"></div>
           <form>
             <div class="dropdown-item" *ngFor="let account of accounts"  (click)="onAccountClick(account)">
@@ -45,13 +45,13 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="#" i18n="@@menu-charts">Charts</a>
+        <a class="nav-link" i18n="@@menu-charts">Charts</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" i18n="@@menu-help">Help</a>
+        <a class="nav-link" i18n="@@menu-help">Help</a>
       </li>
       <li class="nav-item dropdown"> 
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="drop down" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="drop down" aria-haspopup="true" aria-expanded="false">
           Languages
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
