@@ -25,13 +25,15 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <!-- hack to prevent inside clicks to close -->
+          <a class="dropdown-item" [routerLink]="['/accounts/account']" i18n="@@menu-manage">Create</a>
+          <div class="dropdown-divider"></div>
           <form>
-          <div class="dropdown-item" *ngFor="let account of accounts"  (click)="onAccountClick(account)">
-            <div class="custom-control custom-checkbox my-1 mr-sm-2">
-              <input type="checkbox" class="custom-control-input" id="{{account.id}}" [checked]="account.selected">
-              <label class="custom-control-label" for="customControlInline">{{ account.name }} </label>
+            <div class="dropdown-item" *ngFor="let account of accounts"  (click)="onAccountClick(account)">
+              <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                <input type="checkbox" class="custom-control-input" id="{{account.id}}" [checked]="account.selected">
+                <label class="custom-control-label" for="customControlInline">{{ account.name }} </label>
+              </div>
             </div>
-          </div>
           </form>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" [routerLink]="['/accounts']" i18n="@@menu-manage">Manage</a>
