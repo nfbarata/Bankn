@@ -13,12 +13,13 @@
           File
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" data-toggle="modal" data-target="#newModal" i18n>New</a>
           <a class="dropdown-item" data-toggle="modal" data-target="#uploadModal" i18n>Open...</a>
-          <a class="dropdown-item" (click)="onSaveAs()"i18n>Save as...</a>
+          <a class="dropdown-item" (click)="onSaveAs()" [hidden]="hasBankn" i18n>Save as...</a>
         </div>
       </li>
 
-      <li class="nav-item active dropdown"> 
+      <li class="nav-item {{hasBankn?'active':''}} dropdown"> 
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" i18n="@@menu-accounts">
           Accounts
         </a>
@@ -37,7 +38,7 @@
         </div>
       </li>
 
-      <li class="nav-item active">
+      <li class="nav-item {{hasBankn?'active':''}} ">
         <a class="nav-link" [routerLink]="['/transactions']" i18n="@@menu-transactions">Transactions</a>
       </li>
 
