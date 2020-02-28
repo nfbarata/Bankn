@@ -32,7 +32,6 @@ export class TransactionService {
           amount:transaction.amount * Math.pow(10,referenceValue.getPrecision()),
           currency:account.referenceValue.currency
         });
-        
         transactions.push(transaction);
       });
     });
