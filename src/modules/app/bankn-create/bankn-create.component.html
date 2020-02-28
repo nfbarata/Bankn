@@ -1,4 +1,3 @@
-
 <h2>{{formData.id==null?'Create bankn profile':'Edit bankn profile'}}</h2>
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
   <div class="form-group">
@@ -8,7 +7,7 @@
     </label>
     <input  class="form-control" id="name" type="text" formControlName="name">
     <small id="nameHelpBlock" class="form-text text-muted">
-      Month
+      Used as file name when saving
     </small>
 
     <label for="name" i18n>
@@ -18,7 +17,7 @@
       <option *ngFor="let country of countries" [selected]="country.alpha2==formData.referenceCountry" [value]="country.alpha2">{{country.name}} - {{country.currencies[0]}}</option>
     </select>
     <small id="passwordHelpBlock" class="form-text text-muted">
-      Month
+      Used as default currency when creating accounts
     </small>
   </div>
   <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
