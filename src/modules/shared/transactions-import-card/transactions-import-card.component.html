@@ -7,11 +7,11 @@
     <p class="card-text" i18n>Import new transactions to selected account</p>
     <!--form [formGroup]="form" (ngSubmit)="onSubmit(form.value)"-->
       <div class="form-group">
-        <select class="form-control" [(ngModel)]="newSelectedAccount"><!--formControlName="account">-->
+        <select class="form-control" [value]="newSelectedAccount"><!--formControlName="account">-->
           <option *ngFor="let account of accounts" [selected]="selectedAccount==null?false:account.id==selectedAccount.id" [value]="account.id">{{account.name}}</option>
         </select>
       </div>
-      <a class="btn btn-primary text-white" [routerLink]="['/accounts/account/{{newSelectedAccount.id}}}}/import']" i81n>Import</a>
+      <a class="btn btn-primary text-white" disabled='disabled' [routerLink]="['/accounts/account/'+(newSelectedAccount==null?'':newSelectedAccount.id)+'/import']" i81n>Import</a>
     <!--/form-->
   </div>
 </div>
