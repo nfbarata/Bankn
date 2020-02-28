@@ -14,6 +14,7 @@ export class BanknCreateComponent implements OnInit {
   formData;
 
   constructor(
+    private formBuilder: FormBuilder,
     private banknService:BanknService,
   ) { 
     this.formData = {
@@ -30,6 +31,7 @@ export class BanknCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.countries = this.banknService.getCountries();
   }
 
 }

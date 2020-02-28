@@ -38,6 +38,7 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.countries = this.banknService.getCountries();
     this.route.paramMap.subscribe(params => {
       var accountId:String = params.get('accountId');
       if(accountId==null || accountId.trim().length==0){
