@@ -6,6 +6,7 @@ import { TransactionImportComponent } from './transaction-import/transaction-imp
 
 const routes: Routes = [
   { path: '', component: TransactionListComponent },
+  { path: 'transaction/:accountId/:transactionId', component: TransactionImportComponent },
   { path: 'import/:accountId', component: TransactionImportComponent },
 ]
 
