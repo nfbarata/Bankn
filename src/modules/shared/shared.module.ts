@@ -7,6 +7,7 @@ import { AccountCreateCardComponent } from './account-create-card/account-create
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FileOpenCardComponent } from './file-open-card/file-open-card.component';
 import { BanknCreateCardComponent } from './bankn-create-card/bankn-create-card.component';
+import { TransactionsImportCardComponent } from './transactions-import-card/transactions-import-card.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { BanknCreateCardComponent } from './bankn-create-card/bankn-create-card.
     AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent
   ],
   declarations: [
-    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent
   ]
 })
 export class SharedModule { }
