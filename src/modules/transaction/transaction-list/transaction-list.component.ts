@@ -39,6 +39,5 @@ export class TransactionListComponent implements OnInit {
   refreshAccounts(){
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.accounts = this.accountService.getAccounts();
-
   }
 }
