@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
 import { Account } from "../models/account";
 import { BanknService } from '../services/bankn.service';
 import { EventsService } from '../services/events.service';
@@ -75,7 +74,8 @@ export class AccountService {
     //return uuidv4();
     var accounts:Account[] = this.getAccounts();
     for (let i = 0; i < accounts.length; i++) {
-      if(accounts[i].id!=i)
+      var is = i.toString();
+      if(!accounts[i].id==is)
         return i.toString();
     }
   }
