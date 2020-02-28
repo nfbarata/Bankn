@@ -40,19 +40,16 @@ export class AccountService {
   }
 
   getCurrency(account:Account){
-    console.log(account.referenceAmount.currency);
     return account.referenceAmount.currency;
   }
 
   getPrecision(account:Account){
+    //TODO guardar este valor em memó
     var reference = Dinero({currency:this.getCurrency(account)});
-    console.log(reference.precision);
-    return reference.precision;
+    return reference.getPrecision();
   }
 
   toDinero(account:Account, amount){
-    //console.log(amount);
-    /console.log(amount * Math.pow(10,this.getPrecision(account)));
     return Dinero({
         amount:amount * Math.pow(10,this.getPrecision(account)),
         currency:this.getCurrency(account)
