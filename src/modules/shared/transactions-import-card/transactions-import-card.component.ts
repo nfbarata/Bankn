@@ -37,10 +37,10 @@ export class TransactionsImportCardComponent implements OnInit {
     }else{
       this.selectedAccount=this.accounts[0];
     }
+    this.newSelectedAccount = this.selectedAccount;
   }
 
   accountChangeHandler (event: any) {
-    //update the ui
     this.newSelectedAccount = event.target.value;
   }
 }
