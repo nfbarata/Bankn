@@ -20,6 +20,7 @@ export class BanknCreateComponent implements OnInit {
     private banknService:BanknService,
   ) { 
     this.formData = {
+      name:'',
       referenceCountry:null,
     }
     this.form = this.formBuilder.group(this.formData);
@@ -42,12 +43,15 @@ export class BanknCreateComponent implements OnInit {
     if(data.id==null){
       this.banknService.loadFromJson(
         {
+          name:data.name,
           referenceCountry:data.referenceCountry
         }
       );
-      this.router.navigate(['/accounts/accou']);
+      this.router.navigate(['/accounts/account']);
     }else{
-      this.banknService.referenceCountry = data.referenceCountry;
+      this.banknService.update(
+        data.name,
+        data.referenceCountry);
       this.router.navigate(['']);
     }
     this.form.reset();

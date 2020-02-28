@@ -68,6 +68,12 @@ export class BanknService {
     this.fileService.downloadJsonFile(this.bankn);
   }
 
+  update(name:String,referenceCountry:String):void{
+    this.bankn.name = name;
+    this.bankn.referenceCountry = referenceCountry;
+    this.eventsService.banknChange.emit();
+  }
+
   private clear():void{
     if(this.bankn!=null){
       //(necessary? quickly...)

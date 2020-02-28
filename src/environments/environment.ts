@@ -2,6 +2,7 @@ export const environment = {
   production: false,
 
   bankn : {
+    name:'teste',
     referenceCountry:'PT',
     accounts : [
       {
