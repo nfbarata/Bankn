@@ -24,7 +24,6 @@ export class AccountComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
     ) { 
-
       this.accountFormData = {
         id:null,
         name:null,
