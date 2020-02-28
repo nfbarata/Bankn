@@ -20,7 +20,7 @@ export class BanknCreateComponent implements OnInit {
     private banknService:BanknService,
   ) { 
     this.formData = {
-      name:'',
+      name:'bankn',
       referenceCountry:null,
     }
     this.form = this.formBuilder.group(this.formData);
@@ -29,7 +29,7 @@ export class BanknCreateComponent implements OnInit {
   ngOnInit() {
     this.formData.referenceCountry = this.banknService.getDefaultCountryCode();
     this.countries = this.banknService.getCountries();
-    this.orm.setValue(this.formData);;
+    this.form.setValue(this.formData);;
   }
 
   onSubmit(data) {
