@@ -4,6 +4,7 @@ import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
 import { Transaction } from "../../../models/transaction";
+import { Dinero } from 'dinero.js';
 
 @Component({
   selector: 'app-transaction-list',

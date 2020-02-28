@@ -26,7 +26,13 @@ export class TransactionService {
   getTransactions(accounts : Account[]) : Transaction[] {
     var transactions : Transaction[] = [];
     accounts.forEach(account => {
+      var referenceValue = Dinero({currency:account.referenceValue.currency});
       account.transactions.forEach(transaction => {
+        transaction.amount = Dinero({
+          amount:transaction.amount * Math.pow(10,referenceValue.getPrecision()),
+          currency:account.referenceValue.currency
+        });
+        
         transactions.push(transaction);
       });
     });

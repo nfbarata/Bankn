@@ -5,18 +5,20 @@
 
 <div class="container" [hidden]="transactions==0">
   <div class="row">
-    <h5 class="col-2" i18n>Name</h5>
-    <h5 class="col-8" i18n>Description</h5>
-    <h5 class="col-2" i18n>Value</h5>
+    <h5 class="col-sm-3" i18n>Date</h5>
+    <h5 class="col-sm-7" i18n>Description</h5>
+    <h5 class="col-sm-2" i18n>Value</h5>
   </div>
   <div class="row" *ngFor="let transaction of transactions">
-    <label class="col-2">
-      {{transaction.date.getFullYear()}}/{{transaction.date.getMonth()+1}}/{{transaction.date.getDate()}}
+    <label class="col-sm-3">
+      {{transaction.date.getFullYear()}}-{{transaction.date.getMonth()+1}}-{{transaction.date.getDate()}}
     </label>
-    <label class="col-8">
+    <label class="col-sm-7">
       {{ transaction.description }}
     </label>
-    <label class="col-2">
-      {{transaction.amount}}
+    <label class="col-sm-2">
+      {{
+        transaction.amount.toUnit()
+      }}
     </label>
   </div>
