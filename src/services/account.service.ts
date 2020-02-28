@@ -44,7 +44,7 @@ export class AccountService {
   }
 
   getPrecision(account:Account){
-    //TODO guardar este valor em memó
+    //TODO guardar este valor em memória
     var reference = Dinero({currency:this.getCurrency(account)});
     return reference.getPrecision();
   }
