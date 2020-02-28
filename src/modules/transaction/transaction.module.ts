@@ -5,7 +5,8 @@ import { TransactionRoutingModule } from './transaction-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
-import { TransactionImportComponent } from './transaction-import/transaction-import.component'
+import { TransactionImportComponent } from './transaction-import/transaction-import.component';
+import { TransactionComponent } from './transaction/transaction.component'
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { TransactionImportComponent } from './transaction-import/transaction-imp
   ],
   declarations: [
     TransactionListComponent,
-    TransactionImportComponent
+    TransactionImportComponent,
+    TransactionComponent
   ],
   exports: [
     TransactionImportComponent
