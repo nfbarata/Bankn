@@ -43,4 +43,5 @@ export class TransactionsImportCardComponent implements OnInit {
   accountChangeHandler (event: any) {
     this.newSelectedAccount = event.target.value;
   }
+  
 }
