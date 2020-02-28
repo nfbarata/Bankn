@@ -42,6 +42,10 @@ export class BanknService {
     
   }
 
+  initialized():Boolean{
+    return this.bankn!=null;
+  }
+
   loadFromJson(bankn:Bankn):void{
     this.clear();
     
