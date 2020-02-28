@@ -19,6 +19,7 @@ import { MainComponent } from './main/main.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuSideComponent } from './menu-side/menu-side.component';
 import { HomeComponent } from './home/home.component';
+import { BanknCreateComponent } from './bankn-create/bankn-create.component';
 
 //TODO pass to object
 const lang = (function(defaultValue:String) {
@@ -40,7 +41,7 @@ const lang = (function(defaultValue:String) {
   exports: [
   ],
   declarations: [ 
-    MainComponent, MenuComponent, HomeComponent, MenuSideComponent
+    MainComponent, MenuComponent, HomeComponent, MenuSideComponent, BanknCreateComponent
   ],
   bootstrap: [ MainComponent ],
   providers: [
