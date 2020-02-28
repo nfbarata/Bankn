@@ -18,15 +18,19 @@ export class MenuComponent implements OnInit {
     private eventsService: EventsService
   ) { }
 
+  hasBankn:Boolean = false;
+
   ngOnInit() {
-    this.refreshAccounts();
-    this.eventsService.accountsChange.subscribe(()=>{
-      this.refreshAccounts();
-    });
+    this.refreshData();
+    this.eventsService.banknChange.subscribe(this.refreshData());
+    this.eventsService.accountsChange.subscribe(this.refreshData());
   }
 
-  refreshAccounts(){
-    this.accounts = this.accountService.getAccounts();  
+  refreshData(){
+    this.hasBankn = this.banknService.initialized();
+    if(this.hasBankn){
+      this.accounts = this.accountService.getAccounts(); 
+    }
   }
 
   onAccountClick(account:Account){
