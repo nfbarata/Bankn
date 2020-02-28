@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
     private banknService:BanknService,
     private eventsService:EventsService
   ) { 
-    console.log("subs");
     this.eventsService.banknChange.subscribe(()=>{
       this.hasBankn=true;
       console.log(this.hasBankn);

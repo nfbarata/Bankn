@@ -45,7 +45,7 @@ export class BanknService {
     this.eventsService.banknChange.emit();
     this.eventsService.accountsChange.emit();
     this.eventsService.accountSelectionChange.emit();
-    console.log("emite");
+
   }
 
   addAccount(account:Account):void{
