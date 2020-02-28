@@ -1,5 +1,5 @@
 import { Output, LOCALE_ID, Inject } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Bankn } from "../models/bankn";
 import { Account } from "../models/account";
 import { EventsService} from "./events.service";
@@ -22,10 +22,10 @@ export class BanknService {
   defaultCountryCode:String='null';
 
   constructor(
-    private accountService:AccountService,
+    @Inject(LOCALE_ID) public locale: string,
+    private injector: Injector,
     private eventsService:EventsService,
-    private fileService:FileService,
-    @Inject(LOCALE_ID) public locale: string
+    private fileService:FileService
   ) {  
     if(locale!=null && locale.split("-").length>0){
       this.defaultCountryCode = locale.split("-")[0].toUpperCase();
@@ -49,9 +49,10 @@ export class BanknService {
   }
 
   fromJson(json){
+    var accountService:AccountService = this.injector.get(AccountService);
     return new Bankn(
       json.name,
-      this.accountService.fromJson(json.accounts),
+      accountService.fromJson(json.accounts),
       json.referenceCountry
     );
   }
@@ -71,9 +72,10 @@ export class BanknService {
   }
 
   toJson(){
+    var accountService:AccountService = this.injector.get(AccountService);
     new Bankn(
       this.bankn.name,
-      this.accountService.toJson(this.bankn.accounts),
+      accountService.toJson(this.bankn.accounts),
       this.bankn.referenceCountry
     )
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, Injector } from '@angular/core';
 import { Account } from "../models/account";
 import { BanknService } from '../services/bankn.service';
 import { EventsService } from '../services/events.service';
@@ -10,9 +10,9 @@ import { TransactionService } from '../services/transaction.service';
 export class AccountService {
 
   constructor(
+    private injector:Injector,
     private banknService : BanknService,
     private eventsService : EventsService,
-    private transactionService : TransactionService
   ) { }
 
   createAccount(
@@ -35,6 +35,7 @@ export class AccountService {
   }
 
   toJson(accounts:Account[]){
+    var transactionService:TransactionService = this.injector.get(TransactionService);
     var results = [];
     accounts.forEach(account => {
       results.push(new Account(
@@ -44,7 +45,7 @@ export class AccountService {
         account.referenceAmount,
         account.referenceDate,
         account.referenceCountry,
-        this.transactionService.toJson(account.transactions),
+        transactionService.toJson(account.transactions),
         account.selected
       ));
     });
@@ -52,6 +53,7 @@ export class AccountService {
   }
 
   fromJson(json){
+    var transactionService:TransactionService = this.injector.get(TransactionService);
     var results = [];
     if(json!=null){
       json.forEach(account => {
@@ -62,7 +64,7 @@ export class AccountService {
           account.referenceAmount,
           account.referenceDate,
           account.referenceCountry,
-          this.transactionService.fromJson(account.transactions, account.referenceAmount),
+          transactionService.fromJson(account.transactions, account.referenceAmount),
           account.selected
         ));
       });
