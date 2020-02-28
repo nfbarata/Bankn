@@ -47,8 +47,16 @@ export class BanknService {
     return this.bankn!=null;
   }
 
+  setBankn(bankn:Bankn){
+    this.clear();
+    this.bankn = bankn;    
+    this.eventsService.banknChange.emit();
+    this.eventsService.accountsChange.emit();
+    this.eventsService.accountSelectionChange.emit();
+  }
+
   fromJson(json){
-    var accountService:AccountService = this.injector.get(AccountService);
+    var accountService = this.injector.get("AccountService");
     return new Bankn(
       json.name,
       accountService.fromJson(json.accounts),
@@ -59,7 +67,7 @@ export class BanknService {
   loadFromFile(): void{
     this.fileService.parseJsonFile((bankn:Bankn)=>{
       this.clear();
-      this.bankn = this.fromJson(bankn);    
+      this.setBankn(this.fromJson(bankn));
       this.eventsService.banknChange.emit();
       this.eventsService.accountsChange.emit();
       this.eventsService.accountSelectionChange.emit();

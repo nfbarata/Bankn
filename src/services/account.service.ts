@@ -3,7 +3,6 @@ import { Account } from "../models/account";
 import { BanknService } from '../services/bankn.service';
 import { EventsService } from '../services/events.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -35,7 +34,7 @@ export class AccountService {
   }
 
   toJson(accounts:Account[]){
-    var transactionService:TransactionService = this.injector.get(TransactionService);
+    var transactionService: = this.injector.get("TransactionService");
     var results = [];
     accounts.forEach(account => {
       results.push(new Account(
