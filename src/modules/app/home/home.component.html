@@ -13,5 +13,7 @@
   <div class="col-sm-6">
     <transactions-import-card [hidden]="!(hasBankn&&hasAccounts)"></transactions-import-card>
   </div>
-  
+  <div class="col-sm-6">
+    <transaction-create-card [hidden]="!(hasBankn&&hasAccounts)"></transaction-create-card>
+  </div>
 </div>
