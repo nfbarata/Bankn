@@ -14,7 +14,7 @@ import { TransactionsImportCardComponent } from './transactions-import-card/tran
     CommonModule, RouterModule
   ],
   exports: [
-    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent
   ],
   declarations: [
     AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent
