@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TransactionListComponent } from './transaction-list/transaction-list.component'
 import { TransactionImportComponent } from './transaction-import/transaction-import.component'
+import { TransactionComponent } from './transaction-import/transaction.component'
 
 const routes: Routes = [
   { path: '', component: TransactionListComponent },

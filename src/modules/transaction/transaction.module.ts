@@ -20,7 +20,7 @@ import { TransactionComponent } from './transaction/transaction.component'
     TransactionComponent
   ],
   exports: [
-    TransactionImportComponent
+    TransactionImportComponent,TransactionComponent
   ]
 })
 export class TransactionModule { }
