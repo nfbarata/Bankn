@@ -6,18 +6,21 @@
       {{ account.name }}
     </a>
   </h3>
-  <p *ngIf="account.description">
+  <div *ngIf="account.description">
     Description: {{ account.description }}
-  </p>
-  <button [routerLink]="['/accounts/account',account.id]">
+  </div>
+  <br>
+  <button class="btn btn-primary text-white" [routerLink]="['/accounts/account',account.id]">
     Open
   </button>
-  <button (click)="onDelete(account)">
+  <button class="btn btn-danger text-white" (click)="onDelete(account)">
     delete
   </button>
+  <br>
 </div>
+<br>
 <div>
-  <button [routerLink]="['/accounts/account']">
+  <button class="btn btn-primary text-white" [routerLink]="['/accounts/account']">
     Create
   </button>
 </div>
