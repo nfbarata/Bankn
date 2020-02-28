@@ -12,6 +12,7 @@ export class TransactionsImportCardComponent implements OnInit {
   
   accounts:Account[] = [];
   selectedAccount:Account=null;
+  newSelectedAccount:Account=null;
 
   constructor(
     private accountService: AccountService,
@@ -36,6 +37,10 @@ export class TransactionsImportCardComponent implements OnInit {
     }else{
       this.selectedAccount=this.accounts[0];
     }
-    console.log(this.selectedAccount.id);
+  }
+
+  accountChangeHandler (event: any) {
+    //update the ui
+    this.newSelectedAccount = event.target.value;
   }
 }
