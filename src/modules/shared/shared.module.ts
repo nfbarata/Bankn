@@ -13,7 +13,7 @@ import { BanknCreateCardComponent } from './bankn-create-card/bankn-create-card.
     CommonModule, RouterModule
   ],
   exports: [
-    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent
   ],
   declarations: [
     AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent

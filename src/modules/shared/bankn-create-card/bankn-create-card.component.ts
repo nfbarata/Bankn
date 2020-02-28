@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'pp-bankn-create-card',
+  selector: 'bankn-create-card',
   templateUrl: './bankn-create-card.component.html',
   styleUrls: ['./bankn-create-card.component.css']
 })
