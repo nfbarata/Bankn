@@ -46,7 +46,7 @@ export class BanknService {
     return this.countries;
   }
 
-  getDefaultCountryCode(){
+  getDefaultCountryCode():String{
     return this.defaultCountryCode;
   }
 

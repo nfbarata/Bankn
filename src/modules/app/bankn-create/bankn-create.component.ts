@@ -18,19 +18,13 @@ export class BanknCreateComponent implements OnInit {
     private banknService:BanknService,
   ) { 
     this.formData = {
-        id:null,
-        name:null,
-        referenceValue:null,
         referenceCountry:null,
-        referenceDay:null,
-        referenceMonth:null,
-        referenceYear:null,
-        description:null
       }
       this.form = this.formBuilder.group(this.formData);
   }
 
   ngOnInit() {
+    this.formData.referenceCountry = this.banknService.getDefaultCountryCode();
     this.countries = this.banknService.getCountries();
   }
 
