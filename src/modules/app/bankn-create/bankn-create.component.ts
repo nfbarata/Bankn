@@ -42,12 +42,12 @@ export class BanknCreateComponent implements OnInit {
     var currency = country.currencies[0];
     
     if(data.id==null){
-      this.banknService.loadFromJson(
+      this.banknService.setBankn(this.banknService.fromJson(
         {
           name:data.name,
           referenceCountry:data.referenceCountry
         }
-      );
+      ));
       this.router.navigate(['/accounts/account']);
     }else{
       this.banknService.update(
