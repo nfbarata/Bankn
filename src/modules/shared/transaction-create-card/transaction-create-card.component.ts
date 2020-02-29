@@ -31,13 +31,15 @@ export class TransactionCreateCardComponent implements OnInit {
   }
 
   refreshSelectionData(){
-    var selectedAccounts = this.accountService.getSelectedAccounts();
-    if(selectedAccounts.length>0){
-      this.selectedAccount=selectedAccounts[0];
-    }else{
-      this.selectedAccount=this.accounts[0];
+    if(this.accounts.length>0){
+      var selectedAccounts = this.accountService.getSelectedAccounts();
+      if(selectedAccounts.length>0){
+        this.selectedAccount=selectedAccounts[0];
+      }else{
+        this.selectedAccount=this.accounts[0];
+      }
+      this.newSelectedAccount = this.selectedAccount.id;
     }
-    this.newSelectedAccount = this.selectedAccount.id;
   }
 
   accountChangeHandler (event: any) {
