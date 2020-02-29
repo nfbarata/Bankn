@@ -80,20 +80,16 @@ export class AccountService {
     }
   }
 
-  getCurrency(accountReferenceAmount:Dinero){
-    return accountReferenceAmount.currency;
-  }
-
-  getPrecision(accountReferenceAmount:Dinero){
+  private getPrecision(currency:String){
     //TODO guardar este valor em memória
-    var reference = Dinero({currency:this.getCurrency(accountReferenceAmount)});
+    var reference = Dinero({currency:currency});
     return reference.getPrecision();
   }
 
-  toDinero(accountReferenceAmount:Dinero, amount){
+  toDinero(currency:String, amount){
     return Dinero({
-        amount:amount * Math.pow(10,this.getPrecision(accountReferenceAmount)),
-        currency:this.getCurrency(accountReferenceAmount)
+        amount:amount * Math.pow(10,this.getPrecision(currency)),
+        currency:currency
     });
   }
 
