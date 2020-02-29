@@ -4,7 +4,6 @@ import { ActivatedRoute,Router } from '@angular/router';
 import { BanknService } from '../../../services/bankn.service';
 import { AccountService } from '../../../services/account.service';
 import { Account } from "../../../models/account";
-//import currencies from '../../../assets/currencies.json';
 
 @Component({
   selector: 'account',
