@@ -8,11 +8,11 @@ export class Account {
   //type
   //arquived
   transactions : Transaction[] = [];
-  referenceAmount:Object;//Dinero format
-  referenceCountry:String;
+  referenceAmount:Dinero;
+  referenceCountry:String;//to select in edit
   referenceDate:Date;
   description:String = "";
-  //currency; inside referenceValue
+  //currency; inside referenceAmount
   //exclude orçamentos
 
   selected:Boolean = false;

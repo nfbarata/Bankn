@@ -4,28 +4,28 @@ export class Transaction {
   
   private id:String;//uuid
   
-  private amount;
+  private amount:Dinero;
   private date:Date;
 
   //type;  despesa/receita/transfer
   //account:Account;
-  private toAccount : string;
+  private toAccount : String;
 
-  private entity:string;//fromAccount
-  private category:string;
+  private entity:String;//fromAccount
+  private category:String;
 
-  private description:string;
+  private description:String;
 
   //receipt;
 
   constructor(
-    uuid:string,
-    amount,
+    uuid:String,
+    amount:Dinero,
     date:Date,
-    toAccount:string,
-    entity:string,
-    category:string,
-    description:string
+    toAccount:String,
+    entity:String,
+    category:String,
+    description:String
   ) {
     this.id = uuid;
     this.amount = amount;
