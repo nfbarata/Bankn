@@ -52,7 +52,7 @@ export class AccountService {
   }
 
   fromJson(json){
-    var transactionService:TransactionService = this.injector.get(TransactionService);
+    var transactionService = this.injector.get("TransactionService");
     var results = [];
     if(json!=null){
       json.forEach(account => {

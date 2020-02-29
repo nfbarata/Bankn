@@ -79,7 +79,7 @@ export class BanknService {
   }
 
   toJson(){
-    var accountService:AccountService = this.injector.get(AccountService);
+    var accountService = this.injector.get("AccountService");
     new Bankn(
       this.bankn.name,
       accountService.toJson(this.bankn.accounts),
