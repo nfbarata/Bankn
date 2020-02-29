@@ -80,7 +80,7 @@ export class AccountComponent implements OnInit {
     }
     var currency = country.currencies[0];
     
-    var amount: = this.accountService.toDinero(currency,data.referenceAmount);
+    var amount = this.accountService.toDinero(currency,data.referenceAmount);
 
     var date = new Date(0);//clear hours/minutes/seconds
     date.setFullYear(data.referenceYear, data.referenceMonth-1, data.referenceDay);

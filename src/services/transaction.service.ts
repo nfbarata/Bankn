@@ -20,7 +20,7 @@ export class TransactionService {
     transactions.forEach(transaction => {
       results.push(new Transaction(
         transaction.id,
-        transaction.amount.amount,//Dinero to value, compacted result
+        transaction.amount.toUnit(),//Dinero to value, compacted result
         transaction.date,
         transaction.toAccount,
         transaction.entity,
@@ -31,13 +31,13 @@ export class TransactionService {
     return results;
   }
 
-  fromJson(json, accountReferenceAmount:Dinero){
+  fromJson(json, currency:String){
     var results = [];
     if(json!=null){
       json.forEach(transaction => {
         results.push(new Transaction(
           transaction.id,
-          this.accountService.toDinero(accountReferenceAmount, transaction.amount),//value to Dinero, speed
+          this.accountService.toDinero(currency, transaction.amount),//value to Dinero, speed
           transaction.date,
           transaction.toAccount,
           transaction.entity,

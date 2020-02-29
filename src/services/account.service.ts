@@ -79,7 +79,7 @@ export class AccountService {
           Dinero(account.referenceAmount),
           account.referenceDate,
           account.referenceCountry,
-          transactionService.fromJson(account.transactions, account.referenceAmount),
+          transactionService.fromJson(account.transactions, account.referenceAmount.currency),
           account.selected
         ));
       });
