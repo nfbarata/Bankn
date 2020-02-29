@@ -95,7 +95,7 @@ export class AccountComponent implements OnInit {
       this.accountService.createAccount(
         data.name,
         data.description,
-        amount.toObject(),
+        amount,//.toObject(),
         date,
         data.referenceCountry
       );
@@ -104,7 +104,7 @@ export class AccountComponent implements OnInit {
         data.id,
         data.name,
         data.description,
-        amount.toObject(),
+        amount,//.toObject(),
         date,
         data.referenceCountry
       );
