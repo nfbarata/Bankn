@@ -34,7 +34,7 @@ export class AccountService {
   }
 
   toJson(accounts:Account[]){
-    var transactionService: = this.injector.get("TransactionService");
+    var transactionService = this.injector.get("TransactionService");
     var results = [];
     accounts.forEach(account => {
       results.push(new Account(

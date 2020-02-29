@@ -12,8 +12,11 @@ registerLocaleData(localePt, 'pt-PT');
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
-import { AccountService } from '../../services/account.service';
 import { FileService } from '../../services/file.service';
+import { EventsService } from '../../services/events.service';
+import { BanknService } from '../../services/bankn.service';
+import { AccountService } from '../../services/account.service';
+import { TransactionService } from '../../services/transaction.service';
 
 import { MainComponent } from './main/main.component';
 import { MenuComponent } from './menu/menu.component';
@@ -39,6 +42,7 @@ const lang = (function(defaultValue:String) {
     AppRoutingModule, SharedModule
   ],
   exports: [
+    
   ],
   declarations: [ 
     MainComponent, MenuComponent, HomeComponent, MenuSideComponent, BanknCreateComponent
@@ -46,7 +50,8 @@ const lang = (function(defaultValue:String) {
   bootstrap: [ MainComponent ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' }, 
-    AccountService, FileService,
+    EventsService,FileService,
+    BanknService, AccountService, TransactionService,
     { provide: LOCALE_ID, useValue: lang }
   ]
 })
