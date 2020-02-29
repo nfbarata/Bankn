@@ -37,7 +37,7 @@ export class TransactionService {
       json.forEach(transaction => {
         results.push(new Transaction(
           transaction.id,
-          this.accountService.toDinero(accountReferenceAmount, transaction.amount.amount),//value to Dinero, speed
+          this.accountService.toDinero(accountReferenceAmount, transaction.amount),//value to Dinero, speed
           transaction.date,
           transaction.toAccount,
           transaction.entity,
