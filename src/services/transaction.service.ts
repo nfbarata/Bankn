@@ -4,9 +4,7 @@ import { Account } from "../models/account";
 import { Transaction } from "../models/transaction";
 import { AccountService } from '../services/account.service';
 
-@Injectable({
-  providedIn:'root'
-})
+@Injectable({providedIn: 'root'})
 export class TransactionService {
 
   constructor(

@@ -2,8 +2,9 @@ import { Output, LOCALE_ID, Inject } from '@angular/core';
 import { Injectable, Injector } from '@angular/core';
 import { Bankn } from "../models/bankn";
 import { Account } from "../models/account";
-import { EventsService} from "./events.service";
-import { FileService} from "./file.service";
+import { EventsService } from "./events.service";
+import { FileService } from "./file.service";
+import { ACCOUNT_SERVICE } from '../modules/app/app.module';
 
 const countries        = require('country-data-list').countries,
       currencies       = require('country-data-list').currencies,
@@ -11,9 +12,7 @@ const countries        = require('country-data-list').countries,
       languages        = require('country-data-list').languages,
       callingCountries = require('country-data-list').callingCountries;
 
-@Injectable({
-  providedIn:'root'
-})
+@Injectable({providedIn: 'root'})
 export class BanknService {
 
   private bankn : Bankn=null;
@@ -56,7 +55,7 @@ export class BanknService {
   }
 
   fromJson(json){
-    var accountService = this.injector.get("AccountService");
+    var accountService = this.injector.get(ACCOUNT_SERVICE);
     return new Bankn(
       json.name,
       accountService.fromJson(json.accounts),
@@ -78,8 +77,8 @@ export class BanknService {
     this.fileService.downloadJsonFile(this.toJson());
   }
 
-  toJson(){
-    var accountService = this.injector.get("AccountService");
+  toJson():Bankn{
+    var accountService = this.injector.get(ACCOUNT_SERVICE);
     new Bankn(
       this.bankn.name,
       accountService.toJson(this.bankn.accounts),

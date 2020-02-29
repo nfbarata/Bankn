@@ -2,10 +2,9 @@ import { Injectable, Inject, Injector } from '@angular/core';
 import { Account } from "../models/account";
 import { BanknService } from '../services/bankn.service';
 import { EventsService } from '../services/events.service';
+import { TRANSACTION_SERVICE } from '../modules/app/app.module';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class AccountService {
 
   constructor(
@@ -34,7 +33,7 @@ export class AccountService {
   }
 
   toJson(accounts:Account[]){
-    var transactionService = this.injector.get("TransactionService");
+    var transactionService = this.injector.get(TRANSACTION_SERVICE);
     var results = [];
     accounts.forEach(account => {
       results.push(new Account(
@@ -52,7 +51,7 @@ export class AccountService {
   }
 
   fromJson(json){
-    var transactionService = this.injector.get("TransactionService");
+    var transactionService = this.injector.get(TRANSACTION_SERVICE);
     var results = [];
     if(json!=null){
       json.forEach(account => {

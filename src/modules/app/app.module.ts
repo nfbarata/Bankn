@@ -1,4 +1,4 @@
-import { NgModule , LOCALE_ID, Injector, Inject  } from '@angular/core';
+import { NgModule , LOCALE_ID, Injector, Inject, InjectionToken  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';//from erro
@@ -35,6 +35,10 @@ const lang = (function(defaultValue:String) {
     return lang;
 })('pt-PT');
 
+export let AppInjector: Injector;
+export const ACCOUNT_SERVICE = new InjectionToken('AccountService');
+export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
+
 @NgModule({
   imports: [ 
     BrowserModule, 
@@ -50,14 +54,23 @@ const lang = (function(defaultValue:String) {
   bootstrap: [ MainComponent ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' }, 
+    {provide: LOCALE_ID, useValue: lang},
     EventsService,FileService,
     BanknService, AccountService, TransactionService,
-    { provide: LOCALE_ID, useValue: lang }
+    { provide: ACCOUNT_SERVICE, useExisting: AccountService },
+    { provide: TRANSACTION_SERVICE, useExisting: TransactionService }
   ]
 })
 export class AppModule { 
- 
+   
   constructor(
-    private injector:Injector
-  ){  }
+    private injector:Injector,
+    private eventsService: EventsService,
+    private fileService: FileService,
+    private banknService:BanknService, 
+    private accountService:AccountService, 
+    private transactionService:TransactionService
+  ){  
+    AppInjector=this.injector;
+  }
 }

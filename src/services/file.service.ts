@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Account } from "../models/account";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class FileService {
 
   fileToUpload: File = null;

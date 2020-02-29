@@ -18,7 +18,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(){
     if(environment.bankn!=null){
-      //this.banknService.setBankn(this.banknService.fromJson(environment.bankn));
+      this.banknService.setBankn(this.banknService.fromJson(environment.bankn));
     }
   }
 
