@@ -35,7 +35,6 @@ export class TransactionService {
     var results = [];
     if(json!=null){
       json.forEach(transaction => {
-
         results.push(new Transaction(
           transaction.id,
           this.accountService.toDinero(currency, transaction.amount),//value to Dinero, speed
@@ -59,7 +58,6 @@ export class TransactionService {
     var transactions : Transaction[] = [];
     accounts.forEach(account => {
       account.transactions.forEach(transaction => {
-        transaction.amount = this.accountService.toDinero(account, transaction.amount);
         transactions.push(transaction);
       });
     });
