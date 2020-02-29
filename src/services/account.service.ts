@@ -32,6 +32,23 @@ export class AccountService {
     this.banknService.addAccount(account);
   }
 
+  updateAccount(
+    id:String,
+    name:String, 
+    description:String, 
+    referenceAmount:Dinero, 
+    referenceDate:Date,
+    referenceCountry:String){
+
+    var account : Account = this.getAccount(id);
+    account.name = name;
+    account.description = description;
+    account.referenceAmount = referenceAmount;
+    account.referenceDate = referenceDate;
+    account.referenceCountry = referenceCountry;
+    this.eventsService.accountsChange.emit();
+  }
+
   toJson(accounts:Account[]){
     var transactionService = this.injector.get(TRANSACTION_SERVICE);
     var results = [];
@@ -40,7 +57,7 @@ export class AccountService {
         account.id,
         account.name,
         account.description,
-        account.referenceAmount,
+        account.referenceAmount.toObject(),
         account.referenceDate,
         account.referenceCountry,
         transactionService.toJson(account.transactions),
@@ -59,7 +76,7 @@ export class AccountService {
           account.id,
           account.name,
           account.description,
-          account.referenceAmount,
+          Dinero(account.referenceAmount),
           account.referenceDate,
           account.referenceCountry,
           transactionService.fromJson(account.transactions, account.referenceAmount),
@@ -91,23 +108,6 @@ export class AccountService {
         amount:amount * Math.pow(10,this.getPrecision(currency)),
         currency:currency
     });
-  }
-
-  updateAccount(
-    id:String,
-    name:String, 
-    description:String, 
-    referenceAmount:Dinero, 
-    referenceDate:Date,
-    referenceCountry:String){
-
-    var account : Account = this.getAccount(id);
-    account.name = name;
-    account.description = description;
-    account.referenceAmount = referenceAmount;
-    account.referenceDate = referenceDate;
-    account.referenceCountry = referenceCountry;
-    this.eventsService.accountsChange.emit();
   }
 
   deleteAccountId(accountId:String){

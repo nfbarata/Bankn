@@ -56,15 +56,11 @@ export class AccountComponent implements OnInit {
         
       }else{
         var account:Account = this.accountService.getAccount(accountId);
-        var country;
-        for (let i = 0; i < this.countries.length; i++) {
-          if (this.countries[i].currencies[0] == account.referenceAmount.currency) 
-            country = this.countries[i];
-        }
+
         this.accountFormData = {
           id:account.id,
           name:account.name,
-          referenceAmount:Dinero(account.referenceAmount).toUnit(),
+          referenceAmount:account.referenceAmount.toUnit(),
           referenceCountry:account.referenceCountry,
           referenceDay:account.referenceDate.getDate(),
           referenceMonth:account.referenceDate.getMonth()+1,
@@ -84,8 +80,8 @@ export class AccountComponent implements OnInit {
     }
     var currency = country.currencies[0];
     
-    var amount = this.accountService.toDinero(currency,data.referenceAmount);
-    
+    var amount: = this.accountService.toDinero(currency,data.referenceAmount);
+
     var date = new Date(0);//clear hours/minutes/seconds
     date.setFullYear(data.referenceYear, data.referenceMonth-1, data.referenceDay);
     
