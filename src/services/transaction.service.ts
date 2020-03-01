@@ -66,6 +66,6 @@ export class TransactionService {
   }
 
   compareTransaction(a:Transaction,b:Transaction){
-    return a.date-b.date;
+    return b.datea.date;
   }
 }

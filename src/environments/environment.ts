@@ -8,7 +8,7 @@ export const environment = {
       {
         id:1,
         name:"conta teste 1",
-        selected : false,
+        selected : true,
         referenceAmount : {
           amount:0,
           currency:'EUR',
