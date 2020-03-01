@@ -1,49 +1,57 @@
 <h2>{{formData.id==null?'Create Transaction':'Edit Transaction'}}</h2>
 <br>
-<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)"> 
-  <div class="container">
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+
     <div class="row">
       <div class="col-sm-6 form-group">
-          <label for="name" i18n>Name</label>
-          <input  class="form-control" id="name" type="text" formControlName="name">
+          <label for="name" i18n>Entity</label>
+          <input  class="form-control" id="entity" type="text" formControlName="entity">
       </div>
     </div>
+
     <div class="row">
       <div class="col-sm-12 form-group">
-        <label i18n>Reference Value</label>
+        <label i18n>Date</label>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-2 form-group">
-        <input  class="form-control" id="referenceAmount" type="text" formControlName="referenceAmount">
-        <small id="passwordHelpBlock" class="form-text text-muted">Value</small>
+      <div class="col-xl-1 col-md-2 col-4 form-group">
+        <input class="form-control" id="day" type="text" formControlName="day">
+        <small id="dayHelpBlock" class="form-text text-muted" i18n>Day</small>
       </div>
-      <div class="col-sm-4 form-group">
-        <select class="form-control" formControlName="referenceCountry">
-          <option *ngFor="let country of countries" [selected]="country.alpha2==formData.referenceCountry" [value]="country.alpha2">{{country.name}} - {{country.currencies[0]}}</option>
+      <div class="col-xl-1 col-md-2 col-4 form-group">
+        <input class="form-control" id="month" type="text" formControlName="month">
+        <small id="monthHelpBlock" class="form-text text-muted" i18n>Month</small>
+      </div>
+      <div class="col-xl-1 col-md-2 col-4 form-group">
+        <input class="form-control" id="year" type="text" formControlName="year">
+        <small id="yearHelpBlock" class="form-text text-muted" i18n>Year</small>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 form-group">
+        <label for="name" i18n>Account</label>
+        <select class="form-control" formControlName="accountId">
+              <option *ngFor="let account of accounts" [selected]="account.id==accountId" [value]="account.id">{{account.name}}</option>
         </select>
-        <small id="passwordHelpBlock" class="form-text text-muted">Currency</small>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-6 form-group">
+          <label for="name" i18n>Category</label>
+          <input  class="form-control" id="category" type="text" formControlName="category">
+      </div>
+    </div>
+
+
     <div class="row">
       <div class="col-sm-12 form-group">
-        <label i18n>Reference Date</label>
+        <label i18n>Amount</label>
+        <input  class="form-control" id="amount" type="text" formControlName="amount">
       </div>
     </div>
-    <div class="row">
-      <div class="col-xl-1 col-md-2 col-4 form-group">
-        <input class="form-control" id="referenceDay" type="text" formControlName="referenceDay">
-        <small id="passwordHelpBlock" class="form-text text-muted" i18n>Day</small>
-      </div>
-      <div class="col-xl-1 col-md-2 col-4 form-group">
-        <input class="form-control" id="referenceMonth" type="text" formControlName="referenceMonth">
-        <small id="passwordHelpBlock" class="form-text text-muted" i18n>Month</small>
-      </div>
-      <div class="col-xl-1 col-md-2 col-4 form-group">
-        <input class="form-control" id="referenceYear" type="text" formControlName="referenceYear">
-        <small id="passwordHelpBlock" class="form-text text-muted" i18n>Year</small>
-      </div>
-    </div>
+   
     <div class="row">
       <div class="col-12 form-group">
         <label for="description" i18n>
@@ -52,6 +60,6 @@
         <input class="form-control" id="description" type="text" formControlName="description">
       </div>
     </div>
-  </div>
-  <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
+  
+    <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
 </form>

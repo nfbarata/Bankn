@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
+import { EventsService } from '../../../services/events.service';
 import { BanknService } from '../../../services/bankn.service';
 import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
+import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: 'transaction',
@@ -15,8 +17,11 @@ export class TransactionComponent implements OnInit {
 
   form;
   formData;
+  accounts:Account[];
+  accountId:String;
 
   constructor(
+    private eventsService: EventsService,
     private banknService: BanknService,
     private accountService: AccountService,
     private transactionService: TransactionService,
@@ -25,6 +30,7 @@ export class TransactionComponent implements OnInit {
     private router: Router
   ) {
     this.formData = {
+      accountId:null,
       id:null,
       amount:null,
       day:null,
@@ -40,11 +46,14 @@ export class TransactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshAccounts();
+    this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
    this.route.paramMap.subscribe(params => {
-      var accountId:String = params.get('accountId');
+      this.accountId = params.get('accountId');
       var transactionId:String = params.get('transactionId');
       if(transactionId==null || transactionId.trim().length==0){
         this.formData = {
+          accountId:this.accountId,
           id:null,
           amount:0,
           day:1,
@@ -57,9 +66,8 @@ export class TransactionComponent implements OnInit {
           description:""
         }
         this.form.setValue(this.formData);
-        
       }else{
-        var account:Account = this.accountService.getAccount(accountId);
+        var transaction:Transaction = this.transactionService.getTransaction(this.accountId,transactionId);
 
         this.formData = {
           id:account.id,
@@ -74,6 +82,10 @@ export class TransactionComponent implements OnInit {
         this.form.setValue(this.formData);
       } 
     });
+  }
+
+  refreshAccounts(){
+    this.accounts = this.accountService.getAccounts();
   }
 
   onSubmit(data) {
