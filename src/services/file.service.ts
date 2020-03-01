@@ -21,7 +21,7 @@ export class FileService {
 
         picReader.addEventListener("load", function(event) {
             var textFile = event.target;
-            console.log(textFile.result);
+            //console.log(textFile.result);
             var object = JSON.parse(textFile.result);
             callback(object);
         });
