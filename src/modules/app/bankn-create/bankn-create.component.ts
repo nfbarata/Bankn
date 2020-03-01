@@ -32,8 +32,8 @@ export class BanknCreateComponent implements OnInit {
   ngOnInit() {
     this.countries = this.banknService.getCountries();
     this.route.paramMap.subscribe(params => {
-      var accountId:String = params.get('banknId');
-      if(accountId==null || accountId.trim().length==0){
+      var banknId:String = params.get('banknId');
+      if(banknId==null || banknId.trim().length==0){
         this.formData.name="bankn";
         this.formData.referenceCountry = this.banknService.getDefaultCountryCode();
         this.form.setValue(this.formData);
