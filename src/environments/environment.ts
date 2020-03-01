@@ -25,14 +25,14 @@ export const environment = {
           {
             id:11,
             amount:1000000.01,
-            type:"Credit",
+            type:"c",
             date:new Date(2009,11,31),
             description: "movimento teste 11"
           },
           {
             id:12,
             amount:11.1,
-            type:"Debit",
+            type:"d",
             date:new Date(2009,5,12),
             description: "movimento teste 22"
           },
@@ -54,14 +54,14 @@ export const environment = {
           {
             id:21,
             amount:20,
-            type:"Credit",
+            type:"c",
             date:new Date(2009,6,11),
             description: "movimento teste 21"
           },
           {
             id:22,
             amount:21,
-            type:"Dedit",
+            type:"d",
             date:new Date(2009,5,12),
             description: "movimento teste 22"
           },

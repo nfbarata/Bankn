@@ -126,7 +126,6 @@ export class AccountService {
 
   getAccount(accountId:String) : Account{
     var accounts:Account[] = this.getAccounts();
-    returnAccount : Account;
     for (let i = 0; i < accounts.length; i++) {
       if (accounts[i].id == accountId) 
         return accounts[i];

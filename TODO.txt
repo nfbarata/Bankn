@@ -9,3 +9,6 @@ date format
 visual
 i18n
 transactions telem
+
+icones
+  txn list edit 

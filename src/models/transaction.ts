@@ -16,10 +16,11 @@ export const TransactionType = {
 }
 
 export function getTransactionType(id:String){
-  for (let [key, value] of Object.entries(object1)) {
-    if(key==id)
+  for (let [key, value] of Object.entries(TransactionType)) {
+    if(value.==id)
       return value;
   }
+  console.error("TransactionType not found: "+id);
 }
 
 export class Transaction {

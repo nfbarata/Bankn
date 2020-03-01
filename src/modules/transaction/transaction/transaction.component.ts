@@ -70,8 +70,7 @@ export class TransactionComponent implements OnInit {
         }
         this.form.setValue(this.formData);
       }else{
-        var transaction:Transaction = this.transactionService.getTransaction(this.account.id,transactionId);
-
+        var transaction:Transaction = this.transactionService.getTransaction(this.account,transactionId);
         this.formData = {
           accountId:this.account.id,
           id:transactionId,
@@ -103,7 +102,7 @@ export class TransactionComponent implements OnInit {
     date.setFullYear(data.referenceYear, data.referenceMonth-1, data.referenceDay);
     
     if(data.id==null){
-      this.accountService.createAccount(
+      this.transactionService.createTransaction(
         data.name,
         data.description,
         amount,//.toObject(),
@@ -111,7 +110,7 @@ export class TransactionComponent implements OnInit {
         data.referenceCountry
       );
     }else{
-      this.accountService.updateAccount(
+      this.transactionService.updateTransaction(
         data.id,
         data.name,
         data.description,
