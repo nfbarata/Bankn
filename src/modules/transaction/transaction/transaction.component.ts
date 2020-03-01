@@ -6,7 +6,7 @@ import { BanknService } from '../../../services/bankn.service';
 import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
-import { Transaction, TransactionType } from "../../../models/transaction";
+import { Transaction, TransactionType, getTransactionType } from "../../../models/transaction";
 
 @Component({
   selector: 'transaction',
@@ -76,9 +76,9 @@ export class TransactionComponent implements OnInit {
           accountId:this.account.id,
           id:transactionId,
           amount:this.transaction.amount.toUnit(),
-          day:1,
-          month:1,
-          year:2000,
+          day:this.transaction.date.getDate(),
+          month:this.transaction.date.getMonth()+1,
+          tear:this.transaction.date.getFullYear(),
           typeId:this.transaction.type.id,
           toAccount:this.transaction.toAccount,
           entity:this.transaction.entity,
@@ -99,14 +99,14 @@ export class TransactionComponent implements OnInit {
     var amount = this.accountService.toDinero(account.referenceAmount.getCurrency(),data.amount);
 
     var date = new Date(0);//clear hours/minutes/seconds
-    date.setFullYear(data.year, data.month-1, data.ay);
-    
+    date.setFullYear(data.year, data.month-1, data.day);
+
     if(data.id==null){
       this.transactionService.createTransaction(
         account,
         amount,
         date,
-        data.typeId,
+        getTransactionType(data.typeId),
         data.toAccount,
         data.entity,
         data.category,
@@ -118,7 +118,7 @@ export class TransactionComponent implements OnInit {
         this.transaction,
         amount,
         date,
-        data.typeId,
+        getTransactionType(data.typeId),
         data.toAccount,
         data.entity,
         data.category,
@@ -128,4 +128,5 @@ export class TransactionComponent implements OnInit {
     this.form.reset();
     this.router.navigate(['/transactions']);
   }
+  
 }
