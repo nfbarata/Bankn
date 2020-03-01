@@ -5,7 +5,7 @@
 
 <div class="container" [hidden]="transactions==0">
   <div *ngFor="let transaction of transactions; let i = index;">
-    <div class="row bg-secondary text-white" *ngIf="i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime()">
+    <div class="row bg-secondary text-white" *ngIf="transaction.hide!=true && (i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime())">
       <label class="col-sm-3">
         {{transaction.date|date}}
       </label>
@@ -15,7 +15,7 @@
         {{transaction.sum | dinero}}
       </label>
     </div>
-    <div class="row">
+    <div class="row" *ngf="transaction.hide!=true">
       <label class="col-sm-3">
         
       </label>
@@ -33,7 +33,7 @@
       <label class="col-sm-7">
       </label>
       <label class="col-sm-2">
-        saldo inicial
+        {{transaction.amount | dinero}}
       </label>
     </div>
   </div>

@@ -32,6 +32,18 @@ export class TransactionListComponent implements OnInit {
   refreshData(){
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.transactions = this.transactionService.getTransactions(this.selectedAccounts);
+    
+    //add reference values
+    this.selectedAccounts.forEach(account => {
+      var referenceTransaction = this.transactionService.getReferenceTransaction(account);
+      referenceTransaction.hide=true;
+      this.transactions.push(referenceTransaction);
+    });
+
+    //sort
+    this.transactions = this.transactionService.sortTransactions(this.transactions);
+
+    //add sums
     var sum = Dinero({amount:0,currency:"EUR"});//account ini
     for (let i = this.transactions.length-1; i >=0 ; i--) {
       sum = sum.add(this.transactions[i].amount);

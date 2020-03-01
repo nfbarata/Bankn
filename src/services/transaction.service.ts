@@ -49,6 +49,18 @@ export class TransactionService {
     return results;
   }
 
+  getReferenceTransaction(account:Account){
+    return new Transaction(
+      "referenceAccount-"+account.id,
+      account.referenceAmount,
+      account.referenceDate,
+      null,
+      null,
+      null,
+      null
+    );
+  }
+
   getSelectedAccountsTransactions() : Transaction[]{
     var accounts : Account[] = this.accountService.getSelectedAccounts();
     return this.getTransactions(accounts);
@@ -61,8 +73,11 @@ export class TransactionService {
         transactions.push(transaction);
       });
     });
-    transactions = transactions.sort(this.compareTransaction);
     return transactions;
+  }
+
+  sortTransactions(transactions:Transaction[]){
+    return transactions.sort(this.compareTransaction);
   }
 
   compareTransaction(a:Transaction,b:Transaction){
