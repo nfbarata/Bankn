@@ -17,7 +17,7 @@ export class TransactionService {
     account:Account,
     amount:Dinero,
     date:Date,
-    typeId:String,
+    type:String,
     toAccount:String,
     entity:String,
     category:String,
@@ -41,7 +41,7 @@ export class TransactionService {
     transaction:Transaction,
     amount:Dinero,
     date:Date,
-    typeId:String,
+    type:String,
     toAccount:String,
     entity:String,
     category:String,
@@ -49,7 +49,7 @@ export class TransactionService {
   ){
     transaction.amount = amount;
     transaction.date = date;
-    transaction.typeId = typeId;
+    transaction.type = type;
     transaction.toAmount = toAccount;
     transaction.entity = entity;
     transaction.category = category;
