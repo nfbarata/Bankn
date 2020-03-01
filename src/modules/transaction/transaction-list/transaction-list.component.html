@@ -23,7 +23,7 @@
         {{ transaction.description }}
       </label>
       <label class="col-lg-1 col-sm-2 col-1">
-        {{transaction.amount | dinero}}
+        {{transaction | transaction}}
       </label>
     </div>
     <div class="row bg-secondary text-white" *ngIf="i==transactions.length-1">
