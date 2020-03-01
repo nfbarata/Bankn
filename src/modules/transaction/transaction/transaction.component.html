@@ -1,6 +1,2 @@
 <h2>{{formData.id==null?'Create Transaction':'Edit Transaction'}}</h2>
 <br>
-<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)"> 
- 
-  <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
-</form>
