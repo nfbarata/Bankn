@@ -20,6 +20,7 @@ export class TransactionComponent implements OnInit {
   accounts:Account[];
   account:Account;
   transactionTypes:String;
+  transaction:Transaction = null;
 
   constructor(
     private eventsService: EventsService,
@@ -50,7 +51,7 @@ export class TransactionComponent implements OnInit {
   ngOnInit() {
     this.refreshAccounts();
     this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
-   this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(params => {
       var accountId = params.get('accountId');
       this.account = this.accountService.getAccount(accountId);
       var transactionId:String = params.get('transactionId');
@@ -70,19 +71,19 @@ export class TransactionComponent implements OnInit {
         }
         this.form.setValue(this.formData);
       }else{
-        var transaction:Transaction = this.transactionService.getTransaction(this.account,transactionId);
+        this.transaction = this.transactionService.getTransaction(this.account,transactionId);
         this.formData = {
           accountId:this.account.id,
           id:transactionId,
-          amount:transaction.amount.toUnit(),
+          amount:this.transaction.amount.toUnit(),
           day:1,
           month:1,
           year:2000,
-          typeId:transaction.type.id,
-          toAccount:transaction.toAccount,
-          entity:transaction.entity,
-          category:transaction.category,
-          description:transaction.description
+          typeId:this.transaction.type.id,
+          toAccount:this.transaction.toAccount,
+          entity:this.transaction.entity,
+          category:this.transaction.category,
+          description:this.transaction.description
         };
         this.form.setValue(this.formData);
       } 
@@ -94,29 +95,34 @@ export class TransactionComponent implements OnInit {
   }
 
   onSubmit(data) {
-    var currency = this.banknService.getCurrencyOfCountry(data.referenceCountry);
-    
-    var amount = this.accountService.toDinero(currency,data.referenceAmount);
+    var account = this.accountService.getAccount(data.account.id);
+    var amount = this.accountService.toDinero(account.referenceAmount.currency,data.referenceAmount);
 
     var date = new Date(0);//clear hours/minutes/seconds
     date.setFullYear(data.referenceYear, data.referenceMonth-1, data.referenceDay);
     
     if(data.id==null){
       this.transactionService.createTransaction(
-        data.name,
-        data.description,
-        amount,//.toObject(),
+        account,
+        amount,
         date,
-        data.referenceCountry
+        data.typeId,
+        data.toAccount,
+        data.entity,
+        data.category,
+        data.description
       );
     }else{
       this.transactionService.updateTransaction(
-        data.id,
-        data.name,
-        data.description,
-        amount,//.toObject(),
+        account,
+        this.transaction,
+        amount,
         date,
-        data.referenceCountry
+        data.typeId,
+        data.toAccount,
+        data.entity,
+        data.category,
+        data.description
       );
     }
     this.form.reset();
