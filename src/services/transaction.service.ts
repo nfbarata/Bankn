@@ -40,9 +40,9 @@ export class TransactionService {
           transaction.id,
           this.accountService.toDinero(currency, transaction.amount),//value to Dinero, speed
           transaction.date,
-          transaction.toAccount,
-          transaction.entity,
-          transaction.category,
+          typeof transaction.toAccount === "undefined"?null:transaction.toAccount,
+          typeof transaction.entity  === "undefined"?null:transaction.entity,
+          typeof transaction.category  === "undefined"?null:transaction.category,
           transaction.description,
           getTransactionType(transaction.type)
         ));

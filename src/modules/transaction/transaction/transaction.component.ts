@@ -74,7 +74,7 @@ export class TransactionComponent implements OnInit {
         this.formData = {
           accountId:this.account.id,
           id:transactionId,
-          amount:transaction.amount,
+          amount:transaction.amount.toUnit(),
           day:1,
           month:1,
           year:2000,
