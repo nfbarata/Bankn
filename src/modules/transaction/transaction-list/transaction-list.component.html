@@ -4,25 +4,20 @@
 <account-select-card [hidden]="!(accounts.length>0&&selectedAccounts.length==0)"></account-select-card>
 
 <div class="container" [hidden]="transactions==0">
-  <div class="row">
-    <h5 class="col-sm-3" i18n>Date</h5>
-    <h5 class="col-sm-7" i18n>Description</h5>
-    <h5 class="col-sm-2" i18n>Value</h5>
-  </div>
   <div *ngFor="let transaction of transactions; let i = index;">
-    <div class="row" *ngIf="i>0 && transaction.date.getTime()==transactions[i-1].date.getTime()">
+    <div class="row bg-secondary text-white" *ngIf="i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime()">
       <label class="col-sm-3">
-        date
+        {{transaction.date|date}}
       </label>
       <label class="col-sm-7">
       </label>
       <label class="col-sm-2">
-        sum
+        {{transaction.sum | dinero}}
       </label>
     </div>
     <div class="row">
       <label class="col-sm-3">
-        {{transaction.date|date}}
+        
       </label>
       <label class="col-sm-7">
         {{ transaction.description }}
@@ -41,5 +36,5 @@
         saldo inicial
       </label>
     </div>
-    <input #date{{i}} [hidden]="true" [value]="transaction.date.getTime()"/>
   </div>
+</div>
