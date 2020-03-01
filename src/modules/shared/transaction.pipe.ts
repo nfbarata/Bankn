@@ -7,6 +7,12 @@ import { Transaction,TransactionType } from "../../models/transaction";
 })
 export class TransactionPipe implements PipeTransform {
 
+  constructor(
+    private dinero:DineroPipe
+  ){
+
+  }
+
   transform(transaction: Transaction, args?: any): any {
     var result = "";
     switch(transaction.type){
@@ -14,10 +20,10 @@ export class TransactionPipe implements PipeTransform {
 
       break;
       case TransactionType.DEBIT:
-        result+="-";
+        result=result+"-";
       break;
     }
-    result += transaction | DineroPipe;
+    result = result + this.dinero.transform(transaction.amount);
     return result;
   }
 

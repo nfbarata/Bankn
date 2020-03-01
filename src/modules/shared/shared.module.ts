@@ -18,10 +18,13 @@ import { TransactionPipe } from './transaction.pipe';
   ],
   exports: [
     AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent,
-    TransactionCreateCardComponent,DineroPipe,
+    TransactionCreateCardComponent,DineroPipe,TransactionPipe
   ],
   declarations: [
     AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent, TransactionCreateCardComponent,DineroPipe, TransactionPipe
+  ],
+  providers:[
+    DineroPipe , TransactionPipe
   ]
 })
 export class SharedModule { }

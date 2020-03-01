@@ -47,7 +47,7 @@ export class TransactionListComponent implements OnInit {
     //add sums
     var sum = Dinero({amount:0,currency:"EUR"});//account ini
     for (let i = this.transactions.length-1; i >=0 ; i--) {
-      switch(transactions[i].type){
+      switch(this.transactions[i].type){
         case TransactionType.CREDIT:
           sum = sum.add(this.transactions[i].amount);
         break;
