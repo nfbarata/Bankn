@@ -37,9 +37,8 @@ export class BanknService {
     }
     console.log("default countryCode: "+this.defaultCountryCode);
     this.countries = countries.all.filter(function(country){
-          return country.currencies.length>0;
-        });
-    
+      return country.currencies.length>0;
+    });
   }
 
   initialized():Boolean{
@@ -133,8 +132,8 @@ export class BanknService {
   }
 
   getCurrencyOfCountry(countryCode:String){
-    var country;
-    for (let i = 0; i < this.countries.length; i++) {
+    var country = null;
+    for (let i = 0; i < this.countries.length && country==null; i++) {
       if (this.countries[i].alpha2 == countryCode) 
         country = this.countries[i];
     }
