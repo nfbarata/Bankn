@@ -27,7 +27,9 @@ export class TransactionComponent implements OnInit {
     this.formData = {
       id:null,
       amount:null,
-      date:null,
+      day:null,
+      month:null,
+      year:null,
       type:null,
       toAccount:null,
       entity:null,
@@ -44,13 +46,15 @@ export class TransactionComponent implements OnInit {
       if(transactionId==null || transactionId.trim().length==0){
         this.formData = {
           id:null,
-          name:'',
-          referenceAmount:0,
-          referenceCountry:this.banknService.getReferenceCountry(),
-          referenceDay:'1',
-          referenceMonth:'1',
-          referenceYear:'2000',
-          description:''
+          amount:0,
+          day:1,
+          month:1,
+          year:2000,
+          type:"",
+          toAccount:null,
+          entity:null,
+          category:null,
+          description:""
         }
         this.form.setValue(this.formData);
         

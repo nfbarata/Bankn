@@ -3,12 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TransactionListComponent } from './transaction-list/transaction-list.component'
 import { TransactionImportComponent } from './transaction-import/transaction-import.component'
-import { TransactionComponent } from './transaction-import/transaction.component'
+import { TransactionComponent } from './transaction/transaction.component'
 
 const routes: Routes = [
   { path: '', component: TransactionListComponent },
-  { path: 'transaction/:accountId', component: TransactionImportComponent },
-  { path: 'transaction/:accountId/:transactionId', component: TransactionImportComponent },
+  { path: 'transaction/:accountId', component: TransactionComponent },
+  { path: 'transaction/:accountId/:transactionId', component: TransactionComponent },
   { path: 'import/:accountId', component: TransactionImportComponent },
 ]
 
