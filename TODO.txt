@@ -4,3 +4,8 @@ categorias/entidades
 debito vs credito
 
 graficos
+
+
+visual
+
+transactions telem
