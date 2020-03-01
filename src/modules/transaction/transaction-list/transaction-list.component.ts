@@ -39,8 +39,7 @@ export class TransactionListComponent implements OnInit {
 
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.selectedAccounts.forEach(account => {
-      var transactions = this.transactionService.getTransactions(account);
-      transactions.forEach(transaction => {
+      account.transactions.forEach(transaction => {
         transaction.accountId=account.id;
         newTransactions.push(transaction);
       });
