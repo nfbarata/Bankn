@@ -1,5 +1,6 @@
 import { Injectable, Inject, Injector } from '@angular/core';
 import { Account } from "../models/account";
+import { Transaction } from "../models/transaction";
 import { BanknService } from '../services/bankn.service';
 import { EventsService } from '../services/events.service';
 import { TRANSACTION_SERVICE } from '../modules/app/app.module';
@@ -176,5 +177,10 @@ export class AccountService {
       account.selected = false;
       this.eventsService.accountSelectionChange.emit();
     }
+  }
+
+  addTransaction(account:Account, transaction:Transaction){
+    account.transactions.push(transaction);
+    this.eventsService.accountTransactionsChange.emit();
   }
 }

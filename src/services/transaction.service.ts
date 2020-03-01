@@ -2,17 +2,59 @@ import { Injectable, Inject } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { Account } from "../models/account";
 import { Transaction, TransactionType, getTransactionType } from "../models/transaction";
+import { EventsService } from '../services/events.service';
 import { AccountService } from '../services/account.service';
 
 @Injectable({providedIn: 'root'})
 export class TransactionService {
 
   constructor(
+    private eventsService: EventsService,
     private accountService : AccountService
   ) { }
 
-  createTransaction(){
-    uidv4();
+  createTransaction(
+    account:Account,
+    amount:Dinero,
+    date:Date,
+    typeId:String,
+    toAccount:String,
+    entity:String,
+    category:String,
+    description:String
+  ){
+    var transaction = new Transaction(
+        uidv4(),
+        transaction.amount,
+        transaction.date,
+        transaction.toAccount,
+        transaction.entity,
+        transaction.category,
+        transaction.description,
+        transaction.type
+      );
+      this.accountService.addTransaction(account,transaction);
+  }
+
+  updateTransaction(
+    account:Account,
+    transaction:Transaction,
+    amount:Dinero,
+    date:Date,
+    typeId:String,
+    toAccount:String,
+    entity:String,
+    category:String,
+    description:String
+  ){
+    transaction.amount = amount;
+    transaction.date = date;
+    transaction.typeId = typeId;
+    transaction.toAmount = toAccount;
+    transaction.entity = entity;
+    transaction.category = category;
+    transaction.description = description;
+    this.eventsService.transactionChange.emit();
   }
 
   toJson(transactions:Transaction[]){
