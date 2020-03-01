@@ -3,7 +3,7 @@ import { Account } from "../models/account";
 import { BanknService } from '../services/bankn.service';
 import { EventsService } from '../services/events.service';
 import { TRANSACTION_SERVICE } from '../modules/app/app.module';
-import { Dinero } from '@types/dinero.js'
+//import { Dinero } from '@types/dinero.js'
 
 @Injectable({providedIn: 'root'})
 export class AccountService {
