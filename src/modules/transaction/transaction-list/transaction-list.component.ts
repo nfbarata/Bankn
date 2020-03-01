@@ -31,15 +31,18 @@ export class TransactionListComponent implements OnInit {
 
   refreshData(){
     this.selectedAccounts = this.accountService.getSelectedAccounts();
-    this.transactions = this.transactionService.getTransactions(this.selectedAccounts);
-    
-    //add reference values
     this.selectedAccounts.forEach(account => {
+      var transactions = this.transactionService.getTransactions(this.selectedAccounts);
+      transactions.forEach(transaction => {
+        transaction.accountId=account.id;
+        this.transactions.push(transaction);
+      });
+      //add reference values
       var referenceTransaction = this.transactionService.getReferenceTransaction(account);
       referenceTransaction.hide=true;
       this.transactions.push(referenceTransaction);
     });
-
+    
     //sort
     this.transactions = this.transactionService.sortTransactions(this.transactions);
 
