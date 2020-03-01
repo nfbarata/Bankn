@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Bankn} from '../../../mode/bankn';
 import { BanknService} from '../../../services/bankn.service';
 
 @Component({
@@ -42,11 +43,10 @@ export class BanknCreateComponent implements OnInit {
     var currency = country.currencies[0];
     
     if(data.id==null){
-      this.banknService.setBankn(this.banknService.fromJson(
-        {
-          name:data.name,
-          referenceCountry:data.referenceCountry
-        }
+      this.banknService.setBankn(new Bankn(
+          data.name,
+          [],
+          data.referenceCountry
       ));
       this.router.navigate(['/accounts/account']);
     }else{

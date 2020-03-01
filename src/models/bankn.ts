@@ -10,7 +10,11 @@ export class Bankn {
     accounts : Account[], 
     referenceCountry:String) {
     this.name = name;
-    this.accounts = accounts;
+    if(accounts==null){
+      this.accounts = [];
+    }else{
+      this.accounts = accounts;
+    }
     this.referenceCountry = referenceCountry;
   }
 }
