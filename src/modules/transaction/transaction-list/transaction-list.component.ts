@@ -54,7 +54,7 @@ export class TransactionListComponent implements OnInit {
 
 //TODO se reference values são posteriores tem que se diminuir o sum
     //add sums
-    var sum = Dinero({amount:0,currency:"EUR"});//account ini
+    var sum = Dinero({amount:0,currency:"EUR"});//TODO account ini
     for (let i = newTransactions.length-1; i >=0 ; i--) {
       switch(newTransactions[i].type){
         case TransactionType.CREDIT:
