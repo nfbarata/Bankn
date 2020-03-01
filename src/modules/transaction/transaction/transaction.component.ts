@@ -78,7 +78,7 @@ export class TransactionComponent implements OnInit {
           amount:this.transaction.amount.toUnit(),
           day:this.transaction.date.getDate(),
           month:this.transaction.date.getMonth()+1,
-          tear:this.transaction.date.getFullYear(),
+          year:this.transaction.date.getFullYear(),
           typeId:this.transaction.type.id,
           toAccount:this.transaction.toAccount,
           entity:this.transaction.entity,
@@ -100,7 +100,8 @@ export class TransactionComponent implements OnInit {
 
     var date = new Date(0);//clear hours/minutes/seconds
     date.setFullYear(data.year, data.month-1, data.day);
-
+    
+    
     if(data.id==null){
       this.transactionService.createTransaction(
         account,
@@ -128,5 +129,5 @@ export class TransactionComponent implements OnInit {
     this.form.reset();
     this.router.navigate(['/transactions']);
   }
-  
+
 }
