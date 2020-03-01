@@ -43,6 +43,7 @@ export class TransactionListComponent implements OnInit {
     //sort
     this.transactions = this.transactionService.sortTransactions(this.transactions);
 
+//TODO se reference values são posteriores tem que se diminuir o
     //add sums
     var sum = Dinero({amount:0,currency:"EUR"});//account ini
     for (let i = this.transactions.length-1; i >=0 ; i--) {
