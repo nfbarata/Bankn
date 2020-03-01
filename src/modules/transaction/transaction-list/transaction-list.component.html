@@ -26,11 +26,12 @@
         {{transaction.amount | dinero}} {{transaction.currency}}
       </label>
     </div>
-    <div class="row" *ngIf="i==transactions.length-1">
-      <label class="col-sm-3">
+    <div class="row bg-secondary text-white" *ngIf="i==transactions.length-1">
+      <label class="col-sm-8">
         
       </label>
-      <label class="col-sm-7">
+      <label class="col-sm-2" i18n>
+        Saldo inicial
       </label>
       <label class="col-sm-2">
         {{transaction.amount | dinero}}
