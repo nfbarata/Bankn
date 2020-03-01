@@ -20,7 +20,7 @@ export const environment = {
         transactions : [
           {
             id:11,
-            amount:10.01,
+            amount:1000000.01,
             type:"credit",
             date:new Date(2009,5,11),
             description: "movimento teste 11"

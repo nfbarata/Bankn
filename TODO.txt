@@ -5,7 +5,7 @@ debito vs credito
 
 graficos
 
-
+money format - simbolo pode ser ants por exemplo
 visual
 
 transactions telem
