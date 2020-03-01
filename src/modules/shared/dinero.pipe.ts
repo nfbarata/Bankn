@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import coinify from 'coinify';
 
 @Pipe({
   name: 'dinero'
@@ -6,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DineroPipe implements PipeTransform {
 
   transform(value: Dinero, args?: any): String {
-    return value.toUnit();
+    return value.toUnit();// + " " + coinify.symbol(value.currency);
   }
 
 }

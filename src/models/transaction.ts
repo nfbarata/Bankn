@@ -31,7 +31,8 @@ export class Transaction {
     toAccount:String,
     entity:String,
     category:String,
-    description:String
+    description:String,
+    type:String
   ) {
     this.id = uuid;
     this.amount = amount;
@@ -40,6 +41,7 @@ export class Transaction {
     this.entity = entity;
     this.category = category;
     this.description = description;
+    this.type = type;
   }
 
   getAmount():Dinero{

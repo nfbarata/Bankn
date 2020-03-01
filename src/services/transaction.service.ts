@@ -25,7 +25,8 @@ export class TransactionService {
         transaction.toAccount,
         transaction.entity,
         transaction.category,
-        transaction.description
+        transaction.description,
+        transaction.type
       ));
     });
     return results;
@@ -42,7 +43,8 @@ export class TransactionService {
           transaction.toAccount,
           transaction.entity,
           transaction.category,
-          transaction.description
+          transaction.description,
+          transaction.type
         ));
       });
     }

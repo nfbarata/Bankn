@@ -17,13 +17,12 @@ export class TransactionPipe implements PipeTransform {
     var result = "";
     switch(transaction.type){
       case TransactionType.CREDIT:
-
       break;
       case TransactionType.DEBIT:
         result=result+"-";
       break;
     }
-    result = result + this.dinero.transform(transaction.amount);
+    result = result + this.dinero.transform(transaction.getAmount());
     return result;
   }
 
