@@ -30,36 +30,45 @@ export class TransactionListComponent implements OnInit {
   }
 
   refreshData(){
+
+    //clear
+    while(this.transactions.length>0)
+      this.transactions.pop();
+    
+    var newTransactions = [];
+
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.selectedAccounts.forEach(account => {
-      var transactions = this.transactionService.getTransactions(this.selectedAccounts);
+      var transactions = this.transactionService.getTransactions(account);
       transactions.forEach(transaction => {
         transaction.accountId=account.id;
-        this.transactions.push(transaction);
+        newTransactions.push(transaction);
       });
       //add reference values
       var referenceTransaction = this.transactionService.getReferenceTransaction(account);
       referenceTransaction.hide=true;
-      this.transactions.push(referenceTransaction);
+      newTransactions.push(referenceTransaction);
     });
     
     //sort
-    this.transactions = this.transactionService.sortTransactions(this.transactions);
+    newTransactions = this.transactionService.sortTransactions(newTransactions);
 
 //TODO se reference values são posteriores tem que se diminuir o sum
     //add sums
     var sum = Dinero({amount:0,currency:"EUR"});//account ini
-    for (let i = this.transactions.length-1; i >=0 ; i--) {
-      switch(this.transactions[i].type){
+    for (let i = newTransactions.length-1; i >=0 ; i--) {
+      switch(newTransactions[i].type){
         case TransactionType.CREDIT:
-          sum = sum.add(this.transactions[i].amount);
+          sum = sum.add(newTransactions[i].amount);
         break;
         case TransactionType.DEBIT:
-          sum = sum.subtract(this.transactions[i].amount);
+          sum = sum.subtract(newTransactions[i].amount);
         break;
       }
-      this.transactions[i].sum = sum;
+      newTransactions[i].sum = sum;
     }
+
+    this.transactions = newTransactions;
   }
 
   refreshAccounts(){
