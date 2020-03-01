@@ -7,7 +7,7 @@
   <div *ngFor="let transaction of transactions; let i = index;">
     <div class="row bg-secondary text-white" *ngIf="transaction.hide!=true && (i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime())">
       <label class="col-lg-3 col-sm-4 col-6">
-        {{transaction.date | date}}
+        {{transaction.date | date:'shortDate'}}
       </label>
       <label class="col-lg-7 col-sm-5 col-1">
       </label>
