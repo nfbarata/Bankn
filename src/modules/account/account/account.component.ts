@@ -12,8 +12,8 @@ import { Account } from "../../../models/account";
 })
 export class AccountComponent implements OnInit {
 
-  accountForm;
-  accountFormData;
+  form;
+  formData;
   countries;
   
   constructor(
@@ -23,7 +23,7 @@ export class AccountComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
     ) { 
-      this.accountFormData = {
+      this.formData = {
         id:null,
         name:null,
         referenceAmount:null,
@@ -33,7 +33,7 @@ export class AccountComponent implements OnInit {
         referenceYear:null,
         description:null
       }
-      this.accountForm = this.formBuilder.group(this.accountFormData);
+      this.form = this.formBuilder.group(this.formData);
   }
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class AccountComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       var accountId:String = params.get('accountId');
       if(accountId==null || accountId.trim().length==0){
-        this.accountFormData = {
+        this.formData = {
           id:null,
           name:'',
           referenceAmount:0,
@@ -51,12 +51,12 @@ export class AccountComponent implements OnInit {
           referenceYear:'2000',
           description:''
         }
-        this.accountForm.setValue(this.accountFormData);
+        this.form.setValue(this.formData);
         
       }else{
         var account:Account = this.accountService.getAccount(accountId);
 
-        this.accountFormData = {
+        this.formData = {
           id:account.id,
           name:account.name,
           referenceAmount:account.referenceAmount.toUnit(),
@@ -66,7 +66,7 @@ export class AccountComponent implements OnInit {
           referenceYear:account.referenceDate.getFullYear(),
           description:account.description
         };
-        this.accountForm.setValue(this.accountFormData);
+        this.form.setValue(this.formData);
       } 
     });
   }
@@ -97,7 +97,7 @@ export class AccountComponent implements OnInit {
         data.referenceCountry
       );
     }
-    this.accountForm.reset();
+    this.form.reset();
     this.router.navigate(['/accounts']);
   }
 }
