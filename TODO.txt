@@ -8,5 +8,5 @@ graficos
 money format - simbolo pode ser ants por exemplo
 date format
 visual
-
+i18n
 transactions telem
