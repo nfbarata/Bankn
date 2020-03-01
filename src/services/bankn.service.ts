@@ -95,11 +95,13 @@ export class BanknService {
   private clear():void{
     if(this.bankn!=null){
       //(necessary? quickly...)
-      while(this.bankn.accounts.length > 0) {
-        while(this.bankn.accounts[this.bankn.accounts.length()-1].transactions.length>0){
-            this.bankn.accounts[this.bankn.accounts.length()-1].transactions.pop();    
+      if(this.bankn.accounts!=null){
+        while(this.bankn.accounts.length > 0) {
+          while(this.bankn.accounts[0].transactions.length>0){
+              this.bankn.accounts[0].transactions.pop();    
+          }
+          this.bankn.accounts.pop();
         }
-        this.bankn.accounts.pop();
       }
     }
   }

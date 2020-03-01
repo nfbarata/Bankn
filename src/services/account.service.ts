@@ -96,6 +96,7 @@ export class AccountService {
       if(!accounts[i].id==is)
         return i.toString();
     }
+    return "0";
   }
 
   private getPrecision(currency:String){
