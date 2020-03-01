@@ -5,6 +5,7 @@ import { Account } from "../models/account";
 import { EventsService } from "./events.service";
 import { FileService } from "./file.service";
 import { ACCOUNT_SERVICE } from '../modules/app/app.module';
+import { v4 as uuidv4 } from 'uuid';
 
 const countries        = require('country-data-list').countries,
       currencies       = require('country-data-list').currencies,
@@ -53,9 +54,26 @@ export class BanknService {
     this.eventsService.accountSelectionChange.emit();
   }
 
+  createBankn(
+    name:String,
+    referenceCountry:String
+  ):Bankn{
+    return new Bankn(
+      uidv4(),
+      name,
+      [],
+      referenceCountry
+    );
+  }
+
+  getBankn(){
+    return this.bankn;
+  }
+
   fromJson(json){
     var accountService = this.injector.get(ACCOUNT_SERVICE);
     return new Bankn(
+      json.id,
       json.name,
       accountService.fromJson(json.accounts),
       json.referenceCountry
@@ -78,7 +96,8 @@ export class BanknService {
 
   toJson():Bankn{
     var accountService = this.injector.get(ACCOUNT_SERVICE);
-    new Bankn(
+    return new Bankn(
+      this.bankn.id,
       this.bankn.name,
       accountService.toJson(this.bankn.accounts),
       this.bankn.referenceCountry

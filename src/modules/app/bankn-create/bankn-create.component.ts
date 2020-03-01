@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Bankn} from '../../../models/bankn';
 import { BanknService} from '../../../services/bankn.service';
 
@@ -19,9 +19,11 @@ export class BanknCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private banknService:BanknService,
+    private route: ActivatedRoute,
   ) { 
     this.formData = {
-      name:'bankn',
+      id:null,
+      name:null,
       referenceCountry:null,
     }
     this.form = this.formBuilder.group(this.formData);
@@ -29,15 +31,26 @@ export class BanknCreateComponent implements OnInit {
 
   ngOnInit() {
     this.countries = this.banknService.getCountries();
-    this.formData.referenceCountry = this.banknService.getDefaultCountryCode();
-    this.form.setValue(this.formData);;
+    this.route.paramMap.subscribe(params => {
+      var accountId:String = params.get('banknId');
+      if(accountId==null || accountId.trim().length==0){
+        this.formData.name="bankn";
+        this.formData.referenceCountry = this.banknService.getDefaultCountryCode();
+        this.form.setValue(this.formData);
+      }else{
+        var bankn = this.banknService.getBankn();
+        this.formData.id = bankn.id;
+        this.formData.name=bankn.name;
+        this.formData.referenceCountry = bankn.referenceCountry;
+        this.form.setValue(this.formData);
+      } 
+    });
   }
 
   onSubmit(data) {
     if(data.id==null){
-      this.banknService.setBankn(new Bankn(
+      this.banknService.setBankn(this.banknService.createBankn(
           data.name,
-          [],
           data.referenceCountry
       ));
       this.router.navigate(['/accounts/account']);
