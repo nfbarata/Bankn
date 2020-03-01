@@ -18,7 +18,7 @@ export class TransactionComponent implements OnInit {
   form;
   formData;
   accounts:Account[];
-  accountId:String;
+  account:Account;
   transactionTypes:String;
 
   constructor(
@@ -44,18 +44,19 @@ export class TransactionComponent implements OnInit {
       description:null
     }
     this.form = this.formBuilder.group(this.formData);
-    this.transactionTypes = Object.entries(TransactionType);
+    this.transactionTypes = Object.values(TransactionType);
   }
 
   ngOnInit() {
     this.refreshAccounts();
     this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
    this.route.paramMap.subscribe(params => {
-      this.accountId = params.get('accountId');
+      var accountId = params.get('accountId');
+      var account = this.accountService.getAccount(accountId);
       var transactionId:String = params.get('transactionId');
       if(transactionId==null || transactionId.trim().length==0){
         this.formData = {
-          accountId:this.accountId,
+          accountId:this.account.id,
           id:null,
           amount:0,
           day:1,
@@ -69,20 +70,20 @@ export class TransactionComponent implements OnInit {
         }
         this.form.setValue(this.formData);
       }else{
-        var transaction:Transaction = this.transactionService.getTransaction(this.accountId,transactionId);
+        var transaction:Transaction = this.transactionService.getTransaction(this.account.id,transactionId);
 
         this.formData = {
-          accountId:this.accountId,
+          accountId:this.account.id,
           id:transactionId,
           amount:transaction.amount,
           day:1,
           month:1,
           year:2000,
-          typeId:TransactionType.Debit.id,
-          toAccount:null,
-          entity:null,
-          category:null,
-          description:""
+          typeId:transaction.type.id,
+          toAccount:transaction.toAccount,
+          entity:transaction.entity,
+          category:transaction.category,
+          description:transaction.description
         };
         this.form.setValue(this.formData);
       } 

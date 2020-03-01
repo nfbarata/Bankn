@@ -79,6 +79,14 @@ export class TransactionService {
     return transactions;
   }
 
+  getTransaction(account:Account, id:String){
+    var transactions = this.getTransactions([account]);
+    for(var i = 0; i!=transactions.length;i++){
+      if(transactions[i].id==id)
+        return transactions[i];
+    }
+  }
+
   sortTransactions(transactions:Transaction[]){
     return transactions.sort(this.compareTransaction);
   }

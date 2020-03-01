@@ -6,7 +6,7 @@
       <div class="col-sm-6 form-group">
         <label for="name" i18n>Type</label>
         <select class="form-control" formControlName="typeId">
-              <option *ngFor="let type of transactionTypes" [selected]="type.value.id==typeId" [value]="type.value.id">{{type.value.description}}</option>
+              <option *ngFor="let type of transactionTypes" [selected]="type.id==typeId" [value]="type.id">{{type.description}}</option>
         </select>
       </div>
     </div>
@@ -42,7 +42,7 @@
       <div class="col-sm-6 form-group">
         <label for="name" i18n>Account</label>
         <select class="form-control" formControlName="accountId">
-              <option *ngFor="let account of accounts" [selected]="account.id==accountId" [value]="account.id">{{account.name}}</option>
+              <option *ngFor="let a of accounts" [selected]="a.id==accountId" [value]="a.id">{{a.name}}</option>
         </select>
       </div>
     </div>
