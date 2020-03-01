@@ -22,10 +22,10 @@ export class BanknCreateComponent implements OnInit {
     private route: ActivatedRoute,
   ) { 
     this.formData = {
-      id:"",
+      id:null,
       name:null,
       referenceCountry:null,
-    }
+    };
     this.form = this.formBuilder.group(this.formData);
   }
 
@@ -34,7 +34,6 @@ export class BanknCreateComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       var banknId:String = params.get('banknId');
       if(banknId==null || banknId.trim().length==0){
-        this.formData.name="";
         this.formData.name="bankn";
         this.formData.referenceCountry = this.banknService.getDefaultCountryCode();
         this.form.setValue(this.formData);
