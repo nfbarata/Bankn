@@ -6,7 +6,7 @@ import { BanknService } from '../../../services/bankn.service';
 import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
-import { Transaction } from "../../../models/transaction";
+import { Transaction, TransactionType } from "../../../models/transaction";
 
 @Component({
   selector: 'transaction',
@@ -19,6 +19,7 @@ export class TransactionComponent implements OnInit {
   formData;
   accounts:Account[];
   accountId:String;
+  transactionTypes:String;
 
   constructor(
     private eventsService: EventsService,
@@ -36,13 +37,14 @@ export class TransactionComponent implements OnInit {
       day:null,
       month:null,
       year:null,
-      type:null,
+      typeId:null,
       toAccount:null,
       entity:null,
       category:null,
       description:null
     }
     this.form = this.formBuilder.group(this.formData);
+    this.transactionTypes = Object.entries(TransactionType);
   }
 
   ngOnInit() {
@@ -59,7 +61,7 @@ export class TransactionComponent implements OnInit {
           day:1,
           month:1,
           year:2000,
-          type:"",
+          typeId:TransactionType.Debit.id,
           toAccount:null,
           entity:null,
           category:null,
@@ -70,14 +72,17 @@ export class TransactionComponent implements OnInit {
         var transaction:Transaction = this.transactionService.getTransaction(this.accountId,transactionId);
 
         this.formData = {
-          id:account.id,
-          name:account.name,
-          referenceAmount:account.referenceAmount.toUnit(),
-          referenceCountry:account.referenceCountry,
-          referenceDay:account.referenceDate.getDate(),
-          referenceMonth:account.referenceDate.getMonth()+1,
-          referenceYear:account.referenceDate.getFullYear(),
-          description:account.description
+          accountId:this.accountId,
+          id:transactionId,
+          amount:transaction.amount,
+          day:1,
+          month:1,
+          year:2000,
+          typeId:TransactionType.Debit.id,
+          toAccount:null,
+          entity:null,
+          category:null,
+          description:""
         };
         this.form.setValue(this.formData);
       } 

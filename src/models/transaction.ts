@@ -1,9 +1,25 @@
 import  { Account } from "./account";
 
 export const TransactionType = {
-    CREDIT: 'credit',
-    DEBIT: 'debit',
-    TRANSFER: 'transfer',
+    CREDIT: {
+      id:'c',
+      description:'Credit'//i18n
+    },
+    DEBIT: {
+      id:'d',
+      description:'Debit'//i18n
+    },
+    TRANSFER: {
+      id:'t',
+      description:'Transfer'//i18n
+    },
+}
+
+export function getTransactionType(id:String){
+  for (let [key, value] of Object.entries(object1)) {
+    if(key==id)
+      return value;
+  }
 }
 
 export class Transaction {
@@ -13,7 +29,7 @@ export class Transaction {
   private amount:Dinero;
   private date:Date;
 
-  private type:String;
+  private typeId:String;
   //account:Account;
   private toAccount : String;
 
