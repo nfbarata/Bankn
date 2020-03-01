@@ -1,7 +1,6 @@
-import
-create new
+import txns
+create new txn
 categorias/entidades
-debito vs credito
 
 graficos
 
