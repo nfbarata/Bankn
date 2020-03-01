@@ -13,6 +13,7 @@
     "@angular/router": "^9.0.4",
     "@types/dinero.js": "^1.6.2",
     "bootstrap": "^4.4.1",
+    "bootstrap-icons": "^1.0.0-alpha2",
     "coinify": "^2.0.2",
     "core-js": "^3.6.4",
     "country-data-list": "^1.1.9",
