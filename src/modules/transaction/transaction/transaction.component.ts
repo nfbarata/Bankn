@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
+import { BanknService } from '../../../services/bankn.service';
+import { AccountService } from '../../../services/account.service';
+import { TransactionService } from '../../../services/transaction.service';
+import { Account } from "../../../models/account";
 
 @Component({
   selector: 'transaction',
@@ -9,15 +13,92 @@ import { ActivatedRoute,Router } from '@angular/router';
 })
 export class TransactionComponent implements OnInit {
 
+  form;
+  formData;
+
   constructor(
+    private banknService: BanknService,
+    private accountService: AccountService,
+    private transactionService: TransactionService,
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {
+    this.formData = {
+      id:null,
+      amount:null,
+      date:null,
+      type:null,
+      toAccount:null,
+      entity:null,
+      category:null,
+      description:null
+    }
+    this.form = this.formBuilder.group(this.formData);
+  }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+   this.route.paramMap.subscribe(params => {
       var accountId:String = params.get('accountId');
+      var transactionId:String = params.get('transactionId');
+      if(transactionId==null || transactionId.trim().length==0){
+        this.formData = {
+          id:null,
+          name:'',
+          referenceAmount:0,
+          referenceCountry:this.banknService.getReferenceCountry(),
+          referenceDay:'1',
+          referenceMonth:'1',
+          referenceYear:'2000',
+          description:''
+        }
+        this.form.setValue(this.formData);
+        
+      }else{
+        var account:Account = this.accountService.getAccount(accountId);
+
+        this.formData = {
+          id:account.id,
+          name:account.name,
+          referenceAmount:account.referenceAmount.toUnit(),
+          referenceCountry:account.referenceCountry,
+          referenceDay:account.referenceDate.getDate(),
+          referenceMonth:account.referenceDate.getMonth()+1,
+          referenceYear:account.referenceDate.getFullYear(),
+          description:account.description
+        };
+        this.form.setValue(this.formData);
+      } 
     });
   }
 
+  onSubmit(data) {
+    var currency = this.banknService.getCurrencyOfCountry(data.referenceCountry);
+    
+    var amount = this.accountService.toDinero(currency,data.referenceAmount);
+
+    var date = new Date(0);//clear hours/minutes/seconds
+    date.setFullYear(data.referenceYear, data.referenceMonth-1, data.referenceDay);
+    
+    if(data.id==null){
+      this.accountService.createAccount(
+        data.name,
+        data.description,
+        amount,//.toObject(),
+        date,
+        data.referenceCountry
+      );
+    }else{
+      this.accountService.updateAccount(
+        data.id,
+        data.name,
+        data.description,
+        amount,//.toObject(),
+        date,
+        data.referenceCountry
+      );
+    }
+    this.form.reset();
+    this.router.navigate(['/accounts']);
+  }
 }
