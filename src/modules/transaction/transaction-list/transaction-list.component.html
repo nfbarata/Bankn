@@ -15,7 +15,7 @@
         {{transaction.sum | dinero}}
       </label>
     </div>
-    <div class="row" *ngf="transaction.hide!=true">
+    <div class="row" *ngIf="transaction.hide!=true">
       <label class="col-sm-3">
         
       </label>

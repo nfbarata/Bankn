@@ -12,7 +12,7 @@ export const environment = {
         referenceAmount : {
           amount:0,
           currency:'EUR',
-          precision:0
+          precision:2
         },
         referenceCountry:'PT',
         referenceDate : new Date(2000,1,1),
@@ -21,13 +21,13 @@ export const environment = {
           {
             id:11,
             amount:10.01,
-            date:new Date(2009,5,11,11,59,11),
+            date:new Date(2009,5,11),
             description: "movimento teste 11"
           },
           {
             id:12,
             amount:11.1,
-            date:new Date(2009,5,12,11,59,11),
+            date:new Date(2009,5,12),
             description: "movimento teste 22"
           },
         ]
@@ -38,23 +38,23 @@ export const environment = {
         selected : false,
         referenceCountry:'PT',
         referenceAmount : {
-          amount:0,
+          amount:100000,
           currency:'EUR',
-          precision:0
+          precision:2
         },
-        referenceDate : new Date(2000,1,1),
+        referenceDate : new Date(2009,5,31),
         description:'bbb',
         transactions :[
           {
             id:21,
             amount:20,
-            date:new Date(2009,6,11,11,59,11),
+            date:new Date(2009,6,11),
             description: "movimento teste 21"
           },
           {
             id:22,
             amount:21,
-            date:new Date(2009,5,12,11,59,11),
+            date:new Date(2009,5,12),
             description: "movimento teste 22"
           },
         ]
