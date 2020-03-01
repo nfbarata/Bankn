@@ -12,7 +12,7 @@ import { Transaction } from "../../../models/transaction";
 })
 export class TransactionListComponent implements OnInit {
 
-  transactions : Transaction[] = [];
+  transactions = [];
   selectedAccounts : Account[] = [];
   accounts : Account[] = [];
 
@@ -32,9 +32,9 @@ export class TransactionListComponent implements OnInit {
   refreshData(){
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.transactions = this.transactionService.getTransactions(this.selectedAccounts);
-    var sum = Dinero({currency:"EUR"});//account ini
-    for (let i = this.transactions.length-1; i !=0 ; i--) {
-      sum =sum.add(this.transactions[i].amount);
+    var sum = Dinero({amount:0,currency:"EUR"});//account ini
+    for (let i = this.transactions.length-1; i >=0 ; i--) {
+      sum = sum.add(this.transactions[i].amount);
       this.transactions[i].sum = sum;
     }
   }
