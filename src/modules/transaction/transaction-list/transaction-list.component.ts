@@ -3,7 +3,7 @@ import { EventsService } from '../../../services/events.service';
 import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
-import { Transaction } from "../../../models/transaction";
+import { Transaction,TransactionType } from "../../../models/transaction";
 
 @Component({
   selector: 'app-transaction-list',
@@ -47,7 +47,14 @@ export class TransactionListComponent implements OnInit {
     //add sums
     var sum = Dinero({amount:0,currency:"EUR"});//account ini
     for (let i = this.transactions.length-1; i >=0 ; i--) {
-      sum = sum.add(this.transactions[i].amount);
+      switch(transactions[i].type){
+        case TransactionType.CREDIT:
+          sum = sum.add(this.transactions[i].amount);
+        break;
+        case TransactionType.DEBIT:
+          sum = sum.subtract(this.transactions[i].amount);
+        break;
+      }
       this.transactions[i].sum = sum;
     }
   }
