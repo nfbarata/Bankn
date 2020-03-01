@@ -22,7 +22,7 @@ export const environment = {
             id:11,
             amount:1000000.01,
             type:"credit",
-            date:new Date(2009,5,11),
+            date:new Date(2009,11,31),
             description: "movimento teste 11"
           },
           {
