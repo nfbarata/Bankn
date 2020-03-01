@@ -132,6 +132,15 @@ export class BanknService {
     return this.defaultCountryCode;
   }
 
+  getCurrencyOfCountry(countryCode:String){
+    var country;
+    for (let i = 0; i < this.countries.length; i++) {
+      if (this.countries[i].alpha2 == countryCode) 
+        country = this.countries[i];
+    }
+    return country.currencies[0];
+  }
+
   getReferenceCountry(){
     return this.bankn.referenceCountry;
   }

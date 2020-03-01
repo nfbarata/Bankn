@@ -29,19 +29,10 @@ export class BanknCreateComponent implements OnInit {
 
   ngOnInit() {
     this.formData.referenceCountry = this.banknService.getDefaultCountryCode();
-    this.countries = this.banknService.getCountries();
     this.form.setValue(this.formData);;
   }
 
   onSubmit(data) {
-    var country;
-    for (let i = 0; i < this.countries.length; i++) {
-      if (this.countries[i].alpha2 == data.referenceCountry) 
-        country = this.countries[i];
-    }
-    
-    var currency = country.currencies[0];
-    
     if(data.id==null){
       this.banknService.setBankn(new Bankn(
           data.name,
