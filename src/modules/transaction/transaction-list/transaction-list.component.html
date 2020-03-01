@@ -9,7 +9,7 @@
     <h5 class="col-sm-7" i18n>Description</h5>
     <h5 class="col-sm-2" i18n>Value</h5>
   </div>
-  <div *ngFor="let transaction of transactions; let i = index">
+  <div *ngFor="let transaction of transactions; let i = index;">
     <div class="row" *ngIf="i>0 && transaction.date.getTime()==transactions[i-1].date.getTime()">
       <label class="col-sm-3">
         date
@@ -22,23 +22,23 @@
     </div>
     <div class="row">
       <label class="col-sm-3">
-        {{transaction.date.getFullYear()}}-{{transaction.date.getMonth()+1}}-{{transaction.date.getDate()}}
+        {{transaction.date|date}}
       </label>
       <label class="col-sm-7">
         {{ transaction.description }}
       </label>
       <label class="col-sm-2">
-        {{transaction.amount.toUnit()}} {{transaction.currency}}
+        {{transaction.amount | dinero}} {{transaction.currency}}
       </label>
     </div>
-    <div class="row" *ngIf="i==0">
+    <div class="row" *ngIf="i==transactions.length-1">
       <label class="col-sm-3">
         
       </label>
       <label class="col-sm-7">
       </label>
       <label class="col-sm-2">
-        init
+        saldo inicial
       </label>
     </div>
     <input #date{{i}} [hidden]="true" [value]="transaction.date.getTime()"/>
