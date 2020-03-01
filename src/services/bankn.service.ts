@@ -54,12 +54,13 @@ export class BanknService {
     this.eventsService.accountSelectionChange.emit();
   }
 
+
   createBankn(
     name:String,
     referenceCountry:String
   ):Bankn{
     return new Bankn(
-      uidv4(),
+      uuidv4(),
       name,
       [],
       referenceCountry
