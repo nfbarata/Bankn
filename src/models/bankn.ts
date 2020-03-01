@@ -11,6 +11,7 @@ export class Bankn {
     name:String,
     accounts : Account[], 
     referenceCountry:String) {
+    this.id = id;
     this.name = name;
     if(accounts==null){
       this.accounts = [];

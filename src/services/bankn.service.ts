@@ -66,7 +66,7 @@ export class BanknService {
     );
   }
 
-  getBankn(){
+  getBankn():Bankn{
     return this.bankn;
   }
 
