@@ -1,5 +1,11 @@
 import  { Account } from "./account";
 
+export const TransactionType = {
+    CREDIT: 'credit',
+    DEBIT: 'debit',
+    TRANSFER: 'transfer',
+}
+
 export class Transaction {
   
   private id:String;//uuid
@@ -7,7 +13,7 @@ export class Transaction {
   private amount:Dinero;
   private date:Date;
 
-  //type;  despesa/receita/transfer
+  private type:String;
   //account:Account;
   private toAccount : String;
 
