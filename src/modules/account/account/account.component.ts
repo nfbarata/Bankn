@@ -43,7 +43,7 @@ export class AccountComponent implements OnInit {
       if(accountId==null || accountId.trim().length==0){
         this.formData = {
           id:null,
-          name:'',
+          name:'Main',
           referenceAmount:0,
           referenceCountry:this.banknService.getReferenceCountry(),
           referenceDay:'1',

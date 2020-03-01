@@ -99,6 +99,6 @@ export class TransactionComponent implements OnInit {
       );
     }
     this.form.reset();
-    this.router.navigate(['/accounts']);
+    this.router.navigate(['/transactions']);
   }
 }
