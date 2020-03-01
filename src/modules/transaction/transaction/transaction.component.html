@@ -14,16 +14,16 @@
         <input  class="form-control" id="amount" type="text" formControlName="amount">
       </div>
     </div>
-    
+
     <div class="row">    
       <div class="col-sm-6 form-group">
-          <label for="name" i18n>Entity</label>
+          <label for="entity" i18n>Entity</label>
           <input  class="form-control" id="entity" type="text" formControlName="entity">
       </div>
       <div class="col-sm-6 form-group">
-        <label for="name" i18n>Account</label>
+        <label for="account" i18n>Account</label>
         <select class="form-control" formControlName="accountId">
-              <option *ngFor="let a of accounts" [selected]="a.id==accountId" [value]="a.id">{{a.name}}</option>
+          <option *ngFor="let a of accounts" [selected]="a.id==accountId" [value]="a.id">{{a.name}}</option>
         </select>
       </div>
     </div>

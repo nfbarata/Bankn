@@ -95,11 +95,11 @@ export class TransactionComponent implements OnInit {
   }
 
   onSubmit(data) {
-    var account = this.accountService.getAccount(data.account.id);
-    var amount = this.accountService.toDinero(account.referenceAmount.currency,data.referenceAmount);
+    var account = this.accountService.getAccount(data.accountId);
+    var amount = this.accountService.toDinero(account.referenceAmount.getCurrency(),data.amount);
 
     var date = new Date(0);//clear hours/minutes/seconds
-    date.setFullYear(data.referenceYear, data.referenceMonth-1, data.referenceDay);
+    date.setFullYear(data.year, data.month-1, data.ay);
     
     if(data.id==null){
       this.transactionService.createTransaction(
