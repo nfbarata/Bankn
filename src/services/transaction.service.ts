@@ -25,13 +25,13 @@ export class TransactionService {
   ){
     var transaction = new Transaction(
         uuidv4(),
-        transaction.amount,
-        transaction.date,
-        transaction.toAccount,
-        transaction.entity,
-        transaction.category,
-        transaction.description,
-        transaction.type
+        amount,
+        date,
+        toAccount,
+        entity,
+        category,
+        description,
+        type
       );
       this.accountService.addTransaction(account,transaction);
   }
