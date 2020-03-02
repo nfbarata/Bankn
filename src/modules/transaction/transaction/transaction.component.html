@@ -63,5 +63,5 @@
   
     <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
     &nbsp;
-    <a *ngIf="formData.id!=null" class="btn btn-danger" href="" role="button" (click)="onDelete(formData.accountId,formData.id);" i18n>Delete</a>
+    <a *ngIf="formData.id!=null" class="btn btn-danger text-white" role="button" (click)="onDelete(formData.accountId,formData.id);" i18n>Delete</a>
 </form>
