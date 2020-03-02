@@ -24,7 +24,7 @@ export class TransactionService {
     description:String
   ){
     var transaction = new Transaction(
-        uidv4(),
+        uuidv4(),
         transaction.amount,
         transaction.date,
         transaction.toAccount,
