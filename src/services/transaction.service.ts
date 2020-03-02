@@ -105,7 +105,6 @@ export class TransactionService {
       account.referenceAmount.toUnit()>0?TransactionType.CREDIT:TransactionType.DEBIT
     );
   }
-  
 
   getSelectedAccountsTransactions() : Transaction[]{
     var accounts : Account[] = this.accountService.getSelectedAccounts();
