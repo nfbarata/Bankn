@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location} from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
 import { BanknService } from '../../../services/bankn.service';
@@ -21,7 +22,8 @@ export class AccountComponent implements OnInit {
     private accountService: AccountService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
     ) { 
       this.formData = {
         id:null,
@@ -103,5 +105,6 @@ export class AccountComponent implements OnInit {
 
   onDelete(accountId:String){
     this.accountService.deleteAccountId(accountId);
+    this.location.back();
   }
 }
