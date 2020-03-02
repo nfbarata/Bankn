@@ -3,6 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';//from erro
 
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
+import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
+
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localePt from '@angular/common/locales/pt';
@@ -43,8 +48,7 @@ export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
 
 @NgModule({
   imports: [ 
-    BrowserModule, 
-    FormsModule, ReactiveFormsModule,
+    BrowserModule, FormsModule, ReactiveFormsModule, FontAwesomeModule,
     AppRoutingModule, SharedModule
   ],
   exports: [
@@ -66,6 +70,7 @@ export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
 export class AppModule { 
    
   constructor(
+    private library: FaIconLibrary,
     private injector:Injector,
     private eventsService: EventsService,
     private fileService: FileService,
@@ -74,5 +79,14 @@ export class AppModule {
     private transactionService:TransactionService
   ){  
     AppInjector=this.injector;
+    library.addIcons(
+      faSquare, 
+      faCheckSquare, 
+      farSquare, 
+      farCheckSquare, 
+      faStackOverflow, 
+      faGithub, 
+      faMedium
+    );
   }
 }
