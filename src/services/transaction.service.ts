@@ -139,7 +139,7 @@ export class TransactionService {
 
   deleteTransactionId(accountId:String, transactionId:String){
     var account = this.accountService.getAccount(accountId);
-    this.deleteTransaction(accountId, transactionId);
+    this.deleteTransaction(account, transactionId);
   }
 
   deleteTransaction(account:Account, transactionId:String){
