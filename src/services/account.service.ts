@@ -94,8 +94,8 @@ export class AccountService {
     var accounts:Account[] = this.getAccounts();
     for (let i = 0; i < accounts.length; i++) {
       var is = i.toString();
-      if(!accounts[i].id==is)
-        return i.toString();
+      if(accounts[i].id!=is)
+        return is;
     }
     return "0";
   }
