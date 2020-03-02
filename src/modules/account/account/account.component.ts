@@ -100,4 +100,8 @@ export class AccountComponent implements OnInit {
     this.form.reset();
     this.router.navigate(['/accounts']);
   }
+
+  onDelete(account:Account){
+    this.accountService.deleteAccount(account);
+  }
 }

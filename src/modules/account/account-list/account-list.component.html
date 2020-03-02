@@ -1,51 +1,22 @@
-<h2>Accounts</h2>
-<br>
-<div class="container">
-  <div class="row" class="col-12" *ngFor="let account of accounts">
-    <div class="col-sm">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <h3>
-              <a [title]="account.name + ' details'">
-                {{ account.name }}
-              </a>
-            </h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div *ngIf="account.description">
-              Description: {{ account.description }}
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-">
-            <div class="container">
-              <div class="row">
-                <div class="col-6">
-                  <button class="btn btn-secondary text-white" [routerLink]="['/accounts/account',account.id]">
-                    Open
-                  </button>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-danger text-white" (click)="onDelete(account)">
-                    delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-  <br>
-</div>
 <br>
 <div class="row">
-  <button class="btn btn-secondary text-white" [routerLink]="['/accounts/account']">
-    New
-  </button>
+  <div class="col-6">
+    <h2 i18n>Accounts</h2>
+  </div>
+  <div class="col-6 text-right">
+    <button class="btn btn-primary " type="submit" [routerLink]="['/accounts/account']">New</button>
+  </div>
+</div>
+<br>
+<div class="container">
+  <div class="row" *ngFor="let account of accounts">
+    <!-- group tipo de conta-->
+    <div class="col-12" [routerLink]="['/accounts/account',account.id]">
+      <a >
+        {{ account.name }}
+      </a>
+    </div>
+    <!--TODO saldo-->
+  </div>
+  <br>
 </div>

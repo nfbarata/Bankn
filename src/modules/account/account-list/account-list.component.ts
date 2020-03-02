@@ -27,7 +27,4 @@ export class AccountListComponent implements OnInit {
     this.accounts = this.accountService.getAccounts();  
   }
 
-  onDelete(account:Account){
-    this.accountService.deleteAccount(account);
-  }
 }
