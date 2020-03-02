@@ -183,4 +183,12 @@ export class AccountService {
     account.transactions.push(transaction);
     this.eventsService.accountTransactionsChange.emit();
   }
+
+  deleteTransactionId(account:Account, transactionId:Transaction){
+    account.transactions = account.transactions.filter(function(transaction){
+       return transaction.id != transactionId;
+    });
+    
+    this.eventsService.accountTransactionsChange.emit();
+  }
 }

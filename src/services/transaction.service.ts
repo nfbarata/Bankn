@@ -136,4 +136,13 @@ export class TransactionService {
   compareTransaction(a:Transaction,b:Transaction){
     return b.date-a.date;
   }
+
+  deleteTransactionId(accountId:String, transactionId:String){
+    var account = this.accountService.getAccount(accountId);
+    this.deleteTransaction(accountId, transactionId);
+  }
+
+  deleteTransaction(account:Account, transactionId:String){
+    this.accountService.deleteTransactionId(account,transactionId);
+  }
 }

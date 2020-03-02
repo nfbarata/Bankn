@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location} from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
 import { EventsService } from '../../../services/events.service';
@@ -28,7 +29,8 @@ export class TransactionComponent implements OnInit {
     private transactionService: TransactionService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     this.formData = {
       accountId:null,
@@ -134,4 +136,9 @@ export class TransactionComponent implements OnInit {
     this.router.navigate(['/transactions']);
   }
 
+  onDelete(accountId:String, transactionId:String){
+    this.transactionService.deleteTransactionId(accountId, transactionId);
+    this.location.back();
+    //this.router.navigate(['/transactions']);
+  }
 }
