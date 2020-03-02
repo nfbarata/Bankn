@@ -53,11 +53,12 @@ export class TransactionComponent implements OnInit {
     this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
     this.route.paramMap.subscribe(params => {
       var accountId = params.get('accountId');
+      console.log(accountId);
       this.account = this.accountService.getAccount(accountId);
       var transactionId:String = params.get('transactionId');
       if(transactionId==null || transactionId.trim().length==0){
         this.formData = {
-          accountId:this.account.id,
+          accountId:accountId,
           id:null,
           amount:0,
           day:1,
@@ -73,7 +74,7 @@ export class TransactionComponent implements OnInit {
       }else{
         this.transaction = this.transactionService.getTransaction(this.account,transactionId);
         this.formData = {
-          accountId:this.account.id,
+          accountId:accountId,
           id:transactionId,
           amount:this.transaction.amount.toUnit(),
           day:this.transaction.date.getDate(),
