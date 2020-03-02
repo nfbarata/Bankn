@@ -10,7 +10,7 @@ export const environment = {
     referenceCountry:'PT',
     accounts : [
       {
-        id:1,
+        id:"1",
         name:"conta teste 1",
         selected : true,
         referenceAmount : {
@@ -39,7 +39,7 @@ export const environment = {
         ]
       },
       {
-        id:2,
+        id:"2",
         name:"conta teste 2",
         selected : false,
         referenceCountry:'PT',

@@ -92,13 +92,23 @@ export class AccountService {
   private createId():String{
     //return uuidv4();
     var accounts:Account[] = this.getAccounts();
-    for (let i = 0; i < accounts.length; i++) {
-      var is = i.toString();
-      if(accounts[i].id!=is)
-        return is;
+    var accountIds:String[]=[];
+    for (let i=0; i < accounts.length; i++) {
+      accountIds.push(accounts[i].id);
     }
-    return "0";
+    accountIds = accountIds.sort((a:String,b:String):any=>{
+      return Number(a)-Number(b);
+    });
+    let i;
+    for (i=0; i < accountIds.length; i++) {
+      if(accountIds[i].localeCompare(i+"")!=0){
+        console.log(i);
+        return i+"";
+      }
+    }
+    return (i)+"";
   }
+
 
   private getPrecision(currency:String){
     //TODO guardar este valor em memória
