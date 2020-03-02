@@ -101,7 +101,7 @@ export class AccountComponent implements OnInit {
     this.router.navigate(['/accounts']);
   }
 
-  onDelete(account:Account){
-    this.accountService.deleteAccount(account);
+  onDelete(accountId:String){
+    this.accountService.deleteAccountId(accountId);
   }
 }
