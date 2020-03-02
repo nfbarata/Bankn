@@ -188,7 +188,7 @@ export class AccountService {
     account.transactions = account.transactions.filter(function(transaction){
        return transaction.id != transactionId;
     });
-    
+    this.eventsService.transactionChange.emit();
     this.eventsService.accountTransactionsChange.emit();
   }
 }
