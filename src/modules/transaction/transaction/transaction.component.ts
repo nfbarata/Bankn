@@ -53,7 +53,6 @@ export class TransactionComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       var accountId = params.get('accountId');
       if(accountId==null || accountId.trim().length==0){
-      }else{
         var selected = this.accountService.getSelectedAccounts();
         if(selected.length>0)
           accountId=selected[0].id;
