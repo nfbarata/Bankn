@@ -24,10 +24,15 @@
     </div>
   </div>
 </div>
-<fa-icon [icon]="['fas', 'check-square']"></fa-icon>
+
+<!--fa-icon [icon]="['fas', 'check-square']"></fa-icon-->
   
 <div class="container fixed-bottom">
   <div class="float-right">
-    <button class="btn btn-primary " type="submit"><b>+</b></button>
+    <button class="btn btn-primary " type="submit" [routerLink]="['/transactions/transaction']"><b>+</b></button>
+    &nbsp;
+    <button class="btn btn-secondary " type="submit" [routerLink]="['/transactions']"><b>=</b></button>
   </div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>  
 </div>

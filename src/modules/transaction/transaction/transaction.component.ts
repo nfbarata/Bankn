@@ -18,7 +18,6 @@ export class TransactionComponent implements OnInit {
   form;
   formData;
   accounts:Account[];
-  account:Account;
   transactionTypes:String;
   transaction:Transaction = null;
 
@@ -53,8 +52,12 @@ export class TransactionComponent implements OnInit {
     this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
     this.route.paramMap.subscribe(params => {
       var accountId = params.get('accountId');
-      console.log(accountId);
-      this.account = this.accountService.getAccount(accountId);
+      if(accountId==null || accountId.trim().length==0){
+      }else{
+        var selected = this.accountService.getSelectedAccounts();
+        if(selected.length>0)
+          accountId=selected[0].id;
+      }
       var transactionId:String = params.get('transactionId');
       if(transactionId==null || transactionId.trim().length==0){
         this.formData = {
@@ -72,7 +75,8 @@ export class TransactionComponent implements OnInit {
         }
         this.form.setValue(this.formData);
       }else{
-        this.transaction = this.transactionService.getTransaction(this.account,transactionId);
+        var account=this.accountService.getAccount(accountId);
+        this.transaction = this.transactionService.getTransaction(.account,transactionId);
         this.formData = {
           accountId:accountId,
           id:transactionId,
