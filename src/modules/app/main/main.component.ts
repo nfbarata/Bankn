@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BanknService } from '../../../services/bankn.service';
+import { EventsService } from '../../../services/events.service';
+import { AccountService } from '../../../services/account.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -8,10 +10,14 @@ import { environment } from '../../../environments/environment';
   styleUrls: [ './main.component.css' ]
 })
 export class MainComponent implements OnInit {
-  name = 'bankn';
+  
+  hasBankn:Boolean = false;
+  hasAccounts:Boolean = false;
 
   constructor(
     private banknService: BanknService,
+    private eventsService: EventsService,
+    private accountService: AccountService
   ) { 
 
   }
@@ -20,6 +26,15 @@ export class MainComponent implements OnInit {
     if(environment.bankn!=null){
       this.banknService.setBankn(this.banknService.fromJson(environment.bankn));
     }
+  
+    this.refreshData();
+    this.eventsService.banknChange.subscribe(()=>this.refreshData());
+    this.eventsService.accountsChange.subscribe(()=>this.refreshData());
+  }
+
+  refreshData(){
+    this.hasBankn = this.banknService.initialized();
+    this.hasAccounts = this.accountService.getAccounts().length>0;
   }
 
   onOpen(){

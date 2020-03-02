@@ -29,7 +29,7 @@
   
 <div class="container fixed-bottom">
   <div class="float-right">
-    <button class="btn btn-primary " type="submit" [routerLink]="['/transactions/transaction']"><b>+</b></button>
+    <button *ngIf="hasAccounts" class="btn btn-primary " type="submit" [routerLink]="['/transactions/transaction']"><b>+</b></button>
     &nbsp;
     <button class="btn btn-secondary " type="submit" [routerLink]="['/transactions']"><b>=</b></button>
   </div>
