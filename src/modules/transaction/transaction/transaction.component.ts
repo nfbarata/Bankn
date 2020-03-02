@@ -60,14 +60,15 @@ export class TransactionComponent implements OnInit {
           accountId=selected[0].id;
       }
       var transactionId:String = params.get('transactionId');
+      var now = new Date();
       if(transactionId==null || transactionId.trim().length==0){
         this.formData = {
           accountId:accountId,
           id:null,
           amount:0,
-          day:1,
-          month:1,
-          year:2000,
+          day:now.getDate(),
+          month:now.getMonth()+1,
+          year:now.getFullYear(),
           typeId:TransactionType.DEBIT.id,
           toAccount:null,
           entity:null,
