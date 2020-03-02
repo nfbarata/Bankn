@@ -76,7 +76,7 @@ export class TransactionComponent implements OnInit {
         this.form.setValue(this.formData);
       }else{
         var account=this.accountService.getAccount(accountId);
-        this.transaction = this.transactionService.getTransaction(.account,transactionId);
+        this.transaction = this.transactionService.getTransaction(account,transactionId);
         this.formData = {
           accountId:accountId,
           id:transactionId,
