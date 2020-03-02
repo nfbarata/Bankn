@@ -17,7 +17,7 @@ export class TransactionService {
     account:Account,
     amount:Dinero,
     date:Date,
-    type:String,
+    type,
     toAccount:String,
     entity:String,
     category:String,
@@ -41,7 +41,7 @@ export class TransactionService {
     transaction:Transaction,
     amount:Dinero,
     date:Date,
-    type:String,
+    type,
     toAccount:String,
     entity:String,
     category:String,
@@ -102,7 +102,7 @@ export class TransactionService {
       null,
       null,
       null,
-      null
+      account.referenceAmount.toUnit()>0?TransactionType.CREDIT:TransactionType.DEBIT.i
     );
   }
 

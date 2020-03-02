@@ -30,7 +30,7 @@ export class Transaction {
   private amount:Dinero;
   private date:Date;
 
-  private typeId:String;
+  private type;
   //account:Account;
   private toAccount : String;
 
@@ -49,7 +49,7 @@ export class Transaction {
     entity:String,
     category:String,
     description:String,
-    type:String
+    type
   ) {
     this.id = uuid;
     this.amount = amount;
