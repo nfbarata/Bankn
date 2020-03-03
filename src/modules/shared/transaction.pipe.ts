@@ -14,15 +14,17 @@ export class TransactionPipe implements PipeTransform {
   }
 
   transform(transaction: Transaction, args?: any): any {
+    var amount = transaction.getAmount();
     var result = "";
     switch(transaction.type){
       case TransactionType.CREDIT:
       break;
       case TransactionType.DEBIT:
-        result=result+"-";
+        if(amount.toUnit()!=0)
+          result=result+"-";
       break;
     }
-    result = result + this.dinero.transform(transaction.getAmount());
+    result = result + this.dinero.transform(amount);
     return result;
   }
 

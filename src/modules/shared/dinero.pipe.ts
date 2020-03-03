@@ -7,12 +7,6 @@ import coinify from 'coinify';
 export class DineroPipe implements PipeTransform {
 
   transform(value: Dinero, args?: any): String {
-    var unit = value.toUnit();
-    var result = "";
-    if(unit<0){
-      result=result+"-";
-    }
-    result = result + unit + coinify.symbol(value.getCurrency());
-    return result;
+    return value.toUnit() + coinify.symbol(value.getCurrency());
   }
 }
