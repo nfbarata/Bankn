@@ -55,7 +55,7 @@ export class AccountService {
     var transactionService = this.injector.get(TRANSACTION_SERVICE);
     var results = [];
     accounts.forEach(account => {
-      results.push(new Account(
+      results.push([
         account.id,
         account.name,
         account.description,
@@ -64,7 +64,7 @@ export class AccountService {
         account.referenceCountry,
         transactionService.toJson(account.transactions),
         account.selected
-      ));
+      ]);
     });
     return results;
   }
