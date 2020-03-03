@@ -26,6 +26,8 @@ export function getTransactionType(id:String){
 export class Transaction {
   
   private id:String;//uuid
+  //meta
+  accountId:String;
   
   private amount:Dinero;
   private date:Date;

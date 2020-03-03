@@ -74,11 +74,11 @@ export class TransactionService {
     return results;
   }
 
-  fromJson(json, currency:String){
+  fromJson(json, currency:String, accountId:String){
     var results = [];
     if(json!=null){
       json.forEach(transaction => {
-        results.push(new Transaction(
+        var transaction=new Transaction(
           transaction.id,
           this.accountService.toDinero(currency, transaction.amount),//value to Dinero, speed
           transaction.date,
@@ -87,7 +87,9 @@ export class TransactionService {
           typeof transaction.category  === "undefined"?null:transaction.category,
           transaction.description,
           getTransactionType(transaction.type)
-        ));
+        )
+        transaction.accountId=accountId;
+        results.push(transaction);
       });
     }
     return results;

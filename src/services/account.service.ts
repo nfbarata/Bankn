@@ -81,7 +81,7 @@ export class AccountService {
           Dinero(account.referenceAmount),
           account.referenceDate,
           account.referenceCountry,
-          transactionService.fromJson(account.transactions, account.referenceAmount.currency),
+          transactionService.fromJson(account.transactions, account.referenceAmount.currency, accoun),
           account.selected
         ));
       });
@@ -190,6 +190,7 @@ export class AccountService {
   }
 
   addTransaction(account:Account, transaction:Transaction){
+    transaction.accountId = account.id;
     account.transactions.push(transaction);
     var transactionService = this.injector.get(TRANSACTION_SERVICE);
     account.transactions = transactionService.sortTransactions(account.transactions);
