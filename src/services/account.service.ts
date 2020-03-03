@@ -191,6 +191,8 @@ export class AccountService {
 
   addTransaction(account:Account, transaction:Transaction){
     account.transactions.push(transaction);
+    var transactionService = this.injector.get(TRANSACTION_SERVICE);
+    account.transactions = transactionService.sortTransactions(account.transactions);
     this.eventsService.accountTransactionsChange.emit();
   }
 

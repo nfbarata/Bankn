@@ -39,12 +39,16 @@ export class TransactionListComponent implements OnInit {
 
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.selectedAccounts.forEach(account => {
-      account.transactions.forEach(transaction => {
+
+      var accountTransactions = account.transactions.forEach(transaction => {
+        //add meta accountId
         transaction.accountId=account.id;
         newTransactions.push(transaction);
       });
+      
       //add reference values
       var referenceTransaction = this.transactionService.getReferenceTransaction(account);
+      //add meta h
       referenceTransaction.hide=true;
       newTransactions.push(referenceTransaction);
     });
@@ -64,6 +68,7 @@ export class TransactionListComponent implements OnInit {
           sum = sum.subtract(newTransactions[i].amount);
         break;
       }
+      //add meta sum
       newTransactions[i].sum = sum;
     }
 
