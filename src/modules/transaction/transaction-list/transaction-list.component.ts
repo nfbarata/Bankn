@@ -42,6 +42,7 @@ export class TransactionListComponent implements OnInit {
     var firstAccount:Account = null;
 
     this.selectedAccounts = this.accountService.getSelectedAccounts();
+    
     this.selectedAccounts.forEach(account => {
 
       //add meta balance for this account
@@ -67,6 +68,7 @@ export class TransactionListComponent implements OnInit {
       balanceUp = balanceUp.add(newTransactions[i].balanceAfter);
       newTransactions[i].balanceAfter = balanceUp;
     }
+
     this.transactions = newTransactions;
   }
 
