@@ -44,13 +44,14 @@ export class TransactionListComponent implements OnInit {
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.selectedAccounts.forEach(account => {
 
-      var accountTransactions = account.transactions;
-      console.log(accountTransactions.length);
+      var accountTransactions = [].concat(account.transactions);
+
       if(!this.hasRealTransactions && accountTransactions.length>0)
         this.hasRealTransactions = true;
 
       //add reference values
       var referenceTransaction = this.transactionService.getReferenceTransaction(account);
+
       //add meta hide
       referenceTransaction.hide=true;
       accountTransactions.push(referenceTransaction);
