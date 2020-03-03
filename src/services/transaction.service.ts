@@ -68,7 +68,7 @@ export class TransactionService {
         entity: transaction.entity,
         category: transaction.category,
         description: transaction.description,
-        type:transaction.type.id
+        type: transaction.type.id
       });
     });
     return results;
