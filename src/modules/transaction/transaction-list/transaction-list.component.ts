@@ -37,28 +37,34 @@ export class TransactionListComponent implements OnInit {
     
     var newTransactions = [];
 
+    var firstReferenceTransaction:Transaction = null;
+
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.selectedAccounts.forEach(account => {
 
       var accountTransactions = account.transactions.forEach(transaction => {
-        //add meta accountId
+        //add meta accountId -> TODO add it at creation?
         transaction.accountId=account.id;
         newTransactions.push(transaction);
       });
       
       //add reference values
       var referenceTransaction = this.transactionService.getReferenceTransaction(account);
-      //add meta h
+      //add meta hide
       referenceTransaction.hide=true;
       newTransactions.push(referenceTransaction);
+      if(firstReferenceTransaction==null || firstReferenceTransaction.date.getTime()>referenceTransaction.date.getTime())
+        firstReferenceTransaction = referenceTransaction; 
     });
     
     //sort
     newTransactions = this.transactionService.sortTransactions(newTransactions);
 
-//TODO se reference values são posteriores tem que se diminuir o sum
-    //add sums
-    var sum = Dinero({amount:0,currency:"EUR"});//TODO account ini
+    //add meta sum and invert order
+    var sum = Dinero({
+      amount:0,
+      currency: firstReferenceTransaction.amount.getCurrency()
+    });
     for (let i = newTransactions.length-1; i >=0 ; i--) {
       switch(newTransactions[i].type){
         case TransactionType.CREDIT:
@@ -68,10 +74,8 @@ export class TransactionListComponent implements OnInit {
           sum = sum.subtract(newTransactions[i].amount);
         break;
       }
-      //add meta sum
       newTransactions[i].sum = sum;
     }
-
     this.transactions = newTransactions;
   }
 
