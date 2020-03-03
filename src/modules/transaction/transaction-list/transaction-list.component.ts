@@ -52,19 +52,57 @@ export class TransactionListComponent implements OnInit {
       //add reference values
       var referenceTransaction = this.transactionService.getReferenceTransaction(account);
 
+      var sum = Dinero({
+        amount:referenceTransaction.amount.toUnit(),
+        currency: referenceTransaction.amount.getCurrency()
+      });
+      var diference = Dinero({
+        amount:referenceTransaction.amount.toUnit(),
+        currency: referenceTransaction.amount.getCurrency()
+      });
+
+      //add meta sum for this account
+      for (let i = accountTransactions.length-1; i >=0 ; i--) {
+        if(accountTransactions[i].date.getTime()>referenceTransaction.date.getTime()){
+          //after referenceValue
+          accountTransactions[i].init=sum;
+          switch(accountTransactions[i].type){
+            case TransactionType.CREDIT:
+              sum = sum.add(accountTransactions[i].amount);
+            break;
+            case TransactionType.DEBIT:
+              sum = sum.subtract(accountTransactions[i].amount);
+            break;
+          }
+          accountTransactions[i].sum = sum;
+        }else{
+          //before referenceValue
+          accountTransactions[i].init=sum;
+          switch(accountTransactions[i].type){
+            case TransactionType.CREDIT:
+              sum = sum.subtract(accountTransactions[i].amount);
+            break;
+            case TransactionType.DEBIT:
+              sum = sum.add(accountTransactions[i].amount);
+            break;
+          }
+          accountTransactions[i].sum = sum;
+        }
+      }
+
       //add meta hide
       referenceTransaction.hide=true;
-      accountTransactions.push(referenceTransaction);
+      //accountTransactions.push(referenceTransaction);
       if(firstReferenceTransaction==null || firstReferenceTransaction.date.getTime()>referenceTransaction.date.getTime())
         firstReferenceTransaction = referenceTransaction; 
 
       newTransactions = newTransactions.concat(accountTransactions);
     });
-    console.log(this.hasRealTransactions);
+
     //sort
     newTransactions = this.transactionService.sortTransactions(newTransactions);
 
-    //add meta sum and invert order
+    //update meta sum for all accounts and invert order
     var sum = Dinero({
       amount:0,
       currency: firstReferenceTransaction.amount.getCurrency()
@@ -72,10 +110,10 @@ export class TransactionListComponent implements OnInit {
     for (let i = newTransactions.length-1; i >=0 ; i--) {
       switch(newTransactions[i].type){
         case TransactionType.CREDIT:
-          sum = sum.add(newTransactions[i].amount);
+          sum = sum.add(newTransactions[i].sum);
         break;
         case TransactionType.DEBIT:
-          sum = sum.subtract(newTransactions[i].amount);
+          sum = sum.subtract(newTransactions[i].sum);
         break;
       }
       newTransactions[i].sum = sum;
