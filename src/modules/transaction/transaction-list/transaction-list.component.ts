@@ -42,34 +42,37 @@ export class TransactionListComponent implements OnInit {
     var firstAccount:Account = null;
 
     this.selectedAccounts = this.accountService.getSelectedAccounts();
-    
-    this.selectedAccounts.forEach(account => {
 
-      //add meta balance for this account
-      newTransactions = newTransactions.concat(this.applyBalanceToTransactions(account));
+    if(this.selectedAccounts.length>0){
 
-      //update firstReferenceTransaction
-      if(firstAccount==null || firstAccount.referenceDate.getTime()>account.referenceDate.getTime()){
-        firstAccount = account; 
+      this.selectedAccounts.forEach(account => {
+
+        //add meta balance for this account
+        newTransactions = newTransactions.concat(this.applyBalanceToTransactions(account));
+
+        //update firstReferenceTransaction
+        if(firstAccount==null || firstAccount.referenceDate.getTime()>account.referenceDate.getTime()){
+          firstAccount = account; 
+        }
+        if(!this.hasRealTransactions && account.transactions.length>0)
+          this.hasRealTransactions = true;
+      });
+
+      //sort
+      newTransactions = this.transactionService.sortTransactions(newTransactions);
+
+      //update meta sum for all accounts and invert order
+      var balanceUp = this.accountService.toDinero(
+        firstAccount.referenceAmount.getCurrency(),
+        0
+      );
+      for (let i = newTransactions.length-1; i >=0 ; i--) {
+        balanceUp = balanceUp.add(newTransactions[i].balanceAfter);
+        newTransactions[i].balanceAfter = balanceUp;
       }
-      if(!this.hasRealTransactions && account.transactions.length>0)
-        this.hasRealTransactions = true;
-    });
 
-    //sort
-    newTransactions = this.transactionService.sortTransactions(newTransactions);
-
-    //update meta sum for all accounts and invert order
-    var balanceUp = this.accountService.toDinero(
-      firstAccount.referenceAmount.getCurrency(),
-      0
-    );
-    for (let i = newTransactions.length-1; i >=0 ; i--) {
-      balanceUp = balanceUp.add(newTransactions[i].balanceAfter);
-      newTransactions[i].balanceAfter = balanceUp;
+      this.transactions = newTransactions;
     }
-
-    this.transactions = newTransactions;
   }
 
   refreshAccounts(){
