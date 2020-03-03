@@ -45,6 +45,7 @@ export class TransactionListComponent implements OnInit {
     this.selectedAccounts.forEach(account => {
 
       var accountTransactions = account.transactions;
+      console.log(accountTransactions.length);
       if(!this.hasRealTransactions && accountTransactions.length>0)
         this.hasRealTransactions = true;
 
@@ -58,7 +59,7 @@ export class TransactionListComponent implements OnInit {
 
       newTransactions = newTransactions.concat(accountTransactions);
     });
-    console.log(thasRealTransactions);
+    console.log(this.hasRealTransactions);
     //sort
     newTransactions = this.transactionService.sortTransactions(newTransactions);
 
