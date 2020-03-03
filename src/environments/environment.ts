@@ -1,11 +1,10 @@
-
+/*
 export const environment = {
   production: true,
 };
-/*
+*/
 export const environment = {
   production: false,
-
   bankn : {
     id:'1',
     name:'teste',
@@ -72,4 +71,3 @@ export const environment = {
     ],
   }
 };
-*/
