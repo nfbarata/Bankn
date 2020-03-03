@@ -89,23 +89,20 @@ export class TransactionListComponent implements OnInit {
       account.referenceAmount.getCurrency(),
       account.referenceAmount.toUnit()
     );
-    console.log(initialBalance);
+
     //calculate initial balance
     for (let i = accountTransactions.length-1; i >=0 ; i--) {
       if(accountTransactions[i].date.getTime()<=account.referenceDate.getTime()){
         switch(accountTransactions[i].type){
           case TransactionType.CREDIT:
             initialBalance = initialBalance.subtract(accountTransactions[i].amount);
-            console.log(initialBalance);
           break;
           case TransactionType.DEBIT:
             initialBalance = initialBalance.add(accountTransactions[i].amount);
-            console.log(initialBalance);
           break;
         }
       }
     }
-    console.log(initialBalance);
 
     var accumulatedBalance = initialBalance;
 

@@ -46,7 +46,7 @@ export const environment = {
         selected : true,
         referenceCountry:'PT',
         referenceAmount : {
-          amount:5000,
+          amount:50000,
           currency:'EUR',
           precision:2
         },
