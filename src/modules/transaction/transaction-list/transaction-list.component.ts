@@ -52,11 +52,11 @@ export class TransactionListComponent implements OnInit {
       //add reference values
       var referenceTransaction = this.transactionService.getReferenceTransaction(account);
 
-      var sum = Dinero({
+      var balanceUp = Dinero({
         amount:referenceTransaction.amount.toUnit(),
         currency: referenceTransaction.amount.getCurrency()
       });
-      var diference = Dinero({
+      var balanceDown = Dinero({
         amount:referenceTransaction.amount.toUnit(),
         currency: referenceTransaction.amount.getCurrency()
       });
@@ -65,58 +65,56 @@ export class TransactionListComponent implements OnInit {
       for (let i = accountTransactions.length-1; i >=0 ; i--) {
         if(accountTransactions[i].date.getTime()>referenceTransaction.date.getTime()){
           //after referenceValue
-          accountTransactions[i].init=sum;
+          accountTransactions[i].balanceBefore=balanceUp;
           switch(accountTransactions[i].type){
             case TransactionType.CREDIT:
-              sum = sum.add(accountTransactions[i].amount);
+              balanceUp = balanceUp.add(accountTransactions[i].amount);
             break;
             case TransactionType.DEBIT:
-              sum = sum.subtract(accountTransactions[i].amount);
+              balanceUp = balanceUp.subtract(accountTransactions[i].amount);
             break;
           }
-          accountTransactions[i].sum = sum;
+          accountTransactions[i].balanceAfter = balanceUp;
         }else{
           //before referenceValue
-          accountTransactions[i].init=sum;
+          accountTransactions[i].balanceBefore=balanceDown;
           switch(accountTransactions[i].type){
             case TransactionType.CREDIT:
-              sum = sum.subtract(accountTransactions[i].amount);
+              balanceDown = balanceDown.subtract(accountTransactions[i].amount);
             break;
             case TransactionType.DEBIT:
-              sum = sum.add(accountTransactions[i].amount);
+              balanceDown = balanceDown.add(accountTransactions[i].amount);
             break;
           }
-          accountTransactions[i].sum = sum;
+          accountTransactions[i].balanceAfter = balanceDown;
         }
       }
 
-      //add meta hide
-      referenceTransaction.hide=true;
-      //accountTransactions.push(referenceTransaction);
+      newTransactions = newTransactions.concat(accountTransactions);
+
+      //update firstReferenceTransaction
       if(firstReferenceTransaction==null || firstReferenceTransaction.date.getTime()>referenceTransaction.date.getTime())
         firstReferenceTransaction = referenceTransaction; 
-
-      newTransactions = newTransactions.concat(accountTransactions);
     });
 
     //sort
     newTransactions = this.transactionService.sortTransactions(newTransactions);
 
     //update meta sum for all accounts and invert order
-    var sum = Dinero({
+    var balanceUp = Dinero({
       amount:0,
       currency: firstReferenceTransaction.amount.getCurrency()
     });
     for (let i = newTransactions.length-1; i >=0 ; i--) {
       switch(newTransactions[i].type){
         case TransactionType.CREDIT:
-          sum = sum.add(newTransactions[i].sum);
+          balanceUp = balanceUp.add(newTransactions[i].sum);
         break;
         case TransactionType.DEBIT:
-          sum = sum.subtract(newTransactions[i].sum);
+          balanceUp = balanceUp.subtract(newTransactions[i].sum);
         break;
       }
-      newTransactions[i].sum = sum;
+      newTransactions[i].balanceAfter = balanceUp;
     }
     this.transactions = newTransactions;
   }

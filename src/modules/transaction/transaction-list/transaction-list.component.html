@@ -23,7 +23,7 @@
         {{transaction.date | date:'shortDate'}}
       </label>
       <label class="col-10 text-right">
-        {{transaction.sum | dinero}}
+        {{transaction.balanceAfter | dinero}}
       </label>
     </div>
     <div class="row overflow-hidden" *ngIf="transaction.hide!=true" style="height:30px" [routerLink]="['/transactions/transaction/'+transaction.accountId+'/'+transaction.id]">
@@ -40,7 +40,7 @@
         Initial value
       </label>
       <label class="col-5 text-right">
-        {{transaction.init | dinero}}
+        {{transaction.balanceBefore | dinero}}
       </label>
     </div>
   </div>
