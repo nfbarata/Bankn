@@ -40,7 +40,6 @@ export class TransactionComponent implements OnInit {
       month:null,
       year:null,
       typeId:null,
-      toAccount:null,
       entity:null,
       category:null,
       description:null
@@ -70,7 +69,6 @@ export class TransactionComponent implements OnInit {
           month:now.getMonth()+1,
           year:now.getFullYear(),
           typeId:TransactionType.DEBIT.id,
-          toAccount:null,
           entity:null,
           category:null,
           description:""
@@ -87,7 +85,6 @@ export class TransactionComponent implements OnInit {
           month:this.transaction.date.getMonth()+1,
           year:this.transaction.date.getFullYear(),
           typeId:this.transaction.type.id,
-          toAccount:this.transaction.toAccount,
           entity:this.transaction.entity,
           category:this.transaction.category,
           description:this.transaction.description
