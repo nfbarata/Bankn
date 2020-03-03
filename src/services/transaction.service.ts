@@ -78,7 +78,7 @@ export class TransactionService {
     var results = [];
     if(json!=null){
       json.forEach(transaction => {
-        var transaction=new Transaction(
+        var newTransaction=new Transaction(
           transaction.id,
           this.accountService.toDinero(currency, transaction.amount),//value to Dinero, speed
           transaction.date,
@@ -88,8 +88,8 @@ export class TransactionService {
           transaction.description,
           getTransactionType(transaction.type)
         )
-        transaction.accountId=accountId;
-        results.push(transaction);
+        newTransaction.accountId=accountId;
+        results.push(newTransaction);
       });
     }
     return results;
