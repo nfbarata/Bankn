@@ -44,55 +44,15 @@ export class TransactionListComponent implements OnInit {
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.selectedAccounts.forEach(account => {
 
-      var accountTransactions = [].concat(account.transactions);
-
-      if(!this.hasRealTransactions && accountTransactions.length>0)
-        this.hasRealTransactions = true;
-
-      var balanceUp = this.accountService.toDinero(
-        account.referenceAmount.getCurrency(),
-        account.referenceAmount.toUnit()
-      );
-      var balanceDown = this.accountService.toDinero(
-        account.referenceAmount.getCurrency(),
-        account.referenceAmount.toUnit()
-      );
-
-      //add meta sum for this account
-      for (let i = accountTransactions.length-1; i >=0 ; i--) {
-        if(accountTransactions[i].date.getTime()>account.referenceDate.getTime()){
-          //after referenceAmount
-          accountTransactions[i].balanceBefore=balanceUp;
-          switch(accountTransactions[i].type){
-            case TransactionType.CREDIT:
-              balanceUp = balanceUp.add(accountTransactions[i].amount);
-            break;
-            case TransactionType.DEBIT:
-              balanceUp = balanceUp.subtract(accountTransactions[i].amount);
-            break;
-          }
-          accountTransactions[i].balanceAfter = balanceUp;
-        }else{
-          //before referenceAmount
-          accountTransactions[i].balanceBefore=balanceDown;
-          switch(accountTransactions[i].type){
-            case TransactionType.CREDIT:
-              balanceDown = balanceDown.subtract(accountTransactions[i].amount);
-            break;
-            case TransactionType.DEBIT:
-              balanceDown = balanceDown.add(accountTransactions[i].amount);
-            break;
-          }
-          accountTransactions[i].balanceAfter = balanceDown;
-        }
-      }
-
-      newTransactions = newTransactions.concat(accountTransactions);
+      //add meta balance for this account
+      newTransactions = newTransactions.concat(this.applyBalanceToTransactions(account));
 
       //update firstReferenceTransaction
       if(firstAccount==null || firstAccount.referenceDate.getTime()>account.referenceDate.getTime()){
         firstAccount = account; 
       }
+      if(!this.hasRealTransactions && account.transactions.length>0)
+        this.hasRealTransactions = true;
     });
 
     //sort
@@ -120,5 +80,47 @@ export class TransactionListComponent implements OnInit {
   refreshAccounts(){
     this.accounts = this.accountService.getAccounts();
     this.refreshData();
+  }
+
+  applyBalanceToTransactions(account:Account):Transaction[]{
+    var balanceUp = this.accountService.toDinero(
+      account.referenceAmount.getCurrency(),
+      account.referenceAmount.toUnit()
+    );
+    var balanceDown = this.accountService.toDinero(
+      account.referenceAmount.getCurrency(),
+      account.referenceAmount.toUnit()
+    );
+    
+    var accountTransactions = [].concat(account.transactions);
+
+    for (let i = accountTransactions.length-1; i >=0 ; i--) {
+      if(accountTransactions[i].date.getTime()>account.referenceDate.getTime()){
+        //after referenceAmount
+        accountTransactions[i].balanceBefore=balanceUp;
+        switch(accountTransactions[i].type){
+          case TransactionType.CREDIT:
+            balanceUp = balanceUp.add(accountTransactions[i].amount);
+          break;
+          case TransactionType.DEBIT:
+            balanceUp = balanceUp.subtract(accountTransactions[i].amount);
+          break;
+        }
+        accountTransactions[i].balanceAfter = balanceUp;
+      }else{
+        //before referenceAmount
+        accountTransactions[i].balanceBefore=balanceDown;
+        switch(accountTransactions[i].type){
+          case TransactionType.CREDIT:
+            balanceDown = balanceDown.subtract(accountTransactions[i].amount);
+          break;
+          case TransactionType.DEBIT:
+            balanceDown = balanceDown.add(accountTransactions[i].amount);
+          break;
+        }
+        accountTransactions[i].balanceAfter = balanceDown;
+      }
+    }
+    return accountTransactions;
   }
 }
