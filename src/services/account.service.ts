@@ -55,12 +55,13 @@ export class AccountService {
     var transactionService = this.injector.get(TRANSACTION_SERVICE);
     var results = [];
     accounts.forEach(account => {
+      console.log(account.referenceDate);
       results.push([
         account.id,
         account.name,
         account.description,
         account.referenceAmount.toObject(),
-        account.referenceDate.format('YYYY-MM-DD'),
+        account.referenceDate.toISOString().substring(0,10),
         account.referenceCountry,
         transactionService.toJson(account.transactions),
         account.selected

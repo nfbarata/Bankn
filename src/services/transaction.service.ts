@@ -63,7 +63,7 @@ export class TransactionService {
       results.push(new Transaction(
         transaction.id,
         transaction.amount.toUnit(),//Dinero to value, compacted result
-        transaction.date.format('YYYY-MM-DD'),
+        transaction.date.toISOString().substring(0,10),
         transaction.toAccount,
         transaction.entity,
         transaction.category,
