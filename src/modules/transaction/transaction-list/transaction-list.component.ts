@@ -58,7 +58,7 @@ export class TransactionListComponent implements OnInit {
           this.hasRealTransactions = true;
       });
 
-      //sort
+      //sort (from multiple accounts)
       newTransactions = this.transactionService.sortTransactions(newTransactions);
 
       //update meta sum for all accounts and invert order
