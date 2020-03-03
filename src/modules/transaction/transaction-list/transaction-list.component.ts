@@ -39,39 +39,25 @@ export class TransactionListComponent implements OnInit {
 
     var newTransactions = [];
 
-    var firstAccount:Account = null;
-
     this.selectedAccounts = this.accountService.getSelectedAccounts();
 
     if(this.selectedAccounts.length>0){
 
       this.selectedAccounts.forEach(account => {
-
-        //add meta balance for this account
-        newTransactions = newTransactions.concat(this.applyBalanceToTransactions(account));
-
-        //update firstReferenceTransaction
-        if(firstAccount==null || firstAccount.referenceDate.getTime()>account.referenceDate.getTime()){
-          firstAccount = account; 
-        }
+        newTransactions = newTransactions.concat(account.transactions);
         if(!this.hasRealTransactions && account.transactions.length>0)
           this.hasRealTransactions = true;
       });
 
+      //get initial value
+      var initialValue = this.accountService.getInitialValueMultiple(this.selectedAccounts);
+
       //sort (from multiple accounts)
       newTransactions = this.transactionService.sortTransactions(newTransactions);
 
-      //update meta sum for all accounts and invert order
-      var accumulatedBalance = this.accountService.toDinero(
-        firstAccount.referenceAmount.getCurrency(),
-        0
-      );
-      for (let i = newTransactions.length-1; i >=0 ; i--) {
-        accumulatedBalance = accumulatedBalance.add(newTransactions[i].balanceAfter);
-        //update balanceAfter with all accounts balance
-        newTransactions[i].balanceAfter = accumulatedBalance;
-      }
-
+      //calculate balances
+      this.applyBalanceToTransactions(newTransactions, initialValue);
+      
       this.transactions = newTransactions;
     }
   }
@@ -81,43 +67,25 @@ export class TransactionListComponent implements OnInit {
     this.refreshData();
   }
 
-  applyBalanceToTransactions(account:Account):Transaction[]{
-    
-    var accountTransactions = [].concat(account.transactions);
-
-    var initialBalance = this.accountService.toDinero(
-      account.referenceAmount.getCurrency(),
-      account.referenceAmount.toUnit()
+  applyBalanceToTransactions(transactions:Transaction[], initialValue:Dinero):void{
+    //update meta sum for all accounts and invert order
+    var accumulatedBalance = this.accountService.toDinero(
+      initialValue.getCurrency(),
+      initialValue.toUnit()
     );
 
-    //calculate initial balance
-    for (let i = accountTransactions.length-1; i >=0 ; i--) {
-      if(accountTransactions[i].date.getTime()<=account.referenceDate.getTime()){
-        switch(accountTransactions[i].type){
-          case TransactionType.CREDIT:
-            initialBalance = initialBalance.subtract(accountTransactions[i].amount);
-          break;
-          case TransactionType.DEBIT:
-            initialBalance = initialBalance.add(accountTransactions[i].amount);
-          break;
-        }
-      }
-    }
-
-    var accumulatedBalance = initialBalance;
-
-    for (let i = accountTransactions.length-1; i >=0 ; i--) {
-      accountTransactions[i].balanceBefore=accumulatedBalance;
-      switch(accountTransactions[i].type){
+    //add meta balance for this account
+    for (let i = transactions.length-1; i >=0 ; i--) {
+      transactions[i].balanceBefore=accumulatedBalance;
+      switch(transactions[i].type){
         case TransactionType.CREDIT:
-          accumulatedBalance = accumulatedBalance.add(accountTransactions[i].amount);
+          accumulatedBalance = accumulatedBalance.add(transactions[i].amount);
         break;
         case TransactionType.DEBIT:
-          accumulatedBalance = accumulatedBalance.subtract(accountTransactions[i].amount);
+          accumulatedBalance = accumulatedBalance.subtract(transactions[i].amount);
         break;
       }
-      accountTransactions[i].balanceAfter = accumulatedBalance;
+      transactions[i].balanceAfter = accumulatedBalance;
     }
-    return accountTransactions;
   }
 }

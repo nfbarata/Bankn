@@ -1,6 +1,6 @@
 import { Injectable, Inject, Injector } from '@angular/core';
 import { Account } from "../models/account";
-import { Transaction } from "../models/transaction";
+import { Transaction, TransactionType } from "../models/transaction";
 import { BanknService } from '../services/bankn.service';
 import { EventsService } from '../services/events.service';
 import { TRANSACTION_SERVICE } from '../modules/app/app.module';
@@ -203,5 +203,41 @@ export class AccountService {
     });
     this.eventsService.transactionChange.emit();
     this.eventsService.accountTransactionsChange.emit();
+  }
+
+  getInitialValue(account:Account):Dinero{
+    var initialBalance = this.toDinero(
+      account.referenceAmount.getCurrency(),
+      account.referenceAmount.toUnit()
+    );
+
+    //calculate initial balance
+    for (let i = account.transactions.length-1; i >=0 ; i--) {
+      if(account.referenceDate.getTime()>account.transactions[i].date.getTime()){
+        switch(account.transactions[i].type){
+          case TransactionType.CREDIT:
+            initialBalance = initialBalance.subtract(account.transactions[i].amount);
+          break;
+          case TransactionType.DEBIT:
+            initialBalance = initialBalance.add(account.transactions[i].amount);
+          break;
+        }
+      }else{
+        //no need to continue
+        break;
+      }
+    }
+    return initialBalance;
+  }
+
+  getInitialValueMultiple(accounts:Account[]):Dinero{
+    var initialBalance = this.toDinero(
+      accounts[0].referenceAmount.getCurrency(),//TODO dif currencies
+      0
+    );
+    accounts.forEach(account => {
+      initialBalance = initialBalance.add(this.getInitialValue(account));
+    });
+    return initialBalance;
   }
 }
