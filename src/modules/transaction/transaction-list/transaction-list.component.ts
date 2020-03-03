@@ -64,7 +64,7 @@ export class TransactionListComponent implements OnInit {
       //update meta sum for all accounts and invert order
       var balanceUp = this.accountService.toDinero(
         firstAccount.referenceAmount.getCurrency(),
-        0
+        firstAccount.referenceAmount.toUnit()
       );
       for (let i = newTransactions.length-1; i >=0 ; i--) {
         balanceUp = balanceUp.add(newTransactions[i].balanceAfter);
