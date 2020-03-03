@@ -60,7 +60,7 @@ export class AccountService {
         account.name,
         account.description,
         account.referenceAmount.toObject(),
-        account.referenceDate,
+        account.referenceDate.format('YYYY-MM-DD'),
         account.referenceCountry,
         transactionService.toJson(account.transactions),
         account.selected
@@ -79,7 +79,7 @@ export class AccountService {
           account.name,
           account.description,
           Dinero(account.referenceAmount),
-          account.referenceDate,
+          new Date(account.referenceDate),
           account.referenceCountry,
           transactionService.fromJson(account.transactions, account.referenceAmount.currency, account.id),
           account.selected

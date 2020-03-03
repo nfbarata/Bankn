@@ -21,21 +21,21 @@ export const environment = {
           precision:2
         },
         referenceCountry:'PT',
-        referenceDate : new Date(2000,1,1),
+        referenceDate : "2000-1-1",
         description:'aaa',
         transactions : [
           {
             id:11,
             amount:1000000.01,
             type:"c",
-            date:new Date(2009,11,31),
+            date:"2009-11-31",
             description: "movimento teste 11"
           },
           {
             id:12,
             amount:11.1,
             type:"d",
-            date:new Date(2009,5,12),
+            date:"2009-5-12",
             description: "movimento teste 22"
           },
         ]
@@ -50,21 +50,21 @@ export const environment = {
           currency:'EUR',
           precision:2
         },
-        referenceDate : new Date(2009,5,31),
+        referenceDate : "2009-5-31",
         description:'bbb',
         transactions :[
           {
             id:21,
             amount:20,
             type:"c",
-            date:new Date(2009,6,11),
+            date:"2009-6-11",
             description: "movimento teste 21"
           },
           {
             id:22,
             amount:100,
             type:"d",
-            date:new Date(2009,5,12),
+            date:"2009-5-12",
             description: "movimento teste 22"
           },
         ]

@@ -63,7 +63,7 @@ export class TransactionService {
       results.push(new Transaction(
         transaction.id,
         transaction.amount.toUnit(),//Dinero to value, compacted result
-        transaction.date,
+        transaction.date.format('YYYY-MM-DD'),
         transaction.toAccount,
         transaction.entity,
         transaction.category,
@@ -81,7 +81,7 @@ export class TransactionService {
         var newTransaction=new Transaction(
           transaction.id,
           this.accountService.toDinero(currency, transaction.amount),//value to Dinero, speed
-          transaction.date,
+          new Date(transaction.date),
           typeof transaction.toAccount === "undefined"?null:transaction.toAccount,
           typeof transaction.entity  === "undefined"?null:transaction.entity,
           typeof transaction.category  === "undefined"?null:transaction.category,
