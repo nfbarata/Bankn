@@ -12,6 +12,7 @@ import { Transaction,TransactionType } from "../../../models/transaction";
 })
 export class TransactionListComponent implements OnInit {
 
+  hasRealTransactions:boolean = false;
   transactions = [];
   selectedAccounts : Account[] = [];
   accounts : Account[] = [];
@@ -34,7 +35,8 @@ export class TransactionListComponent implements OnInit {
     //clear
     while(this.transactions.length>0)
       this.transactions.pop();
-    
+    this.hasRealTransactions = false;
+
     var newTransactions = [];
 
     var firstReferenceTransaction:Transaction = null;
@@ -42,21 +44,21 @@ export class TransactionListComponent implements OnInit {
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.selectedAccounts.forEach(account => {
 
-      var accountTransactions = account.transactions.forEach(transaction => {
-        //add meta accountId -> TODO add it at creation?
-        transaction.accountId=account.id;
-        newTransactions.push(transaction);
-      });
-      
+      var accountTransactions = account.transactions;
+      if(!this.hasRealTransactions && accountTransactions.length>0)
+        this.hasRealTransactions = true;
+
       //add reference values
       var referenceTransaction = this.transactionService.getReferenceTransaction(account);
       //add meta hide
       referenceTransaction.hide=true;
-      newTransactions.push(referenceTransaction);
+      accountTransactions.push(referenceTransaction);
       if(firstReferenceTransaction==null || firstReferenceTransaction.date.getTime()>referenceTransaction.date.getTime())
         firstReferenceTransaction = referenceTransaction; 
+
+      newTransactions = newTransactions.concat(accountTransactions);
     });
-    
+    console.log(thasRealTransactions);
     //sort
     newTransactions = this.transactionService.sortTransactions(newTransactions);
 
