@@ -14,7 +14,7 @@ export const environment = {
       {
         id:"1",
         name:"conta teste 1",
-        selected : true,
+        selected : false,
         referenceAmount : {
           amount:0,
           currency:'EUR',
@@ -43,10 +43,10 @@ export const environment = {
       {
         id:"2",
         name:"conta teste 2",
-        selected : false,
+        selected : true,
         referenceCountry:'PT',
         referenceAmount : {
-          amount:100000,
+          amount:5000,
           currency:'EUR',
           precision:2
         },
@@ -62,7 +62,7 @@ export const environment = {
           },
           {
             id:22,
-            amount:21,
+            amount:100,
             type:"d",
             date:new Date(2009,5,12),
             description: "movimento teste 22"

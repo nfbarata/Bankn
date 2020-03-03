@@ -62,13 +62,14 @@ export class TransactionListComponent implements OnInit {
       newTransactions = this.transactionService.sortTransactions(newTransactions);
 
       //update meta sum for all accounts and invert order
-      var balanceUp = this.accountService.toDinero(
+      var accumulatedBalance = this.accountService.toDinero(
         firstAccount.referenceAmount.getCurrency(),
-        firstAccount.referenceAmount.toUnit()
+        0
       );
       for (let i = newTransactions.length-1; i >=0 ; i--) {
-        balanceUp = balanceUp.add(newTransactions[i].balanceAfter);
-        newTransactions[i].balanceAfter = balanceUp;
+        accumulatedBalance = accumulatedBalance.add(newTransactions[i].balanceAfter);
+        //update balanceAfter with all accounts balance
+        newTransactions[i].balanceAfter = accumulatedBalance;
       }
 
       this.transactions = newTransactions;
@@ -81,43 +82,44 @@ export class TransactionListComponent implements OnInit {
   }
 
   applyBalanceToTransactions(account:Account):Transaction[]{
-    var balanceUp = this.accountService.toDinero(
-      account.referenceAmount.getCurrency(),
-      account.referenceAmount.toUnit()
-    );
-    var balanceDown = this.accountService.toDinero(
-      account.referenceAmount.getCurrency(),
-      account.referenceAmount.toUnit()
-    );
     
     var accountTransactions = [].concat(account.transactions);
 
+    var initialBalance = this.accountService.toDinero(
+      account.referenceAmount.getCurrency(),
+      account.referenceAmount.toUnit()
+    );
+    console.log(initialBalance);
+    //calculate initial balance
     for (let i = accountTransactions.length-1; i >=0 ; i--) {
-      if(accountTransactions[i].date.getTime()>account.referenceDate.getTime()){
-        //after referenceAmount
-        accountTransactions[i].balanceBefore=balanceUp;
+      if(accountTransactions[i].date.getTime()<=account.referenceDate.getTime()){
         switch(accountTransactions[i].type){
           case TransactionType.CREDIT:
-            balanceUp = balanceUp.add(accountTransactions[i].amount);
+            initialBalance = initialBalance.subtract(accountTransactions[i].amount);
+            console.log(initialBalance);
           break;
           case TransactionType.DEBIT:
-            balanceUp = balanceUp.subtract(accountTransactions[i].amount);
+            initialBalance = initialBalance.add(accountTransactions[i].amount);
+            console.log(initialBalance);
           break;
         }
-        accountTransactions[i].balanceAfter = balanceUp;
-      }else{
-        //before referenceAmount
-        accountTransactions[i].balanceBefore=balanceDown;
-        switch(accountTransactions[i].type){
-          case TransactionType.CREDIT:
-            balanceDown = balanceDown.subtract(accountTransactions[i].amount);
-          break;
-          case TransactionType.DEBIT:
-            balanceDown = balanceDown.add(accountTransactions[i].amount);
-          break;
-        }
-        accountTransactions[i].balanceAfter = balanceDown;
       }
+    }
+    console.log(initialBalance);
+
+    var accumulatedBalance = initialBalance;
+
+    for (let i = accountTransactions.length-1; i >=0 ; i--) {
+      accountTransactions[i].balanceBefore=accumulatedBalance;
+      switch(accountTransactions[i].type){
+        case TransactionType.CREDIT:
+          accumulatedBalance = accumulatedBalance.add(accountTransactions[i].amount);
+        break;
+        case TransactionType.DEBIT:
+          accumulatedBalance = accumulatedBalance.subtract(accountTransactions[i].amount);
+        break;
+      }
+      accountTransactions[i].balanceAfter = accumulatedBalance;
     }
     return accountTransactions;
   }
