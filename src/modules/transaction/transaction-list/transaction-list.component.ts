@@ -106,10 +106,10 @@ export class TransactionListComponent implements OnInit {
     for (let i = newTransactions.length-1; i >=0 ; i--) {
       switch(newTransactions[i].type){
         case TransactionType.CREDIT:
-          balanceUp = balanceUp.add(newTransactions[i].sum);
+          balanceUp = balanceUp.add(newTransactions[i].balanceAfter);
         break;
         case TransactionType.DEBIT:
-          balanceUp = balanceUp.subtract(newTransactions[i].sum);
+          balanceUp = balanceUp.subtract(newTransactions[i].balanceAfter);
         break;
       }
       newTransactions[i].balanceAfter = balanceUp;
