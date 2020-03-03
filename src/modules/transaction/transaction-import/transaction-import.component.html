@@ -1,1 +1,17 @@
-TODO
+<h2>Import transactions</h2>
+<br>
+<form class="container" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+
+    <div class="row">
+      <div class="col-12 form-group">
+        <label for="description" i18n>
+          Description
+        </label>
+        <textarea class="form-control" id="description" formControlName="description"></textarea>
+      </div>
+    </div>
+  
+    <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
+    &nbsp;
+    <a *ngIf="formData.id!=null" class="btn btn-danger text-white" role="button" (click)="onDelete(formData.accountId,formData.id);" i18n>Delete</a>
+</form>
