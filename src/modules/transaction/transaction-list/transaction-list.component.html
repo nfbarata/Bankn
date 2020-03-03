@@ -13,7 +13,7 @@
 <account-select-card [hidden]="!(accounts.length>0&&selectedAccounts.length==0)"></account-select-card>
 
 <div class="col-sm-5">
-    <transaction-create-card [hidden]="!(accounts.length>0&&hasRealTransactions)"></transaction-create-card>
+    <transaction-create-card [hidden]="accounts.length==0 || hasRealTransactions"></transaction-create-card>
 </div>
 
 <div class="container" [hidden]="!hasRealTransactions">
