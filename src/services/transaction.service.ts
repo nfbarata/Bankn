@@ -95,7 +95,7 @@ export class TransactionService {
     return results;
   }
 
-  getReferenceTransaction(account:Account){
+  /*getReferenceTransaction(account:Account){
     return new Transaction(
       "referenceAccount-"+account.id,
       account.referenceAmount,
@@ -106,7 +106,7 @@ export class TransactionService {
       null,
       account.referenceAmount.toUnit()>0?TransactionType.CREDIT:TransactionType.DEBIT
     );
-  }
+  }*/
 
   getSelectedAccountsTransactions() : Transaction[]{
     var accounts : Account[] = this.accountService.getSelectedAccounts();

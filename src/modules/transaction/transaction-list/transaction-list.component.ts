@@ -39,7 +39,7 @@ export class TransactionListComponent implements OnInit {
 
     var newTransactions = [];
 
-    var firstReferenceTransaction:Transaction = null;
+    var firstAccount:Account = null;
 
     this.selectedAccounts = this.accountService.getSelectedAccounts();
     this.selectedAccounts.forEach(account => {
@@ -49,21 +49,18 @@ export class TransactionListComponent implements OnInit {
       if(!this.hasRealTransactions && accountTransactions.length>0)
         this.hasRealTransactions = true;
 
-      //add reference values
-      var referenceTransaction = this.transactionService.getReferenceTransaction(account);
-
       var balanceUp = Dinero({
-        amount:referenceTransaction.amount.toUnit(),
-        currency: referenceTransaction.amount.getCurrency()
+        amount: account.referenceValue.toUnit(),
+        currency: account.referenceValue.getCurrency()
       });
       var balanceDown = Dinero({
-        amount:referenceTransaction.amount.toUnit(),
-        currency: referenceTransaction.amount.getCurrency()
+        amount: account.referenceValue.toUnit(),
+        currency: account.referenceValue.getCurrency()
       });
 
       //add meta sum for this account
       for (let i = accountTransactions.length-1; i >=0 ; i--) {
-        if(accountTransactions[i].date.getTime()>referenceTransaction.date.getTime()){
+        if(accountTransactions[i].date.getTime()>account.referenceDate.getTime()){
           //after referenceValue
           accountTransactions[i].balanceBefore=balanceUp;
           switch(accountTransactions[i].type){
@@ -93,8 +90,9 @@ export class TransactionListComponent implements OnInit {
       newTransactions = newTransactions.concat(accountTransactions);
 
       //update firstReferenceTransaction
-      if(firstReferenceTransaction==null || firstReferenceTransaction.date.getTime()>referenceTransaction.date.getTime())
-        firstReferenceTransaction = referenceTransaction; 
+      if(firstAccount==null || firstAccount.referenceDate.getTime()>account.referenceDate.getTime()){
+        firstAccount = account; 
+      }
     });
 
     //sort
@@ -103,7 +101,7 @@ export class TransactionListComponent implements OnInit {
     //update meta sum for all accounts and invert order
     var balanceUp = Dinero({
       amount:0,
-      currency: firstReferenceTransaction.amount.getCurrency()
+      currency: firstAccount.referenceValue.getCurrency()
     });
     for (let i = newTransactions.length-1; i >=0 ; i--) {
       switch(newTransactions[i].type){
