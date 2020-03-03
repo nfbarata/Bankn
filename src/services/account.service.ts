@@ -56,16 +56,16 @@ export class AccountService {
     var results = [];
     accounts.forEach(account => {
       console.log(account.referenceDate);
-      results.push([
-        account.id,
-        account.name,
-        account.description,
-        account.referenceAmount.toObject(),
-        account.referenceDate.toISOString().substring(0,10),
-        account.referenceCountry,
-        transactionService.toJson(account.transactions),
-        account.selected
-      ]);
+      results.push({
+        id: account.id,
+        name: account.name,
+        description: account.description,
+        referenceAmount: account.referenceAmount.toObject(),
+        referenceDate: account.referenceDate.toISOString().substring(0,10),
+        referenceCountry: account.referenceCountry,
+        transactions: transactionService.toJson(account.transactions),
+        selected: account.selected
+      });
     });
     return results;
   }

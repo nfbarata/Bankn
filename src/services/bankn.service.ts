@@ -95,14 +95,14 @@ export class BanknService {
     this.fileService.downloadJsonFile(this.toJson());
   }
 
-  toJson():Bankn{
+  toJson():any{
     var accountService = this.injector.get(ACCOUNT_SERVICE);
-    return new Bankn(
-      this.bankn.id,
-      this.bankn.name,
-      accountService.toJson(this.bankn.accounts),
-      this.bankn.referenceCountry
-    )
+    return {
+      id: this.bankn.id,
+      name: this.bankn.name,
+      accounts: accountService.toJson(this.bankn.accounts),
+      referenceCountry: this.bankn.referenceCountry
+    };
   }
 
   update(name:String,referenceCountry:String):void{

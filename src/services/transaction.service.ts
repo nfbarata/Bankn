@@ -60,16 +60,16 @@ export class TransactionService {
   toJson(transactions:Transaction[]){
     var results = [];
     transactions.forEach(transaction => {
-      results.push(new Transaction(
-        transaction.id,
-        transaction.amount.toUnit(),//Dinero to value, compacted result
-        transaction.date.toISOString().substring(0,10),
-        transaction.toAccount,
-        transaction.entity,
-        transaction.category,
-        transaction.description,
-        transaction.type.id
-      ));
+      results.push({
+        id: transaction.id,
+        amount: transaction.amount.toUnit(),//Dinero to value, compacted result
+        date: transaction.date.toISOString().substring(0,10),
+        toAccount: transaction.toAccount,
+        entity: transaction.entity,
+        category: transaction.category,
+        description: transaction.description,
+        type:transaction.type.id
+      });
     });
     return results;
   }
