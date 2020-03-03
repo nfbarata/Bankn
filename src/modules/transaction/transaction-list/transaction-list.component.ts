@@ -49,19 +49,19 @@ export class TransactionListComponent implements OnInit {
       if(!this.hasRealTransactions && accountTransactions.length>0)
         this.hasRealTransactions = true;
 
-      var balanceUp = Dinero({
-        amount: account.referenceValue.toUnit(),
-        currency: account.referenceValue.getCurrency()
-      });
-      var balanceDown = Dinero({
-        amount: account.referenceValue.toUnit(),
-        currency: account.referenceValue.getCurrency()
-      });
+      var balanceUp = this.accountService.toDinero(
+        account.referenceAmount.getCurrency(),
+        account.referenceAmount.toUnit()
+      );
+      var balanceDown = this.accountService.toDinero(
+        account.referenceAmount.getCurrency(),
+        account.referenceAmount.toUnit()
+      );
 
       //add meta sum for this account
       for (let i = accountTransactions.length-1; i >=0 ; i--) {
         if(accountTransactions[i].date.getTime()>account.referenceDate.getTime()){
-          //after referenceValue
+          //after referenceAmount
           accountTransactions[i].balanceBefore=balanceUp;
           switch(accountTransactions[i].type){
             case TransactionType.CREDIT:
@@ -73,7 +73,7 @@ export class TransactionListComponent implements OnInit {
           }
           accountTransactions[i].balanceAfter = balanceUp;
         }else{
-          //before referenceValue
+          //before referenceAmount
           accountTransactions[i].balanceBefore=balanceDown;
           switch(accountTransactions[i].type){
             case TransactionType.CREDIT:
@@ -99,10 +99,10 @@ export class TransactionListComponent implements OnInit {
     newTransactions = this.transactionService.sortTransactions(newTransactions);
 
     //update meta sum for all accounts and invert order
-    var balanceUp = Dinero({
-      amount:0,
-      currency: firstAccount.referenceValue.getCurrency()
-    });
+    var balanceUp = this.accountService.toDinero(
+      firstAccount.referenceAmount.getCurrency(),
+      0
+    );
     for (let i = newTransactions.length-1; i >=0 ; i--) {
       switch(newTransactions[i].type){
         case TransactionType.CREDIT:
