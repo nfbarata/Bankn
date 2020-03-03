@@ -25,29 +25,23 @@ export function getTransactionType(id:String){
 
 export class Transaction {
   
-  private id:String;//uuid
-  //meta
-  accountId:String;
-  
-  private amount:Dinero;
   private date:Date;
-
-  private type;
-  //account:Account;
-  private toAccount : String;
-
-  private entity:String;//fromAccount
   private category:String;
-
+  private entity:String;//toAccount
+  private amount:Dinero;
+  //balance?
+  accountId:String;//meta
   private description:String;
 
+  private id:String;//uuid
+  private type;
+ 
   //receipt;
 
   constructor(
     uuid:String,
     amount:Dinero,
     date:Date,
-    toAccount:String,
     entity:String,
     category:String,
     description:String,
@@ -56,7 +50,6 @@ export class Transaction {
     this.id = uuid;
     this.amount = amount;
     this.date = date;
-    this.toAccount = toAccount;
     this.entity = entity;
     this.category = category;
     this.description = description;

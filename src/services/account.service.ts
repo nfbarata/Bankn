@@ -197,7 +197,7 @@ export class AccountService {
     this.eventsService.accountTransactionsChange.emit();
   }
 
-  deleteTransactionId(account:Account, transactionId:Transaction){
+  deleteTransactionId(account:Account, transactionId:String){
     account.transactions = account.transactions.filter(function(transaction){
        return transaction.id != transactionId;
     });

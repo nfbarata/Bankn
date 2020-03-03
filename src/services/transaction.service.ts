@@ -18,7 +18,6 @@ export class TransactionService {
     amount:Dinero,
     date:Date,
     type,
-    toAccount:String,
     entity:String,
     category:String,
     description:String
@@ -27,7 +26,6 @@ export class TransactionService {
         uuidv4(),
         amount,
         date,
-        toAccount,
         entity,
         category,
         description,
@@ -42,7 +40,6 @@ export class TransactionService {
     amount:Dinero,
     date:Date,
     type,
-    toAccount:String,
     entity:String,
     category:String,
     description:String
@@ -50,7 +47,6 @@ export class TransactionService {
     transaction.amount = amount;
     transaction.date = date;
     transaction.type = type;
-    transaction.toAmount = toAccount;
     transaction.entity = entity;
     transaction.category = category;
     transaction.description = description;
@@ -64,7 +60,6 @@ export class TransactionService {
         id: transaction.id,
         amount: transaction.amount.toUnit(),//Dinero to value, compacted result
         date: transaction.date.toISOString().substring(0,10),
-        toAccount: transaction.toAccount,
         entity: transaction.entity,
         category: transaction.category,
         description: transaction.description,
@@ -82,7 +77,6 @@ export class TransactionService {
           transaction.id,
           this.accountService.toDinero(currency, transaction.amount),//value to Dinero, speed
           new Date(transaction.date),
-          typeof transaction.toAccount === "undefined"?null:transaction.toAccount,
           typeof transaction.entity  === "undefined"?null:transaction.entity,
           typeof transaction.category  === "undefined"?null:transaction.category,
           transaction.description,

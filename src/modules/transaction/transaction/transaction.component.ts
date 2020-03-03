@@ -115,7 +115,6 @@ export class TransactionComponent implements OnInit {
         amount,
         date,
         getTransactionType(data.typeId),
-        data.toAccount,
         data.entity,
         data.category,
         data.description
@@ -127,7 +126,6 @@ export class TransactionComponent implements OnInit {
         amount,
         date,
         getTransactionType(data.typeId),
-        data.toAccount,
         data.entity,
         data.category,
         data.description
