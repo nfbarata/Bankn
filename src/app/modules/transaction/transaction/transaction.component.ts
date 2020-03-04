@@ -58,6 +58,10 @@ export class TransactionComponent implements OnInit {
         if(selected.length>0)
           accountId=selected[0].id;
       }
+      if(accountId==null){
+        accountId=this.accounts[0].id;
+      }
+      
       var transactionId:String = params.get('transactionId');
       var now = new Date();
       if(transactionId==null || transactionId.trim().length==0){
