@@ -4,14 +4,26 @@
     <h2 i18n>Transactions</h2>
   </div>
   <div class="col-6 text-right">
-    <button *ngIf="accounts.length==0" class="btn btn-primary " type="submit" [routerLink]="['/transactions/transaction']">New</button>
+    <button class="btn btn-primary " type="submit" [routerLink]="['/transactions/transaction']" [disabled]="accounts.length==0">New</button>
   </div>
 </div>
 <br>
 
-<account-create-card *ngIf="accounts.length==0"></account-create-card>
-<account-select-card *ngIf="accounts.length>0&&selectedAccounts.length==0"></account-select-card>
-<transaction-create-card *ngIf="accounts.length!=0&&!hasRealTransactions"></transaction-create-card>
+<div *ngIf="accounts.length==0" class="row">
+  <div class="col-sm-5">
+    <account-create-card *ngIf=""></account-create-card>
+  </div>
+</div>
+<div *ngIf="accounts.length>0&&selectedAccounts.length==0" class="row">
+  <div class="col-sm-5">
+    <account-select-card *ngIf=""></account-select-card>
+  </div>
+</div>
+<div *ngIf="accounts.length!=0&&!hasRealTransactions" class="row">
+  <div class="col-sm-5">
+    <transaction-create-card *ngIf=""></transaction-create-card>
+  </div>
+</div>
 
 <div *ngIf="hasRealTransactions" class="container">
   <div *ngFor="let transaction of transactions; let i = index;">
