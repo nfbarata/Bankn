@@ -8,7 +8,12 @@
   </div>
 </div>
 <br>
-<div class="container">
+<div *ngIf="accounts.length>0" class="container">
+  <div class="row bg-secondary text-white">
+    <label class="col-12">
+      Name
+    </label>
+  </div>
   <div class="row" *ngFor="let account of accounts">
     <!-- group tipo de conta-->
     <div class="col-12" [routerLink]="['/accounts/account',account.id]">
