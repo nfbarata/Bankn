@@ -23,6 +23,8 @@ import { EventsService } from './services/events.service';
 import { BanknService } from './services/bankn.service';
 import { AccountService } from './services/account.service';
 import { TransactionService } from './services/transaction.service';
+//guards
+import { InitializedGuard } from './guards/initialized.guard';
 //components
 import { MainComponent } from './components/main/main.component';
 import { MenuComponent } from './components/menu/menu.component';
@@ -65,7 +67,8 @@ export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
     EventsService,FileService,
     BanknService, AccountService, TransactionService,
     { provide: ACCOUNT_SERVICE, useExisting: AccountService },
-    { provide: TRANSACTION_SERVICE, useExisting: TransactionService }
+    { provide: TRANSACTION_SERVICE, useExisting: TransactionService },
+    InitializedGuard
   ]
 })
 export class AppModule { 
