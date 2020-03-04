@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../../services/account.service';
-import { BanknService } from '../../../services/bankn.service';
-import { FileService } from '../../../services/file.service';
-import { EventsService } from '../../../services/events.service';
-import { Account } from "../../../models/account";
+import { AccountService } from '../../services/account.service';
+import { BanknService } from '../../services/bankn.service';
+import { FileService } from '../../services/file.service';
+import { EventsService } from '../../services/events.service';
+import { Account } from "../../models/account";
 
 @Component({
   selector: 'main-menu',

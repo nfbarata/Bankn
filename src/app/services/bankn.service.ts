@@ -1,11 +1,14 @@
 import { Output, LOCALE_ID, Inject } from '@angular/core';
 import { Injectable, Injector } from '@angular/core';
-import { Bankn } from "../models/bankn";
-import { Account } from "../models/account";
+
+import { v4 as uuidv4 } from 'uuid';
+
 import { EventsService } from "./events.service";
 import { FileService } from "./file.service";
-import { ACCOUNT_SERVICE } from '../modules/app/app.module';
-import { v4 as uuidv4 } from 'uuid';
+import { ACCOUNT_SERVICE } from '../app.module';
+
+import { Bankn } from "../models/bankn";
+import { Account } from "../models/account";
 
 const countries        = require('country-data-list').countries,
       currencies       = require('country-data-list').currencies,

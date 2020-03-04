@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BanknService } from '../../../services/bankn.service';
-import { EventsService } from '../../../services/events.service';
-import { AccountService } from '../../../services/account.service';
-import { environment } from '../../../environments/environment';
+import { BanknService } from '../../services/bankn.service';
+import { EventsService } from '../../services/events.service';
+import { AccountService } from '../../services/account.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'main',

@@ -1,33 +1,34 @@
+//angular dependecies
 import { NgModule , LOCALE_ID, Injector, Inject, InjectionToken  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';//from erro
-
+//external dependencies
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
-
+//localization
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localePt from '@angular/common/locales/pt';
 registerLocaleData(localeEn, 'en-EN');
 registerLocaleData(localePt, 'pt-PT');
-
+//modules
 import { AppRoutingModule } from './app-routing.module';
-import { SharedModule } from '../shared/shared.module';
-
-import { FileService } from '../../services/file.service';
-import { EventsService } from '../../services/events.service';
-import { BanknService } from '../../services/bankn.service';
-import { AccountService } from '../../services/account.service';
-import { TransactionService } from '../../services/transaction.service';
-
-import { MainComponent } from './main/main.component';
-import { MenuComponent } from './menu/menu.component';
-import { MenuSideComponent } from './menu-side/menu-side.component';
-import { HomeComponent } from './home/home.component';
-import { BanknCreateComponent } from './bankn-create/bankn-create.component';
+import { SharedModule } from './modules/shared/shared.module';
+//services
+import { FileService } from './services/file.service';
+import { EventsService } from './services/events.service';
+import { BanknService } from './services/bankn.service';
+import { AccountService } from './services/account.service';
+import { TransactionService } from './services/transaction.service';
+//components
+import { MainComponent } from './components/main/main.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { MenuSideComponent } from './components/menu-side/menu-side.component';
+import { HomeComponent } from './components/home/home.component';
+import { BanknCreateComponent } from './components/bankn-create/bankn-create.component';
 
 //TODO pass to object
 const lang = (function(defaultValue:String) {

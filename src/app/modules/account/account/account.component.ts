@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Location} from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
-import { BanknService } from '../../../services/bankn.service';
+
+import { BanknService } from '../../../..services/bankn.service';
 import { AccountService } from '../../../services/account.service';
 import { Account } from "../../../models/account";
 

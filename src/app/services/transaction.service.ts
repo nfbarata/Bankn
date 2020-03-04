@@ -1,9 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
+
 import { v4 as uuidv4 } from 'uuid';
+
+import { EventsService } from './events.service';
+import { AccountService } from './account.service';
+
 import { Account } from "../models/account";
 import { Transaction, TransactionType, getTransactionType } from "../models/transaction";
-import { EventsService } from '../services/events.service';
-import { AccountService } from '../services/account.service';
 
 @Injectable({providedIn: 'root'})
 export class TransactionService {

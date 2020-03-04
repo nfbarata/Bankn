@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Bankn} from '../../../models/bankn';
-import { BanknService} from '../../../services/bankn.service';
+import { Bankn} from '../../models/bankn';
+import { BanknService} from '../../services/bankn.service';
 
 @Component({
   selector: 'bankn-create',

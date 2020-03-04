@@ -1,9 +1,12 @@
 import { Injectable, Inject, Injector } from '@angular/core';
+
+import { BanknService } from './bankn.service';
+import { EventsService } from './events.service';
 import { Account } from "../models/account";
+
 import { Transaction, TransactionType } from "../models/transaction";
-import { BanknService } from '../services/bankn.service';
-import { EventsService } from '../services/events.service';
-import { TRANSACTION_SERVICE } from '../modules/app/app.module';
+
+import { TRANSACTION_SERVICE } from '../app.module';
 //import { Dinero } from '@types/dinero.js'
 
 @Injectable({providedIn: 'root'})

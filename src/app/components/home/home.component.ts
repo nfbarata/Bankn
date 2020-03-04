@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BanknService} from '../../../services/bankn.service';
-import { AccountService} from '../../../services/account.service';
-import { EventsService} from '../../../services/events.service';
+import { BanknService} from '../../services/bankn.service';
+import { AccountService} from '../../services/account.service';
+import { EventsService} from '../../services/events.service';
 
 @Component({
   selector: 'home',
