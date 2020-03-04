@@ -1,8 +1,8 @@
-
+/*
 export const environment = {
   production: true,
-};
-/*
+};*/
+
 export const environment = {
   production: false,
   bankn : {
@@ -71,4 +71,3 @@ export const environment = {
     ],
   }
 };
-*/
