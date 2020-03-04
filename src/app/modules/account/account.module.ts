@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { AccountsRoutingModule } from './account-routing.module'
+import { SharedModule } from '../shared/shared.module';
 
 import { AccountComponent } from './account/account.component';
 import { AccountListComponent } from './account-list/account-list.component';
@@ -11,7 +12,8 @@ import { AccountListComponent } from './account-list/account-list.component';
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule,
-    AccountsRoutingModule
+    AccountsRoutingModule,
+    SharedModule
   ],
   declarations: [ 
     AccountComponent, 
