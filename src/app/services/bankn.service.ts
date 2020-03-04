@@ -45,7 +45,7 @@ export class BanknService {
     });
   }
 
-  initialized():Boolean{
+  initialized():boolean{
     return this.bankn!=null;
   }
 
