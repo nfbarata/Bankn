@@ -7,6 +7,11 @@
   </div>
 </div>
 <br>
+<div *ngIf="accounts.length==0" class="row">
+  <div class="col-sm-5">
+    <account-create-card></account-create-card>
+  </div>
+</div>
 <div *ngIf="accounts.length>0" class="container">
   <div class="row bg-secondary text-white">
     <label class="col-12">
