@@ -7,16 +7,13 @@
     <button class="btn btn-primary " type="submit" [routerLink]="['/transactions/transaction']">New</button>
   </div>
 </div>
-
 <br>
-<account-create-card [hidden]="accounts.length>0"></account-create-card>
-<account-select-card [hidden]="!(accounts.length>0&&selectedAccounts.length==0)"></account-select-card>
 
-<div class="col-sm-5">
-    <transaction-create-card [hidden]="accounts.length==0 || hasRealTransactions"></transaction-create-card>
-</div>
+<account-create-card *ngIf="accounts.length==0"></account-create-card>
+<account-select-card *ngIf="accounts.length>0&&selectedAccounts.length==0"></account-select-card>
+<transaction-create-card *ngIf="accounts.length!=0&&!hasRealTransactions"></transaction-create-card>
 
-<div class="container" [hidden]="!hasRealTransactions">
+<div *ngIf="hasRealTransactions" class="container">
   <div *ngFor="let transaction of transactions; let i = index;">
     <div class="row bg-secondary text-white" *ngIf="transaction.hide!=true && (i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime())">
       <label class="col-2">
