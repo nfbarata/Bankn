@@ -21,12 +21,13 @@ export class TextArea {
   styleUrls: ['./transaction-import.component.css']
 })
 export class TransactionImportComponent implements OnInit, AfterViewInit {
-  text = 'this is some text';
-  tags: HighlightTag[] = [{
-    indices: { start: 8, end: 12 },
-    cssClass: 'bg-blue',
-    data: { user: { id: 1 } }
-  }];
+  text = 'Hello @mattlewis92 how are you today?\n\nLook I have a #different background color!\n\n@angular is pretty awesome!';
+  /*tags: HighlightTag[] = [{
+    indices: { start: 0, end: 12 },
+    //cssClass: 'bg-blue',
+    data: "a"//{ user: { id: 1 } }
+  }];*/
+   tags: HighlightTag[] = [];
   //@ViewChild(TextArea) importData;
   //@ViewChild('importData',{static:false}) importData2:ElementRef;
 
@@ -74,4 +75,34 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/transactions']);
   }
 
+
+  addTags() {
+    this.tags = [];
+    const matchMentions = /(@\w+) ?/g;
+    let mention;
+    // tslint:disable-next-line
+    while ((mention = matchMentions.exec(this.text))) {
+      this.tags.push({
+        indices: {
+          start: mention.index,
+          end: mention.index + mention[1].length
+        },
+        data: mention[1]
+      });
+    }
+
+    const matchHashtags = /(#\w+) ?/g;
+    let hashtag;
+    // tslint:disable-next-line
+    while ((hashtag = matchHashtags.exec(this.text))) {
+      this.tags.push({
+        indices: {
+          start: hashtag.index,
+          end: hashtag.index + hashtag[1].length
+        },
+        cssClass: 'bg-pink',
+        data: hashtag[1]
+      });
+    }
+  }
 }
