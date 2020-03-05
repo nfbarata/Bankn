@@ -8,23 +8,17 @@ import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
 import { Transaction, TransactionType, getTransactionType } from "../../../models/transaction";
-
-/*@Directive({selector: 'importData'})
-export class TextArea {
-  
-}*/
-
+declare var $: any;
 @Component({
   selector: 'transaction-import',
   templateUrl: './transaction-import.component.html',
   styleUrls: ['./transaction-import.component.css'],
-  encapsulation: ViewEncapsulation.None
+ / encapsulation: ViewEncapsulation.None
 })
 export class TransactionImportComponent implements OnInit, AfterViewInit {
   text = 'Hello @mattlewis92 how are you today?\n\nLook I have a #different background color!\n\n@angular is pretty awesome!';
 
-  @ViewChild(TextArea) importData;
-  @ViewChild('importData',{static:false}) importData2:ElementRef;
+  @ViewChild('importData',{static:false}) importData:ElementRef;
 
   form;
   formData;
@@ -48,14 +42,19 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.importData);
-    console.log(this.importData2);
-    this.importData2.nativeElement.highlightWithinTextarea({
-      highlight: "aa" // string, regexp, array, function, or custom object
+    //console.log(this.importData);
+    console.log(`jQuery version: ${$.fn.jquery}`);
+    console.log($('importData'));
+    $('.importData').highlightWithinTextarea({
+        highlight: "aa" // string, regexp, array, function, or custom object
     });
+    /*this.importData.nativeElement.highlightWithinTextarea({
+      highlight: "aa" // string, regexp, array, function, or custom object
+    });*/
   }
 
   ngOnInit() {
+    
     this.route.paramMap.subscribe(params => {
       var accountId = params.get('accountId');
     });

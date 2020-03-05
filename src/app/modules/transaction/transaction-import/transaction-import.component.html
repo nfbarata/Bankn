@@ -1,5 +1,6 @@
 <h2>Import transactions</h2>
 <br>
+<textarea class="importData" wrap="off" rows="6"></textarea>
 <form class="container" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
 <!--TODO pegar os dados da área de transferencia e colar já formatada com as colunas com header dinamicos e com opçãoao para ignorar linhas
 headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo, categora entidade (data mont e descricao obrig)
@@ -10,7 +11,7 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
         <label for="importData" i18n>
           External transactions:
         </label>
-        <textarea #importData class="form-control" formControlName="importData" wrap="off" rows="6"></textarea>
+        <textarea class="form-control" formControlName="importData" wrap="off" rows="6"></textarea>
         <small id="passwordHelpBlock" class="form-text text-muted" i18n>Copy paste data from your homebanking</small>
       </div>
     </div>
