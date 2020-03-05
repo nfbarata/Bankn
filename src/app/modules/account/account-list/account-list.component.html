@@ -12,36 +12,21 @@
     <account-create-card></account-create-card>
   </div>
 </div>
- <table *ngIf="accounts.length>0" class="table table-sm">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let account of accounts">
-        <th scope="row">{{ account.name }}</th>
-        <td><button class="btn btn-primary" [routerLink]="['/accounts/account',account.id]" i18n>Edit</button>&nbsp;<button class="btn btn-secondary" [routerLink]="['/transactions/',account.id]" i18n>Transactions</button></td>
-      </tr>
-    </tbody>
-  </table>
-<div *ngIf="accounts.length>0" class="container">
- 
-  <div class="row bg-secondary text-white">
-    <label class="col-12">
-      Name
-    </label>
-  </div>
-  <div class="row" *ngFor="let account of accounts">
-    <!-- group tipo de conta-->
-    <div class="col-12" [routerLink]="['/accounts/account',account.id]">
-      <a >
-        {{ account.name }} - {{account.description}}
-      </a>
-    </div>
-    <!--TODO saldo-->
-    
-  </div>
-  <br>
+<div class="table-responsive">
+<table *ngIf="accounts.length>0" class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col" class="">Name</th>
+      <th scope="col" class="d-none d-sm-block">Description</th>
+      <th scope="col" class="text-right">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let account of accounts">
+      <th scope="row">{{ account.name }}</th>
+      <td class="d-none d-sm-block">{{ account.description }}</td>
+      <td class="text-right"><button class="btn btn-primary" [routerLink]="['/accounts/account',account.id]" i18n>Edit</button>&nbsp;<button class="btn btn-secondary" [routerLink]="['/transactions/',account.id]" i18n>Txns</button></td>
+    </tr>
+  </tbody>
+</table>
 </div>
