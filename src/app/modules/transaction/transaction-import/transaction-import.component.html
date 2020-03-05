@@ -1,22 +1,19 @@
 <h2>Import transactions</h2>
 <br>
 <form class="container" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-<!--TODO pegar os dados da área de transfer
-encia e colar já formatada com as colunas com header dinamicos e com opçãoao para ignorar linhas
+<!--TODO pegar os dados da área de transferencia e colar já formatada com as colunas com header dinamicos e com opçãoao para ignorar linhas
 headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo, categora entidade (data mont e descricao obrig)
  dar opção de upload de csv-->
  
     <div class="row">
       <div class="col-12 form-group">
         <label for="description" i18n>
-          Description
+          External transactions
         </label>
         <textarea class="form-control" id="description" formControlName="description" wrap="off"></textarea>
       </div>
     </div>
 
 
-    <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
-    &nbsp;
-    <a *ngIf="formData.id!=null" class="btn btn-danger text-white" role="button" (click)="onDelete(formData.accountId,formData.id);" i18n>Delete</a>
+    <button class="btn btn-primary" type="submit" i18n>Import</button>
 </form>
