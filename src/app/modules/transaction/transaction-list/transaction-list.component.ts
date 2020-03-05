@@ -32,6 +32,19 @@ export class TransactionListComponent implements OnInit {
     this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
     this.route.paramMap.subscribe(params => {
       var accountId = params.get('accountId');
+      if(accountId==null || accountId.trim().length==0){
+        //do nothing
+      }else{
+        this.accounts.forEach(account => {
+          if(account.id==accountId){
+            this.accountService.selectAccount(account);
+          }else{
+            if(account.selected){
+              this.accountService.toggleAccount(account);
+            }
+          }
+        });
+      }
     });
   }
 
