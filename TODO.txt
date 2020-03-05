@@ -1,6 +1,7 @@
 import txns
 create new txn
 categorias/entidades
+  tags
 
 graficos
 
