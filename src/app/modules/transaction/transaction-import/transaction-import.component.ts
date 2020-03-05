@@ -30,7 +30,9 @@ export class TransactionImportComponent implements OnInit {
     private location: Location
   ) { 
     this.formData = {
-      description:null
+      description:null,
+      columnSeparator:null,
+      lineSeparator:null
     }
     this.form = this.formBuilder.group(this.formData);
   }
