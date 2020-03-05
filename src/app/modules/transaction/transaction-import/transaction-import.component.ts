@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input, Directive } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input, Directive, ViewEncapsulation } from '@angular/core';
 import { Location} from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
@@ -8,7 +8,6 @@ import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
 import { Transaction, TransactionType, getTransactionType } from "../../../models/transaction";
-import { HighlightTag } from 'angular-text-input-highlight';
 
 /*@Directive({selector: 'importData'})
 export class TextArea {
@@ -18,16 +17,12 @@ export class TextArea {
 @Component({
   selector: 'transaction-import',
   templateUrl: './transaction-import.component.html',
-  styleUrls: ['./transaction-import.component.css']
+  styleUrls: ['./transaction-import.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TransactionImportComponent implements OnInit, AfterViewInit {
   text = 'Hello @mattlewis92 how are you today?\n\nLook I have a #different background color!\n\n@angular is pretty awesome!';
-  /*tags: HighlightTag[] = [{
-    indices: { start: 0, end: 12 },
-    //cssClass: 'bg-blue',
-    data: "a"//{ user: { id: 1 } }
-  }];*/
-   tags: HighlightTag[] = [];
+
   //@ViewChild(TextArea) importData;
   //@ViewChild('importData',{static:false}) importData2:ElementRef;
 
@@ -71,38 +66,8 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(data) {
+ 
     this.form.reset();
     this.router.navigate(['/transactions']);
-  }
-
-
-  addTags() {
-    this.tags = [];
-    const matchMentions = /(@\w+) ?/g;
-    let mention;
-    // tslint:disable-next-line
-    while ((mention = matchMentions.exec(this.text))) {
-      this.tags.push({
-        indices: {
-          start: mention.index,
-          end: mention.index + mention[1].length
-        },
-        data: mention[1]
-      });
-    }
-
-    const matchHashtags = /(#\w+) ?/g;
-    let hashtag;
-    // tslint:disable-next-line
-    while ((hashtag = matchHashtags.exec(this.text))) {
-      this.tags.push({
-        indices: {
-          start: hashtag.index,
-          end: hashtag.index + hashtag[1].length
-        },
-        cssClass: 'bg-pink',
-        data: hashtag[1]
-      });
-    }
   }
 }

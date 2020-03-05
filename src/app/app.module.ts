@@ -8,7 +8,6 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { faStackOverflow, faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
-import { TextInputHighlightModule } from 'angular-text-input-highlight';
 //localization
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
@@ -53,7 +52,7 @@ export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
 @NgModule({
   imports: [ 
     BrowserModule, FormsModule, ReactiveFormsModule, FontAwesomeModule,
-    AppRoutingModule, SharedModule, TextInputHighlightModule
+    AppRoutingModule, SharedModule
   ],
   exports: [
     

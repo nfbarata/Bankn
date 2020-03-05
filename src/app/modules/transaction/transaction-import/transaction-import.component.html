@@ -10,9 +10,13 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
         <label for="importData" i18n>
           External transactions:
         </label>
-        <textarea class="form-control" formControlName="importData" mwlTextInputElement [(ngModel)]="text" #importData wrap="off" rows="6" (input)="addTags()"></textarea>
+        <textarea #importData class="form-control" formControlName="importData" wrap="off" rows="6"></textarea>
+        <script>
+          $('').highlightWithinTextarea({
+            highlight: "aa" // string, regexp, array, function, or custom object
+          });
+        </script>
         <small id="passwordHelpBlock" class="form-text text-muted" i18n>Copy paste data from your homebanking</small>
-        <mwl-text-input-highlight [tags]="tags" [tagCssClass]="'bg-blue'" [textInputElement]="importData"  wrap="off" ></mwl-text-input-highlight>
       </div>
     </div>
     <div class="row">
