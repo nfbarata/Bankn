@@ -23,8 +23,8 @@ export class TextArea {
 export class TransactionImportComponent implements OnInit, AfterViewInit {
   text = 'Hello @mattlewis92 how are you today?\n\nLook I have a #different background color!\n\n@angular is pretty awesome!';
 
-  //@ViewChild(TextArea) importData;
-  //@ViewChild('importData',{static:false}) importData2:ElementRef;
+  @ViewChild(TextArea) importData;
+  @ViewChild('importData',{static:false}) importData2:ElementRef;
 
   form;
   formData;
@@ -48,11 +48,11 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    /*console.log(this.importData);
+    console.log(this.importData);
     console.log(this.importData2);
     this.importData2.nativeElement.highlightWithinTextarea({
       highlight: "aa" // string, regexp, array, function, or custom object
-    });*/
+    });
   }
 
   ngOnInit() {
