@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute,Router } from '@angular/router';
 import { EventsService } from '../../../services/events.service';
 import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
@@ -18,6 +19,7 @@ export class TransactionListComponent implements OnInit {
   accounts : Account[] = [];
 
   constructor(
+    private route: ActivatedRoute,
     private eventsService: EventsService,
     private accountService: AccountService,
     private transactionService: TransactionService,
@@ -28,6 +30,9 @@ export class TransactionListComponent implements OnInit {
     this.refreshAccounts();
     this.eventsService.accountSelectionChange.subscribe(()=>this.refreshData());
     this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
+    this.route.paramMap.subscribe(params => {
+      var accountId = params.get('accountId');
+    });
   }
 
   refreshData(){

@@ -1,6 +1,5 @@
 <h2>Import transactions</h2>
 <br>
-<textarea class="importData" wrap="off" rows="6"></textarea>
 <form class="container" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
 <!--TODO pegar os dados da área de transferencia e colar já formatada com as colunas com header dinamicos e com opçãoao para ignorar linhas
 headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo, categora entidade (data mont e descricao obrig)
@@ -11,28 +10,66 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
         <label for="importData" i18n>
           External transactions:
         </label>
-        <textarea class="form-control" formControlName="importData" wrap="off" rows="6"></textarea>
+        <br>
+        <textarea class="form-control" formControlName="importData" id="importData" wrap="off" rows="6"></textarea>
         <small id="passwordHelpBlock" class="form-text text-muted" i18n>Copy paste data from your homebanking</small>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-4 form-group">
+      <div class="col-6 form-group">
         <select class="form-control" formControlName="columnSeparator">
           <option value=" " selected>tab</option>
           <option value=",">comma</option>
           <option value=";">semicolon</option>
           <option value=" ">space</option>
         </select>
-        <small id="passwordHelpBlock" class="form-text text-muted">Currency</small>
+        <small id="passwordHelpBlock" class="form-text text-muted">Column separator</small>
+      </div>
+      <div class="col-6 form-group">
+        <select class="form-control" formControlName="lineSeparator">
+          <option selected>\n</option>
+        </select>
+        <small id="passwordHelpBlock" class="form-text text-muted">Row separator</small>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-4 form-group">
-        <select class="form-control" formControlName="lineSeparator">
-          <option>\n</option>
-        </select>
-        <small id="passwordHelpBlock" class="form-text text-muted">Currency</small>
+      <div class="col-12">
+        <button class="btn btn-primary" type="submit" i18n>Import</button>
       </div>
     </div>
-    <button class="btn btn-primary" type="submit" i18n>Import</button>
+    <br>
+    <div class="row">
+      <div class="col-12">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+    </div>
 </form>

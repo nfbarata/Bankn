@@ -1,8 +1,0 @@
-/*/ by default you won't see the highlighted tags until
-// you add a CSS class with a background color*/
-.bg-blue {
-  background-color: lightblue;
-}
-.bg-pink {
-  background-color: lightcoral;
-}
