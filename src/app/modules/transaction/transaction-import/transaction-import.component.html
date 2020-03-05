@@ -7,18 +7,16 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
  
     <div class="row">
       <div class="col-12 form-group">
-        <label for="description" i18n>
+        <label for="importData" i18n>
           External transactions:
         </label>
-        <textarea class="form-control" id="description" formControlName="description" wrap="off"></textarea>
+        <textarea #importData class="form-control" formControlName="importData" wrap="off"></textarea>
         <small id="passwordHelpBlock" class="form-text text-muted" i18n>Copy paste data from your homebanking</small>
+        
+        <textarea mwlTextInputElement [(ngModel)]="text" #textarea></textarea>
+        <mwl-text-input-highlight [tags]="tags" [textInputElement]="textarea"></mwl-text-input-highlight>
       </div>
     </div>
-    <script>
-      $('.description').highlightWithinTextarea({
-        highlight: "aa" // string, regexp, array, function, or custom object
-      });
-    </script>
     <div class="row">
       <div class="col-sm-4 form-group">
         <select class="form-control" formControlName="columnSeparator">
