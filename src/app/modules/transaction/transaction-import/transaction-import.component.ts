@@ -67,13 +67,24 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   onInputChange(){
+    this.clearTable();
     var data = this.importData.nativeElement.value;
     var lines = data.split(this.lineSeparator.nativeElement.value);
     if(lines.length>0 && lines[0].trim().length>0){
-      var columns = lines[0].split(this.columnSeparator.nativeElement.value);
-      console.log(columns);
-      if(columns.length>3){
+      var firstColumn = lines[0].split(this.columnSeparator.nativeElement.value);
+      var parsedData = [];
+      if(firstColumn.length>3){
+        for(var i=0; i!=lines.length;i++){
+          var columns = lines[i].split(this.columnSeparator.nativeElement.value);
+          if(columns.length!=firstColumn.length){
+            this.setMessage('There should be at least 3 columns');
+            this.submitDisabled = true;
+            return;    
+          }
+          parsedData.push(columns);
+        }
         this.setMessage('Check the data below before import');
+        this.fillTable(parsedData);
         this.submitDisabled = false;
       }else{
         this.setMessage('There should be at least 3 columns');
@@ -82,8 +93,25 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     }else{
       this.setMessage('Enter some text');
       this.submitDisabled = true;
-    }
-    //this.parsedData
+    } 
+  }
+
+  clearTable(){
+    this.renderer.setProperty(this.parsedData.nativeElement, 'innerHTML',""); 
+  }
+
+  fillTable(data){
+    console.log(data);
+    data.forEach(row=>{
+      var htmlRow = this.renderer.createElement('tr');
+      this.renderer.appendChild(this.parsedData.nativeElement, htmlRow);
+      row.forEach(column=>{
+        var htmlCell = this.renderer.createElement('td');
+        this.renderer.appendChild(htmlRow, htmlCell);
+        this.renderer.setProperty(htmlCell, 'innerHTML',column);
+      });
+    });
+ //this.parsedData
 /*
 const h1 = this.renderer.createElement('h1');
     const text = this.renderer.createText('Hello world');
@@ -91,6 +119,5 @@ const h1 = this.renderer.createElement('h1');
     this.renderer.appendChild(h1, text);
     this.renderer.appendChild(this.el.nativeElement, div);
 */
-
   }
 }
