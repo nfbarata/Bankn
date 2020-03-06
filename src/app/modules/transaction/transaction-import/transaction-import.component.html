@@ -34,11 +34,11 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
     </div>
     <div class="row">
       <div class="col-6 form-group">
-        <input #customColumnSepartor class="form-control" formControlName="customColumnSeparator" [hidden]="columnSeparator.value!=''" (keyup)="onInputChange()" (paste)="onInputChange()">
+        <input #customColumnSeparator class="form-control" formControlName="customColumnSeparator" [hidden]="columnSeparator.value!=''" (keyup)="onInputChange()" (paste)="onInputChange()">
         <small id="customColumnSeparatorHelpBlock" class="form-text text-muted" (change)="onInputChange()">Column separator</small>
       </div>
       <div class="col-6 form-group">
-        <input #customLineSepartor class="form-control" formControlName="customLineSeparator" [hidden]="lineSeparator.value!=''" (keyup)="onInputChange()" (paste)="onInputChange()">
+        <input #customLineSeparator class="form-control" formControlName="customLineSeparator" [hidden]="lineSeparator.value!=''" (keyup)="onInputChange()" (paste)="onInputChange()">
         <small id="lineSeparatorHelpBlock" class="form-text text-muted" (change)="onInputChange()">Row separator</small>
       </div>
     </div>
