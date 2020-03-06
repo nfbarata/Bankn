@@ -89,7 +89,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     }
     if(this.columnSeparator.nativeElement.value==""){
       columnSeparator = this.customColumnSeparator.nativeElement.value;
-      if(lineSeparator.trim().length==0){
+      if(columnSeparator.trim().length==0){
         this.setMessage('Insert some value at column separator');
         return;
       }
