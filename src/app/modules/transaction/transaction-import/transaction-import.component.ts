@@ -28,6 +28,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
 
   form;
   formData;
+  accountId;
 
   constructor(
     private renderer: Renderer2,
@@ -55,16 +56,15 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    
     this.route.paramMap.subscribe(params => {
-      var accountId = params.get('accountId');
+      this.accountId = params.get('accountId');
     });
   }
 
   onSubmit(data) {
-
+    this.transactionService.importTransactions=data;
     this.form.reset();
-    this.router.navigate(['/transactions']);
+    this.router.navigate(['/transactions/import-parse/'+this.accountId]);
   }
 
   setMessage(message:string){

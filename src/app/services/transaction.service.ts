@@ -11,6 +11,8 @@ import { Transaction, TransactionType, getTransactionType } from "../models/tran
 @Injectable({providedIn: 'root'})
 export class TransactionService {
 
+  importTransactions;
+
   constructor(
     private eventsService: EventsService,
     private accountService : AccountService
