@@ -62,9 +62,12 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   onInputChange(){
-    console.log(this.importData);
-    //var data = inputData.
+    var data = this.importData.nativeElement.value;
+    console.log(this.lineSeparator.nativeElement.value);
+    console.log(this.columnSeparator.nativeElement.value);
     //data.split()
     //this.parsedData
+
+    
   }
 }
