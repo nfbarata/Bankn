@@ -7,13 +7,13 @@ import { TransactionComponent } from './transaction/transaction.component'
 
 const routes: Routes = [
   { path: '', component: TransactionListComponent },
-
   { path: 'transaction', component: TransactionComponent },
   { path: ':accountId', component: TransactionListComponent },
   { path: 'transaction/:accountId', component: TransactionComponent },
   { path: 'transaction/:accountId/:transactionId', component: TransactionComponent },
   { path: 'import/:accountId', component: TransactionImportComponent },
 ]
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
