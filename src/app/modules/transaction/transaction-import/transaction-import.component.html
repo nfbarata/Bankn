@@ -18,16 +18,16 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
     <div class="row">
       <div class="col-6 form-group">
         <select #columnSeparator class="form-control" formControlName="columnSeparator" (change)="onInputChange()">
-          <option value="&#9;">tab</option>
-          <option value=",">comma</option>
-          <option value=";">semicolon</option>
-          <option value=" ">space</option>
+          <option value="9">tab</option>
+          <option value="44">comma</option>
+          <option value="59">semicolon</option>
+          <option value="32">space</option>
         </select>
         <small id="columnSeparatorHelpBlock" class="form-text text-muted">Column separator</small>
       </div>
       <div class="col-6 form-group">
         <select #lineSeparator class="form-control" formControlName="lineSeparator" (change)="onInputChange()">
-          <option value="&#10;">\n</option>
+          <option value="10">\n</option>
         </select>
         <small id="lineSeparatorHelpBlock" class="form-text text-muted">Row separator</small>
       </div>

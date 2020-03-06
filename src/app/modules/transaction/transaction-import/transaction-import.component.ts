@@ -38,10 +38,11 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     private router: Router,
     private location: Location
   ) { 
+    //https://www.rapidtables.com/web/html/html-codes.html
     this.formData = {
       importData:null,
-      columnSeparator:"&#9;",
-      lineSeparator:"&#10;"
+      columnSeparator:"9",
+      lineSeparator:"10"
     }
     this.form = this.formBuilder.group(this.formData);
   }
@@ -67,17 +68,20 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   onInputChange(){
+    //new DOMParser().parseFromString(input, "text/html").documentElement.textContent;
+    var lineSeparator = new DOMParser().parseFromString("&#"+this.lineSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
+    var columnSeparator = new DOMParser().parseFromString("&#"+this.columnSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
     this.clearTable();
     var data = this.importData.nativeElement.value;
-    var lines = data.split(this.lineSeparator.nativeElement.value);
+    var lines = data.split(lineSeparator);
     if(lines.length>0 && lines[0].trim().length>0){
-      var firstColumn = lines[0].split(this.columnSeparator.nativeElement.value);
+      var firstColumn = lines[0].split(columnSeparator);
       var parsedData = [];
       if(firstColumn.length>3){
         for(var i=0; i!=lines.length;i++){
-          var columns = lines[i].split(this.columnSeparator.nativeElement.value);
+          var columns = lines[i].split(columnSeparator);
           if(columns.length!=firstColumn.length){
-            this.setMessage('There should be at least 3 columns');
+            this.setMessage('Not all rows have the same number of columns');
             this.submitDisabled = true;
             return;    
           }
@@ -101,7 +105,6 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   fillTable(data){
-    console.log(data);
     data.forEach(row=>{
       var htmlRow = this.renderer.createElement('tr');
       this.renderer.appendChild(this.parsedData.nativeElement, htmlRow);
@@ -111,13 +114,5 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
         this.renderer.setProperty(htmlCell, 'innerHTML',column);
       });
     });
- //this.parsedData
-/*
-const h1 = this.renderer.createElement('h1');
-    const text = this.renderer.createText('Hello world');
-
-    this.renderer.appendChild(h1, text);
-    this.renderer.appendChild(this.el.nativeElement, div);
-*/
   }
 }
