@@ -96,8 +96,6 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     }else{
       columnSeparator = String.fromCharCode(this.columnSeparator.nativeElement.value);
     }
-    console.log(lineSeparator);
-    console.log(columnSeparator);
 
     var data = this.importData.nativeElement.value;
     var lines = data.split(lineSeparator);
