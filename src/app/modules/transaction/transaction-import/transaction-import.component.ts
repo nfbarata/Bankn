@@ -85,7 +85,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
         return;
       }
     }else{
-      lineSeparator = new DOMParser().parseFromString("&#"+this.lineSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
+      lineSeparator = String.fromCharCode(this.lineSeparator.nativeElement.value);
     }
     if(this.columnSeparator.nativeElement.value==""){
       columnSeparator = this.customColumnSeparator.nativeElement.value;
@@ -94,14 +94,13 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
         return;
       }
     }else{
-      columnSeparator = new DOMParser().parseFromString("&#"+this.columnSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
+      columnSeparator = String.fromCharCode(this.columnSeparator.nativeElement.value);
     }
     console.log(lineSeparator);
     console.log(columnSeparator);
 
     var data = this.importData.nativeElement.value;
     var lines = data.split(lineSeparator);
-    console.log(lines);
     if(lines.length>0 && lines[0].trim().length>0){
       var firstRow = lines[0].split(columnSeparator);
       var parsedData = [];
@@ -118,7 +117,6 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
         this.fillTable(parsedData);
         this.submitDisabled = false;
       }else{
-        console.log(firstRow);
         this.setMessage('There should be at least 3 columns');
       }
     }else{
