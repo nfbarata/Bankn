@@ -60,6 +60,13 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
   }
 
   fillTable(data){
+    var headerRow = this.renderer.createElement('tr');
+    this.renderer.appendChild(this.parsedData.nativeElement, headerRow);
+    data[0].forEach(column=>{
+        var headerCell = this.renderer.createElement('td');
+        this.renderer.appendChild(headerRow, headerCell);
+        this.renderer.setProperty(headerCell, 'innerHTML',column);
+    });    
     data.forEach(row=>{
       var htmlRow = this.renderer.createElement('tr');
       this.renderer.appendChild(this.parsedData.nativeElement, htmlRow);
