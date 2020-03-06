@@ -20,6 +20,9 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   text = '';
 
   @ViewChild('importData',{static:false}) importData:ElementRef;
+  @ViewChild('columnSeparator',{static:false}) columnSeparator:ElementRef;
+  @ViewChild('lineSeparator',{static:false}) lineSeparator:ElementRef;
+  @ViewChild('parsedData',{static:false}) parsedData:ElementRef;
 
   form;
   formData;
@@ -56,5 +59,12 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
  
     this.form.reset();
     this.router.navigate(['/transactions']);
+  }
+
+  onInputChange(){
+    console.log(this.importData);
+    //var data = inputData.
+    //data.split()
+    //this.parsedData
   }
 }
