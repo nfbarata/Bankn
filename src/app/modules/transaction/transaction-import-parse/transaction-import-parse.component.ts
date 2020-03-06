@@ -14,7 +14,7 @@ import { Transaction, TransactionType, getTransactionType } from "../../../model
   templateUrl: './transaction-import-parse.component.html',
   styleUrls: ['./transaction-import-parse.component.css']
 })
-export class TransactionImportParseComponent implements OnInit {
+export class TransactionImportParseComponent implements OnInit, AfterViewInit {
 
   accountId;
   transactions;
@@ -33,7 +33,8 @@ export class TransactionImportParseComponent implements OnInit {
   ) { 
     this.transactions = this.transactionService.importTransactions;
   }
-
+  ngAfterViewInit(): void {
+  }
   ngOnInit() {
     this.transactions = this.transactionService.importTransactions;
     this.route.paramMap.subscribe(params => {
@@ -44,6 +45,7 @@ export class TransactionImportParseComponent implements OnInit {
   }
 
   clearTable(){
+    console.log(this.parsedData);
     this.renderer.setProperty(this.parsedData.nativeElement, 'innerHTML',""); 
   }
 
