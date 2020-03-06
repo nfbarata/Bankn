@@ -14,7 +14,6 @@ const routes: Routes = [
   { path: 'import/:accountId', component: TransactionImportComponent },
 ]
 
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
