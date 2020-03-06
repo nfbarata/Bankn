@@ -62,14 +62,32 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
   fillTable(data){
     var headerRow = this.renderer.createElement('tr');
     this.renderer.appendChild(this.parsedData.nativeElement, headerRow);
+    
+    var headerCheckbox = this.renderer.createElement('th');
+    this.renderer.setProperty(headerCheckbox, 'innerHTML',"Import?");
+    
+    this.renderer.appendChild(headerRow, headerCheckbox);
+    
     data[0].forEach(column=>{
-        var headerCell = this.renderer.createElement('td');
+        var headerCell = this.renderer.createElement('th');
         this.renderer.appendChild(headerRow, headerCell);
-        this.renderer.setProperty(headerCell, 'innerHTML',column);
+        this.renderer.setProperty(headerCell, 'innerHTML',"TODO");
     });    
+    
     data.forEach(row=>{
+      
       var htmlRow = this.renderer.createElement('tr');
       this.renderer.appendChild(this.parsedData.nativeElement, htmlRow);
+
+      var htmlCheckBoxCell = this.renderer.createElement('td');
+      this.renderer.appendChild(htmlRow, htmlCheckBoxCell);
+      
+      var htmlCheckbox = this.renderer.createElement('input');
+      this.renderer.setProperty(htmlCheckbox, 'type',"checkbox");
+      this.renderer.setProperty(htmlCheckbox, 'checked',"tr");
+      
+      this.renderer.appendChild(htmlCheckBoxCell, htmlCheckbox);
+      
       row.forEach(column=>{
         var htmlCell = this.renderer.createElement('td');
         this.renderer.appendChild(htmlRow, htmlCell);
