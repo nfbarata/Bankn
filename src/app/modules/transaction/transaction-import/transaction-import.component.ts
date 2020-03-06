@@ -21,6 +21,8 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   @ViewChild('importData',{static:false}) importData:ElementRef;
   @ViewChild('columnSeparator',{static:false}) columnSeparator:ElementRef;
   @ViewChild('lineSeparator',{static:false}) lineSeparator:ElementRef;
+  @ViewChild('customColumnSeparator',{static:false}) customColumnSeparator:ElementRef;
+  @ViewChild('customLineSeparator',{static:false}) customLineSeparator:ElementRef;
   @ViewChild('parsedData',{static:false}) parsedData:ElementRef;
   @ViewChild('submitHelpBlock',{static:false}) submitHelpBlock:ElementRef;
 
@@ -42,7 +44,9 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     this.formData = {
       importData:null,
       columnSeparator:"9",
-      lineSeparator:"10"
+      lineSeparator:"10",
+      customColumnSeparator:"",
+      customLineSeparator:""
     }
     this.form = this.formBuilder.group(this.formData);
   }
@@ -68,23 +72,44 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   onInputChange(){
-    var lineSeparator = new DOMParser().parseFromString("&#"+this.lineSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
-    var columnSeparator = new DOMParser().parseFromString("&#"+this.columnSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
+
+    this.clearTable();
+    this.submitDisabled = true;
+
+    var lineSeparator;
+    var columnSeparator;
+    if(this.lineSeparator.nativeElement.value==""){
+      lineSeparator = this.customLineSeparator.nativeElement.value;
+      if(lineSeparator.trim().length==0){
+        this.setMessage('Insert some value at row separator');
+        return;
+      }
+    }else{
+      lineSeparator = new DOMParser().parseFromString("&#"+this.lineSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
+    }
+    if(this.columnSeparator.nativeElement.value==""){
+      columnSeparator = this.customColumnSeparator.nativeElement.value;
+      if(lineSeparator.trim().length==0){
+        this.setMessage('Insert some value at column separator');
+        return;
+      }
+    }else{
+      columnSeparator = new DOMParser().parseFromString("&#"+this.columnSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
+    }
     console.log(lineSeparator);
     console.log(columnSeparator);
 
-    this.clearTable();
     var data = this.importData.nativeElement.value;
     var lines = data.split(lineSeparator);
+    console.log(lines);
     if(lines.length>0 && lines[0].trim().length>0){
-      var firstColumn = lines[0].split(columnSeparator);
+      var firstRow = lines[0].split(columnSeparator);
       var parsedData = [];
-      if(firstColumn.length>3){
+      if(firstRow.length>3){
         for(var i=0; i!=lines.length;i++){
           var columns = lines[i].split(columnSeparator);
-          if(columns.length!=firstColumn.length){
+          if(columns.length!=firstRow.length){
             this.setMessage('Not all rows have the same number of columns');
-            this.submitDisabled = true;
             return;    
           }
           parsedData.push(columns);
@@ -93,13 +118,11 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
         this.fillTable(parsedData);
         this.submitDisabled = false;
       }else{
-        console.log(firstColumn);
+        console.log(firstRow);
         this.setMessage('There should be at least 3 columns');
-        this.submitDisabled = true;
       }
     }else{
       this.setMessage('Enter some text');
-      this.submitDisabled = true;
     } 
   }
 
