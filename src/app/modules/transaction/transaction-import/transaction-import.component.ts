@@ -56,6 +56,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.transactionService.importTransactions=[];
     this.route.paramMap.subscribe(params => {
       this.accountId = params.get('accountId');
     });

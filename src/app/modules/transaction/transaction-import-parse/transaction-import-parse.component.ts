@@ -49,9 +49,11 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     this.transactions = this.transactionService.importTransactions;
+    if(this.transactions.length==0){
+      this.router.navigate(['/transactions/import/'+this.accountId]);
+    }
     this.route.paramMap.subscribe(params => {
       this.accountId = params.get('accountId');
-      
     });
   }
 
@@ -84,7 +86,7 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
       
       var htmlCheckbox = this.renderer.createElement('input');
       this.renderer.setProperty(htmlCheckbox, 'type',"checkbox");
-      this.renderer.setProperty(htmlCheckbox, 'checked',"tr");
+      this.renderer.setProperty(htmlCheckbox, 'checked',"true");
       
       this.renderer.appendChild(htmlCheckBoxCell, htmlCheckbox);
       
