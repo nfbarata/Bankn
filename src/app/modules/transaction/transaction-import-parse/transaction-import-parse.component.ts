@@ -60,7 +60,6 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
   }
 
   fillTable(data){
-    console.log(data);
     data.forEach(row=>{
       var htmlRow = this.renderer.createElement('tr');
       this.renderer.appendChild(this.parsedData.nativeElement, htmlRow);

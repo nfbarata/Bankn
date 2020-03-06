@@ -15,6 +15,9 @@ export class Account {
   //currency; inside referenceAmount
   //exclude orçamentos
 
+  lastColumnSeparator:string;
+  lastLineSeparator:string;
+
   selected:Boolean = false;
 
   constructor(

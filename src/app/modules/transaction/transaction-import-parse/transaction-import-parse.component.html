@@ -2,16 +2,6 @@
 <br>
 <form class="container" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
     <div class="row">
-      <div class="col-12 form-group" mwlTextInputHighlightContainer>
-        <label for="importData" i18n>
-          External transactions:
-        </label>
-        <br>
-        <textarea #importData class="form-control" formControlName="importData" id="importData" wrap="off" rows="6" (keyup)="onInputChange()" (paste)="onInputChange()"></textarea>
-        <small id="importDataHelpBlock" class="form-text text-muted" i18n>Copy paste data from your homebanking</small>
-      </div>
-    </div>
-    <div class="row">
       <div class="col-12">
         <div class="table-responsive">
         <table class="table table-sm table-bordered small font-weight-lighter text-truncate">

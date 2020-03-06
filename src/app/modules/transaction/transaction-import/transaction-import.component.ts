@@ -28,6 +28,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   form;
   formData;
   accountId;
+  output;
 
   constructor(
     private renderer: Renderer2,
@@ -61,7 +62,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(data) {
-    this.transactionService.importTransactions=data.importData;
+    this.transactionService.importTransactions=this.output;
     this.form.reset();
     this.router.navigate(['/transactions/import-parse/'+this.accountId]);
   }
@@ -125,10 +126,12 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   clearTable(){
+    this.output = null;
     this.renderer.setProperty(this.parsedData.nativeElement, 'innerHTML',""); 
   }
 
   fillTable(data){
+    this.output = data;
     data.forEach(row=>{
       var htmlRow = this.renderer.createElement('tr');
       this.renderer.appendChild(this.parsedData.nativeElement, htmlRow);
