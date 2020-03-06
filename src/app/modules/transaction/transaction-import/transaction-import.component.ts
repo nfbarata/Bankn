@@ -68,9 +68,11 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   onInputChange(){
-    //new DOMParser().parseFromString(input, "text/html").documentElement.textContent;
     var lineSeparator = new DOMParser().parseFromString("&#"+this.lineSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
     var columnSeparator = new DOMParser().parseFromString("&#"+this.columnSeparator.nativeElement.value+";", "text/html").documentElement.textContent;
+    console.log(lineSeparator);
+    console.log(columnSeparator);
+
     this.clearTable();
     var data = this.importData.nativeElement.value;
     var lines = data.split(lineSeparator);
@@ -91,6 +93,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
         this.fillTable(parsedData);
         this.submitDisabled = false;
       }else{
+        console.log(firstColumn);
         this.setMessage('There should be at least 3 columns');
         this.submitDisabled = true;
       }
