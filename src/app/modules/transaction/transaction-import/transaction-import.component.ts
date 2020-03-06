@@ -62,6 +62,10 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/transactions']);
   }
 
+  setMessage(message:string){
+    this.renderer.setProperty(this.submitHelpBlock.nativeElement, 'innerHTML', message);
+  }
+
   onInputChange(){
     var data = this.importData.nativeElement.value;
     var lines = data.split(this.lineSeparator.nativeElement.value);
@@ -69,14 +73,14 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
       var columns = lines[0].split(this.columnSeparator.nativeElement.value);
       console.log(columns);
       if(columns.length>3){
-        this.renderer.setProperty(this.submitHelpBlock.nativeElement, 'innerHTML', 'Check the data below before import');
+        this.setMessage('Check the data below before import');
         this.submitDisabled = false;
       }else{
-        this.renderer.setProperty(this.submitHelpBlock.nativeElement, 'innerHTML', 'There should be at least 3 columns');
+        this.setMessage('There should be at least 3 columns');
         this.submitDisabled = true;
       }
     }else{
-      this.renderer.setProperty(this.submitHelpBlock.nativeElement, 'innerHTML', 'Enter some text');
+      this.setMessage('Enter some text');
       this.submitDisabled = true;
     }
     //this.parsedData
