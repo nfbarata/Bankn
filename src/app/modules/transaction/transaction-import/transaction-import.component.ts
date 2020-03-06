@@ -40,7 +40,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   ) { 
     this.formData = {
       importData:null,
-      columnSeparator:"",
+      columnSeparator:"&#9;",
       lineSeparator:"&#10;"
     }
     this.form = this.formBuilder.group(this.formData);
