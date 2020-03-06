@@ -69,7 +69,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
       var columns = lines[0].split(this.columnSeparator.nativeElement.value);
       console.log(columns);
       if(columns.length>3){
-        this.renderer.setProperty(this.submitHelpBlock.nativeElement, 'innerHTML', '');
+        this.renderer.setProperty(this.submitHelpBlock.nativeElement, 'innerHTML', 'Check the data below before import');
         this.submitDisabled = false;
       }else{
         this.renderer.setProperty(this.submitHelpBlock.nativeElement, 'innerHTML', 'There should be at least 3 columns');
