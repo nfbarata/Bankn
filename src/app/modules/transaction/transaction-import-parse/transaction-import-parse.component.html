@@ -1,5 +1,24 @@
 <h2>Parse transactions</h2>
 <br>
+<form class="container" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <div class="row">
+      <div class="col-12 form-group" mwlTextInputHighlightContainer>
+        <label for="importData" i18n>
+          External transactions:
+        </label>
+        <br>
+        <textarea #importData class="form-control" formControlName="importData" id="importData" wrap="off" rows="6" (keyup)="onInputChange()" (paste)="onInputChange()"></textarea>
+        <small id="importDataHelpBlock" class="form-text text-muted" i18n>Copy paste data from your homebanking</small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-primary" type="submit" i18n [disabled]="submitDisabled">Import</button>
+        <small #submitHelpBlock id="submitHelpBlock" class="form-text text-muted">Enter some text to import</small>
+      </div>
+    </div>
+</form>
+<br>
 <div class="container">
   <div class="row">
     <div class="col-12">

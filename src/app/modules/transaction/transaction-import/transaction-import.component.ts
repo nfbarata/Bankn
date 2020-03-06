@@ -62,7 +62,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(data) {
-    this.transactionService.importTransactions=data;
+    this.transactionService.importTransactions=data.importData;
     this.form.reset();
     this.router.navigate(['/transactions/import-parse/'+this.accountId]);
   }

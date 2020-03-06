@@ -16,6 +16,8 @@ import { Transaction, TransactionType, getTransactionType } from "../../../model
 })
 export class TransactionImportParseComponent implements OnInit, AfterViewInit {
 
+  form;
+  formData;
   accountId;
   transactions;
   @ViewChild('parsedData',{static:false}) parsedData:ElementRef;
@@ -32,6 +34,14 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
     private location: Location
   ) { 
     this.transactions = this.transactionService.importTransactions;
+    this.formData = {
+      importData:null,
+      columnSeparator:"9",
+      lineSeparator:"10",
+      customColumnSeparator:"",
+      customLineSeparator:""
+    }
+    this.form = this.formBuilder.group(this.formData);
   }
   ngAfterViewInit(): void {
   }
