@@ -18,7 +18,7 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
     <div class="row">
       <div class="col-6 form-group">
         <select #columnSeparator class="form-control" formControlName="columnSeparator" (change)="onInputChange()">
-          <option value=" " selected>tab</option>
+          <option value=" ">tab</option>
           <option value=",">comma</option>
           <option value=";">semicolon</option>
           <option value=" ">space</option>
@@ -27,7 +27,7 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
       </div>
       <div class="col-6 form-group">
         <select #lineSeparator class="form-control" formControlName="lineSeparator" (change)="onInputChange()">
-          <option selected>\n</option>
+          <option value="n">\n</option>
         </select>
         <small id="lineSeparatorHelpBlock" class="form-text text-muted">Row separator</small>
       </div>

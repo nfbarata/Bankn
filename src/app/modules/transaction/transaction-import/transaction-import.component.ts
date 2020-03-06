@@ -39,8 +39,8 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   ) { 
     this.formData = {
       importData:null,
-      columnSeparator:null,
-      lineSeparator:null
+      columnSeparator:" ",
+      lineSeparator:"n"
     }
     this.form = this.formBuilder.group(this.formData);
   }
@@ -65,9 +65,11 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     var data = this.importData.nativeElement.value;
     console.log(this.lineSeparator.nativeElement.value);
     console.log(this.columnSeparator.nativeElement.value);
-    //data.split()
+    var lines = data.split(this.lineSeparator.nativeElement.value);
+
+    console.log(lines);
     //this.parsedData
 
-    
+
   }
 }
