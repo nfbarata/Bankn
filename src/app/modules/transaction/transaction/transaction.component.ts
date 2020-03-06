@@ -60,7 +60,6 @@ export class TransactionComponent implements OnInit {
         else
           accountId=this.accounts[0].id;
       }
-      console.log(accountId);
       
       var transactionId:String = params.get('transactionId');
       var now = new Date();
