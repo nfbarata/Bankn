@@ -43,6 +43,7 @@ export class AccountComponent implements OnInit {
     this.countries = this.banknService.getCountries();
     this.route.paramMap.subscribe(params => {
       var accountId:String = params.get('accountId');
+
       if(accountId==null || accountId.trim().length==0){
         this.formData = {
           id:null,

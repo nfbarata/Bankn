@@ -3,29 +3,29 @@ import  { Transaction } from "./transaction";
 
 export class Account {
 
-  id:String;//uuid
-  name : String;
+  id:string;//uuid
+  name : string;
   //type
   //arquived
   transactions : Transaction[] = [];
   referenceAmount:Dinero;
-  referenceCountry:String;//to select in edit
+  referenceCountry:string;//to select in edit
   referenceDate:Date;
-  description:String = "";
+  description:string = "";
   //currency; inside referenceAmount
   //exclude orçamentos
 
   selected:Boolean = false;
 
   constructor(
-    id:String,
-    name:String,
-    description:String, 
+    id:string,
+    name:string,
+    description:string, 
     referenceAmount:Dinero, 
     referenceDate:Date,
-    referenceCountry:String,
+    referenceCountry:string,
     transactions:Transaction[],
-    selected:Boolean
+    selected:boolean
   ) {
     this.id = id;
     this.name = name;

@@ -57,9 +57,8 @@ export class TransactionComponent implements OnInit {
         var selected = this.accountService.getSelectedAccounts();
         if(selected.length>0)
           accountId=selected[0].id;
-      }
-      if(accountId==null){
-        accountId=this.accounts[0].id;
+        else
+          accountId=this.accounts[0].id;
       }
       
       var transactionId:String = params.get('transactionId');
