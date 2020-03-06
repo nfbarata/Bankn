@@ -17,7 +17,6 @@ import { Transaction, TransactionType, getTransactionType } from "../../../model
 })
 export class TransactionImportComponent implements OnInit, AfterViewInit {
   submitDisabled: boolean=true;
-  text = '';
   @ViewChild('importData',{static:false}) importData:ElementRef;
   @ViewChild('columnSeparator',{static:false}) columnSeparator:ElementRef;
   @ViewChild('lineSeparator',{static:false}) lineSeparator:ElementRef;

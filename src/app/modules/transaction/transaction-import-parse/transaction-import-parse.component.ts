@@ -44,22 +44,23 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
     this.form = this.formBuilder.group(this.formData);
   }
   ngAfterViewInit(): void {
+    this.clearTable();
+    this.fillTable(this.transactions);
   }
   ngOnInit() {
     this.transactions = this.transactionService.importTransactions;
     this.route.paramMap.subscribe(params => {
       this.accountId = params.get('accountId');
-      this.clearTable();
-      this.fillTable(this.transactions);
+      
     });
   }
 
   clearTable(){
-    console.log(this.parsedData);
     this.renderer.setProperty(this.parsedData.nativeElement, 'innerHTML',""); 
   }
 
   fillTable(data){
+    console.log(data);
     data.forEach(row=>{
       var htmlRow = this.renderer.createElement('tr');
       this.renderer.appendChild(this.parsedData.nativeElement, htmlRow);
