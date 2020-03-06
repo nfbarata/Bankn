@@ -11,13 +11,13 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
           External transactions:
         </label>
         <br>
-        <textarea class="form-control" formControlName="importData" id="importData" wrap="off" rows="6" (change)="onInputChange()"></textarea>
+        <textarea #importData class="form-control" formControlName="importData" id="importData" wrap="off" rows="6" (keyup)="onInputChange()" (paste)="onInputChange()"></textarea>
         <small id="importDataHelpBlock" class="form-text text-muted" i18n>Copy paste data from your homebanking</small>
       </div>
     </div>
     <div class="row">
       <div class="col-6 form-group">
-        <select class="form-control" formControlName="columnSeparator" (change)="onInputChange()">
+        <select #columnSeparator class="form-control" formControlName="columnSeparator" (change)="onInputChange()">
           <option value=" " selected>tab</option>
           <option value=",">comma</option>
           <option value=";">semicolon</option>
@@ -26,7 +26,7 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
         <small id="columnSeparatorHelpBlock" class="form-text text-muted">Column separator</small>
       </div>
       <div class="col-6 form-group">
-        <select class="form-control" formControlName="lineSeparator" (change)="onInputChange()">
+        <select #lineSeparator class="form-control" formControlName="lineSeparator" (change)="onInputChange()">
           <option selected>\n</option>
         </select>
         <small id="lineSeparatorHelpBlock" class="form-text text-muted">Row separator</small>
@@ -40,7 +40,7 @@ headers ignorar descricao, data varios formatos,montante cred deb, sinal, saldo,
     <br>
     <div class="row">
       <div class="col-12">
-        <table class="table" id="parsedData">
+        <table #parsedData class="table" id="parsedData">
           <tbody>
             <tr>
               <td>Mark</td>
