@@ -97,6 +97,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
       columnSeparator = String.fromCharCode(this.columnSeparator.nativeElement.value);
     }
 
+    //i18n
     var data = this.importData.nativeElement.value;
     var lines = data.split(lineSeparator);
     if(lines.length>0 && lines[0].trim().length>0){
@@ -104,7 +105,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
       var parsedData = [];
       if(firstRow.length>3){
         for(var i=0; i!=lines.length;i++){
-          if(lines[i].trim().length!=0){
+          if(lines[i].trim().length!=0){//ignore empty lines
             var columns = lines[i].split(columnSeparator);
             if(columns.length!=firstRow.length){
               this.setMessage('Not all rows have the same number of columns');
