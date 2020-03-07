@@ -5,7 +5,39 @@
       <div class="col-12">
         <div class="table-responsive-xl">
         <table class="table table-sm table-bordered small font-weight-lighter text-truncate">
+          <tbody id="parsedData2">
+            <tr>
+              <th>
+                Import?
+              </th>
+              <th *ngFor="let columneHeader of transactions[0]; let h = index;">
+                <select class="form-control">
+                  <option>Description</option>
+                </select>
+              </th>
+            </tr>
+            <tr *ngFor="let transaction of transactions; let t = index;">
+              <td>
+                <div class="custom-control custom-checkbox text-center">
+                  <input type="checkbox" checked class="custom-control-input" id="import{{t}}">
+                  <label for="import{{t}}" class="custom-control-label"></label>
+                </div>
+              </td>
+              <td *ngFor="let column of transaction">
+                {{column}}
+              </td>
+            </tr>      
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive-xl">
+        <table class="table table-sm table-bordered small font-weight-lighter text-truncate">
           <tbody #parsedData id="parsedData">
+
             <!--
               text-truncate
             <tr>
