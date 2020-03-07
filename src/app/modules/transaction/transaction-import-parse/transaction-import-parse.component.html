@@ -1,4 +1,4 @@
-<h2>Parse transactions</h2>
+<h2>Filter transactions</h2>
 <br>
 <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
     <div class="row">
@@ -37,25 +37,6 @@
         <div class="table-responsive-xl">
         <table class="table table-sm table-bordered small font-weight-lighter text-truncate">
           <tbody #parsedData id="parsedData">
-
-            <!--
-              text-truncate
-            <tr>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>Jacob</td>
-              <td>Thorntonssss ssssssss</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>Larry</td>
-              <td>the Bssssssssssssssssssssird</td>
-              <td>@twittesssssssssssssr</td>
-            </tr>
-            -->
           </tbody>
         </table>
         </div>
@@ -63,7 +44,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <button class="btn btn-primary" type="submit" i18n [disabled]="submitDisabled">Import</button>
+        <button class="btn btn-primary" type="submit" i18n [disabled]="submitDisabled">Filter</button>
         <small #submitHelpBlock id="submitHelpBlock" class="form-text text-muted">Enter some text to import</small>
       </div>
     </div>
