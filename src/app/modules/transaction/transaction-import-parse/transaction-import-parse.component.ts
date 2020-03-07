@@ -73,8 +73,13 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
     
     data[0].forEach(column=>{
         var headerCell = this.renderer.createElement('th');
+      
+        var select = this.renderer.createElement('select');
+        this.renderer.addClass(select, "form-control");
+      
+        this.renderer.appendChild(headerCell, select);
+      
         this.renderer.appendChild(headerRow, headerCell);
-        this.renderer.setProperty(headerCell, 'innerHTML',"TODO");
     });    
     
     var i = 0;
