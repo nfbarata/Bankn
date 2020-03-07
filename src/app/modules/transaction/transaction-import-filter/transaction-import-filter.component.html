@@ -7,12 +7,19 @@
         <table class="table table-sm table-bordered small font-weight-lighter text-truncate">
           <tbody id="parsedData2">
             <tr>
-              <th>
+              <th class="align-middle">
                 Import?
               </th>
+              <!-- ignorar descricao, data varios formatos,montante cred deb, sinal, saldo-->
               <th *ngFor="let columneHeader of transactions[0]; let h = index;">
                 <select class="form-control">
+                  <option>Ignore</option>
                   <option>Description</option>
+                  <option>Date</option>
+                  <option>Amount</option>
+                  <option>Credit</option>
+                  <option>Debit</option>
+                  <option>Sign</option>
                 </select>
               </th>
             </tr>
