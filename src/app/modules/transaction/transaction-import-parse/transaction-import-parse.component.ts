@@ -89,6 +89,7 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
       var htmlCheckboxDiv = this.renderer.createElement('div');
       this.renderer.addClass(htmlCheckboxDiv, "custom-control");
       this.renderer.addClass(htmlCheckboxDiv, "custom-checkbox");
+      this.renderer.addClass(htmlCheckboxDiv, "text-center");
 
       var htmlCheckbox = this.renderer.createElement('input');
       this.renderer.setProperty(htmlCheckbox, 'id',"checkbox"+index);
