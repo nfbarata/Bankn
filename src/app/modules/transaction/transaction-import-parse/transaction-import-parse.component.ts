@@ -33,7 +33,6 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
     private router: Router,
     private location: Location
   ) { 
-    this.transactions = this.transactionService.importTransactions;
     this.formData = {
       importData:null,
       columnSeparator:"9",
@@ -76,7 +75,8 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
         this.renderer.setProperty(headerCell, 'innerHTML',"TODO");
     });    
     
-    data.forEach(row=>{
+    var i = 0;
+    data.forEach((row, index)=>{
       
       var htmlRow = this.renderer.createElement('tr');
       this.renderer.appendChild(this.parsedData.nativeElement, htmlRow);
@@ -84,11 +84,24 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
       var htmlCheckBoxCell = this.renderer.createElement('td');
       this.renderer.appendChild(htmlRow, htmlCheckBoxCell);
       
+      var htmlCheckboxDiv = this.renderer.createElement('div');
+      this.renderer.addClass(htmlCheckboxDiv, "custom-control");
+      this.renderer.addClass(htmlCheckboxDiv, "custom-checkbox");
+
       var htmlCheckbox = this.renderer.createElement('input');
+      this.renderer.setProperty(htmlCheckbox, 'id',"checkbox"+index);
       this.renderer.setProperty(htmlCheckbox, 'type',"checkbox");
       this.renderer.setProperty(htmlCheckbox, 'checked',"true");
+      this.renderer.addClass(htmlCheckbox, "custom-control-input");
       
-      this.renderer.appendChild(htmlCheckBoxCell, htmlCheckbox);
+      var htmlCheckboxLabel = this.renderer.createElement('label');
+      this.renderer.setAttribute(htmlCheckboxLabel, 'for',"checkbox"+index);
+      this.renderer.addClass(htmlCheckboxLabel, "custom-control-label");
+      
+      this.renderer.appendChild(htmlCheckboxDiv, htmlCheckbox);
+      this.renderer.appendChild(htmlCheckboxDiv, htmlCheckboxLabel);
+      
+      this.renderer.appendChild(htmlCheckBoxCell, htmlCheckboxDiv);
       
       row.forEach(column=>{
         var htmlCell = this.renderer.createElement('td');
