@@ -43,8 +43,10 @@ export class TransactionImportParseComponent implements OnInit, AfterViewInit {
     this.form = this.formBuilder.group(this.formData);
   }
   ngAfterViewInit(): void {
-    this.clearTable();
-    this.fillTable(this.transactions);
+    if(this.transactions.length>0){
+      this.clearTable();
+      this.fillTable(this.transactions);
+    }
   }
   ngOnInit() {
     this.transactions = this.transactionService.importTransactions;
