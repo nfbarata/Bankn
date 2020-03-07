@@ -10,11 +10,11 @@ import { Account } from "../../../models/account";
 import { Transaction, TransactionType, getTransactionType } from "../../../models/transaction";
 
 @Component({
-  selector: 'app-transaction-import-parse',
-  templateUrl: './transaction-import-parse.component.html',
-  styleUrls: ['./transaction-import-parse.component.css']
+  selector: 'app-transaction-import-filter',
+  templateUrl: './transaction-import-filter.component.html',
+  styleUrls: ['./transaction-import-filter.component.css']
 })
-export class TransactionImportParseComponent implements OnInit, AfterViewInit {
+export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
 
   form;
   formData;

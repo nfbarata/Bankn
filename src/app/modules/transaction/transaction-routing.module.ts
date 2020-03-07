@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TransactionListComponent } from './transaction-list/transaction-list.component'
 import { TransactionImportComponent } from './transaction-import/transaction-import.component'
-import { TransactionImportParseComponent } from './transaction-import-parse/transaction-import-parse.component'
+import { TransactionImportFilterComponent } from './transaction-import-filter/transaction-import-filter.component'
 import { TransactionComponent } from './transaction/transaction.component'
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'transaction/:accountId', component: TransactionComponent },
   { path: 'transaction/:accountId/:transactionId', component: TransactionComponent },
   { path: 'import/:accountId', component: TransactionImportComponent },
-  { path: 'import-parse/:accountId', component: TransactionImportParseComponent },
+  { path: 'import-parse/:accountId', component: TransactionImportFilterComponent },
 ]
 
 @NgModule({

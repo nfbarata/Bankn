@@ -8,7 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { TransactionImportComponent } from './transaction-import/transaction-import.component';
 import { TransactionComponent } from './transaction/transaction.component';
-import { TransactionImportParseComponent } from './transaction-import-parse/transaction-import-parse.component'
+import { TransactionImportFilterComponent } from './transaction-import-filter/transaction-import-filter.component'
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { TransactionImportParseComponent } from './transaction-import-parse/tran
     TransactionListComponent,
     TransactionImportComponent,
     TransactionComponent,
-    TransactionImportParseComponent
+    TransactionImportFilterComponent
   ],
   exports: [
     TransactionImportComponent,TransactionComponent
