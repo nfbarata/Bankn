@@ -75,8 +75,8 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     this.transactionService.filterTransactions=[];
     this.transactions.forEach((row, i)=>{
       var ignore = this.document.getElementById('ignore'+i);
+      console.log(ignore);
       if(!ignore.checked){
-        var setNegative = false;
         var amount:Number = null;
         var date:Date = null;
         var description: string = null;

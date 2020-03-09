@@ -20,7 +20,7 @@
             <tr *ngFor="let transaction of transactions; let t = index;">
               <td>
                 <div class="custom-control custom-checkbox text-center">
-                  <input type="checkbox" checked class="custom-control-input" id="ignore{{t}}">
+                  <input type="checkbox" [checked]="" class="custom-control-input" id="ignore{{t}}">
                   <label for="ignore{{t}}" class="custom-control-label"></label>
                 </div>
               </td>
@@ -36,7 +36,7 @@
     <div class="row">
       <div class="col-12">
         <button class="btn btn-primary" type="submit" i18n [disabled]="submitDisabled">Filter</button>
-        <small #submitHelpBlock id="submitHelpBlock" class="form-text text-muted">Enter some text to import</small>
+        <small #submitHelpBlock id="submitHelpBlock" class="form-text text-muted">Classify each relevant column</small>
       </div>
     </div>
 </form>
