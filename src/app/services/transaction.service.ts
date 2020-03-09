@@ -13,6 +13,7 @@ export class TransactionService {
 
   importTransactions=[];//volatile
   filterTransactions=[];//volatile
+  filterActions=[];//volatile
 
   constructor(
     private eventsService: EventsService,

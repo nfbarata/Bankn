@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input, Directive, ViewEncapsulation, Renderer2 } from '@angular/core';
-import { Location} from '@angular/common';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input, Directive, ViewEncapsulation, Renderer2, Inject } from '@angular/core';
+import { Location, DOCUMENT } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
 import { ActivatedRoute,Router } from '@angular/router';
 import { EventsService } from '../../../services/events.service';
@@ -21,6 +21,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   accountId;
   transactions;
   //@ViewChild('parsedData',{static:false}) parsedData:ElementRef;
+  document;
 
   constructor(
     private renderer: Renderer2,
@@ -31,8 +32,10 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    @Inject(DOCUMENT) document
   ) { 
+    this.document = document;
     this.formData = {
       importData:null,
     }
@@ -45,7 +48,6 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     }*/
   }
   ngOnInit() {
-    this.transactionService.filterTransactions=[];
     this.transactions = this.transactionService.importTransactions;
     if(this.transactions.length==0){
       this.router.navigate(['/transactions/import/'+this.accountId]);
@@ -56,8 +58,28 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(data) {
+    this.transactionService.filterActions=[];
+    this.transactions[0].forEach((column, index)=>{
+      var action=this.document.getElementById('action'+index);
+      this.transactionService.filterActions.push(action);
+    });
+    this.transactionService.filterTransactions=[];
+    this.transactions.forEach((row, i)=>{
+      var ignore = this.document.getElementById('ignore'+i);
+      if(!ignore.checked){
+        var transaction = [];
+        this.transactions[0].forEach((column,j)=>{
+          var columnValue = "";
+          switch(this.transactionService.filterActions[j]){
+
+          }
+          transaction.push(columnValue);
+        });
+        this.transactionService.filterTransactions.push(transaction);
+      }
+    });
     
-    console.log(data);
+    console.log(this.transactionService.filterTransactions);
     //this.transactionService.importTransactions=this.output;
     this.form.reset();
     this.router.navigate(['/transactions/import-edit/'+this.accountId]);

@@ -12,7 +12,7 @@
               </th>
               <!-- ignorar descricao, data varios formatos,montante cred deb, sinal, saldo-->
               <th *ngFor="let columneHeader of transactions[0]; let h = index;">
-                <select class="form-control" id="class{{h}}">
+                <select class="form-control" id="action{{h}}">
                   <option>Ignore</option>
                   <option>Description</option>
                   <option>Date</option>
@@ -26,8 +26,8 @@
             <tr *ngFor="let transaction of transactions; let t = index;">
               <td>
                 <div class="custom-control custom-checkbox text-center">
-                  <input type="checkbox" checked class="custom-control-input" id="import{{t}}">
-                  <label for="import{{t}}" class="custom-control-label"></label>
+                  <input type="checkbox" checked class="custom-control-input" id="ignore{{t}}">
+                  <label for="ignore{{t}}" class="custom-control-label"></label>
                 </div>
               </td>
               <td *ngFor="let column of transaction">
