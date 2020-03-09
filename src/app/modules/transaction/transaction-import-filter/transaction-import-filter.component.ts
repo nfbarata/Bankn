@@ -20,7 +20,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   formData;
   accountId;
   transactions;
-  @ViewChild('parsedData',{static:false}) parsedData:ElementRef;
+  //@ViewChild('parsedData',{static:false}) parsedData:ElementRef;
 
   constructor(
     private renderer: Renderer2,
@@ -49,6 +49,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     }*/
   }
   ngOnInit() {
+    this.transactionService.filterTransactions=[];
     this.transactions = this.transactionService.importTransactions;
     if(this.transactions.length==0){
       this.router.navigate(['/transactions/import/'+this.accountId]);
@@ -58,11 +59,18 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     });
   }
 
-  clearTable(){
-    this.renderer.setProperty(this.parsedData.nativeElement, 'innerHTML',""); 
+  onSubmit(data) {
+    console.log(data);
+    //this.transactionService.importTransactions=this.output;
+    this.form.reset();
+    this.router.navigate(['/transactions/import-edit/'+this.accountId]);
   }
 
-  fillTable(data){
+  /*clearTable(){
+    //this.renderer.setProperty(this.parsedData.nativeElement, 'innerHTML',""); 
+  }*/
+
+  /*fillTable(data){
     var headerRow = this.renderer.createElement('tr');
     this.renderer.appendChild(this.parsedData.nativeElement, headerRow);
     
@@ -117,5 +125,5 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
         this.renderer.setProperty(htmlCell, 'innerHTML',column);
       });
     });
-  }
+  }*/
 }

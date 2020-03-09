@@ -12,6 +12,7 @@ import { Transaction, TransactionType, getTransactionType } from "../models/tran
 export class TransactionService {
 
   importTransactions=[];//volatile
+  filterTransactions=[];//volatile
 
   constructor(
     private eventsService: EventsService,
