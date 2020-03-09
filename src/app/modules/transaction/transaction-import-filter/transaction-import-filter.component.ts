@@ -77,7 +77,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
       var ignore = this.document.getElementById('ignore'+i);
       if(!ignore.checked){
         var setNegative = false;
-        var value:Number = null;
+        var amount:Number = null;
         var date:Date = null;
         var description: string = null;
         var type =TransactionType.CREDIT; 
@@ -97,14 +97,14 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
             case ImportColumnType.DATE_YMD:
               date=new Date();
             break;
-            case AMOUNT:
-              value = Number.parseFloat(column);
+            case ImportColumnType.AMOUNT:
+              amount = Number.parseFloat(column);
             break;
             case ImportColumnType.CREDIT:
-              value = Number.parseFloat(column);
+              amount = Number.parseFloat(column);
             break;
             case ImportColumnType.DEBIT:
-              value = Number.parseFloat(column);
+              amount = Number.parseFloat(column);
               type = TransactionType.DEBIT;
             break;
             case ImportColumnType.SIGN:
@@ -113,13 +113,13 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
             break;
           }
         });
-        if(value==null || date == null || description == null){
+        if(amount==null || date == null || description == null){
           this.setMessage("There should be at least a column for amount, date and description");
           return;
         }
         this.transactionService.filterTransactions.push(new Transaction(
             null,
-            this.accountService.toDinero(this.accountService.getCurrency(this.account),value),
+            this.accountService.toDinero(this.accountService.getCurrency(this.account),amount),
             date,
             null,
             null,
