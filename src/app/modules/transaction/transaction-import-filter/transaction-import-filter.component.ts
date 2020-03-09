@@ -79,6 +79,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
         var amount:Number = 0;
         var date:Date;
         var description: string;
+        var type:TransactionType =TransactionType.CREDIT; 
         this.transactions[0].forEach((column,j)=>{
           switch(getImportColumnType(this.transactionService.filterActions[j])){
             case ImportColumnType.IGNORE:
@@ -103,22 +104,22 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
             break;
             case ImportColumnType.DEBIT:
               amount = Number.parseFloat(column);
+              type = TransactionType.DEBIT;
             break;
             case ImportColumnType.SIGN:
               if(column.trim()=="-")
-                setNegative= true;
+                type = TransactionType.DEBIT;
             break;
           }
         });
-        if(setNegative)
-          amount = -amount;
         this.transactionService.filterTransactions.push(new Transaction(
-            ",
+            null,
             this.accountService.toDinero(this.accountService.getCurrency(this.account),amount),
             date,
             null,
             null,
-            description
+            description,
+            type
           ));
       }
     });
