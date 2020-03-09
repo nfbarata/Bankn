@@ -13,13 +13,7 @@
               <!-- ignorar descricao, data varios formatos,montante cred deb, sinal, saldo-->
               <th *ngFor="let columneHeader of transactions[0]; let h = index;">
                 <select class="form-control" id="action{{h}}">
-                  <option>Ignore</option>
-                  <option>Description</option>
-                  <option>Date</option>
-                  <option>Amount</option>
-                  <option>Credit</option>
-                  <option>Debit</option>
-                  <option>Sign</option>
+                  <option *ngFor="let keyValue of importColumnType">{{keyValue[1].description}}</option>
                 </select>
               </th>
             </tr>

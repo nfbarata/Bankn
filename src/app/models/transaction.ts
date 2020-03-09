@@ -15,6 +15,45 @@ export const TransactionType = {
     },
 }
 
+export const ImportColumnType = {
+    IGNORE:{
+      id:'i',
+      description:'Ignore'
+    },
+    DESCRIPTION:{
+      id:'des',
+      description:'Description'
+    }, 
+    DATE_DMY:{
+      id:'dtdmy',
+      description:'Date (Day Month Year)'
+    },
+    DATE_MDY:{
+      id:'dtmdy',
+      description:'Date (Month Day Year)'
+    },
+    DATE_YMD:{
+      id:'dtymd',
+      description:'Date (Year Month Day)'
+    },
+    AMOUNT:{
+      id:'a',
+      description:'Amount'
+    },
+    CREDIT:{
+      id:'c',
+      description:'Credit'
+    },
+    DEBIT:{
+      id:'d',
+      description:'Debit'
+    },
+    SIGN:{
+      id:'s',
+      description:'Sign'
+    }
+}
+
 export function getTransactionType(id:String){
   for (let [key, value] of Object.entries(TransactionType)) {
     if(value.id==id)
