@@ -79,7 +79,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
         var amount:Number = 0;
         var date:Date;
         var description: string;
-        var type:TransactionType =TransactionType.CREDIT; 
+        var type =TransactionType.CREDIT; 
         this.transactions[0].forEach((column,j)=>{
           switch(getImportColumnType(this.transactionService.filterActions[j])){
             case ImportColumnType.IGNORE:
