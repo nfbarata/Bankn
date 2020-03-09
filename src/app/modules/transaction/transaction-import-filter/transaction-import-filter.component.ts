@@ -64,18 +64,36 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
       var action=this.document.getElementById('action'+index);
       this.transactionService.filterActions.push(action.value);
     });
+    
     this.transactionService.filterTransactions=[];
     this.transactions.forEach((row, i)=>{
       var ignore = this.document.getElementById('ignore'+i);
       if(!ignore.checked){
         var transaction = [];
         this.transactions[0].forEach((column,j)=>{
-          var columnValue = "";
+          var ignore:boolean = false;
+          var columnValue = column;
           switch(getImportColumnType(this.transactionService.filterActions[j])){
             case ImportColumnType.IGNORE:
+              ignore=true;
+            break;
+            case ImportColumnType.DESCRIPTION:
+            break;
+            case ImportColumnType.DATE_DMY:
+            break;
+            case ImportColumnType.DATE_MDY:
+            break;
+            case ImportColumnType.DATE_YMD:
+            break;
+            case ImportColumnType.CREDIT:
+            break;
+            case ImportColumnType.DEBIT:
+            break;
+            case ImportColumnType.SIGN:
             break;
           }
-          transaction.push(columnValue);
+          if(!ignore)
+            transaction.push(columnValue);
         });
         this.transactionService.filterTransactions.push(transaction);
       }
