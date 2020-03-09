@@ -20,9 +20,10 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   formData;
   account;
   transactions;
-  //@ViewChild('parsedData',{static:false}) parsedData:ElementRef;
   document;
   importColumnType = Object.entries(ImportColumnType);
+
+  @ViewChild('submitHelpBlock',{static:false}) submitHelpBlock:ElementRef;
 
   constructor(
     private renderer: Renderer2,
@@ -76,9 +77,9 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
       var ignore = this.document.getElementById('ignore'+i);
       if(!ignore.checked){
         var setNegative = false;
-        var amount:Number = 0;
-        var date:Date;
-        var description: string;
+        var value:Number = null;
+        var date:Date = null;
+        var description: string = null;
         var type =TransactionType.CREDIT; 
         this.transactions[0].forEach((column,j)=>{
           switch(getImportColumnType(this.transactionService.filterActions[j])){
@@ -97,13 +98,13 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
               date=new Date();
             break;
             case AMOUNT:
-              amount = Number.parseFloat(column);
+              value = Number.parseFloat(column);
             break;
             case ImportColumnType.CREDIT:
-              amount = Number.parseFloat(column);
+              value = Number.parseFloat(column);
             break;
             case ImportColumnType.DEBIT:
-              amount = Number.parseFloat(column);
+              value = Number.parseFloat(column);
               type = TransactionType.DEBIT;
             break;
             case ImportColumnType.SIGN:
@@ -112,9 +113,13 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
             break;
           }
         });
+        if(value==null || date == null || description == null){
+          this.setMessage("There should be at least a column for amount, date and description");
+          return;
+        }
         this.transactionService.filterTransactions.push(new Transaction(
             null,
-            this.accountService.toDinero(this.accountService.getCurrency(this.account),amount),
+            this.accountService.toDinero(this.accountService.getCurrency(this.account),value),
             date,
             null,
             null,
@@ -128,6 +133,11 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     this.form.reset();
     this.router.navigate(['/transactions/import-edit/'+this.account.id]);
   }
+
+  setMessage(message:string){
+    this.renderer.setProperty(this.submitHelpBlock.nativeElement, 'innerHTML', message);
+  }
+
 
   /*clearTable(){
     //this.renderer.setProperty(this.parsedData.nativeElement, 'innerHTML',""); 
