@@ -62,6 +62,14 @@ export function getTransactionType(id:String){
   console.error("TransactionType not found: "+id);
 }
 
+export function getImportColumnType(id:String){
+  for (let [key, value] of Object.entries(ImportColumnType)) {
+    if(value.id==id)
+      return value;
+  }
+  console.error("ImportColumnType not found: "+id);
+}
+
 export class Transaction {
   
   private date:Date;

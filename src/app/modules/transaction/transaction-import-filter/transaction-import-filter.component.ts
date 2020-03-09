@@ -7,7 +7,7 @@ import { BanknService } from '../../../services/bankn.service';
 import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
-import { Transaction, TransactionType, getTransactionType, ImportColumnType } from "../../../models/transaction";
+import { Transaction, TransactionType, getTransactionType, ImportColumnType, getImportColumnType } from "../../../models/transaction";
 
 @Component({
   selector: 'app-transaction-import-filter',
@@ -62,7 +62,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     this.transactionService.filterActions=[];
     this.transactions[0].forEach((column, index)=>{
       var action=this.document.getElementById('action'+index);
-      this.transactionService.filterActions.push(action);
+      this.transactionService.filterActions.push(action.value);
     });
     this.transactionService.filterTransactions=[];
     this.transactions.forEach((row, i)=>{
@@ -71,8 +71,8 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
         var transaction = [];
         this.transactions[0].forEach((column,j)=>{
           var columnValue = "";
-          switch(this.transactionService.filterActions[j]){
-            case "":
+          switch(getImportColumnType(this.transactionService.filterActions[j])){
+            case ImportColumnType.IGNORE:
             break;
           }
           transaction.push(columnValue);

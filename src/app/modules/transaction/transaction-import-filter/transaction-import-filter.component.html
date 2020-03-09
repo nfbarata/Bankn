@@ -13,7 +13,7 @@
               <!-- ignorar descricao, data varios formatos,montante cred deb, sinal, saldo-->
               <th *ngFor="let columneHeader of transactions[0]; let h = index;">
                 <select class="form-control" id="action{{h}}">
-                  <option *ngFor="let keyValue of importColumnType">{{keyValue[1].description}}</option>
+                  <option *ngFor="let keyValue of importColumnType" value="{{keyValue[1].id}}">{{keyValue[1].description}}</option>
                 </select>
               </th>
             </tr>
