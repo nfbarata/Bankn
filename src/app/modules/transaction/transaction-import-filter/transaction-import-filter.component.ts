@@ -35,10 +35,6 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   ) { 
     this.formData = {
       importData:null,
-      columnSeparator:"9",
-      lineSeparator:"10",
-      customColumnSeparator:"",
-      customLineSeparator:""
     }
     this.form = this.formBuilder.group(this.formData);
   }
@@ -60,6 +56,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit(data) {
+    
     console.log(data);
     //this.transactionService.importTransactions=this.output;
     this.form.reset();
