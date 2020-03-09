@@ -18,7 +18,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
 
   form;
   formData;
-  accountId;
+  account;
   transactions;
   //@ViewChild('parsedData',{static:false}) parsedData:ElementRef;
   document;
@@ -49,60 +49,83 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     }*/
   }
   ngOnInit() {
+    this.account=null;
     this.transactions = this.transactionService.importTransactions;
-    if(this.transactions.length==0){
-      this.router.navigate(['/transactions/import/'+this.accountId]);
-    }
     this.route.paramMap.subscribe(params => {
-      this.accountId = params.get('accountId');
+      var accountId = params.get('accountId');
+      this.account = this.accountService.getAccount(accountId);
+      if(this.account==null){
+        this.router.navigate(['']);
+      }
+      if(this.transactions.length==0){
+        this.router.navigate(['/transactions/import/'+this.account.Id]);
+      }
     });
   }
 
   onSubmit(data) {
+    
     this.transactionService.filterActions=[];
     this.transactions[0].forEach((column, index)=>{
       var action=this.document.getElementById('action'+index);
       this.transactionService.filterActions.push(action.value);
     });
-    
+
     this.transactionService.filterTransactions=[];
     this.transactions.forEach((row, i)=>{
       var ignore = this.document.getElementById('ignore'+i);
       if(!ignore.checked){
-        var transaction = [];
+        var setNegative = false;
+        var amount:Number = 0;
+        var date:Date;
+        var description: string;
         this.transactions[0].forEach((column,j)=>{
-          var ignore:boolean = false;
-          var columnValue = column;
           switch(getImportColumnType(this.transactionService.filterActions[j])){
             case ImportColumnType.IGNORE:
-              ignore=true;
             break;
             case ImportColumnType.DESCRIPTION:
+              description = column;
             break;
             case ImportColumnType.DATE_DMY:
+              date=new Date();
             break;
             case ImportColumnType.DATE_MDY:
+              date=new Date();
             break;
             case ImportColumnType.DATE_YMD:
+              date=new Date();
+            break;
+            case AMOUNT:
+              amount = Number.parseFloat(column);
             break;
             case ImportColumnType.CREDIT:
+              amount = Number.parseFloat(column);
             break;
             case ImportColumnType.DEBIT:
+              amount = Number.parseFloat(column);
             break;
             case ImportColumnType.SIGN:
+              if(column.trim()=="-")
+                setNegative= true;
             break;
           }
-          if(!ignore)
-            transaction.push(columnValue);
         });
-        this.transactionService.filterTransactions.push(transaction);
+        if(setNegative)
+          amount = -amount;
+        this.transactionService.filterTransactions.push(new Transaction(
+            ",
+            this.accountService.toDinero(this.accountService.getCurrency(this.account),amount),
+            date,
+            null,
+            null,
+            description
+          ));
       }
     });
-    
     console.log(this.transactionService.filterTransactions);
     //this.transactionService.importTransactions=this.output;
     this.form.reset();
-    this.router.navigate(['/transactions/import-edit/'+this.accountId]);
+    this.router.navigate(['/transactions/import-edit/'+this.account.id]);
   }
 
   /*clearTable(){

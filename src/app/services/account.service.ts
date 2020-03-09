@@ -126,6 +126,10 @@ export class AccountService {
     });
   }
 
+  getCurrency(account:Account){
+    return account.referenceAmount.getCurrency();
+  }
+
   deleteAccountId(accountId:String){
     this.banknService.deleteAccountId(accountId);
   }

@@ -103,7 +103,7 @@ export class TransactionComponent implements OnInit {
 
   onSubmit(data) {
     var account = this.accountService.getAccount(data.accountId);
-    var amount = this.accountService.toDinero(account.referenceAmount.getCurrency(),data.amount);
+    var amount = this.accountService.toDinero(this.accountService.getCurrency(account),data.amount);
 
     var date = new Date(0);//clear hours/minutes/seconds
     date.setFullYear(data.year, data.month-1, data.day);
