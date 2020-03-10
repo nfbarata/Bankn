@@ -64,6 +64,25 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     });
   }
 
+  private getDate(value){
+    value = value.replace("/","-");
+    value = value.split("-");
+    return value;
+  }
+
+  private getNumber(value):Number{
+    return Number(value.replace(",","."));
+  }
+
+  private getYear(value){
+    if(value.length==4)
+      return value;
+    if(value>80)
+      return "19"+value;
+    else
+      return "20"+value;
+  }
+
   onSubmit(data) {
     
     this.transactionService.filterActions=[];
@@ -89,26 +108,29 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
               description = value;
             break;
             case ImportColumnType.DATE_DMY:
-              date=new Date();
+              value = this.getDate(value);
+              date=new Date(this.getYear(value[2]),value[1]-1,value[0]);
             break;
             case ImportColumnType.DATE_MDY:
-              date=new Date();
+              value = this.getDate(value);
+              date=new Date(this.getYear(value[2]),value[0]-1,value[1]);
             break;
             case ImportColumnType.DATE_YMD:
-              date=new Date();
+              value = this.getDate(value);
+              date=new Date(this.getYear(value[0]),value[1]-1,value[2]);
             break;
             case ImportColumnType.AMOUNT:
               if(value.includes("-")){
                 value = value.replace("-","");
                 type = TransactionType.DEBIT;
               }
-              amount = Number(value.replace(",","."));
+              amount = this.getNumber(value);
             break;
             case ImportColumnType.CREDIT:
-              amount = Number(value.replace(",","."));
+              amount = this.getNumber(value);
             break;
             case ImportColumnType.DEBIT:
-              amount = Number(value.replace(",","."));
+              amount = this.getNumber(value);
               type = TransactionType.DEBIT;
             break;
             case ImportColumnType.SIGN:
