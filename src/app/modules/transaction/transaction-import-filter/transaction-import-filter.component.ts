@@ -81,11 +81,12 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
         var description: string = null;
         var type =TransactionType.CREDIT; 
         this.transactions[0].forEach((column,j)=>{
+          var value = row[j];
           switch(getImportColumnType(this.transactionService.filterActions[j])){
             case ImportColumnType.IGNORE:
             break;
             case ImportColumnType.DESCRIPTION:
-              description = column;
+              description = value;
             break;
             case ImportColumnType.DATE_DMY:
               date=new Date();
@@ -97,17 +98,21 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
               date=new Date();
             break;
             case ImportColumnType.AMOUNT:
-              amount = Number.parseFloat(column);
+              if(value.includes("-")){
+                value = value.replace("-","");
+                type = TransactionType.DEBIT;
+              }
+              amount = new Number(value);
             break;
             case ImportColumnType.CREDIT:
-              amount = Number.parseFloat(column);
+              amount = new Number(value);
             break;
             case ImportColumnType.DEBIT:
-              amount = Number.parseFloat(column);
+              amount = new Number(value);
               type = TransactionType.DEBIT;
             break;
             case ImportColumnType.SIGN:
-              if(column.trim()=="-")
+              if(value.trim()=="-")
                 type = TransactionType.DEBIT;
             break;
           }
