@@ -77,12 +77,12 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   private getYear(value){
     if(value.length==4)
       return value;
-    if(value>80)
+    if(value>80)//TODO
       return "19"+value;
     else
       return "20"+value;
   }
-
+  
   onSubmit(data) {
     
     this.transactionService.filterActions=[];
