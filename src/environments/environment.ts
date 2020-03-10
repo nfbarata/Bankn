@@ -1,7 +1,7 @@
 
 export const environment = {
-//  production: true,
-  production: false,
+  production: true,
+/*  production: false,
   bankn : {
     id:'1',
     name:'teste',
@@ -66,5 +66,5 @@ export const environment = {
         ]
       },
     ],
-  }
+  }*/
 };
