@@ -139,7 +139,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
             break;
           }
         });
-        console.log(amount+","+date+","+description);
+
         if(amount==null || date == null || description == null){
           this.setMessage("There should be at least a column for amount, date and description");
           return;
@@ -155,8 +155,6 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
           ));
       }
     });
-    console.log(this.transactionService.filterTransactions);
-    //this.transactionService.importTransactions=this.output;
     this.form.reset();
     this.router.navigate(['/transactions/import-edit/'+this.account.id]);
   }
