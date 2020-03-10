@@ -57,6 +57,19 @@ export class TransactionImportEditComponent implements OnInit {
   }
 
   onSubmit(data) {
+    //TODO processar categorias/entities
+    this.transactions.forEach(transaction => {
+      this.transactionService.createTransaction(
+        this.account,
+        transaction.amount,
+        transaction.date,
+        transaction.type,
+        null,
+        null,
+        transaction.description
+      );
+    });
+    
     this.form.reset();
     this.accountService.selectAccount(this.account);
     this.router.navigate(['/transactions/'+this.account.id]);
