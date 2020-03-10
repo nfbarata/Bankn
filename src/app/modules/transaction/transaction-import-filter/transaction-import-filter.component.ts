@@ -74,9 +74,8 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
 
     this.transactionService.filterTransactions=[];
     this.transactions.forEach((row, i)=>{
-      var ignore = this.document.getElementById('ignore'+i);
-      console.log(ignore);
-      if(!ignore.checked){
+      var dontIgnore = this.document.getElementById('dontIgnore'+i);
+      if(dontIgnore.checked){
         var amount:Number = null;
         var date:Date = null;
         var description: string = null;
@@ -113,6 +112,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
             break;
           }
         });
+        console.log(amount+","+date+","+description);
         if(amount==null || date == null || description == null){
           this.setMessage("There should be at least a column for amount, date and description");
           return;

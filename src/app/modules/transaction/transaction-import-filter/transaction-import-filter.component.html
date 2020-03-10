@@ -20,8 +20,8 @@
             <tr *ngFor="let transaction of transactions; let t = index;">
               <td>
                 <div class="custom-control custom-checkbox text-center">
-                  <input type="checkbox" [checked]="" class="custom-control-input" id="ignore{{t}}">
-                  <label for="ignore{{t}}" class="custom-control-label"></label>
+                  <input type="checkbox" checked class="custom-control-input" id="dontIgnore{{t}}">
+                  <label for="dontIgnore{{t}}" class="custom-control-label"></label>
                 </div>
               </td>
               <td *ngFor="let column of transaction">
