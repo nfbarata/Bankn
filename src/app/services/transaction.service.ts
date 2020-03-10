@@ -34,7 +34,7 @@ export class TransactionService {
     var transaction = new Transaction(
         uuidv4(),
         amount,
-        date,
+        clearDate,
         entity,
         category,
         description,
