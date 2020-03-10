@@ -102,13 +102,13 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
                 value = value.replace("-","");
                 type = TransactionType.DEBIT;
               }
-              amount = new Number(value);
+              amount = Number(value.replace(",","."));
             break;
             case ImportColumnType.CREDIT:
-              amount = new Number(value);
+              amount = Number(value.replace(",","."));
             break;
             case ImportColumnType.DEBIT:
-              amount = new Number(value);
+              amount = Number(value.replace(",","."));
               type = TransactionType.DEBIT;
             break;
             case ImportColumnType.SIGN:
