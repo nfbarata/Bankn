@@ -30,7 +30,7 @@ export class TransactionService {
     description:String
   ){
     var clearDate = new Date(0);//clear hours/minutes/seconds
-    date.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+    clearDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
     var transaction = new Transaction(
         uuidv4(),
         amount,
