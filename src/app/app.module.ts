@@ -2,7 +2,7 @@
 import { NgModule , LOCALE_ID, Injector, Inject, InjectionToken  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { APP_BASE_HREF } from '@angular/common';//from erro
+//import { APP_BASE_HREF } from '@angular/common';//from erro
 //external dependencies
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
@@ -62,7 +62,7 @@ export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
   ],
   bootstrap: [ MainComponent ],
   providers: [
-    {provide: APP_BASE_HREF, useValue : '/' }, 
+    //{provide: APP_BASE_HREF, useValue : '/' }, 
     {provide: LOCALE_ID, useValue: lang},
     EventsService,FileService,
     BanknService, AccountService, TransactionService,
