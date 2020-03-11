@@ -1,6 +1,6 @@
 import './polyfills';
 
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, TRANSLATIONS, TRANSLATIONS_FORMAT, MissingTranslationStrategy} from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
@@ -11,9 +11,7 @@ if (environment.production) {
   window.console.log = function () { };
 }
 
-//declare const require;
-
-platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
+/*platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   
   // Ensure Angular destroys itself on hot reloads.
   if (window['ngRef']) {
@@ -22,9 +20,9 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   window['ngRef'] = ref;
 
   // Otherwise, log the boot error
-}).catch(err => console.error(err));
+}).catch(err => console.error(err));*/
 
-/*
+
 // use the require method provided by webpack
 declare const require;
 // we use the webpack raw-loader to return the content as a string
@@ -40,4 +38,3 @@ document.addEventListener('DOMContentLoaded', () => {
   })
     .catch(err => console.error(err));
 });
-*/
