@@ -92,7 +92,7 @@ export class AccountService {
     return results;
   }
 
-  private createId():String{
+  private createId():string{
     //return uuidv4();
     var accounts:Account[] = this.getAccounts();
     var accountIds:String[]=[];

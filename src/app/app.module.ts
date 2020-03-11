@@ -33,7 +33,7 @@ import { HomeComponent } from './components/home/home.component';
 import { BanknCreateComponent } from './components/bankn-create/bankn-create.component';
 
 //TODO pass to object
-const lang = (function(defaultValue:String) {
+const LANG = (function(defaultValue:String) {
     if (typeof window === 'undefined' || typeof window.navigator === 'undefined') {
       return defaultValue;
     }
@@ -43,14 +43,18 @@ const lang = (function(defaultValue:String) {
     return lang;
 })('pt-PT');
 
-export let AppInjector: Injector;
+//registerLocaleData(localePt, 'pt-PT');
+
+//TODO circular dependencies:
+//export let AppInjector: Injector;
 export const ACCOUNT_SERVICE = new InjectionToken('AccountService');
 export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
 
 @NgModule({
   imports: [ 
-    BrowserModule, FormsModule, ReactiveFormsModule, FontAwesomeModule,
-    AppRoutingModule, SharedModule
+    BrowserModule,//.withServerTransition({ appId: 'serverApp' }) 
+    FormsModule, ReactiveFormsModule, FontAwesomeModule, AppRoutingModule, 
+    SharedModule
   ],
   exports: [
     
@@ -60,10 +64,10 @@ export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
   ],
   bootstrap: [ MainComponent ],
   providers: [
-    //{provide: APP_BASE_HREF, useValue : '/' }, 
-    {provide: LOCALE_ID, useValue: lang},
     EventsService,FileService,
     BanknService, AccountService, TransactionService,
+    //{provide: APP_BASE_HREF, useValue : '/' }, 
+    { provide: LOCALE_ID, useValue: LANG },
     { provide: ACCOUNT_SERVICE, useExisting: AccountService },
     { provide: TRANSACTION_SERVICE, useExisting: TransactionService },
     InitializedGuard
@@ -72,15 +76,10 @@ export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
 export class AppModule { 
    
   constructor(
-    private library: FaIconLibrary,
-    private injector:Injector,
-    private eventsService: EventsService,
-    private fileService: FileService,
-    private banknService:BanknService, 
-    private accountService:AccountService, 
-    private transactionService:TransactionService
+    //private injector:Injector,
+    private library: FaIconLibrary,   
   ){  
-    AppInjector=this.injector;
+    //AppInjector=this.injector;
     library.addIcons(
       faSquare, 
       faCheckSquare, 
