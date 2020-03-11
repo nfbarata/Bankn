@@ -11,7 +11,7 @@ if (environment.production) {
   window.console.log = function () { };
 }
 
-/*platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
+platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   
   // Ensure Angular destroys itself on hot reloads.
   if (window['ngRef']) {
@@ -20,9 +20,9 @@ if (environment.production) {
   window['ngRef'] = ref;
 
   // Otherwise, log the boot error
-}).catch(err => console.error(err));*/
+}).catch(err => console.error(err));
 
-
+/*
 // use the require method provided by webpack
 declare const require;
 // we use the webpack raw-loader to return the content as a string
@@ -38,3 +38,4 @@ document.addEventListener('DOMContentLoaded', () => {
   })
     .catch(err => console.error(err));
 });
+*/
