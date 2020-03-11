@@ -11,7 +11,7 @@ if (environment.production) {
   window.console.log = function () { };
 }
 
-declare const require;
+//declare const require;
 
 platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   
@@ -23,3 +23,21 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
 
   // Otherwise, log the boot error
 }).catch(err => console.error(err));
+
+/*
+// use the require method provided by webpack
+declare const require;
+// we use the webpack raw-loader to return the content as a string
+const translations = require(`raw-loader!./locale/messages.pt-PT.xlf`);
+
+document.addEventListener('DOMContentLoaded', () => {
+  platformBrowserDynamic().bootstrapModule(AppModule, {
+    missingTranslation: MissingTranslationStrategy.Warning,
+    providers: [
+      { provide: TRANSLATIONS, useValue: translations },
+      { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' }
+    ]
+  })
+    .catch(err => console.error(err));
+});
+*/
