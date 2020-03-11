@@ -47,8 +47,6 @@ export let AppInjector: Injector;
 export const ACCOUNT_SERVICE = new InjectionToken('AccountService');
 export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
 
-//declare var coinify: any;
-
 @NgModule({
   imports: [ 
     BrowserModule, FormsModule, ReactiveFormsModule, FontAwesomeModule,

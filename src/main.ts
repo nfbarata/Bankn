@@ -8,7 +8,10 @@ import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
+  window.console.log = function () { };
 }
+
+declare const require;
 
 platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   
