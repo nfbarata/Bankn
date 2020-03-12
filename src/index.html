@@ -30,6 +30,30 @@
       firebase.analytics();
     </script>
 
+    <!-- Onedrive -->
+    <script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>
+    <script type="text/javascript">     
+      function launchOneDrivePicker(){
+        console.log("teste");
+        var odOptions = {
+          clientId: "000000004C161F73",
+          action: "query",
+          multiSelect: true,
+          advanced: {},
+          success: function(files) { 
+            console.log(files);
+          },
+          cancel: function() { 
+            console.log("onedrive cancel")
+          },
+          error: function(error) { 
+            console.log("onedrive: "+error);
+          }
+        }
+        OneDrive.open(odOptions);
+      }
+    </script>
+
     <!-- TODO take to css -->
     <!--link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">

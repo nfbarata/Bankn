@@ -31,4 +31,12 @@ export class HomeComponent implements OnInit {
     this.hasBankn = this.banknService.initialized();
     this.hasAccounts = this.accountService.getAccounts().length>0;
   }
+
+  OneDrivedriveSuccess(files){
+    console.log(files);
+  }
+
+  onOnedriveCancel(){
+    console.log('Onedrive close/cancel!');
+  }
 }
