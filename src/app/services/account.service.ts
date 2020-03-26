@@ -7,7 +7,7 @@ import { Account } from "../models/account";
 import { Transaction, TransactionType } from "../models/transaction";
 
 import { TRANSACTION_SERVICE } from '../app.module';
-//import { Dinero } from '@types/dinero.js'
+import { Dinero } from 'dinero.js';
 
 @Injectable({providedIn: 'root'})
 export class AccountService {
@@ -19,11 +19,11 @@ export class AccountService {
   ) { }
 
   createAccount(
-    name:String, 
-    description:String, 
+    name:string, 
+    description:string, 
     referenceAmount:Dinero, 
     referenceDate:Date,
-    referenceCountry:String){
+    referenceCountry:string){
     var account : Account = new Account(
       this.createId(),
       name,
@@ -38,12 +38,12 @@ export class AccountService {
   }
 
   updateAccount(
-    id:String,
-    name:String, 
-    description:String, 
+    id:string,
+    name:string, 
+    description:string, 
     referenceAmount:Dinero, 
     referenceDate:Date,
-    referenceCountry:String){
+    referenceCountry:string){
 
     var account : Account = this.getAccount(id);
     account.name = name;
@@ -59,7 +59,7 @@ export class AccountService {
     var results = [];
     accounts.forEach(account => {
       results.push({
-        id: account.id,
+        id: account.getId(),
         name: account.name,
         description: account.description,
         referenceAmount: account.referenceAmount.toObject(),
@@ -95,17 +95,17 @@ export class AccountService {
   private createId():string{
     //return uuidv4();
     var accounts:Account[] = this.getAccounts();
-    var accountIds:String[]=[];
+    var accountIds:string[]=[];
     for (let i=0; i < accounts.length; i++) {
-      accountIds.push(accounts[i].id);
+      accountIds.push(accounts[i].getId());
     }
-    accountIds = accountIds.sort((a:String,b:String):any=>{
+    accountIds = accountIds.sort((a:string,b:string):any=>{
       return Number(a)-Number(b);
     });
     let i;
     for (i=0; i < accountIds.length; i++) {
       if(accountIds[i].localeCompare(i+"")!=0){
-        console.log(i);
+        //console.log(i);
         return i+"";
       }
     }
@@ -113,13 +113,13 @@ export class AccountService {
   }
 
 
-  private getPrecision(currency:String){
+  private getPrecision(currency:string){
     //TODO guardar este valor em memória
     var reference = Dinero({currency:currency});
     return reference.getPrecision();
   }
 
-  toDinero(currency:String, amount){
+  toDinero(currency:string, amount){
     return Dinero({
         amount:amount * Math.pow(10,this.getPrecision(currency)),
         currency:currency
@@ -130,22 +130,22 @@ export class AccountService {
     return account.referenceAmount.getCurrency();
   }
 
-  deleteAccountId(accountId:String){
+  deleteAccountId(accountId:string){
     this.banknService.deleteAccountId(accountId);
   }
 
   deleteAccount(account:Account){
-    this.deleteAccountId(account.id);
+    this.deleteAccountId(account.getId());
   }
 
   getAccounts() : Account[]{
     return this.banknService.getAccounts();
   }
 
-  getAccount(accountId:String) : Account{
+  getAccount(accountId:string) : Account{
     var accounts:Account[] = this.getAccounts();
     for (let i = 0; i < accounts.length; i++) {
-      if (accounts[i].id == accountId) 
+      if (accounts[i].getId() == accountId) 
         return accounts[i];
     }
     console.error("account not found:"+accountId);
@@ -160,7 +160,7 @@ export class AccountService {
     return accounts;
   }
 
-  toggleAccountId(accountId:String){
+  toggleAccountId(accountId:string){
     var account : Account = this.getAccount(accountId);
     this.toggleAccount(account);
   }
@@ -197,16 +197,16 @@ export class AccountService {
   }
 
   addTransaction(account:Account, transaction:Transaction){
-    transaction.accountId = account.id;
+    transaction.accountId = account.getId();
     account.transactions.push(transaction);
     var transactionService = this.injector.get(TRANSACTION_SERVICE);
     account.transactions = transactionService.sortTransactions(account.transactions);
     this.eventsService.accountTransactionsChange.emit();
   }
 
-  deleteTransactionId(account:Account, transactionId:String){
+  deleteTransactionId(account:Account, transactionId:string){
     account.transactions = account.transactions.filter(function(transaction){
-       return transaction.id != transactionId;
+       return transaction.getId() != transactionId;
     });
     this.eventsService.transactionChange.emit();
     this.eventsService.accountTransactionsChange.emit();

@@ -38,7 +38,7 @@ export class TransactionsImportCardComponent implements OnInit {
       }else{
         this.selectedAccount=this.accounts[0];
       }
-      this.newSelectedAccount = this.selectedAccount.id;
+      this.newSelectedAccount = this.selectedAccount.getId();
     }
   }
 

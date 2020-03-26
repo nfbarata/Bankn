@@ -16,9 +16,9 @@ import { Transaction, TransactionType, getTransactionType, ImportColumnType, get
 })
 export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
 
-  form;
+  form:FormGroup;
   formData;
-  account;
+  account:Account;
   transactions;
   document;
   importColumnType = Object.entries(ImportColumnType);
@@ -59,7 +59,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
         this.router.navigate(['']);
       }
       if(this.transactions.length==0){
-        this.router.navigate(['/transactions/import/'+this.account.Id]);
+        this.router.navigate(['/transactions/import/'+this.account.getId()]);
       }
     });
   }
@@ -156,7 +156,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
       }
     });
     this.form.reset();
-    this.router.navigate(['/transactions/import-edit/'+this.account.id]);
+    this.router.navigate(['/transactions/import-edit/'+this.account.getId()]);
   }
 
   setMessage(message:string){

@@ -1,4 +1,5 @@
 import  { Account } from "./account";
+import Dinero from 'dinero.js';
 
 export const TransactionType = {
     CREDIT: {
@@ -72,26 +73,29 @@ export function getImportColumnType(id:String){
 
 export class Transaction {
   
-  private date:Date;
-  private category:String;
-  private entity:String;//toAccount
-  private amount:Dinero;
+  public date:Date;
+  public category:String;
+  public entity:String;//toAccount
+  public amount:Dinero;
   //balance?
-  accountId:String;//meta
-  private description:String;
+  public accountId:String;//meta
+  public description:String;
 
   private id:String;//uuid
-  private type;
+  public type;
  
   //receipt;
 
+  public balanceBefore:Dinero;//volatile
+  public balanceAfter:Dinero;//volatile
+
   constructor(
-    uuid:String,
+    uuid:string,
     amount:Dinero,
     date:Date,
-    entity:String,
-    category:String,
-    description:String,
+    entity:string,
+    category:string,
+    description:string,
     type
   ) {
     this.id = uuid;
@@ -103,12 +107,8 @@ export class Transaction {
     this.type = type;
   }
 
-  getAmount():Dinero{
-    return this.amount;
-  }
-
-  getDate():Date{
-    return this.date;
+  public getId(){
+    return this.id;
   }
 }
 

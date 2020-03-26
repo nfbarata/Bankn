@@ -21,7 +21,7 @@ export class BanknService {
 
   private bankn : Bankn=null;
   countries;
-  defaultCountryCode:String='null';
+  defaultCountryCode:string='null';
 
   constructor(
     @Inject(LOCALE_ID) public locale: string,
@@ -59,8 +59,8 @@ export class BanknService {
 
 
   createBankn(
-    name:String,
-    referenceCountry:String
+    name:string,
+    referenceCountry:string
   ):Bankn{
     return new Bankn(
       uuidv4(),
@@ -108,7 +108,7 @@ export class BanknService {
     };
   }
 
-  update(name:String,referenceCountry:String):void{
+  update(name:string,referenceCountry:string):void{
     this.bankn.name = name;
     this.bankn.referenceCountry = referenceCountry;
     this.eventsService.banknChange.emit();
@@ -133,9 +133,9 @@ export class BanknService {
     this.eventsService.accountsChange.emit();
   }
 
-  deleteAccountId(accountId:String){
+  deleteAccountId(accountId:string){
     this.bankn.accounts = this.bankn.accounts.filter(function(account){
-       return account.id != accountId;
+       return account.getId() != accountId;
     });
     this.eventsService.accountsChange.emit();
   }
@@ -150,11 +150,11 @@ export class BanknService {
     return this.countries;
   }
 
-  getDefaultCountryCode():String{
+  getDefaultCountryCode():string{
     return this.defaultCountryCode;
   }
 
-  getCurrencyOfCountry(countryCode:String){
+  getCurrencyOfCountry(countryCode:string){
     var country = null;
     for (let i = 0; i < this.countries.length && country==null; i++) {
       if (this.countries[i].alpha2 == countryCode) 

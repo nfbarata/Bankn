@@ -14,7 +14,7 @@ export class TransactionPipe implements PipeTransform {
   }
 
   transform(transaction: Transaction, args?: any): any {
-    var amount = transaction.getAmount();
+    var amount = transaction.amount;
     var result = "";
     switch(transaction.type){
       case TransactionType.CREDIT:

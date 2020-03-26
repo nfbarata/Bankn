@@ -3,7 +3,7 @@ import  { Transaction } from "./transaction";
 
 export class Account {
 
-  id:string;//uuid
+  private id:string;//uuid
   name : string;
   //type
   //arquived
@@ -46,6 +46,10 @@ export class Account {
   getTransactions() : Transaction[] {
     return this.transactions;
   };
+
+  getId():string{
+    return this.id;
+  }
 }
 
 

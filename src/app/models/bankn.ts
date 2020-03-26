@@ -1,16 +1,16 @@
 import  { Account } from "./account";
 
 export class Bankn {
-  id:String;
-  name:String;
+  id:string;
+  name:string;
   accounts : Account[] = [];
-  referenceCountry:String;
+  referenceCountry:string;
 
   constructor(
-    id:String,
-    name:String,
+    id:string,
+    name:string,
     accounts : Account[], 
-    referenceCountry:String) {
+    referenceCountry:string) {
     this.id = id;
     this.name = name;
     if(accounts==null){

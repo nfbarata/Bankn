@@ -5,6 +5,7 @@ import { AccountService } from '../../../services/account.service';
 import { TransactionService } from '../../../services/transaction.service';
 import { Account } from "../../../models/account";
 import { Transaction,TransactionType } from "../../../models/transaction";
+import { Dinero } from 'dinero.js';
 
 @Component({
   selector: 'app-transaction-list',
@@ -36,7 +37,7 @@ export class TransactionListComponent implements OnInit {
         //do nothing
       }else{
         this.accounts.forEach(account => {
-          if(account.id==accountId){
+          if(account.getId()==accountId){
             this.accountService.selectAccount(account);
           }else{
             if(account.selected){

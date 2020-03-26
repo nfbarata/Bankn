@@ -25,9 +25,9 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
   @ViewChild('parsedData',{static:false}) parsedData:ElementRef;
   @ViewChild('submitHelpBlock',{static:false}) submitHelpBlock:ElementRef;
 
-  form;
+  form:FormGroup;
   formData;
-  accountId;
+  accountId:string;
   output;
 
   constructor(

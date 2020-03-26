@@ -16,10 +16,10 @@ import { Transaction, TransactionType, getTransactionType } from "../../../model
 })
 export class TransactionComponent implements OnInit {
 
-  form;
+  form:FormGroup;
   formData;
   accounts:Account[];
-  transactionTypes:String;
+  transactionTypes;
   transaction:Transaction = null;
 
   constructor(
@@ -56,12 +56,12 @@ export class TransactionComponent implements OnInit {
       if(accountId==null || accountId.trim().length==0){
         var selected = this.accountService.getSelectedAccounts();
         if(selected.length>0)
-          accountId=selected[0].id;
+          accountId=selected[0].getId();
         else
-          accountId=this.accounts[0].id;
+          accountId=this.accounts[0].getId();
       }
       
-      var transactionId:String = params.get('transactionId');
+      var transactionId:string = params.get('transactionId');
       var now = new Date();
       if(transactionId==null || transactionId.trim().length==0){
         this.formData = {
@@ -135,7 +135,7 @@ export class TransactionComponent implements OnInit {
     this.router.navigate(['/transactions']);
   }
 
-  onDelete(accountId:String, transactionId:String){
+  onDelete(accountId:string, transactionId:string){
     this.transactionService.deleteTransactionId(accountId, transactionId);
     this.location.back();
     //this.router.navigate(['/transactions']);

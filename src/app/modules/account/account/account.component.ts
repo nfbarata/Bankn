@@ -42,7 +42,7 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     this.countries = this.banknService.getCountries();
     this.route.paramMap.subscribe(params => {
-      var accountId:String = params.get('accountId');
+      var accountId:string = params.get('accountId');
 
       if(accountId==null || accountId.trim().length==0){
         this.formData = {
@@ -61,7 +61,7 @@ export class AccountComponent implements OnInit {
         var account:Account = this.accountService.getAccount(accountId);
 
         this.formData = {
-          id:account.id,
+          id:account.getId(),
           name:account.name,
           referenceAmount:account.referenceAmount.toUnit(),
           referenceCountry:account.referenceCountry,
@@ -105,7 +105,7 @@ export class AccountComponent implements OnInit {
     this.router.navigate(['/accounts']);
   }
 
-  onDelete(accountId:String){
+  onDelete(accountId:string){
     this.accountService.deleteAccountId(accountId);
     this.location.back();
   }

@@ -5,7 +5,7 @@ import { Account } from "../models/account";
 export class FileService {
 
   fileToUpload: File = null;
-  fileType:String = 'application/json';
+  fileType:string = 'application/json';
 
   constructor() { }
 
@@ -20,9 +20,8 @@ export class FileService {
         var picReader = new FileReader();
 
         picReader.addEventListener("load", function(event) {
-            var textFile = event.target;
             //console.log(textFile.result);
-            var object = JSON.parse(textFile.result);
+            var object = JSON.parse(event.target.result.toString());
             callback(object);
         });
 

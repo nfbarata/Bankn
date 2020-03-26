@@ -7,6 +7,8 @@ import { AccountService } from './account.service';
 
 import { Account } from "../models/account";
 import { Transaction, TransactionType, getTransactionType } from "../models/transaction";
+import { deflateSync } from 'zlib';
+import { Dinero } from 'dinero.js'
 
 @Injectable({providedIn: 'root'})
 export class TransactionService {
@@ -25,9 +27,9 @@ export class TransactionService {
     amount:Dinero,
     date:Date,
     type,
-    entity:String,
-    category:String,
-    description:String
+    entity:string,
+    category:string,
+    description:string
   ){
     var clearDate = new Date(0);//clear hours/minutes/seconds
     clearDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
@@ -49,9 +51,9 @@ export class TransactionService {
     amount:Dinero,
     date:Date,
     type,
-    entity:String,
-    category:String,
-    description:String
+    entity:string,
+    category:string,
+    description:string
   ){
     transaction.amount = amount;
     transaction.date = date;
@@ -66,7 +68,7 @@ export class TransactionService {
     var results = [];
     transactions.forEach(transaction => {
       results.push({
-        id: transaction.id,
+        id: transaction.getId(),
         amount: transaction.amount.toUnit(),//Dinero to value, compacted result
         date: transaction.date.toISOString().substring(0,10),
         entity: transaction.entity,
@@ -78,7 +80,7 @@ export class TransactionService {
     return results;
   }
 
-  fromJson(json, currency:String, accountId:String){
+  fromJson(json, currency:string, accountId:string){
     var results = [];
     if(json!=null){
       json.forEach(transaction => {
@@ -126,10 +128,10 @@ export class TransactionService {
     return transactions;
   }
 
-  getTransaction(account:Account, id:String){
+  getTransaction(account:Account, id:string){
     var transactions = this.getTransactions([account]);
     for(var i = 0; i!=transactions.length;i++){
-      if(transactions[i].id==id)
+      if(transactions[i].getId()==id)
         return transactions[i];
     }
   }
@@ -139,15 +141,15 @@ export class TransactionService {
   }
 
   compareTransaction(a:Transaction,b:Transaction){
-    return b.date-a.date;
+    return b.date.getTime()-a.date.getTime();
   }
 
-  deleteTransactionId(accountId:String, transactionId:String){
+  deleteTransactionId(accountId:string, transactionId:string){
     var account = this.accountService.getAccount(accountId);
     this.deleteTransaction(account, transactionId);
   }
 
-  deleteTransaction(account:Account, transactionId:String){
+  deleteTransaction(account:Account, transactionId:string){
     this.accountService.deleteTransactionId(account,transactionId);
   }
 }
