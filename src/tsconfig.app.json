@@ -4,6 +4,8 @@
         "experimentalDecorators": true,
         //"target": "es5",
         //"allowJs": true,
-        "typeRoots": ["node_modules/@types"]
+        "typeRoots": ["node_modules/@types"],
+        "types":["node"],
+        "esModuleInterop": true, //import Dinero
     }
 }

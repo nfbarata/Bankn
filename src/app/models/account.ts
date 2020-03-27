@@ -1,5 +1,5 @@
-import { Dinero } from 'dinero.js';
 import  { Transaction } from "./transaction";
+import Dinero from 'dinero.js';
 
 export class Account {
 
@@ -8,7 +8,7 @@ export class Account {
   //type
   //arquived
   transactions : Transaction[] = [];
-  referenceAmount:Dinero;
+  referenceAmount:Dinero.Dinero;
   referenceCountry:string;//to select in edit
   referenceDate:Date;
   description:string = "";
@@ -18,13 +18,13 @@ export class Account {
   lastColumnSeparator:string;
   lastLineSeparator:string;
 
-  selected:Boolean = false;
+  selected:boolean = false;
 
   constructor(
     id:string,
     name:string,
     description:string, 
-    referenceAmount:Dinero, 
+    referenceAmount:Dinero.Dinero, 
     referenceDate:Date,
     referenceCountry:string,
     transactions:Transaction[],

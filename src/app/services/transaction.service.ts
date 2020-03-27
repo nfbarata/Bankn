@@ -7,8 +7,7 @@ import { AccountService } from './account.service';
 
 import { Account } from "../models/account";
 import { Transaction, TransactionType, getTransactionType } from "../models/transaction";
-import { deflateSync } from 'zlib';
-import { Dinero } from 'dinero.js'
+import Dinero from 'dinero.js'
 
 @Injectable({providedIn: 'root'})
 export class TransactionService {
@@ -24,7 +23,7 @@ export class TransactionService {
 
   createTransaction(
     account:Account,
-    amount:Dinero,
+    amount:Dinero.Dinero,
     date:Date,
     type,
     entity:string,
@@ -48,7 +47,7 @@ export class TransactionService {
   updateTransaction(
     account:Account,
     transaction:Transaction,
-    amount:Dinero,
+    amount:Dinero.Dinero,
     date:Date,
     type,
     entity:string,
@@ -80,7 +79,7 @@ export class TransactionService {
     return results;
   }
 
-  fromJson(json, currency:string, accountId:string){
+  fromJson(json:any[], currency:string, accountId:string){
     var results = [];
     if(json!=null){
       json.forEach(transaction => {

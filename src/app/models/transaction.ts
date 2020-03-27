@@ -76,7 +76,7 @@ export class Transaction {
   public date:Date;
   public category:String;
   public entity:String;//toAccount
-  public amount:Dinero;
+  public amount:Dinero.Dinero;
   //balance?
   public accountId:String;//meta
   public description:String;
@@ -86,12 +86,12 @@ export class Transaction {
  
   //receipt;
 
-  public balanceBefore:Dinero;//volatile
-  public balanceAfter:Dinero;//volatile
+  public balanceBefore:Dinero.Dinero;//volatile
+  public balanceAfter:Dinero.Dinero;//volatile
 
   constructor(
     uuid:string,
-    amount:Dinero,
+    amount:Dinero.Dinero,
     date:Date,
     entity:string,
     category:string,

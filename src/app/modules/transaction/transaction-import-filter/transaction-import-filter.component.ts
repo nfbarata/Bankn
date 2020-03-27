@@ -70,7 +70,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     return value;
   }
 
-  private getNumber(value):Number{
+  private getNumber(value):number{
     return Number(value.replace(",","."));
   }
 
@@ -95,7 +95,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     this.transactions.forEach((row, i)=>{
       var dontIgnore = this.document.getElementById('dontIgnore'+i);
       if(dontIgnore.checked){
-        var amount:Number = null;
+        var amount:number = null;
         var date:Date = null;
         var description: string = null;
         var type =TransactionType.CREDIT; 

@@ -75,7 +75,7 @@ export class BanknService {
   }
 
   fromJson(json){
-    var accountService = this.injector.get(ACCOUNT_SERVICE);
+    var accountService:any = this.injector.get(ACCOUNT_SERVICE);
     return new Bankn(
       json.id,
       json.name,
@@ -99,7 +99,7 @@ export class BanknService {
   }
 
   toJson():any{
-    var accountService = this.injector.get(ACCOUNT_SERVICE);
+    var accountService:any = this.injector.get(ACCOUNT_SERVICE);
     return {
       id: this.bankn.id,
       name: this.bankn.name,

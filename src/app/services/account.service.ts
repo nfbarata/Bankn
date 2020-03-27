@@ -7,8 +7,7 @@ import { Account } from "../models/account";
 import { Transaction, TransactionType } from "../models/transaction";
 
 import { TRANSACTION_SERVICE } from '../app.module';
-//import { Dinero } from 'dinero.js';
-
+import Dinero from 'dinero.js';
 
 @Injectable({providedIn: 'root'})
 export class AccountService {
@@ -22,7 +21,7 @@ export class AccountService {
   createAccount(
     name:string, 
     description:string, 
-    referenceAmount:Dinero, 
+    referenceAmount:Dinero.Dinero, 
     referenceDate:Date,
     referenceCountry:string){
     var account : Account = new Account(
@@ -42,7 +41,7 @@ export class AccountService {
     id:string,
     name:string, 
     description:string, 
-    referenceAmount:Dinero, 
+    referenceAmount:Dinero.Dinero, 
     referenceDate:Date,
     referenceCountry:string){
 
@@ -56,7 +55,7 @@ export class AccountService {
   }
 
   toJson(accounts:Account[]){
-    var transactionService = this.injector.get(TRANSACTION_SERVICE);
+    var transactionService:any = this.injector.get(TRANSACTION_SERVICE);
     var results = [];
     accounts.forEach(account => {
       results.push({
@@ -73,8 +72,8 @@ export class AccountService {
     return results;
   }
 
-  fromJson(json){
-    var transactionService = this.injector.get(TRANSACTION_SERVICE);
+  fromJson(json:any[]){
+    var transactionService:any = this.injector.get(TRANSACTION_SERVICE);
     var results = [];
     if(json!=null){
       json.forEach(account => {
@@ -116,18 +115,18 @@ export class AccountService {
 
   private getPrecision(currency:string){
     //TODO guardar este valor em memória
-    var reference = Dinero({currency:currency});
+    var reference = Dinero({currency:<Dinero.Currency>currency});
     return reference.getPrecision();
   }
 
-  toDinero(currency:string, amount){
+  toDinero(currency:string, amount:number){
     return Dinero({
         amount:amount * Math.pow(10,this.getPrecision(currency)),
-        currency:currency
+        currency:<Dinero.Currency>currency
     });
   }
 
-  getCurrency(account:Account){
+  getCurrency(account:Account):string{
     return account.referenceAmount.getCurrency();
   }
 
@@ -200,7 +199,7 @@ export class AccountService {
   addTransaction(account:Account, transaction:Transaction){
     transaction.accountId = account.getId();
     account.transactions.push(transaction);
-    var transactionService = this.injector.get(TRANSACTION_SERVICE);
+    var transactionService:any = this.injector.get(TRANSACTION_SERVICE);
     account.transactions = transactionService.sortTransactions(account.transactions);
     this.eventsService.accountTransactionsChange.emit();
   }
@@ -213,7 +212,7 @@ export class AccountService {
     this.eventsService.accountTransactionsChange.emit();
   }
 
-  getInitialValue(account:Account):Dinero{
+  getInitialValue(account:Account):Dinero.Dinero{
     var initialBalance = this.toDinero(
       account.referenceAmount.getCurrency(),
       account.referenceAmount.toUnit()
@@ -238,7 +237,7 @@ export class AccountService {
     return initialBalance;
   }
 
-  getInitialValueMultiple(accounts:Account[]):Dinero{
+  getInitialValueMultiple(accounts:Account[]):Dinero.Dinero{
     var initialBalance = this.toDinero(
       accounts[0].referenceAmount.getCurrency(),//TODO dif currencies
       0
