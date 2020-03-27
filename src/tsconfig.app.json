@@ -6,6 +6,6 @@
         //"allowJs": true,
         "typeRoots": ["node_modules/@types"],
         "types":["node"],
-        "esModuleInterop": true, //import Dinero
+        "esModuleInterop": true //import Dinero
     }
 }
