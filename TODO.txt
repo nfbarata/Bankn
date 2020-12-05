@@ -1,3 +1,8 @@
+popup generico, input card
+txn list com quick link import(popup comm escolha de conta)
+tests
+
+
 import txns
 create new txn
 categorias/entidades

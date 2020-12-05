@@ -13,13 +13,13 @@
 </div>
 <div *ngIf="hasBankn&&hasAccounts" class="row">
   <div class="col-sm-5">
-    <transactions-import-card [hidden]="!(hasBankn&&hasAccounts)"></transactions-import-card>
+    <transaction-create-card [hidden]="!(hasBankn&&hasAccounts)"></transaction-create-card>
   </div>
   <div class="col-sm-2">
     &nbsp;
   </div>
   <div class="col-sm-5">
-    <transaction-create-card [hidden]="!(hasBankn&&hasAccounts)"></transaction-create-card>
+    <transactions-import-card [hidden]="!(hasBankn&&hasAccounts)"></transactions-import-card>
   </div>
 </div>
 <div *ngIf="hasBankn&&!hasAccounts" class="row">

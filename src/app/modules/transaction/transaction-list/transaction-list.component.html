@@ -3,10 +3,17 @@
     <h2 i18n>Transactions</h2>
   </div>
   <div class="col-6 text-right">
-    <button class="btn btn-primary " type="submit" [routerLink]="['/transactions/transaction']" [disabled]="accounts.length==0">New</button>
+    <button
+      class="btn btn-primary "
+      type="submit"
+      [routerLink]="['/transactions/transaction']"
+      [disabled]="accounts.length==0"
+    >
+      New
+    </button>
   </div>
 </div>
-<br>
+<br />
 
 <div *ngIf="accounts.length==0" class="row">
   <div class="col-sm-5">
@@ -18,15 +25,27 @@
     <account-select-card></account-select-card>
   </div>
 </div>
-<div *ngIf="accounts.length>0&&selectedAccounts.length>0&&!hasRealTransactions" class="row">
+<div
+  *ngIf="accounts.length>0&&selectedAccounts.length>0&&!hasRealTransactions"
+  class="row"
+>
   <div class="col-sm-5">
     <transaction-create-card></transaction-create-card>
+  </div>
+  <div class="col-sm-2">
+    &nbsp;
+  </div>
+  <div class="col-sm-5">
+    <transactions-import-card></transactions-import-card>
   </div>
 </div>
 
 <div *ngIf="hasRealTransactions" class="container">
   <div *ngFor="let transaction of transactions; let i = index;">
-    <div class="row bg-secondary text-white" *ngIf="transaction.hide!=true && (i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime())">
+    <div
+      class="row bg-secondary text-white"
+      *ngIf="transaction.hide!=true && (i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime())"
+    >
       <label class="col-2">
         {{transaction.date | date:'shortDate'}}
       </label>
@@ -34,14 +53,18 @@
         {{transaction.balanceAfter | dinero}}
       </label>
     </div>
-    <div class="row overflow-hidden" *ngIf="transaction.hide!=true" style="height:30px" [routerLink]="['/transactions/transaction/'+transaction.accountId+'/'+transaction.id]">
+    <div
+      class="row overflow-hidden"
+      *ngIf="transaction.hide!=true"
+      style="height:30px"
+      [routerLink]="['/transactions/transaction/'+transaction.accountId+'/'+transaction.id]"
+    >
       <label class="col-7">
         {{ transaction.description }}
       </label>
       <label class="col-5 text-right">
         {{transaction | transaction}}
       </label>
-      
     </div>
     <div class="row bg-secondary text-white" *ngIf="i==transactions.length-1">
       <label class="col-7 text-right" i18n>
@@ -52,5 +75,4 @@
       </label>
     </div>
   </div>
-  
 </div>
