@@ -5,7 +5,7 @@ categorias/entidades
 
 graficos
 
-money format - simbolo pode ser ants por exemplo
+money format - simbolo pode ser antes por exemplo
 date format
 visual
 i18n
