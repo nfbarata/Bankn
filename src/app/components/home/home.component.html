@@ -1,29 +1,29 @@
 <h2 i18n>Welcome to bankn</h2>
 <br>
 <div *ngIf="!hasBankn" class="row">
-  <div class="col-sm-5">
-    <file-open-card [hidden]="hasBankn"></file-open-card>
-  </div>
-  <div class="col-sm-2">
-    &nbsp;
-  </div>
-  <div class="col-sm-5">
-    <bankn-create-card [hidden]="hasBankn"></bankn-create-card>
-  </div>
+	<div class="col-sm-5">
+		<bankn-create-card [hidden]="hasBankn"></bankn-create-card>
+	</div>
+	<div class="col-sm-2">
+		&nbsp;
+	</div>
+	<div class="col-sm-5">
+		<file-open-card [hidden]="hasBankn"></file-open-card>
+	</div>
 </div>
 <div *ngIf="hasBankn&&hasAccounts" class="row">
-  <div class="col-sm-5">
-    <transaction-create-card [hidden]="!(hasBankn&&hasAccounts)"></transaction-create-card>
-  </div>
-  <div class="col-sm-2">
-    &nbsp;
-  </div>
-  <div class="col-sm-5">
-    <transactions-import-card [hidden]="!(hasBankn&&hasAccounts)"></transactions-import-card>
-  </div>
+	<div class="col-sm-5">
+		<transaction-create-card [hidden]="!(hasBankn&&hasAccounts)"></transaction-create-card>
+	</div>
+	<div class="col-sm-2">
+		&nbsp;
+	</div>
+	<div class="col-sm-5">
+		<transactions-import-card [hidden]="!(hasBankn&&hasAccounts)"></transactions-import-card>
+	</div>
 </div>
 <div *ngIf="hasBankn&&!hasAccounts" class="row">
-  <div class="col-sm-5">
-    <account-create-card></account-create-card>
-  </div>
+	<div class="col-sm-5">
+		<account-create-card></account-create-card>
+	</div>
 </div>
