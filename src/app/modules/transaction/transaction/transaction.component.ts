@@ -12,6 +12,7 @@ import {
   TransactionType,
   getTransactionType
 } from "../../../models/transaction";
+import { Paths } from "../../../models/constants";
 
 @Component({
   selector: "transaction",
@@ -138,13 +139,13 @@ export class TransactionComponent implements OnInit {
       );
     }
     this.form.reset();
-    this.router.navigate(["/transactions"]);
+    this.router.navigate([Paths.transactions]);
   }
 
   onDelete(accountId: string, transactionId: string) {
     this.transactionService.deleteTransactionId(accountId, transactionId);
     this.location.back();
-    //this.router.navigate(['/transactions']);
+    //this.router.navigate([Paths.transactions]);
   }
 
   onCancel() {
