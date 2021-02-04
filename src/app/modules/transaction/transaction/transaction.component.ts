@@ -12,7 +12,6 @@ import {
   TransactionType,
   getTransactionType
 } from "../../../models/transaction";
-import { Paths } from "../../../models/constants";
 
 @Component({
   selector: "transaction",
@@ -139,7 +138,7 @@ export class TransactionComponent implements OnInit {
       );
     }
     this.form.reset();
-    this.router.navigate([Paths.transactions]);
+    this.router.navigate(["/transactions"]);
   }
 
   onDelete(accountId: string, transactionId: string) {
