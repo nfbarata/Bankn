@@ -113,4 +113,8 @@ export class AccountComponent implements OnInit {
     this.accountService.deleteAccountId(accountId);
     this.location.back();
   }
+
+  onCancel() {
+    this.location.back();
+  }
 }
