@@ -132,34 +132,6 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     } catch (error) {
       this.setMessage(error);
     }
-
-    //i18n
-    /*
-    var data = this.importData.nativeElement.value;
-    var lines = data.split(lineSeparator);
-    if(lines.length>0 && lines[0].trim().length>0){
-      var firstRow = lines[0].split(columnSeparator);
-      var parsedData = [];
-      if(firstRow.length>3){
-        for(var i=0; i!=lines.length;i++){
-          if(lines[i].trim().length!=0){//ignore empty lines
-            var columns = lines[i].split(columnSeparator);
-            if(columns.length!=firstRow.length){
-              this.setMessage('Not all rows have the same number of columns');
-              return;    
-            }
-            parsedData.push(columns);
-          }
-        }
-        this.setMessage('Check the data below before import');
-        this.fillTable(parsedData);
-        this.submitDisabled = false;
-      }else{
-        this.setMessage('There should be at least 3 columns');
-      }
-    }else{
-      this.setMessage('Enter some text');
-    } */
   }
 
   clearTable() {
