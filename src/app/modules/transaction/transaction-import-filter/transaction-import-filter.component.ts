@@ -1,29 +1,45 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input, Directive, ViewEncapsulation, Renderer2, Inject } from '@angular/core';
-import { Location, DOCUMENT } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule  } from '@angular/forms';
-import { ActivatedRoute,Router } from '@angular/router';
-import { EventsService } from '../../../services/events.service';
-import { BanknService } from '../../../services/bankn.service';
-import { AccountService } from '../../../services/account.service';
-import { TransactionService } from '../../../services/transaction.service';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  Directive,
+  ViewEncapsulation,
+  Renderer2,
+  Inject
+} from "@angular/core";
+import { Location, DOCUMENT } from "@angular/common";
+import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { EventsService } from "../../../services/events.service";
+import { BanknService } from "../../../services/bankn.service";
+import { AccountService } from "../../../services/account.service";
+import { TransactionService } from "../../../services/transaction.service";
 import { Account } from "../../../models/account";
-import { Transaction, TransactionType, getTransactionType, ImportColumnType, getImportColumnType } from "../../../models/transaction";
+import {
+  Transaction,
+  TransactionType,
+  getTransactionType,
+  ImportColumnType,
+  getImportColumnType
+} from "../../../models/transaction";
 
 @Component({
-  selector: 'app-transaction-import-filter',
-  templateUrl: './transaction-import-filter.component.html',
-  styleUrls: ['./transaction-import-filter.component.css']
+  selector: "app-transaction-import-filter",
+  templateUrl: "./transaction-import-filter.component.html",
+  styleUrls: ["./transaction-import-filter.component.css"]
 })
 export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
-
-  form:FormGroup;
+  form: FormGroup;
   formData;
-  account:Account;
+  account: Account;
   transactions;
   document;
   importColumnType = Object.entries(ImportColumnType);
 
-  @ViewChild('submitHelpBlock',{static:false}) submitHelpBlock:ElementRef;
+  @ViewChild("submitHelpBlock", { static: false }) submitHelpBlock: ElementRef;
 
   constructor(
     private renderer: Renderer2,
@@ -36,11 +52,11 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     private router: Router,
     private location: Location,
     @Inject(DOCUMENT) document
-  ) { 
+  ) {
     this.document = document;
     this.formData = {
-      importData:null,
-    }
+      importData: null
+    };
     this.form = this.formBuilder.group(this.formData);
   }
   ngAfterViewInit(): void {
@@ -50,119 +66,134 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     }*/
   }
   ngOnInit() {
-    this.account=null;
+    this.account = null;
     this.transactions = this.transactionService.importTransactions;
     this.route.paramMap.subscribe(params => {
-      var accountId = params.get('accountId');
+      var accountId = params.get("accountId");
       this.account = this.accountService.getAccount(accountId);
-      if(this.account==null){
-        this.router.navigate(['']);
+      if (this.account == null) {
+        this.router.navigate([""]);
       }
-      if(this.transactions.length==0){
-        this.router.navigate(['/transactions/import/'+this.account.getId()]);
+      if (this.transactions.length == 0) {
+        alert("No transactions to import"); //i18n
+        this.router.navigate(["/transactions/import/" + this.account.getId()]);
       }
     });
   }
 
-  private getDate(value){
-    value = value.replace("/","-");
+  private getDate(value) {
+    value = value.replace("/", "-");
     value = value.split("-");
     return value;
   }
 
-  private getNumber(value):number{
-    return Number(value.replace(",","."));
+  private getNumber(value): number {
+    return Number(value.replace(",", "."));
   }
 
-  private getYear(value){
-    if(value.length==4)
-      return value;
-    if(value>80)//TODO
-      return "19"+value;
-    else
-      return "20"+value;
+  private getYear(value) {
+    if (value.length == 4) return value;
+    if (value > 80)
+      //TODO
+      return "19" + value;
+    else return "20" + value;
   }
-  
+
   onSubmit(data) {
-    
-    this.transactionService.filterActions=[];
-    this.transactions[0].forEach((column, index)=>{
-      var action=this.document.getElementById('action'+index);
+    this.transactionService.filterActions = [];
+    this.transactions[0].forEach((column, index) => {
+      var action = this.document.getElementById("action" + index);
       this.transactionService.filterActions.push(action.value);
     });
 
-    this.transactionService.filterTransactions=[];
-    this.transactions.forEach((row, i)=>{
-      var dontIgnore = this.document.getElementById('dontIgnore'+i);
-      if(dontIgnore.checked){
-        var amount:number = null;
-        var date:Date = null;
-        var description: string = null;
-        var type =TransactionType.CREDIT; 
-        this.transactions[0].forEach((column,j)=>{
-          var value = row[j];
-          switch(getImportColumnType(this.transactionService.filterActions[j])){
-            case ImportColumnType.IGNORE:
-            break;
-            case ImportColumnType.DESCRIPTION:
-              description = value;
-            break;
-            case ImportColumnType.DATE_DMY:
-              value = this.getDate(value);
-              date=new Date(this.getYear(value[2]),value[1]-1,value[0]);
-            break;
-            case ImportColumnType.DATE_MDY:
-              value = this.getDate(value);
-              date=new Date(this.getYear(value[2]),value[0]-1,value[1]);
-            break;
-            case ImportColumnType.DATE_YMD:
-              value = this.getDate(value);
-              date=new Date(this.getYear(value[0]),value[1]-1,value[2]);
-            break;
-            case ImportColumnType.AMOUNT:
-              if(value.includes("-")){
-                value = value.replace("-","");
+    this.transactionService.filterTransactions = [];
+    try {
+      this.transactions.forEach((row, i) => {
+        var dontIgnore = this.document.getElementById("dontIgnore" + i);
+        if (dontIgnore.checked) {
+          var amount: number = null;
+          var date: Date = null;
+          var description: string = null;
+          var type = TransactionType.CREDIT;
+
+          this.transactions[0].forEach((column, j) => {
+            var value = row[j];
+            switch (
+              getImportColumnType(this.transactionService.filterActions[j])
+            ) {
+              case ImportColumnType.IGNORE:
+                break;
+              case ImportColumnType.DESCRIPTION:
+                description = value;
+                break;
+              case ImportColumnType.DATE_DMY:
+                value = this.getDate(value);
+                date = new Date(this.getYear(value[2]), value[1] - 1, value[0]);
+                break;
+              case ImportColumnType.DATE_MDY:
+                value = this.getDate(value);
+                date = new Date(this.getYear(value[2]), value[0] - 1, value[1]);
+                break;
+              case ImportColumnType.DATE_YMD:
+                value = this.getDate(value);
+                date = new Date(this.getYear(value[0]), value[1] - 1, value[2]);
+                break;
+              case ImportColumnType.AMOUNT:
+                if (value.includes("-")) {
+                  value = value.replace("-", "");
+                  type = TransactionType.DEBIT;
+                }
+                amount = this.getNumber(value);
+                break;
+              case ImportColumnType.CREDIT:
+                amount = this.getNumber(value);
+                break;
+              case ImportColumnType.DEBIT:
+                amount = this.getNumber(value);
                 type = TransactionType.DEBIT;
-              }
-              amount = this.getNumber(value);
-            break;
-            case ImportColumnType.CREDIT:
-              amount = this.getNumber(value);
-            break;
-            case ImportColumnType.DEBIT:
-              amount = this.getNumber(value);
-              type = TransactionType.DEBIT;
-            break;
-            case ImportColumnType.SIGN:
-              if(value.trim()=="-")
-                type = TransactionType.DEBIT;
-            break;
+                break;
+              case ImportColumnType.SIGN:
+                if (value.trim() == "-") type = TransactionType.DEBIT;
+                break;
+            }
+          });
+
+          if (amount == null || date == null || description == null) {
+            throw new Error(
+              "There should be at least a column for amount, date and description"
+            );
           }
-        });
-
-        if(amount==null || date == null || description == null){
-          this.setMessage("There should be at least a column for amount, date and description");
-          return;
+          this.transactionService.filterTransactions.push(
+            new Transaction(
+              null,
+              this.accountService.toDinero(
+                this.accountService.getCurrency(this.account),
+                amount
+              ),
+              date,
+              null,
+              null,
+              description,
+              type
+            )
+          );
         }
-        this.transactionService.filterTransactions.push(new Transaction(
-            null,
-            this.accountService.toDinero(this.accountService.getCurrency(this.account),amount),
-            date,
-            null,
-            null,
-            description,
-            type
-          ));
-      }
-    });
+      });
+    } catch (error) {
+      this.setMessage(error);
+      return;
+    }
     this.form.reset();
-    this.router.navigate(['/transactions/import-edit/'+this.account.getId()]);
+    this.router.navigate(["/transactions/import-edit/" + this.account.getId()]);
   }
 
-  setMessage(message:string){
-    this.renderer.setProperty(this.submitHelpBlock.nativeElement, 'innerHTML', message);
+  setMessage(message: string) {
+    this.renderer.setProperty(
+      this.submitHelpBlock.nativeElement,
+      "innerHTML",
+      message
+    );
   }
-
 
   /*clearTable(){
     //this.renderer.setProperty(this.parsedData.nativeElement, 'innerHTML',""); 
