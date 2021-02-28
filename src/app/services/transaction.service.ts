@@ -9,6 +9,7 @@ import { Account } from "../models/account";
 import {
   Transaction,
   TransactionType,
+  ImportColumnType,
   getTransactionType
 } from "../models/transaction";
 import Dinero from "dinero.js";
