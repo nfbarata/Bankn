@@ -7,37 +7,35 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'main',
   templateUrl: './main.component.html',
-  styleUrls: [ './main.component.css' ]
+  styleUrls: ['./main.component.css'],
 })
 export class MainComponent implements OnInit {
-  
-  hasBankn:Boolean = false;
-  hasAccounts:Boolean = false;
+  hasBankn: Boolean = false;
+  hasAccounts: Boolean = false;
 
   constructor(
     private banknService: BanknService,
     private eventsService: EventsService,
     private accountService: AccountService
-  ) { 
+  ) {}
 
-  }
+  ngOnInit() {
+    //initialize with test data
+    //if ('bankn' in environment.bankn) {
+    //  this.banknService.setBankn(this.banknService.fromJson(environment.bankn));
+    //}
 
-  ngOnInit(){
-    if(environment.bankn!=null){
-      this.banknService.setBankn(this.banknService.fromJson(environment.bankn));
-    }
-  
     this.refreshData();
-    this.eventsService.banknChange.subscribe(()=>this.refreshData());
-    this.eventsService.accountsChange.subscribe(()=>this.refreshData());
+    this.eventsService.banknChange.subscribe(() => this.refreshData());
+    this.eventsService.accountsChange.subscribe(() => this.refreshData());
   }
 
-  refreshData(){
+  refreshData() {
     this.hasBankn = this.banknService.initialized();
-    this.hasAccounts = this.accountService.getAccounts().length>0;
+    this.hasAccounts = this.accountService.getAccounts().length > 0;
   }
 
-  onOpen(){
+  onOpen() {
     this.banknService.loadFromFile();
   }
 }
