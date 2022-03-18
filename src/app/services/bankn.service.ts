@@ -15,8 +15,8 @@ import { countries } from 'country-data-list';
 @Injectable({ providedIn: 'root' })
 export class BanknService {
   private bankn: Bankn = null;
-  countries;
-  defaultCountryCode: string = 'null';
+  private countries;
+  private defaultCountryCode: string = 'null';
 
   constructor(
     @Inject(LOCALE_ID) public locale: string,
@@ -60,7 +60,7 @@ export class BanknService {
     return this.bankn;
   }
 
-  fromJson(json) {
+  fromJson(json): Bankn {
     var accountService: any = this.injector.get(ACCOUNT_SERVICE);
     return new Bankn(
       json.id,

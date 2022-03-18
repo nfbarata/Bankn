@@ -1,55 +1,59 @@
 import { Injectable } from '@angular/core';
-import { Account } from "../models/account";
+import { Account } from '../models/account';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class FileService {
-
   fileToUpload: File = null;
-  fileType:string = 'application/json';
+  private static readonly FILE_TYPE: string = 'application/json';
 
-  constructor() { }
+  constructor() {}
 
-  parseJsonFile(callback){
-    var output:String = "";
+  parseJsonFile(callback) {
+    var output: String = '';
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       // Great success! All the File APIs are supported.
       //Only plain text
-      if (!this.fileToUpload.type.match(this.fileType)){
-        alert("Invalid file formar");//i18n
-      }else{
+      if (!this.fileToUpload.type.match(FileService.FILE_TYPE)) {
+        alert('Invalid file format'); //i18n
+      } else {
         var picReader = new FileReader();
 
-        picReader.addEventListener("load", function(event) {
-            //console.log(textFile.result);
-            var object = JSON.parse(event.target.result.toString());
-            callback(object);
+        picReader.addEventListener('load', function (event) {
+          //console.log(textFile.result);
+          var object = JSON.parse(event.target.result.toString());
+          callback(object);
         });
 
         //Read the text file
         picReader.readAsText(this.fileToUpload);
       }
     } else {
-      alert('The File APIs are not fully supported in this browser.');//i18n
+      alert('The File APIs are not fully supported in this browser.'); //i18n
     }
   }
 
-  downloadJsonFile(object:Object, filename='bankn.json'){
+  downloadJsonFile(object: Object, filename = 'bankn.json') {
     var output = JSON.stringify(object);
-    let blob = new Blob(['\ufeff' + output], { type: this.fileType+';charset=utf-8;' });
-    let dwldLink = document.createElement("a");
+    let blob = new Blob(['\ufeff' + output], {
+      type: FileService.FILE_TYPE + ';charset=utf-8;',
+    });
+    let dwldLink = document.createElement('a');
     let url = URL.createObjectURL(blob);
-    let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-    if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
-        dwldLink.setAttribute("target", "_blank");
+    let isSafariBrowser =
+      navigator.userAgent.indexOf('Safari') != -1 &&
+      navigator.userAgent.indexOf('Chrome') == -1;
+    if (isSafariBrowser) {
+      //if Safari open in new window to save file with random filename.
+      dwldLink.setAttribute('target', '_blank');
     }
-    dwldLink.setAttribute("href", url);
-    dwldLink.setAttribute("download", filename);
-    dwldLink.style.visibility = "hidden";
+    dwldLink.setAttribute('href', url);
+    dwldLink.setAttribute('download', filename);
+    dwldLink.style.visibility = 'hidden';
     document.body.appendChild(dwldLink);
     dwldLink.click();
     document.body.removeChild(dwldLink);
   }
-/*
+  /*
   downloadFile(data, headerList, filename='data') : void {
     let csvData = this.convertToCSV(data, headerList);
     console.log(csvData)
