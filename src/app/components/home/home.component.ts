@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     this.hasAccounts = this.accountService.getAccounts().length>0;
   }
 
-  OneDrivedriveSuccess(files){
+  OneDrivedriveSuccess(files: any){
     console.log(files);
   }
 

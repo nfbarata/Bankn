@@ -11,8 +11,8 @@ import { Account } from "../../../models/account";
 export class TransactionsImportCardComponent implements OnInit {
   
   accounts:Account[] = [];
-  selectedAccount:Account=null;
-  newSelectedAccount:String=null;
+  selectedAccount:Account | null=null;
+  newSelectedAccount:String | null=null;
 
   constructor(
     private accountService: AccountService,
@@ -38,7 +38,7 @@ export class TransactionsImportCardComponent implements OnInit {
       }else{
         this.selectedAccount=this.accounts[0];
       }
-      this.newSelectedAccount = this.selectedAccount.getId();
+      this.newSelectedAccount = this.selectedAccount.id;
     }
   }
 

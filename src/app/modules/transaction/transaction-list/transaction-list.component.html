@@ -57,7 +57,7 @@
       class="row overflow-hidden"
       *ngIf="transaction.hide!=true"
       style="height:30px"
-      [routerLink]="['/transactions/transaction/'+transaction.accountId+'/'+transaction.id]"
+      [routerLink]="['/transactions/transaction/'+transaction.account.id+'/'+transaction.id]"
     >
       <label class="col-7">
         {{ transaction.description }}

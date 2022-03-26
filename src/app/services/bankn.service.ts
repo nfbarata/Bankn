@@ -1,7 +1,7 @@
 import { Output, LOCALE_ID, Inject } from '@angular/core';
 import { Injectable, Injector } from '@angular/core';
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 import { EventsService } from './events.service';
 import { FileService } from './file.service';
@@ -9,13 +9,14 @@ import { ACCOUNT_SERVICE } from '../app.module';
 
 import { Bankn } from '../models/bankn';
 import { Account } from '../models/account';
-
+//@ts-ignore
 import { countries } from 'country-data-list';
 
 @Injectable({ providedIn: 'root' })
 export class BanknService {
-  private bankn: Bankn = null;
-  private countries;
+  
+  private bankn: Bankn | null = null;
+  private countries: any;
   private defaultCountryCode: string = 'null';
 
   constructor(
@@ -35,7 +36,7 @@ export class BanknService {
       var defaultCurrency = country.currencies[0];*/
     }
     console.log('default countryCode: ' + this.defaultCountryCode);
-    this.countries = countries.all.filter(function (country) {
+    this.countries = countries.all.filter(function (country: any) {
       return country.currencies.length > 0;
     });
   }
@@ -53,27 +54,17 @@ export class BanknService {
   }
 
   createBankn(name: string, referenceCountry: string): Bankn {
-    return new Bankn(uuidv4(), name, [], referenceCountry);
+    return new Bankn(uuid(), name, [], referenceCountry);
   }
 
-  getBankn(): Bankn {
+  getBankn(): Bankn | null {
     return this.bankn;
-  }
-
-  fromJson(json): Bankn {
-    var accountService: any = this.injector.get(ACCOUNT_SERVICE);
-    return new Bankn(
-      json.id,
-      json.name,
-      accountService.fromJson(json.accounts),
-      json.referenceCountry
-    );
   }
 
   loadFromFile(): void {
     this.fileService.parseJsonFile((bankn: Bankn) => {
       this.clear();
-      this.setBankn(this.fromJson(bankn));
+      this.setBankn(Bankn.fromJson(bankn));
       this.eventsService.banknChange.emit();
       this.eventsService.accountsChange.emit();
       this.eventsService.accountSelectionChange.emit();
@@ -81,23 +72,18 @@ export class BanknService {
   }
 
   saveToFile(): void {
-    this.fileService.downloadJsonFile(this.toJson());
-  }
-
-  toJson(): any {
-    var accountService: any = this.injector.get(ACCOUNT_SERVICE);
-    return {
-      id: this.bankn.id,
-      name: this.bankn.name,
-      accounts: accountService.toJson(this.bankn.accounts),
-      referenceCountry: this.bankn.referenceCountry,
-    };
+    if(this.bankn!=null)
+      this.fileService.downloadJsonFile(this.bankn.toJson());
+    else
+      console.error("No bankn");
   }
 
   update(name: string, referenceCountry: string): void {
-    this.bankn.name = name;
-    this.bankn.referenceCountry = referenceCountry;
-    this.eventsService.banknChange.emit();
+    if(this.bankn!=null){
+      this.bankn.name = name;
+      this.bankn.referenceCountry = referenceCountry;
+      this.eventsService.banknChange.emit();
+    }
   }
 
   private clear(): void {
@@ -115,15 +101,19 @@ export class BanknService {
   }
 
   addAccount(account: Account): void {
-    this.bankn.accounts.push(account);
-    this.eventsService.accountsChange.emit();
+    if(this.bankn!=null){
+      this.bankn.accounts.push(account);
+      this.eventsService.accountsChange.emit();
+    }
   }
 
   deleteAccountId(accountId: string) {
-    this.bankn.accounts = this.bankn.accounts.filter(function (account) {
-      return account.getId() != accountId;
-    });
-    this.eventsService.accountsChange.emit();
+    if(this.bankn!=null){
+      this.bankn.accounts = this.bankn.accounts.filter(function (account) {
+        return account.id != accountId;
+      });
+      this.eventsService.accountsChange.emit();
+    }
   }
 
   getAccounts(): Account[] {
@@ -139,7 +129,7 @@ export class BanknService {
     return this.defaultCountryCode;
   }
 
-  getCurrencyOfCountry(countryCode: string) {
+  getCurrencyOfCountry(countryCode: string): string {
     var country = null;
     for (let i = 0; i < this.countries.length && country == null; i++) {
       if (this.countries[i].alpha2 == countryCode) country = this.countries[i];
@@ -147,7 +137,10 @@ export class BanknService {
     return country.currencies[0];
   }
 
-  getReferenceCountry() {
-    return this.bankn.referenceCountry;
+  getReferenceCountry(): string | null {
+    if(this.bankn!=null){
+      return this.bankn.referenceCountry;
+    }
+    return null;
   }
 }

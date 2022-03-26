@@ -21,9 +21,7 @@ import { Account } from "../../../models/account";
 import {
   Transaction,
   TransactionType,
-  getTransactionType,
-  ImportColumnType,
-  getImportColumnType
+  ImportColumnType
 } from "../../../models/transaction";
 
 @Component({
@@ -34,9 +32,10 @@ import {
 export class TransactionImportEditComponent implements OnInit {
   form: FormGroup;
   formData;
-  account: Account;
-  transactions;
-  document;
+  account: Account | null = null;
+  transactions: Transaction[] | null = null;
+  //document;
+  submitDisabled: boolean = false;
 
   constructor(
     private renderer: Renderer2,
@@ -48,9 +47,9 @@ export class TransactionImportEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    @Inject(DOCUMENT) document
+    //@Inject(DOCUMENT) document: any
   ) {
-    this.document = document;
+    //this.document = document;
     this.formData = {
       importData: null
     };
@@ -62,33 +61,40 @@ export class TransactionImportEditComponent implements OnInit {
     this.transactions = this.transactionService.filterTransactions;
     this.route.paramMap.subscribe(params => {
       var accountId = params.get("accountId");
-      this.account = this.accountService.getAccount(accountId);
-      if (this.account == null) {
-        this.router.navigate([""]);
-      }
-      if (this.transactions.length == 0) {
-        alert("No transactions to edit"); //i18n
-        this.router.navigate(["/transactions/import/" + this.account.getId()]);
+      if(accountId!=null){
+        this.account = this.accountService.getAccount(accountId);
+        if (this.account == null) {
+          this.router.navigate([""]);
+        }else if (this.transactions == null || this.transactions.length == 0) {
+          alert("No transactions to edit"); //i18n
+          this.router.navigate(["/transactions/import/" + this.account.id]);
+        }
       }
     });
   }
 
-  onSubmit(data) {
-    //TODO processar categorias/entities
-    this.transactions.forEach(transaction => {
-      this.transactionService.createTransaction(
-        this.account,
-        transaction.amount,
-        transaction.date,
-        transaction.type,
-        null,
-        null,
-        transaction.description
-      );
-    });
+  onSubmit(data: any) {
+    if(this.account!=null && this.transactions!=null){
+      //TODO processar categorias/entities
+      this.transactions.forEach(transaction => {
+        if(this.account!=null)
+          this.transactionService.createTransaction(
+            this.account,
+            transaction.amount,
+            transaction.date,
+            transaction.type,
+            null,
+            null,
+            transaction.description
+          );
+      });
 
-    this.form.reset();
-    this.accountService.selectAccount(this.account);
-    this.router.navigate(["/transactions/" + this.account.getId()]);
+      this.form.reset();
+      this.accountService.selectAccount(this.account);
+      this.router.navigate(["/transactions/" + this.account.id]);
+    }else{
+      console.error("No account selected")
+      this.router.navigate(["/accounts"]);
+    }
   }
 }

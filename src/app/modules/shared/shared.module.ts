@@ -11,6 +11,8 @@ import { TransactionsImportCardComponent } from './transactions-import-card/tran
 import { TransactionCreateCardComponent } from './transaction-create-card/transaction-create-card.component';
 import { DineroPipe } from './dinero.pipe';
 import { TransactionPipe } from './transaction.pipe';
+import { TransactionTypePipe } from './transactionType.pipe';
+import { ImportColumnTypePipe } from './importColumnType.pipe';
 
 @NgModule({
   imports: [
@@ -18,13 +20,13 @@ import { TransactionPipe } from './transaction.pipe';
   ],
   exports: [
     AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent,
-    TransactionCreateCardComponent,DineroPipe,TransactionPipe
+    TransactionCreateCardComponent, DineroPipe, TransactionPipe, TransactionTypePipe, ImportColumnTypePipe
   ],
   declarations: [
-    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent, TransactionCreateCardComponent,DineroPipe, TransactionPipe
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent, TransactionCreateCardComponent,DineroPipe, TransactionPipe, TransactionTypePipe, ImportColumnTypePipe
   ],
   providers:[
-    DineroPipe , TransactionPipe
+    DineroPipe , TransactionPipe, TransactionTypePipe, ImportColumnTypePipe
   ]
 })
 export class SharedModule { }

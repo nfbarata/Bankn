@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, FormControl, FormControlName, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Bankn } from "../../models/bankn";
 import { BanknService } from "../../services/bankn.service";
 
 @Component({
@@ -10,50 +9,55 @@ import { BanknService } from "../../services/bankn.service";
   styleUrls: ["./bankn-create.component.css"]
 })
 export class BanknCreateComponent implements OnInit {
-  countries;
-  form;
-  formData;
+  
+  countries: any;//used on UI
+  form = new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl(),
+    referenceCountry: new FormControl()
+  });
 
   constructor(
-    private formBuilder: FormBuilder,
     private router: Router,
     private banknService: BanknService,
     private route: ActivatedRoute
   ) {
-    this.formData = {
-      id: null,
-      name: null,
-      referenceCountry: null
-    };
-    this.form = this.formBuilder.group(this.formData);
+    this.countries = this.banknService.getCountries();
   }
 
   ngOnInit() {
-    this.countries = this.banknService.getCountries();
     this.route.paramMap.subscribe(params => {
-      var banknId: String = params.get("banknId");
+      var banknId = params.get("banknId");
       if (banknId == null || banknId.trim().length == 0) {
-        this.formData.name = "bankn";
-        this.formData.referenceCountry = this.banknService.getDefaultCountryCode();
-        this.form.setValue(this.formData);
+        this.form.controls["name"].setValue("bankn");
+        this.form.controls["referenceCountry"].setValue(this.banknService.getDefaultCountryCode());
       } else {
         var bankn = this.banknService.getBankn();
-        this.formData.id = bankn.id;
-        this.formData.name = bankn.name;
-        this.formData.referenceCountry = bankn.referenceCountry;
-        this.form.setValue(this.formData);
+        if(bankn!=null){
+          this.form.setValue({
+            id: bankn.id,
+            name: bankn.name,
+            referenceCountry: bankn.referenceCountry
+          });
+        }
       }
     });
   }
 
-  onSubmit(data) {
-    if (data.id == null) {
+  onSubmit() {
+    if (this.form.controls["id"].value == null) {
       this.banknService.setBankn(
-        this.banknService.createBankn(data.name, data.referenceCountry)
+        this.banknService.createBankn(
+          this.form.controls["name"].value, 
+          this.form.controls["referenceCountry"].value
+        )
       );
       this.router.navigate(["/accounts/account"]);
     } else {
-      this.banknService.update(data.name, data.referenceCountry);
+      this.banknService.update(
+        this.form.controls["name"].value, 
+        this.form.controls["referenceCountry"].value
+      );
       this.router.navigate([""]);
     }
     this.form.reset();

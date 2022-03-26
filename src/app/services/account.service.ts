@@ -8,6 +8,7 @@ import { Transaction, TransactionType } from '../models/transaction';
 
 import { TRANSACTION_SERVICE } from '../app.module';
 import Dinero from 'dinero.js';
+import { TransactionService } from './transaction.service';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -31,7 +32,7 @@ export class AccountService {
       referenceAmount,
       referenceDate,
       referenceCountry,
-      null,
+      [],
       true
     );
     this.banknService.addAccount(account);
@@ -45,57 +46,15 @@ export class AccountService {
     referenceDate: Date,
     referenceCountry: string
   ) {
-    var account: Account = this.getAccount(id);
-    account.name = name;
-    account.description = description;
-    account.referenceAmount = referenceAmount;
-    account.referenceDate = referenceDate;
-    account.referenceCountry = referenceCountry;
-    this.eventsService.accountsChange.emit();
-  }
-
-  toJson(accounts: Account[]) {
-    var transactionService: any = this.injector.get(TRANSACTION_SERVICE);
-    var results = [];
-    accounts.forEach((account) => {
-      results.push({
-        id: account.getId(),
-        name: account.name,
-        description: account.description,
-        referenceAmount: account.referenceAmount.toObject(),
-        referenceDate: account.referenceDate.toISOString().substring(0, 10),
-        referenceCountry: account.referenceCountry,
-        transactions: transactionService.toJson(account.transactions),
-        selected: account.selected,
-      });
-    });
-    return results;
-  }
-
-  fromJson(json: any[]) {
-    var transactionService: any = this.injector.get(TRANSACTION_SERVICE);
-    var results = [];
-    if (json != null) {
-      json.forEach((account) => {
-        results.push(
-          new Account(
-            account.id,
-            account.name,
-            account.description,
-            Dinero(account.referenceAmount),
-            new Date(account.referenceDate),
-            account.referenceCountry,
-            transactionService.fromJson(
-              account.transactions,
-              account.referenceAmount.currency,
-              account.id
-            ),
-            account.selected
-          )
-        );
-      });
+    var account: Account | null = this.getAccount(id);
+    if(account != null){
+      account.name = name;
+      account.description = description;
+      account.referenceAmount = referenceAmount;
+      account.referenceDate = referenceDate;
+      account.referenceCountry = referenceCountry;
+      this.eventsService.accountsChange.emit();
     }
-    return results;
   }
 
   private createId(): string {
@@ -103,7 +62,7 @@ export class AccountService {
     var accounts: Account[] = this.getAccounts();
     var accountIds: string[] = [];
     for (let i = 0; i < accounts.length; i++) {
-      accountIds.push(accounts[i].getId());
+      accountIds.push(accounts[i].id);
     }
     accountIds = accountIds.sort((a: string, b: string): any => {
       return Number(a) - Number(b);
@@ -118,41 +77,26 @@ export class AccountService {
     return i + '';
   }
 
-  private getPrecision(currency: string) {
-    //TODO guardar este valor em memória
-    var reference = Dinero({ currency: <Dinero.Currency>currency });
-    return reference.getPrecision();
-  }
-
-  toDinero(currency: string, amount: number) {
-    return Dinero({
-      amount: amount * Math.pow(10, this.getPrecision(currency)),
-      currency: <Dinero.Currency>currency,
-    });
-  }
-
-  getCurrency(account: Account): string {
-    return account.referenceAmount.getCurrency();
-  }
-
   deleteAccountId(accountId: string) {
     this.banknService.deleteAccountId(accountId);
   }
 
   deleteAccount(account: Account) {
-    this.deleteAccountId(account.getId());
+    this.deleteAccountId(account.id);
   }
 
   getAccounts(): Account[] {
     return this.banknService.getAccounts();
   }
 
-  getAccount(accountId: string): Account {
+  getAccount(accountId: string): Account | null {
     var accounts: Account[] = this.getAccounts();
     for (let i = 0; i < accounts.length; i++) {
-      if (accounts[i].getId() == accountId) return accounts[i];
+      if (accounts[i].id == accountId) 
+        return accounts[i];
     }
     console.error('account not found:' + accountId);
+    return null;
   }
 
   getSelectedAccounts(): Account[] {
@@ -164,8 +108,9 @@ export class AccountService {
   }
 
   toggleAccountId(accountId: string) {
-    var account: Account = this.getAccount(accountId);
-    this.toggleAccount(account);
+    var account: Account | null = this.getAccount(accountId);
+    if(account != null)
+      this.toggleAccount(account);
   }
 
   toggleAccount(account: Account) {
@@ -173,9 +118,10 @@ export class AccountService {
     else this.selectAccount(account);
   }
 
-  selectAccountId(accountId) {
-    var account: Account = this.getAccount(accountId);
-    this.selectAccount(account);
+  selectAccountId(accountId: string) {
+    var account: Account | null = this.getAccount(accountId);
+    if(account != null)
+      this.selectAccount(account);
   }
 
   selectAccount(account: Account) {
@@ -185,9 +131,10 @@ export class AccountService {
     }
   }
 
-  unselectAccountId(accountId) {
-    var account: Account = this.getAccount(accountId);
-    this.unselectAccount(account);
+  unselectAccountId(accountId: string) {
+    var account: Account | null = this.getAccount(accountId);
+    if(account != null)
+      this.unselectAccount(account);
   }
 
   unselectAccount(account: Account) {
@@ -198,25 +145,22 @@ export class AccountService {
   }
 
   addTransaction(account: Account, transaction: Transaction) {
-    transaction.accountId = account.getId();
+    transaction.account = account;
     account.transactions.push(transaction);
-    var transactionService: any = this.injector.get(TRANSACTION_SERVICE);
-    account.transactions = transactionService.sortTransactions(
-      account.transactions
-    );
+    TransactionService.sortTransactions(account.transactions);
     this.eventsService.accountTransactionsChange.emit();
   }
 
   deleteTransactionId(account: Account, transactionId: string) {
     account.transactions = account.transactions.filter(function (transaction) {
-      return transaction.getId() != transactionId;
+      return transaction.id != transactionId;
     });
     this.eventsService.transactionChange.emit();
     this.eventsService.accountTransactionsChange.emit();
   }
 
   getInitialValue(account: Account): Dinero.Dinero {
-    var initialBalance = this.toDinero(
+    var initialBalance = Account.toDinero(
       account.referenceAmount.getCurrency(),
       account.referenceAmount.toUnit()
     );
@@ -245,7 +189,7 @@ export class AccountService {
   }
 
   getInitialValueMultiple(accounts: Account[]): Dinero.Dinero {
-    var initialBalance = this.toDinero(
+    var initialBalance = Account.toDinero(
       accounts[0].referenceAmount.getCurrency(), //TODO dif currencies
       0
     );

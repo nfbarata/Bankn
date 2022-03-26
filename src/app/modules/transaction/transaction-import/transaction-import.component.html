@@ -17,7 +17,7 @@ headers, categora entidade (data mont e descricao obrig)
     </div>
     <div class="row">
       <div class="col-6 form-group">
-        <select #columnSeparator class="form-control" formControlName="columnSeparator" (change)="onInputChange()">
+        <select #columnSeparator title="columnSeparator" class="form-control" formControlName="columnSeparator" (change)="onInputChange()">
           <option value="9">tab</option>
           <option value="44">comma</option>
           <option value="59">semicolon</option>
@@ -26,7 +26,7 @@ headers, categora entidade (data mont e descricao obrig)
         </select>
       </div>
       <div class="col-6 form-group">
-        <select #lineSeparator class="form-control" formControlName="lineSeparator" (change)="onInputChange()">
+        <select #lineSeparator title="lineSeparator" class="form-control" formControlName="lineSeparator" (change)="onInputChange()">
           <option value="10">\n</option>
           <option value="">custom</option>
         </select>
@@ -34,11 +34,11 @@ headers, categora entidade (data mont e descricao obrig)
     </div>
     <div class="row">
       <div class="col-6 form-group">
-        <input #customColumnSeparator class="form-control" formControlName="customColumnSeparator" [hidden]="columnSeparator.value!=''" (keyup)="onInputChange()" (paste)="onInputChange()">
+        <input #customColumnSeparator title="customColumnSeparator" class="form-control" formControlName="customColumnSeparator" [hidden]="columnSeparator.value!=''" (keyup)="onInputChange()" (paste)="onInputChange()">
         <small id="customColumnSeparatorHelpBlock" class="form-text text-muted" (change)="onInputChange()">Column separator</small>
       </div>
       <div class="col-6 form-group">
-        <input #customLineSeparator class="form-control" formControlName="customLineSeparator" [hidden]="lineSeparator.value!=''" (keyup)="onInputChange()" (paste)="onInputChange()">
+        <input #customLineSeparator title="customLineSeparator" class="form-control" formControlName="customLineSeparator" [hidden]="lineSeparator.value!=''" (keyup)="onInputChange()" (paste)="onInputChange()">
         <small id="lineSeparatorHelpBlock" class="form-text text-muted" (change)="onInputChange()">Row separator</small>
       </div>
     </div>

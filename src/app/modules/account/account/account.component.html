@@ -1,6 +1,6 @@
-<h2>{{formData.id==null?'Create Account':'Edit Account'}}</h2>
+<h2>{{form.value.id==null?'Create Account':'Edit Account'}}</h2>
 <br>
-<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 form-group">
@@ -15,14 +15,14 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-2 form-group">
-					<input  class="form-control" id="referenceAmount" type="text" formControlName="referenceAmount">
-					<small id="passwordHelpBlock" class="form-text text-muted">Value</small>
+					<input title="referenceAmount" class="form-control" id="referenceAmount" type="text" formControlName="referenceAmount">
+					<small id="referenceAmountHelpBlock" class="form-text text-muted">Value</small>
 				</div>
 				<div class="col-sm-4 form-group">
-					<select class="form-control" formControlName="referenceCountry">
-          <option *ngFor="let country of countries" [selected]="country.alpha2==formData.referenceCountry" [value]="country.alpha2">{{country.name}} - {{country.currencies[0]}}</option>
+					<select title="referenceCountry" class="form-control" formControlName="referenceCountry">
+          <option *ngFor="let country of countries" [selected]="country.alpha2==form.value.referenceCountry" [value]="country.alpha2">{{country.name}} - {{country.currencies[0]}}</option>
         </select>
-					<small id="passwordHelpBlock" class="form-text text-muted">Currency</small>
+					<small id="referenceCountryHelpBlock" class="form-text text-muted">Currency</small>
 				</div>
 			</div>
 			<div class="row">
@@ -32,16 +32,16 @@
 			</div>
 			<div class="row">
 				<div class="col-xl-1 col-md-2 col-4 form-group">
-					<input class="form-control" id="referenceDay" type="text" formControlName="referenceDay">
-					<small id="passwordHelpBlock" class="form-text text-muted" i18n>Day</small>
+					<input title="referenceDay" class="form-control" id="referenceDay" type="text" formControlName="referenceDay">
+					<small id="referenceDayHelpBlock" class="form-text text-muted" i18n>Day</small>
 				</div>
 				<div class="col-xl-1 col-md-2 col-4 form-group">
-					<input class="form-control" id="referenceMonth" type="text" formControlName="referenceMonth">
-					<small id="passwordHelpBlock" class="form-text text-muted" i18n>Month</small>
+					<input title="referenceMonth" class="form-control" id="referenceMonth" type="text" formControlName="referenceMonth">
+					<small id="referenceMonthHelpBlock" class="form-text text-muted" i18n>Month</small>
 				</div>
 				<div class="col-xl-1 col-md-2 col-4 form-group">
-					<input class="form-control" id="referenceYear" type="text" formControlName="referenceYear">
-					<small id="passwordHelpBlock" class="form-text text-muted" i18n>Year</small>
+					<input title="referenceYear" class="form-control" id="referenceYear" type="text" formControlName="referenceYear">
+					<small id="referenceYearHelpBlock" class="form-text text-muted" i18n>Year</small>
 				</div>
 			</div>
 			<div class="row">
@@ -53,9 +53,9 @@
 				</div>
 			</div>
 		</div>
-		<button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
+		<button class="btn btn-primary" type="submit" i18n>{{form.value.id==null?'Create':'Ok'}}</button>
 		&nbsp;
-		<a *ngIf="formData.id!=null" class="btn btn-danger text-white" role="button" (click)="onDelete(formData.id);"
+		<a *ngIf="form.value.id!=null" class="btn btn-danger text-white" role="button" (click)="onDelete(form.value.id);"
 			i18n>Delete</a>
 		&nbsp;
 		<button class="btn btn-primary" (click)="onCancel();" i18n>Cancel</button>

@@ -3,32 +3,40 @@ import { Account } from '../models/account';
 
 @Injectable({ providedIn: 'root' })
 export class FileService {
-  fileToUpload: File = null;
+  fileToUpload: File | null = null;
   private static readonly FILE_TYPE: string = 'application/json';
 
   constructor() {}
 
-  parseJsonFile(callback) {
-    var output: String = '';
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-      // Great success! All the File APIs are supported.
-      //Only plain text
-      if (!this.fileToUpload.type.match(FileService.FILE_TYPE)) {
-        alert('Invalid file format'); //i18n
+  parseJsonFile(callback : Function) {
+    if(this.fileToUpload!=null) {
+      var output: String = '';
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        // Great success! All the File APIs are supported.
+        //Only plain text
+        if (!this.fileToUpload.type.match(FileService.FILE_TYPE)) {
+          alert('Invalid file format'); //i18n
+        } else {
+          var picReader = new FileReader();
+
+          picReader.addEventListener('load', function (event) {
+            if(event.target!=null && event.target.result!=null){
+              //console.log(textFile.result);
+              var object = JSON.parse(event.target.result.toString());
+              callback(object);
+            }else{
+              console.error('No event target.');
+            }
+          });
+
+          //Read the text file
+          picReader.readAsText(this.fileToUpload);
+        }
       } else {
-        var picReader = new FileReader();
-
-        picReader.addEventListener('load', function (event) {
-          //console.log(textFile.result);
-          var object = JSON.parse(event.target.result.toString());
-          callback(object);
-        });
-
-        //Read the text file
-        picReader.readAsText(this.fileToUpload);
+        alert('The File APIs are not fully supported in this browser.'); //i18n
       }
     } else {
-      alert('The File APIs are not fully supported in this browser.'); //i18n
+      console.error('No file selected.');
     }
   }
 

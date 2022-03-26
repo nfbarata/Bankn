@@ -15,7 +15,7 @@ import { Dinero } from 'dinero.js';
 export class TransactionListComponent implements OnInit {
 
   hasRealTransactions:boolean = false;
-  transactions = [];
+  transactions: Transaction[] = [];
   selectedAccounts : Account[] = [];
   accounts : Account[] = [];
 
@@ -37,7 +37,7 @@ export class TransactionListComponent implements OnInit {
         //do nothing
       }else{
         this.accounts.forEach(account => {
-          if(account.getId()==accountId){
+          if(account.id==accountId){
             this.accountService.selectAccount(account);
           }else{
             if(account.selected){
@@ -56,7 +56,7 @@ export class TransactionListComponent implements OnInit {
       this.transactions.pop();
     this.hasRealTransactions = false;
 
-    var newTransactions = [];
+    var newTransactions: Transaction[] = [];
 
     this.selectedAccounts = this.accountService.getSelectedAccounts();
 
@@ -72,7 +72,7 @@ export class TransactionListComponent implements OnInit {
       var initialValue = this.accountService.getInitialValueMultiple(this.selectedAccounts);
 
       //sort (from multiple accounts)
-      newTransactions = this.transactionService.sortTransactions(newTransactions);
+      TransactionService.sortTransactions(newTransactions);
 
       //calculate balances
       this.applyBalanceToTransactions(newTransactions, initialValue);
@@ -88,7 +88,7 @@ export class TransactionListComponent implements OnInit {
 
   applyBalanceToTransactions(transactions:Transaction[], initialValue:Dinero):void{
     //update meta sum for all accounts and invert order
-    var accumulatedBalance = this.accountService.toDinero(
+    var accumulatedBalance = Account.toDinero(
       initialValue.getCurrency(),
       initialValue.toUnit()
     );

@@ -11,16 +11,16 @@
                 Import?
               </th>
               <!-- ignorar descricao, data varios formatos,montante cred deb, sinal, saldo-->
-              <th *ngFor="let columneHeader of transactions[0]; let h = index;">
-                <select class="form-control" id="action{{h}}">
-                  <option *ngFor="let keyValue of importColumnType" value="{{keyValue[1].id}}">{{keyValue[1].description}}</option>
+              <th *ngFor="let columnHeader of (transactions==null || transactions.length==0)?[]:transactions[0]; let h = index;">
+                <select title="columnType" class="form-control" id="action{{h}}">
+                  <option *ngFor="let type of importColumnTypes" value="{{type}}">{{type | importColumnType}}</option>
                 </select>
               </th>
             </tr>
             <tr *ngFor="let transaction of transactions; let t = index;">
               <td>
                 <div class="custom-control custom-checkbox text-center">
-                  <input type="checkbox" checked class="custom-control-input" id="dontIgnore{{t}}">
+                  <input title="ignore" type="checkbox" checked class="custom-control-input" id="dontIgnore{{t}}">
                   <label for="dontIgnore{{t}}" class="custom-control-label"></label>
                 </div>
               </td>

@@ -9,7 +9,7 @@ import { Account } from "../../../models/account";
   styleUrls: ['./account-list.component.css']
 })
 export class AccountListComponent implements OnInit {
-  accounts = [];
+  accounts: Account[] = [];
 
   constructor(
     private eventsService: EventsService,
@@ -26,5 +26,4 @@ export class AccountListComponent implements OnInit {
   refreshAccounts(){
     this.accounts = this.accountService.getAccounts();  
   }
-
 }

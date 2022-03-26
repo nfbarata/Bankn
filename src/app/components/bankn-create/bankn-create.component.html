@@ -1,6 +1,6 @@
-<h2>{{formData.id==null?'Create bankn profile':'Edit bankn profile'}}</h2>
+<h2>{{form.value.id==null?'Create bankn profile':'Edit bankn profile'}}</h2>
 <br>
-<form [formGroup]="form" class="form-group" (ngSubmit)="onSubmit(form.value)">
+<form [formGroup]="form" class="form-group" (ngSubmit)="onSubmit()">
   <div class="row">
     <div class="col-sm-6">
       <label for="name" i18n>
@@ -17,8 +17,8 @@
       <label for="name" i18n>
         Default currency
       </label>
-      <select class="form-control" formControlName="referenceCountry">
-        <option *ngFor="let country of countries" [selected]="country.alpha2==formData.referenceCountry" [value]="country.alpha2">{{country.name}} - {{country.currencies[0]}}</option>
+      <select title="referenceCountry" class="form-control" formControlName="referenceCountry">
+        <option *ngFor="let country of countries" [selected]="country.alpha2==form.value.referenceCountry" [value]="country.alpha2">{{country.name}} - {{country.currencies[0]}}</option>
       </select>
       <small id="refereenceCountryHelpBlock" class="form-text text-muted">
         Used as default currency when creating accounts
@@ -27,5 +27,5 @@
     </div>
   </div>
   <br>
-  <button class="btn btn-primary" type="submit" i18n>{{formData.id==null?'Create':'Ok'}}</button>
+  <button class="btn btn-primary" type="submit" i18n>{{form.value.id==null?'Create':'Ok'}}</button>
 </form>

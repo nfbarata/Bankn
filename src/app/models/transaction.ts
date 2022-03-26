@@ -1,110 +1,91 @@
 import { Account } from './account';
-import Dinero from 'dinero.js';
+import * as Dinero from 'dinero.js';
+// import { AccountService } from '../services/account.service';
 
-export const TransactionType = {
-  CREDIT: {
-    id: 'c',
-    description: 'Credit', //i18n
-  },
-  DEBIT: {
-    id: 'd',
-    description: 'Debit', //i18n
-  },
-  TRANSFER: {
-    id: 't',
-    description: 'Transfer', //i18n
-  },
+export enum TransactionType {
+  CREDIT = 'c',
+  DEBIT = 'd',
+  TRANSFER = 't'
 };
 
-export const ImportColumnType = {
-  IGNORE: {
-    id: 'i',
-    description: 'Ignore',
-  },
-  DESCRIPTION: {
-    id: 'des',
-    description: 'Description',
-  },
-  DATE_DMY: {
-    id: 'dtdmy',
-    description: 'Date (Day Month Year)',
-  },
-  DATE_MDY: {
-    id: 'dtmdy',
-    description: 'Date (Month Day Year)',
-  },
-  DATE_YMD: {
-    id: 'dtymd',
-    description: 'Date (Year Month Day)',
-  },
-  AMOUNT: {
-    id: 'a',
-    description: 'Amount',
-  },
-  CREDIT: {
-    id: 'c',
-    description: 'Credit',
-  },
-  DEBIT: {
-    id: 'd',
-    description: 'Debit',
-  },
-  SIGN: {
-    id: 's',
-    description: 'Sign',
-  },
+export enum ImportColumnType {
+  IGNORE = 'i', //'Ignore',
+  DESCRIPTION = 'des',// 'Description',
+  DATE_DMY = 'dtdmy',// 'Date (Day Month Year)',
+  DATE_MDY = 'dtmdy',// 'Date (Month Day Year)',
+  DATE_YMD = 'dtymd', // 'Date (Year Month Day)',
+  AMOUNT = 'a',// 'Amount',
+  CREDIT = 'c',// 'Credit',
+  DEBIT = 'd',// 'Debit',
+  SIGN = 's',// 'Sign',
 };
-
-export function getTransactionType(id: String) {
-  for (let [key, value] of Object.entries(TransactionType)) {
-    if (value.id == id) return value;
-  }
-  console.error('TransactionType not found: ' + id);
-}
-
-export function getImportColumnType(id: String) {
-  for (let [key, value] of Object.entries(ImportColumnType)) {
-    if (value.id == id) return value;
-  }
-  console.error('ImportColumnType not found: ' + id);
-}
 
 export class Transaction {
+
+  private _id: string; //uuid
+  public type: TransactionType;
   public date: Date;
-  public category: String;
-  public entity: String; //toAccount
   public amount: Dinero.Dinero;
-  //balance?
-  public accountId: String; //meta
-  public description: String;
 
-  private id: String; //uuid
-  public type; //TransactionType
-
+  public description: string | null;
+  public category: string | null;
+  public entity: string | null; //toAccount
+  
   //receipt;
-
-  public balanceBefore: Dinero.Dinero; //volatile
-  public balanceAfter: Dinero.Dinero; //volatile
+  public hide: boolean = false;//volatile
+  public account: Account; //volatile
+  public balanceBefore: Dinero.Dinero | null = null; //volatile
+  public balanceAfter: Dinero.Dinero | null = null; //volatile
 
   constructor(
     uuid: string,
     amount: Dinero.Dinero,
     date: Date,
-    entity: string,
-    category: string,
-    description: string,
-    type
+    entity: string | null,
+    category: string | null,
+    description: string | null,
+    type: TransactionType,
+    account: Account
   ) {
-    this.id = uuid;
+    this._id = uuid;
     this.amount = amount;
     this.date = date;
     this.entity = entity;
     this.category = category;
     this.description = description;
     this.type = type;
+
+    this.account = account;
   }
 
-  public getId() {
-    return this.id;
+  public get id(): string{
+    return this._id;
+  }
+
+  public toJson(){
+    return {
+      id: this.id,
+      amount: this.amount.toUnit(), //Dinero to value, compacted result
+      date: this.date.toISOString().substring(0, 10),
+      entity: this.entity,
+      category: this.category,
+      description: this.description,
+      type: this.type
+    }
+  }
+
+  public static fromJson(transaction: any, account: Account): Transaction{
+    return new Transaction(
+      transaction.id,
+      Account.toDinero(Account.getCurrency(account), transaction.amount), //value to Dinero, speed
+      new Date(transaction.date),
+      typeof transaction.entity === "undefined" ? null : transaction.entity,
+      typeof transaction.category === "undefined"
+        ? null
+        : transaction.category,
+      transaction.description,
+      transaction.type,
+      account
+    )
   }
 }

@@ -19,8 +19,7 @@ import { TransactionService } from "../../../services/transaction.service";
 import { Account } from "../../../models/account";
 import {
   Transaction,
-  TransactionType,
-  getTransactionType
+  TransactionType
 } from "../../../models/transaction";
 
 @Component({
@@ -31,20 +30,18 @@ import {
 })
 export class TransactionImportComponent implements OnInit, AfterViewInit {
   submitDisabled: boolean = true;
-  @ViewChild("importData", { static: false }) importData: ElementRef;
-  @ViewChild("columnSeparator", { static: false }) columnSeparator: ElementRef;
-  @ViewChild("lineSeparator", { static: false }) lineSeparator: ElementRef;
-  @ViewChild("customColumnSeparator", { static: false })
-  customColumnSeparator: ElementRef;
-  @ViewChild("customLineSeparator", { static: false })
-  customLineSeparator: ElementRef;
-  @ViewChild("parsedData", { static: false }) parsedData: ElementRef;
-  @ViewChild("submitHelpBlock", { static: false }) submitHelpBlock: ElementRef;
+  @ViewChild("importData", { static: false }) importData!: ElementRef;
+  @ViewChild("columnSeparator", { static: false }) columnSeparator!: ElementRef;
+  @ViewChild("lineSeparator", { static: false }) lineSeparator!: ElementRef;
+  @ViewChild("customColumnSeparator", { static: false }) customColumnSeparator!: ElementRef;
+  @ViewChild("customLineSeparator", { static: false }) customLineSeparator!: ElementRef;
+  @ViewChild("parsedData", { static: false }) parsedData!: ElementRef;
+  @ViewChild("submitHelpBlock", { static: false }) submitHelpBlock!: ElementRef;
 
   form: FormGroup;
   formData;
-  accountId: string;
-  output;
+  accountId: string | null = null;
+  output : any;
 
   constructor(
     private renderer: Renderer2,
@@ -77,7 +74,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onSubmit(data) {
+  onSubmit(data: any) {
     this.transactionService.importTransactions = this.output;
     this.form.reset();
     this.router.navigate(["/transactions/import-filter/" + this.accountId]);
@@ -129,7 +126,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
       this.setMessage("Check the data below before import"); //i18n
       this.fillTable(result);
       this.submitDisabled = false;
-    } catch (error) {
+    } catch (error: any) {
       this.setMessage(error);
     }
   }
@@ -139,7 +136,7 @@ export class TransactionImportComponent implements OnInit, AfterViewInit {
     this.renderer.setProperty(this.parsedData.nativeElement, "innerHTML", "");
   }
 
-  fillTable(data) {
+  fillTable(data: string[][]) {
     this.output = data;
     data.forEach(row => {
       var htmlRow = this.renderer.createElement("tr");

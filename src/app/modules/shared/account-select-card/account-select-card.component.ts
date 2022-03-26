@@ -31,7 +31,7 @@ export class AccountSelectCardComponent implements OnInit {
     }
     accounts.forEach(account => {
       this.items.push({
-        id : "asc"+account.getId(),
+        id : "asc"+account.id,
         account : account,
         name : account.name,
         selected : account.selected
@@ -50,7 +50,7 @@ export class AccountSelectCardComponent implements OnInit {
     });
   }
 
-  onCheck(selectedItem, e){
+  onCheck(selectedItem: any, e: any){
     selectedItem.selected = e.target.checked;
   }
 }

@@ -17,7 +17,10 @@ export class FileUploadComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleFileInput(files: FileList) {
-    this.fileService.fileToUpload = files.item(0);
+  handleFileInput(event: any) {
+    if(event.target!=null && event.target.files!=null)
+      this.fileService.fileToUpload = event.target.files.item(0);
+    else
+      console.error("No files to process");
   }
 }
