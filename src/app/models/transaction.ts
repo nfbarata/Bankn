@@ -1,5 +1,6 @@
 import { Account } from './account';
-import * as Dinero from 'dinero.js';
+/import * as Dinero from 'dinero.js';
+import Dinero from 'dinero.js'
 // import { AccountService } from '../services/account.service';
 
 export enum TransactionType {
