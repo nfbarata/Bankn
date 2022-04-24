@@ -3,12 +3,41 @@ import { Output, EventEmitter } from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 export class EventsService {
-  @Output() banknChange:  EventEmitter<any> = new EventEmitter();
-  @Output() accountTransactionsChange: EventEmitter<any> = new EventEmitter();
-  @Output() accountsChange: EventEmitter<any> = new EventEmitter();
-  @Output() accountSelectionChange: EventEmitter<any> = new EventEmitter();
-  @Output() transactionChange: EventEmitter<any> = new EventEmitter();
+  @Output() banknChange:  EventEmitter<void> = new EventEmitter();
+  @Output() accountsChange: EventEmitter<void> = new EventEmitter();
+  @Output() accountSelectionChange: EventEmitter<void> = new EventEmitter();
+  @Output() accountTransactionsChange: EventEmitter<void> = new EventEmitter();
+  @Output() transactionChange: EventEmitter<void> = new EventEmitter();
 
   constructor() { }
 
+  public subscribeBanknChange(callback:Function):void{
+    console.debug("banknChange subscribed");
+    this.banknChange.subscribe(()=>callback);
+  }
+
+  public emitBanknChange():void{
+    console.debug("banknChange event");
+    this.banknChange.emit();
+  }
+
+  public emitAccountsChange():void{
+    console.debug("accountsChange event");
+    this.accountsChange.emit();
+  }
+
+  public emitAccountSelectionChange():void{
+    console.debug("accountSelectionChange event");
+    this.accountSelectionChange.emit();
+  }
+
+  public emitAccountTransactionsChange():void{
+    console.debug("accountTransactionsChange event");
+    this.accountTransactionsChange.emit();
+  }
+
+  public emitTransactionChange():void{
+    console.debug("transactionChange event");
+    this.transactionChange.emit();
+  }
 }

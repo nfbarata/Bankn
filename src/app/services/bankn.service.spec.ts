@@ -22,5 +22,12 @@ describe('BanknService', () => {
   
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });  
+  });
+  
+  it('initialized works', () => {
+    expect(service.initialized()).toBeFalse();
+    let bankn = BanknService.createBankn("test","PT");
+    service.setBankn(bankn);
+    expect(service.initialized()).toBeTrue();
+  });
 });

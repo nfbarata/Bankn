@@ -20,6 +20,7 @@ import { AccountListComponent } from './account-list/account-list.component';
     AccountListComponent
   ],
   exports: []
-  //providers : [AccountService]
 })
-export class AccountModule { }
+export class AccountModule { 
+  
+}

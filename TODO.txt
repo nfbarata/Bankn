@@ -1,7 +1,10 @@
+import screens not mobile friendly
+filter transactions column headers with min
+import screens save last options on account/bank
+
 popup generico, input card
 txn list com quick link import(popup comm escolha de conta)
 tests
-
 
 import txns
 create new txn

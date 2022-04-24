@@ -31,4 +31,4 @@ import { TransactionImportEditComponent } from './transaction-import-edit/transa
 })
 export class TransactionModule {
   
- }
+}

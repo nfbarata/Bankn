@@ -48,12 +48,12 @@ export class BanknService {
   setBankn(bankn: Bankn) {
     this.clear();
     this.bankn = bankn;
-    this.eventsService.banknChange.emit();
-    this.eventsService.accountsChange.emit();
-    this.eventsService.accountSelectionChange.emit();
+    this.eventsService.emitBanknChange();
+    this.eventsService.emitAccountsChange();
+    this.eventsService.emitAccountSelectionChange();
   }
 
-  createBankn(name: string, referenceCountry: string): Bankn {
+  static createBankn(name: string, referenceCountry: string): Bankn {
     return new Bankn(uuid(), name, [], referenceCountry);
   }
 
@@ -65,9 +65,9 @@ export class BanknService {
     this.fileService.parseJsonFile((bankn: Bankn) => {
       this.clear();
       this.setBankn(Bankn.fromJson(bankn));
-      this.eventsService.banknChange.emit();
-      this.eventsService.accountsChange.emit();
-      this.eventsService.accountSelectionChange.emit();
+      this.eventsService.emitBanknChange();
+      this.eventsService.emitAccountsChange();
+      this.eventsService.emitAccountSelectionChange();
     });
   }
 
@@ -82,7 +82,7 @@ export class BanknService {
     if(this.bankn!=null){
       this.bankn.name = name;
       this.bankn.referenceCountry = referenceCountry;
-      this.eventsService.banknChange.emit();
+      this.eventsService.emitBanknChange();
     }
   }
 
