@@ -1,28 +1,27 @@
 import { Account } from './account';
 //import * as Dinero from 'dinero.js';
-import Dinero from 'dinero.js'
+import Dinero from 'dinero.js';
 // import { AccountService } from '../services/account.service';
 
 export enum TransactionType {
   CREDIT = 'c',
   DEBIT = 'd',
-  TRANSFER = 't'
-};
+  TRANSFER = 't',
+}
 
 export enum ImportColumnType {
   IGNORE = 'i', //'Ignore',
-  DESCRIPTION = 'des',// 'Description',
-  DATE_DMY = 'dtdmy',// 'Date (Day Month Year)',
-  DATE_MDY = 'dtmdy',// 'Date (Month Day Year)',
+  DESCRIPTION = 'des', // 'Description',
+  DATE_DMY = 'dtdmy', // 'Date (Day Month Year)',
+  DATE_MDY = 'dtmdy', // 'Date (Month Day Year)',
   DATE_YMD = 'dtymd', // 'Date (Year Month Day)',
-  AMOUNT = 'a',// 'Amount',
-  CREDIT = 'c',// 'Credit',
-  DEBIT = 'd',// 'Debit',
-  SIGN = 's',// 'Sign',
-};
+  AMOUNT = 'a', // 'Amount',
+  CREDIT = 'c', // 'Credit',
+  DEBIT = 'd', // 'Debit',
+  SIGN = 's', // 'Sign',
+}
 
 export class Transaction {
-
   private _id: string; //uuid
   public type: TransactionType;
   public date: Date;
@@ -31,9 +30,9 @@ export class Transaction {
   public description: string | null;
   public category: string | null;
   public entity: string | null; //toAccount
-  
+
   //receipt;
-  public hide: boolean = false;//volatile
+  public hide: boolean = false; //volatile
   public account: Account; //volatile
   public balanceBefore: Dinero.Dinero | null = null; //volatile
   public balanceAfter: Dinero.Dinero | null = null; //volatile
@@ -59,11 +58,11 @@ export class Transaction {
     this.account = account;
   }
 
-  public get id(): string{
+  public get id(): string {
     return this._id;
   }
 
-  public toJson(){
+  public toJson() {
     return {
       id: this.id,
       amount: this.amount.toUnit(), //Dinero to value, compacted result
@@ -71,22 +70,20 @@ export class Transaction {
       entity: this.entity,
       category: this.category,
       description: this.description,
-      type: this.type
-    }
+      type: this.type,
+    };
   }
 
-  public static fromJson(transaction: any, account: Account): Transaction{
+  public static fromJson(transaction: any, account: Account): Transaction {
     return new Transaction(
       transaction.id,
       Account.toDinero(Account.getCurrency(account), transaction.amount), //value to Dinero, speed
       new Date(transaction.date),
-      typeof transaction.entity === "undefined" ? null : transaction.entity,
-      typeof transaction.category === "undefined"
-        ? null
-        : transaction.category,
+      typeof transaction.entity === 'undefined' ? null : transaction.entity,
+      typeof transaction.category === 'undefined' ? null : transaction.category,
       transaction.description,
       transaction.type,
       account
-    )
+    );
   }
 }
