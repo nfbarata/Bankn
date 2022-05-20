@@ -8,30 +8,29 @@ import {
   Directive,
   ViewEncapsulation,
   Renderer2,
-  Inject
-} from "@angular/core";
-import { Location, DOCUMENT } from "@angular/common";
-import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { EventsService } from "../../../services/events.service";
-import { BanknService } from "../../../services/bankn.service";
-import { AccountService } from "../../../services/account.service";
-import { TransactionService } from "../../../services/transaction.service";
-import { Account } from "../../../models/account";
+  Inject,
+} from '@angular/core';
+import { Location, DOCUMENT } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventsService } from '../../../services/events.service';
+import { BanknService } from '../../../services/bankn.service';
+import { AccountService } from '../../../services/account.service';
+import { TransactionService } from '../../../services/transaction.service';
+import { Account } from '../../../models/account';
 import {
   Transaction,
   TransactionType,
-  ImportColumnType
-} from "../../../models/transaction";
-import { v4 as uuidv4 } from "uuid";
+  ImportColumnType,
+} from '../../../models/transaction';
+import { UUID } from 'angular2-uuid';
 
 @Component({
-  selector: "app-transaction-import-filter",
-  templateUrl: "./transaction-import-filter.component.html",
-  styleUrls: ["./transaction-import-filter.component.css"]
+  selector: 'app-transaction-import-filter',
+  templateUrl: './transaction-import-filter.component.html',
+  styleUrls: ['./transaction-import-filter.component.css'],
 })
 export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
-
   importColumnTypes = Object.values(ImportColumnType);
   form: FormGroup;
   formData;
@@ -40,7 +39,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   document;
   submitDisabled: boolean = false;
 
-  @ViewChild("submitHelpBlock", { static: false }) submitHelpBlock!: ElementRef;
+  @ViewChild('submitHelpBlock', { static: false }) submitHelpBlock!: ElementRef;
 
   constructor(
     private renderer: Renderer2,
@@ -56,7 +55,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   ) {
     this.document = document;
     this.formData = {
-      importData: null
+      importData: null,
     };
     this.form = this.formBuilder.group(this.formData);
   }
@@ -69,18 +68,18 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.account = null;
     this.transactions = this.transactionService.importTransactions;
-    this.route.paramMap.subscribe(params => {
-      var accountId = params.get("accountId");
+    this.route.paramMap.subscribe((params) => {
+      var accountId = params.get('accountId');
       if (accountId == null) {
-        this.router.navigate([""]);
-      }else{
+        this.router.navigate(['']);
+      } else {
         this.account = this.accountService.getAccount(accountId);
         if (this.account == null) {
-          this.router.navigate([""]);
-        }else{
+          this.router.navigate(['']);
+        } else {
           if (this.transactions == null || this.transactions.length == 0) {
-            alert("No transactions to import"); //i18n
-            this.router.navigate(["/transactions/import/" + this.account.id]);
+            alert('No transactions to import'); //i18n
+            this.router.navigate(['/transactions/import/' + this.account.id]);
           }
         }
       }
@@ -88,32 +87,35 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
   }
 
   private getDate(value: any) {
-    value = value.replace("/", "-");
-    value = value.split("-");
+    value = value.replace('/', '-');
+    value = value.split('-');
     return value;
   }
 
   private getNumber(value: any): number {
-    return Number(value.replace(",", "."));
+    return Number(value.replace(',', '.'));
   }
 
   private getYear(value: any) {
     if (value.length == 4) return value;
     if (value > 80)
       //TODO
-      return "19" + value;
-    else return "20" + value;
+      return '19' + value;
+    else return '20' + value;
   }
 
   onSubmit(data: any) {
-    if(this.account!=null && this.transactions!=null && this.transactions.length>0){
-
+    if (
+      this.account != null &&
+      this.transactions != null &&
+      this.transactions.length > 0
+    ) {
       //parse first line with actions
       this.transactionService.filterActions = [];
       var actions = this.transactions[0];
       actions.forEach((column: any, index: any) => {
-        var action = this.document.getElementById("action" + index);
-        if(action!=null)
+        var action = this.document.getElementById('action' + index);
+        if (action != null)
           this.transactionService.filterActions.push(action.value);
       });
 
@@ -121,11 +123,11 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
       this.transactionService.filterTransactions = [];
       try {
         this.transactions.forEach((row, i) => {
-          var dontIgnore = this.document.getElementById("dontIgnore" + i);
-          if (this.account!=null && dontIgnore.checked) {
-            var amount: number|null = null;
-            var date: Date|null = null;
-            var description: string|null = null;
+          var dontIgnore = this.document.getElementById('dontIgnore' + i);
+          if (this.account != null && dontIgnore.checked) {
+            var amount: number | null = null;
+            var date: Date | null = null;
+            var description: string | null = null;
             var type = TransactionType.CREDIT;
 
             actions.forEach((column: any, j: any) => {
@@ -138,19 +140,31 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
                   break;
                 case ImportColumnType.DATE_DMY:
                   value = this.getDate(value);
-                  date = new Date(this.getYear(value[2]), value[1] - 1, value[0]);
+                  date = new Date(
+                    this.getYear(value[2]),
+                    value[1] - 1,
+                    value[0]
+                  );
                   break;
                 case ImportColumnType.DATE_MDY:
                   value = this.getDate(value);
-                  date = new Date(this.getYear(value[2]), value[0] - 1, value[1]);
+                  date = new Date(
+                    this.getYear(value[2]),
+                    value[0] - 1,
+                    value[1]
+                  );
                   break;
                 case ImportColumnType.DATE_YMD:
                   value = this.getDate(value);
-                  date = new Date(this.getYear(value[0]), value[1] - 1, value[2]);
+                  date = new Date(
+                    this.getYear(value[0]),
+                    value[1] - 1,
+                    value[2]
+                  );
                   break;
                 case ImportColumnType.AMOUNT:
-                  if (value.includes("-")) {
-                    value = value.replace("-", "");
+                  if (value.includes('-')) {
+                    value = value.replace('-', '');
                     type = TransactionType.DEBIT;
                   }
                   amount = this.getNumber(value);
@@ -163,19 +177,19 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
                   type = TransactionType.DEBIT;
                   break;
                 case ImportColumnType.SIGN:
-                  if (value.trim() == "-") type = TransactionType.DEBIT;
+                  if (value.trim() == '-') type = TransactionType.DEBIT;
                   break;
               }
             });
 
             if (amount == null || date == null || description == null) {
               throw new Error(
-                "There should be at least a column for amount, date and description"
+                'There should be at least a column for amount, date and description'
               );
             }
             this.transactionService.filterTransactions.push(
               new Transaction(
-                uuidv4(),
+                UUID.UUID(),
                 Account.toDineroFromAccount(amount, this.account),
                 date,
                 null,
@@ -192,14 +206,14 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
         return;
       }
       this.form.reset();
-      this.router.navigate(["/transactions/import-edit/" + this.account.id]);
+      this.router.navigate(['/transactions/import-edit/' + this.account.id]);
     }
   }
 
   setMessage(message: string) {
     this.renderer.setProperty(
       this.submitHelpBlock.nativeElement,
-      "innerHTML",
+      'innerHTML',
       message
     );
   }
@@ -265,4 +279,3 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     });
   }*/
 }
-
