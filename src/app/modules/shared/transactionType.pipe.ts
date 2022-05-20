@@ -1,24 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TransactionType } from 'src/app/models/transaction';
+import { TransactionType } from '../../models/transaction';
 
 @Pipe({
-  name: 'transactionType'
+  name: 'transactionType',
 })
 export class TransactionTypePipe implements PipeTransform {
-
-  transform(value: string|TransactionType, args?: any): String {
+  transform(value: string | TransactionType, args?: any): String {
     var e: TransactionType;
-    if(typeof value === "string")
-      e = value as TransactionType;
-    else
-      e = value;
-    switch(e){
+    if (typeof value === 'string') e = value as TransactionType;
+    else e = value;
+    switch (e) {
       case TransactionType.CREDIT:
-        return "Credit";//TODO I18n
+        return 'Credit'; //TODO I18n
       case TransactionType.DEBIT:
-        return "Debit";
+        return 'Debit';
       case TransactionType.TRANSFER:
-        return "Transfer";
+        return 'Transfer';
     }
   }
 }
