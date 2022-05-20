@@ -9,9 +9,7 @@ import { Account } from '../models/account';
 //@ts-ignore
 import { countries } from 'country-data-list';
 
-//import { v4 as uuid } from 'uuid';
-import { v4 as uuid } from 'uuid';
-//import uuid = require('uuid/v4');
+import { UUID } from 'angular2-uuid';
 
 @Injectable({ providedIn: 'root' })
 export class BanknService {
@@ -53,7 +51,7 @@ export class BanknService {
   }
 
   static createBankn(name: string, referenceCountry: string): Bankn {
-    return new Bankn(uuid(), name, [], referenceCountry);
+    return new Bankn(UUID.UUID(), name, [], referenceCountry);
   }
 
   getBankn(): Bankn | null {

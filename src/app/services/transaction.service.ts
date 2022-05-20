@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { v4 as uuid } from 'uuid';
+import { UUID } from 'angular2-uuid';
 
 import { EventsService } from './events.service';
 import { AccountService } from './account.service';
@@ -33,7 +33,7 @@ export class TransactionService {
     var clearDate = new Date(0); //clear hours/minutes/seconds
     clearDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
     var transaction = new Transaction(
-      uuid(),
+      UUID.UUID(),
       amount,
       clearDate,
       entity,
