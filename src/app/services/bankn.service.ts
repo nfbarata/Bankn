@@ -1,9 +1,8 @@
-import { Output, LOCALE_ID, Inject } from '@angular/core';
+import { LOCALE_ID, Inject } from '@angular/core';
 import { Injectable, Injector } from '@angular/core';
 
 import { EventsService } from './events.service';
 import { FileService } from './file.service';
-import { ACCOUNT_SERVICE } from '../app.module';
 
 import { Bankn } from '../models/bankn';
 import { Account } from '../models/account';
@@ -22,7 +21,6 @@ export class BanknService {
 
   constructor(
     @Inject(LOCALE_ID) public locale: string,
-    private injector: Injector,
     private eventsService: EventsService,
     private fileService: FileService
   ) {
