@@ -1,34 +1,33 @@
-import  { Transaction } from "./transaction";
-import Dinero from 'dinero.js';
+import { Transaction } from './transaction';
+import { Dinero, dinero } from 'dinero.js';
 
 export class Account {
-
-  private _id:string;//uuid
-  name : string;
+  private _id: string; //uuid
+  name: string;
   //type
   //arquived
-  transactions : Transaction[] = [];
-  referenceAmount:Dinero.Dinero;
-  referenceCountry:string;//to select in edit
-  referenceDate:Date;
-  description:string = "";
+  transactions: Transaction[] = [];
+  referenceAmount: Dinero.Dinero;
+  referenceCountry: string; //to select in edit
+  referenceDate: Date;
+  description: string = '';
   //currency; inside referenceAmount
   //exclude orçamentos
 
   lastColumnSeparator: string | null = null;
   lastLineSeparator: string | null = null;
 
-  selected:boolean = false;
+  selected: boolean = false;
 
   constructor(
-    id:string,
-    name:string,
-    description:string, 
-    referenceAmount:Dinero.Dinero, 
-    referenceDate:Date,
-    referenceCountry:string,
-    transactions:Transaction[]=[],
-    selected:boolean=false
+    id: string,
+    name: string,
+    description: string,
+    referenceAmount: Dinero.Dinero,
+    referenceDate: Date,
+    referenceCountry: string,
+    transactions: Transaction[] = [],
+    selected: boolean = false
   ) {
     this._id = id;
     this.name = name;
@@ -36,20 +35,18 @@ export class Account {
     this.referenceAmount = referenceAmount;
     this.referenceDate = referenceDate;
     this.referenceCountry = referenceCountry;
-    if(transactions==null)
-      this.transactions = [];
-    else
-      this.transactions = transactions;
-    this.selected=selected;
+    if (transactions == null) this.transactions = [];
+    else this.transactions = transactions;
+    this.selected = selected;
   }
 
-  public get id(): string{
+  public get id(): string {
     return this._id;
   }
 
-  public toJson(): any{
+  public toJson(): any {
     var transactionsJson: any[] = [];
-    this.transactions.forEach(transaction => {
+    this.transactions.forEach((transaction) => {
       transactionsJson.push(transaction.toJson());
     });
     return {
@@ -69,13 +66,13 @@ export class Account {
       json.id,
       json.name,
       json.description,
-      Dinero(json.referenceAmount),
+      dinero(json.referenceAmount),
       new Date(json.referenceDate),
       json.referenceCountry,
       [],
       json.selected
     );
-    if(json.transactions)
+    if (json.transactions)
       json.transactions.forEach((transaction: any) => {
         account.transactions.push(Transaction.fromJson(transaction, account));
       });
@@ -84,18 +81,21 @@ export class Account {
 
   private static getPrecision(currency: string): number {
     //TODO guardar este valor em memória
-    var reference = Dinero({ currency: <Dinero.Currency>currency });
+    var reference = dinero({ currency: <Dinero.Currency>currency });
     return reference.getPrecision();
   }
 
   public static toDinero(currency: string, amount: number): Dinero.Dinero {
-    return Dinero({
+    return dinero({
       amount: amount * Math.pow(10, Account.getPrecision(currency)),
       currency: <Dinero.Currency>currency,
     });
   }
 
-  public static toDineroFromAccount(amount: number, account: Account): Dinero.Dinero{
+  public static toDineroFromAccount(
+    amount: number,
+    account: Account
+  ): Dinero.Dinero {
     return this.toDinero(Account.getCurrency(account), amount);
   }
 

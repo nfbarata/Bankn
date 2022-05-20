@@ -1,8 +1,6 @@
 import { Output, LOCALE_ID, Inject } from '@angular/core';
 import { Injectable, Injector } from '@angular/core';
 
-import { v4 as uuid } from 'uuid';
-
 import { EventsService } from './events.service';
 import { FileService } from './file.service';
 import { ACCOUNT_SERVICE } from '../app.module';
@@ -12,9 +10,12 @@ import { Account } from '../models/account';
 //@ts-ignore
 import { countries } from 'country-data-list';
 
+//import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid';
+/import uuid = require('uuid/v4');
+
 @Injectable({ providedIn: 'root' })
 export class BanknService {
-  
   private bankn: Bankn | null = null;
   private countries: any;
   private defaultCountryCode: string = 'null';
@@ -72,14 +73,13 @@ export class BanknService {
   }
 
   saveToFile(): void {
-    if(this.bankn!=null)
+    if (this.bankn != null)
       this.fileService.downloadJsonFile(this.bankn.toJson());
-    else
-      console.error("No bankn");
+    else console.error('No bankn');
   }
 
   update(name: string, referenceCountry: string): void {
-    if(this.bankn!=null){
+    if (this.bankn != null) {
       this.bankn.name = name;
       this.bankn.referenceCountry = referenceCountry;
       this.eventsService.emitBanknChange();
@@ -101,14 +101,14 @@ export class BanknService {
   }
 
   addAccount(account: Account): void {
-    if(this.bankn!=null){
+    if (this.bankn != null) {
       this.bankn.accounts.push(account);
       this.eventsService.accountsChange.emit();
     }
   }
 
   deleteAccountId(accountId: string) {
-    if(this.bankn!=null){
+    if (this.bankn != null) {
       this.bankn.accounts = this.bankn.accounts.filter(function (account) {
         return account.id != accountId;
       });
@@ -138,7 +138,7 @@ export class BanknService {
   }
 
   getReferenceCountry(): string | null {
-    if(this.bankn!=null){
+    if (this.bankn != null) {
       return this.bankn.referenceCountry;
     }
     return null;
