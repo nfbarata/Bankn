@@ -12,7 +12,7 @@ import { countries } from 'country-data-list';
 
 //import { v4 as uuid } from 'uuid';
 import { v4 as uuid } from 'uuid';
-/import uuid = require('uuid/v4');
+//import uuid = require('uuid/v4');
 
 @Injectable({ providedIn: 'root' })
 export class BanknService {
