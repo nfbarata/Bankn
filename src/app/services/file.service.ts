@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Account } from '../models/account';
 
 @Injectable({ providedIn: 'root' })
 export class FileService {
@@ -8,8 +7,8 @@ export class FileService {
 
   constructor() {}
 
-  parseJsonFile(callback : Function) {
-    if(this.fileToUpload!=null) {
+  parseJsonFile(callback: Function) {
+    if (this.fileToUpload != null) {
       var output: String = '';
       if (window.File && window.FileReader && window.FileList && window.Blob) {
         // Great success! All the File APIs are supported.
@@ -20,11 +19,11 @@ export class FileService {
           var picReader = new FileReader();
 
           picReader.addEventListener('load', function (event) {
-            if(event.target!=null && event.target.result!=null){
+            if (event.target != null && event.target.result != null) {
               //console.log(textFile.result);
               var object = JSON.parse(event.target.result.toString());
               callback(object);
-            }else{
+            } else {
               console.error('No event target.');
             }
           });

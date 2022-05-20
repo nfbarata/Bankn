@@ -1,5 +1,5 @@
 import { LOCALE_ID, Inject } from '@angular/core';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { EventsService } from './events.service';
 import { FileService } from './file.service';

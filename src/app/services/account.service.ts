@@ -1,4 +1,4 @@
-import { Injectable, Inject, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { BanknService } from './bankn.service';
 import { EventsService } from './events.service';
@@ -6,14 +6,13 @@ import { Account } from '../models/account';
 
 import { Transaction, TransactionType } from '../models/transaction';
 
-import { TRANSACTION_SERVICE } from '../app.module';
-import Dinero from 'dinero.js';
+//import Dinero from 'dinero.js';
+import * as Dinero from 'dinero.js';
 import { TransactionService } from './transaction.service';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
   constructor(
-    private injector: Injector,
     private banknService: BanknService,
     private eventsService: EventsService
   ) {}
@@ -47,7 +46,7 @@ export class AccountService {
     referenceCountry: string
   ) {
     var account: Account | null = this.getAccount(id);
-    if(account != null){
+    if (account != null) {
       account.name = name;
       account.description = description;
       account.referenceAmount = referenceAmount;
@@ -58,7 +57,7 @@ export class AccountService {
   }
 
   private createId(): string {
-    //return uuidv4();
+    //return uuid();
     var accounts: Account[] = this.getAccounts();
     var accountIds: string[] = [];
     for (let i = 0; i < accounts.length; i++) {
@@ -92,8 +91,7 @@ export class AccountService {
   getAccount(accountId: string): Account | null {
     var accounts: Account[] = this.getAccounts();
     for (let i = 0; i < accounts.length; i++) {
-      if (accounts[i].id == accountId) 
-        return accounts[i];
+      if (accounts[i].id == accountId) return accounts[i];
     }
     console.error('account not found:' + accountId);
     return null;
@@ -109,8 +107,7 @@ export class AccountService {
 
   toggleAccountId(accountId: string) {
     var account: Account | null = this.getAccount(accountId);
-    if(account != null)
-      this.toggleAccount(account);
+    if (account != null) this.toggleAccount(account);
   }
 
   toggleAccount(account: Account) {
@@ -120,8 +117,7 @@ export class AccountService {
 
   selectAccountId(accountId: string) {
     var account: Account | null = this.getAccount(accountId);
-    if(account != null)
-      this.selectAccount(account);
+    if (account != null) this.selectAccount(account);
   }
 
   selectAccount(account: Account) {
@@ -133,8 +129,7 @@ export class AccountService {
 
   unselectAccountId(accountId: string) {
     var account: Account | null = this.getAccount(accountId);
-    if(account != null)
-      this.unselectAccount(account);
+    if (account != null) this.unselectAccount(account);
   }
 
   unselectAccount(account: Account) {

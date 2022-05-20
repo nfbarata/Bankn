@@ -1,25 +1,20 @@
-import { Injectable, Inject } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 
-import { EventsService } from "./events.service";
-import { AccountService } from "./account.service";
+import { EventsService } from './events.service';
+import { AccountService } from './account.service';
 
-import { Account } from "../models/account";
-import {
-  Transaction,
-  TransactionType,
-  ImportColumnType
-} from "../models/transaction";
-import * as Dinero from "dinero.js";
+import { Account } from '../models/account';
+import { Transaction, TransactionType } from '../models/transaction';
+import * as Dinero from 'dinero.js';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class TransactionService {
-  
   //for use between screens
-  importTransactions:any[] = []; //volatile
-  filterTransactions:any[] = []; //volatile
-  filterActions:any[] = []; //volatile
+  importTransactions: any[] = []; //volatile
+  filterTransactions: any[] = []; //volatile
+  filterActions: any[] = []; //volatile
 
   constructor(
     private eventsService: EventsService,
@@ -70,9 +65,9 @@ export class TransactionService {
   }
 
   fromJson(json: any[], currency: string, account: Account): any[] {
-    var results : any[] = [];
+    var results: any[] = [];
     if (json != null) {
-      json.forEach(transaction => {
+      json.forEach((transaction) => {
         results.push(Transaction.fromJson(transaction, account));
       });
     }
@@ -99,8 +94,8 @@ export class TransactionService {
 
   getTransactions(accounts: Account[]): Transaction[] {
     var transactions: Transaction[] = [];
-    accounts.forEach(account => {
-      account.transactions.forEach(transaction => {
+    accounts.forEach((account) => {
+      account.transactions.forEach((transaction) => {
         transactions.push(transaction);
       });
     });
@@ -110,8 +105,7 @@ export class TransactionService {
   getTransaction(account: Account, id: string): Transaction | null {
     var transactions = this.getTransactions([account]);
     for (var i = 0; i != transactions.length; i++) {
-      if (transactions[i].id == id) 
-        return transactions[i];
+      if (transactions[i].id == id) return transactions[i];
     }
     return null;
   }
@@ -126,15 +120,18 @@ export class TransactionService {
 
   deleteTransactionId(accountId: string, transactionId: string) {
     var account = this.accountService.getAccount(accountId);
-    if(account!=null)
-      this.deleteTransaction(account, transactionId);
+    if (account != null) this.deleteTransaction(account, transactionId);
   }
 
   deleteTransaction(account: Account, transactionId: string) {
     this.accountService.deleteTransactionId(account, transactionId);
   }
 
-  parse(data: string, lineSeparator: string, columnSeparator: string): string[][] {
+  parse(
+    data: string,
+    lineSeparator: string,
+    columnSeparator: string
+  ): string[][] {
     //i18n
     var lines = data.split(lineSeparator);
     if (lines.length > 0 && lines[0].trim().length > 0) {
@@ -146,17 +143,17 @@ export class TransactionService {
             //ignore empty lines
             var columns: string[] = lines[i].split(columnSeparator);
             if (columns.length != firstRow.length) {
-              throw new Error("Not all rows have the same number of columns");
+              throw new Error('Not all rows have the same number of columns');
             }
             parsedData.push(columns);
           }
         }
         return parsedData;
       } else {
-        throw new Error("There should be at least 3 columns");
+        throw new Error('There should be at least 3 columns');
       }
     } else {
-      throw new Error("Enter some text");
+      throw new Error('Enter some text');
     }
   }
 }
