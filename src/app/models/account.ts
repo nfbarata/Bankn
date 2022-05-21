@@ -1,5 +1,5 @@
 import { Transaction } from './transaction';
-import { Dinero, dinero } from 'dinero.js';
+import Dinero, { Currency } from 'dinero.js';
 
 export class Account {
   private _id: string; //uuid
@@ -66,7 +66,7 @@ export class Account {
       json.id,
       json.name,
       json.description,
-      dinero(json.referenceAmount),
+      Dinero(json.referenceAmount),
       new Date(json.referenceDate),
       json.referenceCountry,
       [],
@@ -81,14 +81,14 @@ export class Account {
 
   private static getPrecision(currency: string): number {
     //TODO guardar este valor em memória
-    var reference = dinero({ currency: <Dinero.Currency>currency });
+    var reference = Dinero({ currency: <Dinero.Currency>currency });
     return reference.getPrecision();
   }
 
   public static toDinero(currency: string, amount: number): Dinero.Dinero {
-    return dinero({
+    return Dinero({
       amount: amount * Math.pow(10, Account.getPrecision(currency)),
-      currency: <Dinero.Currency>currency,
+      currency: Account.getCurrencyObject(currency),
     });
   }
 
@@ -101,5 +101,9 @@ export class Account {
 
   public static getCurrency(account: Account): string {
     return account.referenceAmount.getCurrency();
+  }
+
+  public static getCurrencyObject(currency: string): Currency{
+    return <Dinero.Currency>currency;
   }
 }

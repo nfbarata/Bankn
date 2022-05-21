@@ -1,4 +1,4 @@
-import Dinero from 'dinero.js';
+import Dinero from "dinero.js";
 import { Account } from './account';
 import { Transaction, TransactionType } from './transaction';
 
@@ -7,7 +7,7 @@ describe('Transaction', () => {
   it('should create an instance', () => {
     expect(new Transaction(
       "id",
-      Dinero(),
+      Dinero({ amount: 0, currency: 'EUR'}),
       new Date(),
       "entity", 
       "category", 
@@ -17,7 +17,7 @@ describe('Transaction', () => {
         "id",
         "name",
         "des",
-        Dinero(),
+        Dinero({ amount: 0, currency: 'EUR' }),
         new Date(),
         "PT"
       ))).toBeTruthy();
@@ -35,7 +35,7 @@ describe('Transaction', () => {
       "id",
       "name",
       "des",
-      Dinero(),
+      Dinero({ amount: 0, currency: 'EUR' }),
       new Date(),
       "PT"
     );
@@ -50,7 +50,7 @@ describe('Transaction', () => {
       type: type
     }, account);
     expect(transaction.id).toBe(id);
-    expect(transaction.amount.getAmount()).toEqual(amount);
+    expect(transaction.amount.toJSON().amount).toEqual(amount);
     expect(transaction.date).toEqual(new Date(date));
     expect(transaction.entity).toBe(entity);
     expect(transaction.category).toBe(category);

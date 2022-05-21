@@ -7,7 +7,7 @@ import { AccountService } from './account.service';
 
 import { Account } from '../models/account';
 import { Transaction, TransactionType } from '../models/transaction';
-import * as Dinero from 'dinero.js';
+import Dinero from 'dinero.js';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
