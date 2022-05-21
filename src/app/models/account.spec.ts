@@ -9,7 +9,7 @@ describe('Account', () => {
       "id",
       "name",
       "des",
-      Dinero(),
+      Dinero({amount:0, currency: 'EUR'}),
       new Date(),
       "PT"
       )).toBeTruthy();
@@ -35,7 +35,7 @@ describe('Account', () => {
     expect(account.id).toBe(id);
     expect(account.name).toBe(name);
     expect(account.description).toBe(description);
-    expect(account.referenceAmount.getAmount()).toEqual(referenceAmount);    
+    expect(account.referenceAmount.toUnit()).toEqual(referenceAmount);    
     expect(account.referenceDate).toEqual(new Date(referenceDate));
     expect(account.referenceCountry).toBe(referenceCountry);
     expect(account.transactions.length).toBe(0);
@@ -71,7 +71,7 @@ describe('Account', () => {
     expect(account.id).toBe(id);
     expect(account.name).toBe(name);
     expect(account.description).toBe(description);
-    expect(account.referenceAmount.getAmount()).toEqual(referenceAmount);    
+    expect(account.referenceAmount.toUnit()).toEqual(referenceAmount);    
     expect(account.referenceDate).toEqual(new Date(referenceDate));
     expect(account.referenceCountry).toBe(referenceCountry);
     expect(account.transactions.length).toBe(2);

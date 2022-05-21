@@ -6,8 +6,7 @@ import { Account } from '../models/account';
 
 import { Transaction, TransactionType } from '../models/transaction';
 
-//import Dinero from 'dinero.js';
-import * as Dinero from 'dinero.js';
+import Dinero from 'dinero.js';
 import { TransactionService } from './transaction.service';
 
 @Injectable({ providedIn: 'root' })
@@ -156,7 +155,7 @@ export class AccountService {
 
   getInitialValue(account: Account): Dinero.Dinero {
     var initialBalance = Account.toDinero(
-      account.referenceAmount.getCurrency(),
+      account.referenceAmount.toJSON().currency,
       account.referenceAmount.toUnit()
     );
 
@@ -167,9 +166,7 @@ export class AccountService {
       ) {
         switch (account.transactions[i].type) {
           case TransactionType.CREDIT:
-            initialBalance = initialBalance.subtract(
-              account.transactions[i].amount
-            );
+            initialBalance = initialBalance.subtract(account.transactions[i].amount);
             break;
           case TransactionType.DEBIT:
             initialBalance = initialBalance.add(account.transactions[i].amount);
@@ -185,7 +182,7 @@ export class AccountService {
 
   getInitialValueMultiple(accounts: Account[]): Dinero.Dinero {
     var initialBalance = Account.toDinero(
-      accounts[0].referenceAmount.getCurrency(), //TODO dif currencies
+      accounts[0].referenceAmount.toJSON().currency, //TODO dif currencies
       0
     );
     accounts.forEach((account) => {
