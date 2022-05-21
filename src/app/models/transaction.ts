@@ -1,6 +1,5 @@
 import { Account } from './account';
 import Dinero from 'dinero.js';
-// import { AccountService } from '../services/account.service';
 
 export enum TransactionType {
   CREDIT = 'c',
