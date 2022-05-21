@@ -1,20 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-// import { AccountService } from './account.service';
+import Dinero from 'dinero.js';
+import { Account } from '../models/account';
 import { BanknService } from './bankn.service';
-// import { TransactionService } from './transaction.service';
 
 describe('BanknService', () => {
 
-    let service: BanknService;
-    // let accountServiceMock: jasmine.SpyObj<AccountService>;
+  let service: BanknService;
+  let account: Account = new Account("teste","teste","desc",Dinero({amount:0,currency:"EUR"}),new Date(),"PT");
 
   beforeEach(() => {
-    //  accountServiceMock = jasmine.createSpyObj([]);
     TestBed.configureTestingModule({
       imports: [],
       declarations: [],
       providers: [
-          // {provide: AccountService, useValue: accountServiceMock}
       ]
     }).compileComponents();
     service = TestBed.inject(BanknService);
@@ -29,5 +27,19 @@ describe('BanknService', () => {
     let bankn = BanknService.createBankn("test","PT");
     service.setBankn(bankn);
     expect(service.initialized()).toBeTrue();
+  });
+
+  it('addAccount, getAccounts and deleteAccountId works', () => {
+    expect(service.initialized()).toBeFalse();
+    let bankn = BanknService.createBankn("test","PT");
+    service.setBankn(bankn);
+    expect(service.getAccounts().length).toBe(0);
+    expect(service.getBankn().accounts.length).toBe(0);
+    service.addAccount(account);
+    expect(service.getAccounts().length).toBe(1);
+    expect(service.getBankn().accounts.length).toBe(1);
+    service.deleteAccountId(account.id);
+    expect(service.getAccounts().length).toBe(0);
+    expect(service.getBankn().accounts.length).toBe(0);
   });
 });
