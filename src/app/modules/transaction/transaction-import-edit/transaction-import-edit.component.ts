@@ -83,8 +83,8 @@ export class TransactionImportEditComponent implements OnInit {
             transaction.amount,
             transaction.date,
             transaction.type,
-            null,
-            null,
+            transaction.entity,
+            transaction.category,
             transaction.description
           );
       });

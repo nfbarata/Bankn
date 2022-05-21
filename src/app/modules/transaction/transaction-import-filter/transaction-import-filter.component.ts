@@ -191,11 +191,11 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
               new Transaction(
                 UUID.UUID(),
                 Account.toDineroFromAccount(amount, this.account),
-                date,
-                null,
-                null,
-                description,
                 type,
+                date,
+                "",
+                "",
+                description,
                 this.account
               )
             );

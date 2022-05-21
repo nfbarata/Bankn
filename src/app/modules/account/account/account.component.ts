@@ -87,9 +87,9 @@ export class AccountComponent implements OnInit {
       this.accountService.createAccount(
         this.form.controls["name"].value,
         this.form.controls["description"].value,
-        amount, //.toObject(),
         date,
-        this.form.controls["referenceCountry"].value
+        this.form.controls["referenceCountry"].value,
+        amount //.toObject(),
       );
     } else {
       this.accountService.updateAccount(

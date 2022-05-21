@@ -69,7 +69,7 @@ export class TransactionListComponent implements OnInit {
       });
 
       //get initial value
-      var initialValue = this.accountService.getInitialValueMultiple(this.selectedAccounts);
+      var initialValue = AccountService.getInitialValueMultiple(this.selectedAccounts);
 
       //sort (from multiple accounts)
       TransactionService.sortTransactions(newTransactions);
