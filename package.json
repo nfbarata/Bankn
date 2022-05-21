@@ -26,6 +26,7 @@
     "core-js": "^3.22.5",
     "country-data-list": "^1.2.1",
     "dinero.js": "2.0.0-alpha.7",
+    "firebase": "^9.8.1",
     "jasmine-core": "^4.1.1",
     "jasmine-spec-reporter": "^7.0.0",
     "jquery": "^3.6.0",
