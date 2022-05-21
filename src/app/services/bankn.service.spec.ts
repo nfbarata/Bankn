@@ -34,12 +34,12 @@ describe('BanknService', () => {
     let bankn = BanknService.createBankn("test","PT");
     service.setBankn(bankn);
     expect(service.getAccounts().length).toBe(0);
-    expect(service.getBankn().accounts.length).toBe(0);
+    expect(service.getBankn()!.accounts.length).toBe(0);
     service.addAccount(account);
     expect(service.getAccounts().length).toBe(1);
-    expect(service.getBankn().accounts.length).toBe(1);
+    expect(service.getBankn()!.accounts.length).toBe(1);
     service.deleteAccountId(account.id);
     expect(service.getAccounts().length).toBe(0);
-    expect(service.getBankn().accounts.length).toBe(0);
+    expect(service.getBankn()!.accounts.length).toBe(0);
   });
 });

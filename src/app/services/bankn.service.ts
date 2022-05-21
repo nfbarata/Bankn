@@ -139,4 +139,12 @@ export class BanknService {
     }
     return null;
   }
+
+  getReferenceCurrency(): string|null {
+    var country = this.getReferenceCountry();
+    if (country != null){
+      return this.getCurrencyOfCountry(country);
+    }
+    return null;
+  }
 }

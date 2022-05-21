@@ -25,35 +25,41 @@ export class Transaction {
   public date: Date;
   public amount: Dinero.Dinero;
 
-  public description: string | null;
-  public category: string | null;
-  public entity: string | null; //toAccount
+  public description: string = "";
+  public category: string = "";
+  public entity: string = ""; //toAccount
 
   //receipt;
   public hide: boolean = false; //volatile
-  public account: Account; //volatile
+  public account!: Account; //volatile
   public balanceBefore: Dinero.Dinero | null = null; //volatile
   public balanceAfter: Dinero.Dinero | null = null; //volatile
 
   constructor(
     uuid: string,
     amount: Dinero.Dinero,
-    date: Date,
-    entity: string | null,
-    category: string | null,
-    description: string | null,
     type: TransactionType,
-    account: Account
+    date?: Date,
+    entity?: string,
+    category?: string,
+    description?: string,
+    account?: Account | null
   ) {
     this._id = uuid;
     this.amount = amount;
-    this.date = date;
-    this.entity = entity;
-    this.category = category;
-    this.description = description;
     this.type = type;
-
-    this.account = account;
+    if(date!==undefined)
+      this.date = date;
+    else
+      this.date = new Date();
+    if(entity !== undefined)
+      this.entity = entity;
+    if(category !== undefined)
+      this.category = category;
+    if(description !== undefined)
+      this.description = description;
+    if(account != null)
+      this.account = account;
   }
 
   public get id(): string {
@@ -76,11 +82,11 @@ export class Transaction {
     return new Transaction(
       transaction.id,
       Account.toDinero(Account.getCurrency(account), transaction.amount), //value to Dinero, speed
+      transaction.type,
       new Date(transaction.date),
       typeof transaction.entity === 'undefined' ? null : transaction.entity,
       typeof transaction.category === 'undefined' ? null : transaction.category,
       transaction.description,
-      transaction.type,
       account
     );
   }

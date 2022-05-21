@@ -26,20 +26,20 @@ export class TransactionService {
     amount: Dinero.Dinero,
     date: Date,
     type: TransactionType,
-    entity: string | null,
-    category: string | null,
-    description: string | null
+    entity?: string,
+    category?: string,
+    description?: string
   ) {
     var clearDate = new Date(0); //clear hours/minutes/seconds
     clearDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
     var transaction = new Transaction(
       UUID.UUID(),
       amount,
+      type,
       clearDate,
       entity,
       category,
       description,
-      type,
       account
     );
     this.accountService.addTransaction(account, transaction);

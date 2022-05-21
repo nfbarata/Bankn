@@ -8,11 +8,11 @@ describe('Transaction', () => {
     expect(new Transaction(
       "id",
       Dinero({ amount: 0, currency: 'EUR'}),
+      TransactionType.CREDIT, 
       new Date(),
       "entity", 
       "category", 
       "desc", 
-      TransactionType.CREDIT, 
       new Account(
         "id",
         "name",

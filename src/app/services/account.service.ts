@@ -19,21 +19,22 @@ export class AccountService {
   createAccount(
     name: string,
     description: string,
-    referenceAmount: Dinero.Dinero,
     referenceDate: Date,
-    referenceCountry: string
-  ) {
+    referenceCountry: string,
+    referenceAmount?: Dinero.Dinero,
+  ): Account {
     var account: Account = new Account(
       this.createId(),
       name,
       description,
-      referenceAmount,
+      referenceAmount === undefined ? Account.toDinero(this.banknService.getReferenceCurrency()!, 0): referenceAmount,
       referenceDate,
       referenceCountry,
       [],
       true
     );
     this.banknService.addAccount(account);
+    return account;
   }
 
   updateAccount(
@@ -153,7 +154,7 @@ export class AccountService {
     this.eventsService.accountTransactionsChange.emit();
   }
 
-  getInitialValue(account: Account): Dinero.Dinero {
+  static getInitialValue(account: Account): Dinero.Dinero {
     var initialBalance = Account.toDinero(
       account.referenceAmount.toJSON().currency,
       account.referenceAmount.toUnit()
@@ -180,13 +181,13 @@ export class AccountService {
     return initialBalance;
   }
 
-  getInitialValueMultiple(accounts: Account[]): Dinero.Dinero {
+  static getInitialValueMultiple(accounts: Account[]): Dinero.Dinero {
     var initialBalance = Account.toDinero(
       accounts[0].referenceAmount.toJSON().currency, //TODO dif currencies
       0
     );
     accounts.forEach((account) => {
-      initialBalance = initialBalance.add(this.getInitialValue(account));
+      initialBalance = initialBalance.add(AccountService.getInitialValue(account));
     });
     return initialBalance;
   }
