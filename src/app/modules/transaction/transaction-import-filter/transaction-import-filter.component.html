@@ -10,10 +10,10 @@
               <th class="align-middle">
                 Import?
               </th>
-              <!-- ignorar descricao, data varios formatos,montante cred deb, sinal, saldo-->
+              <!-- column type options -->
               <th *ngFor="let columnHeader of (transactions==null || transactions.length==0)?[]:transactions[0]; let h = index;">
-                <select title="columnType" class="form-control" id="action{{h}}">
-                  <option *ngFor="let type of importColumnTypes" value="{{type}}">{{type | importColumnType}}</option>
+                <select title="columnType" class="form-select" id="action{{h}}">
+                  <option *ngFor="let type of importColumnTypes" class="w-auto" value="{{type}}">{{type | importColumnType}}</option>
                 </select>
               </th>
             </tr>
