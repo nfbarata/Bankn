@@ -1,5 +1,7 @@
+definir limites mensais de acordo com tipos
+guardar ults seleccoes de import na account como default
+
 import screens not mobile friendly
-filter transactions column headers with min
 import screens save last options on account/bank
 
 popup generico, input card
