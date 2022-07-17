@@ -1,7 +1,16 @@
 definir limites mensais de acordo com tipos
-guardar ults seleccoes de import na account como default
 
-import screens not mobile friendly
+translations on enums
+  ColumnSeparator
+  RowSeparator
+
+txns menu
+  add import
+
+mobile view
+  import screens not friendly -> a column at a time
+  min length on column
+
 import screens save last options on account/bank
 
 popup generico, input card
