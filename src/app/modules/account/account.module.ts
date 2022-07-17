@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { AccountsRoutingModule } from './account-routing.module'
 import { SharedModule } from '../shared/shared.module';
 
-import { AccountComponent } from './account/account.component';
-import { AccountListComponent } from './account-list/account-list.component';
+import { AccountComponent } from './components/account/account.component';
+import { AccountListComponent } from './components/account-list/account-list.component';
 
 @NgModule({
   imports: [

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ImportColumnType } from '../../models/transaction';
+import { ImportColumnType } from 'src/app/models/enums';
 
 @Pipe({
   name: 'importColumnType',

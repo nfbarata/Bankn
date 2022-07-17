@@ -6,15 +6,19 @@ import { EventsService } from './events.service';
 import { AccountService } from './account.service';
 
 import { Account } from '../models/account';
-import { Transaction, TransactionType } from '../models/transaction';
+import { Transaction } from '../models/transaction';
 import Dinero from 'dinero.js';
+import { TransactionType } from '../models/enums';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-  //for use between screens
-  importTransactions: any[] = []; //volatile
-  filterTransactions: any[] = []; //volatile
-  filterActions: any[] = []; //volatile
+
+  //
+  //Volatile - for use between screens
+  //
+  importTransactions: any[] = [];
+  filterTransactions: any[] = [];
+  filterActions: any[] = [];
 
   constructor(
     private eventsService: EventsService,
@@ -26,9 +30,10 @@ export class TransactionService {
     amount: Dinero.Dinero,
     date: Date,
     type: TransactionType,
-    entity?: string,
-    category?: string,
-    description?: string
+    entityName?: string,
+    categoryName?: string,
+    receiptReference?: string,
+    description?: string,
   ) {
     var clearDate = new Date(0); //clear hours/minutes/seconds
     clearDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
@@ -37,8 +42,9 @@ export class TransactionService {
       amount,
       type,
       clearDate,
-      entity,
-      category,
+      entityName,
+      categoryName,
+      receiptReference,
       description,
       account
     );
@@ -51,15 +57,17 @@ export class TransactionService {
     amount: Dinero.Dinero,
     date: Date,
     type: TransactionType,
-    entity: string,
-    category: string,
-    description: string
+    entityName: string,
+    categoryName: string,
+    receiptReference: string,
+    description: string,
   ) {
     transaction.amount = amount;
     transaction.date = date;
     transaction.type = type;
-    transaction.entity = entity;
-    transaction.category = category;
+    transaction.entityName = entityName;
+    transaction.categoryName = categoryName;
+    transaction.receiptReference = receiptReference;
     transaction.description = description;
     this.eventsService.transactionChange.emit();
   }

@@ -1,6 +1,6 @@
 import Dinero from 'dinero.js';
 import { Account } from './account';
-import { TransactionType } from './transaction';
+import { TransactionType } from './enums';
 
 describe('Account', () => {
 

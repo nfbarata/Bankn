@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import Dinero from 'dinero.js';
 import { Account } from '../models/account';
-import { Transaction, TransactionType } from '../models/transaction';
+import { TransactionType } from '../models/enums';
+import { Transaction } from '../models/transaction';
 import { AccountService } from './account.service';
 import { BanknService } from './bankn.service';
 import { EventsService } from './events.service';

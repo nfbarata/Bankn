@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { BanknRoutingModule } from './bankn-routing.module'
 import { SharedModule } from '../shared/shared.module';
 
-import { BanknComponent } from './bankn/bankn.component';
+import { BanknComponent } from './components/bankn/bankn.component';
 
 @NgModule({
   imports: [

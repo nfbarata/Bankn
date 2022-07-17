@@ -1,33 +1,45 @@
 import { Transaction } from './transaction';
 import Dinero, { Currency } from 'dinero.js';
+import { ColumnSeparator, RowSeparator } from './enums';
 
 export class Account {
+
   private _id: string; //uuid
   name: string;
-  //type
-  //arquived
-  transactions: Transaction[] = [];
-  referenceAmount: Dinero.Dinero;
+  description: string;
+
+  transactions: Transaction[];
+
+  //TODO type
+  //TOOD arquived
+  //TODO exclude orçamentos
+  selected: boolean;
+
+  //
+  // From where balance is calculated
+  //
+  referenceAmount: Dinero.Dinero; //currency; inside referenceAmount
   referenceCountry: string; //to select in edit
   referenceDate: Date;
-  description: string = '';
-  //currency; inside referenceAmount
-  //exclude orçamentos
 
-  lastColumnSeparator: string | null = null;
-  lastLineSeparator: string | null = null;
-
-  selected: boolean = false;
+  columnSeparator: ColumnSeparator;
+  customColumnSeparator: string | null;
+  rowSeparator: RowSeparator;
+  customRowSeparator: string | null;
 
   constructor(
     id: string,
     name: string,
-    description: string,
+    description: string = '',
     referenceAmount: Dinero.Dinero,
     referenceDate: Date,
     referenceCountry: string,
     transactions: Transaction[] = [],
-    selected: boolean = false
+    selected: boolean = false,
+    columnSeparator: ColumnSeparator = ColumnSeparator.TAB,
+    customColumnSeparator: string | null = null,
+    rowSeparator: RowSeparator = RowSeparator.NEWLINE,
+    customRowSeparator: string | null = null,
   ) {
     this._id = id;
     this.name = name;
@@ -38,6 +50,10 @@ export class Account {
     if (transactions == null) this.transactions = [];
     else this.transactions = transactions;
     this.selected = selected;
+    this.columnSeparator = columnSeparator;
+    this.rowSeparator = rowSeparator;
+    this.customColumnSeparator = customColumnSeparator;
+    this.customRowSeparator = customRowSeparator;
   }
 
   public get id(): string {
@@ -58,6 +74,10 @@ export class Account {
       referenceCountry: this.referenceCountry,
       transactions: transactionsJson,
       selected: this.selected,
+      columnSeparator: this.columnSeparator,
+      customColumnSeparator: this.customColumnSeparator,
+      rowSeparator: this.columnSeparator,
+      customRowSeparator: this.customRowSeparator,
     };
   }
 
@@ -70,7 +90,11 @@ export class Account {
       new Date(json.referenceDate),
       json.referenceCountry,
       [],
-      json.selected
+      json.selected,
+      json.columnSeparator,
+      json.customColumnSeparator,
+      json.rowSeparator,
+      json.customRowSeparator,
     );
     if (json.transactions)
       json.transactions.forEach((transaction: any) => {

@@ -1,6 +1,7 @@
 import Dinero from "dinero.js";
 import { Account } from './account';
-import { Transaction, TransactionType } from './transaction';
+import { TransactionType } from "./enums";
+import { Transaction } from './transaction';
 
 describe('Transaction', () => {
 
@@ -12,11 +13,12 @@ describe('Transaction', () => {
       new Date(),
       "entity", 
       "category", 
-      "desc", 
+      "receipt",
+      "desc",
       new Account(
         "id",
         "name",
-        "des",
+        "desc",
         Dinero({ amount: 0, currency: 'EUR' }),
         new Date(),
         "PT"
@@ -27,8 +29,9 @@ describe('Transaction', () => {
     var id = "testId";
     var amount = 0;
     var date = "2020-01-01"
-    var entity = "ent";
-    var category = "cat";
+    var entityName = "ent";
+    var categoryName = "cat";
+    var receiptReference = "rec"
     var description = "desc";
     var type = TransactionType.CREDIT;
     var account = new Account(
@@ -43,18 +46,20 @@ describe('Transaction', () => {
     var transaction = Transaction.fromJson({
       id: id,
       amount: amount,
+      type: type,
       date: date,
-      entity: entity,
-      category: category,
+      entityName: entityName,
+      categoryName: categoryName,
+      receiptReference: receiptReference,
       description: description,
-      type: type
     }, account);
     expect(transaction.id).toBe(id);
     expect(transaction.amount.toJSON().amount).toEqual(amount);
-    expect(transaction.date).toEqual(new Date(date));
-    expect(transaction.entity).toBe(entity);
-    expect(transaction.category).toBe(category);
-    expect(transaction.description).toBe(description);
     expect(transaction.type).toBe(type);
+    expect(transaction.date).toEqual(new Date(date));
+    expect(transaction.entityName).toBe(entityName);
+    expect(transaction.categoryName).toBe(categoryName);
+    expect(transaction.receiptReference).toBe(receiptReference);
+    expect(transaction.description).toBe(description);
   });
 });

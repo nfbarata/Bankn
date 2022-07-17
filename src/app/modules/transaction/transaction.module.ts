@@ -5,11 +5,11 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { TransactionRoutingModule } from './transaction-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
-import { TransactionListComponent } from './transaction-list/transaction-list.component';
-import { TransactionImportComponent } from './transaction-import/transaction-import.component';
-import { TransactionComponent } from './transaction/transaction.component';
-import { TransactionImportFilterComponent } from './transaction-import-filter/transaction-import-filter.component';
-import { TransactionImportEditComponent } from './transaction-import-edit/transaction-import-edit.component'
+import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
+import { TransactionImportComponent } from './components/transaction-import/transaction-import.component';
+import { TransactionComponent } from './components/transaction/transaction.component';
+import { TransactionImportFilterComponent } from './components/transaction-import-filter/transaction-import-filter.component';
+import { TransactionImportEditComponent } from './components/transaction-import-edit/transaction-import-edit.component'
 
 @NgModule({
   imports: [

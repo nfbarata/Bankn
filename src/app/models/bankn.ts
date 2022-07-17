@@ -1,4 +1,6 @@
 import  { Account } from "./account";
+import { Category } from "./category";
+import { Entity } from "./entity";
 
 export class Bankn {
   
@@ -7,12 +9,18 @@ export class Bankn {
   accounts : Account[];
   //for default account country
   referenceCountry:string;
+  
+  entities: Entity[];
+  categories: Category[];
 
   constructor(
     id:string,
     name:string,
     accounts : Account[], 
-    referenceCountry:string) {
+    referenceCountry:string,
+    categories: Category[] = [],
+    entities: Entity[]=[],
+  ) {
     this._id = id;
     this.name = name;
     if(accounts==null){
@@ -21,6 +29,8 @@ export class Bankn {
       this.accounts = accounts;
     }
     this.referenceCountry = referenceCountry;
+    this.entities = entities;
+    this.categories = categories;
   }
 
   public get id(): string{
@@ -37,6 +47,8 @@ export class Bankn {
       name: this.name,
       accounts: accountsJson,
       referenceCountry: this.referenceCountry,
+      entities : this.entities,
+      categories : this.categories,
     };
   }
 
@@ -50,7 +62,9 @@ export class Bankn {
       json.id,
       json.name,
       accounts,
-      json.referenceCountry
+      json.referenceCountry,
+      json.entities,
+      json.categories
     );
   }
 }

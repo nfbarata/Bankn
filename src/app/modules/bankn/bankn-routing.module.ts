@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { InitializedGuard } from "../../guards/initialized.guard";
-import { BanknComponent } from "./bankn/bankn.component";
+import { BanknComponent } from "./components/bankn/bankn.component";
 
 const routes: Routes = [
   { path: "", component: BanknComponent },

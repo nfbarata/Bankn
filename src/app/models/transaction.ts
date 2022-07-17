@@ -1,23 +1,6 @@
 import { Account } from './account';
 import Dinero from 'dinero.js';
-
-export enum TransactionType {
-  CREDIT = 'c',
-  DEBIT = 'd',
-  TRANSFER = 't',
-}
-
-export enum ImportColumnType {
-  IGNORE = 'i', //'Ignore',
-  DESCRIPTION = 'des', // 'Description',
-  DATE_DMY = 'dtdmy', // 'Date (Day Month Year)',
-  DATE_MDY = 'dtmdy', // 'Date (Month Day Year)',
-  DATE_YMD = 'dtymd', // 'Date (Year Month Day)',
-  AMOUNT = 'a', // 'Amount',
-  CREDIT = 'c', // 'Credit',
-  DEBIT = 'd', // 'Debit',
-  SIGN = 's', // 'Sign',
-}
+import { TransactionType } from './enums';
 
 export class Transaction {
   private _id: string; //uuid
@@ -25,39 +8,38 @@ export class Transaction {
   public date: Date;
   public amount: Dinero.Dinero;
 
-  public description: string = "";
-  public category: string = "";
-  public entity: string = ""; //toAccount
+  public entityName?: string;
+  public categoryName?: string;
+  public receiptReference?: string;
+  public description?: string;
 
-  //receipt;
-  public hide: boolean = false; //volatile
-  public account!: Account; //volatile
-  public balanceBefore: Dinero.Dinero | null = null; //volatile
-  public balanceAfter: Dinero.Dinero | null = null; //volatile
+  //
+  //Volatile:
+  //
+  public hide: boolean = false; 
+  public account!: Account; 
+  public balanceBefore: Dinero.Dinero | null = null; 
+  public balanceAfter: Dinero.Dinero | null = null;
 
   constructor(
     uuid: string,
     amount: Dinero.Dinero,
     type: TransactionType,
-    date?: Date,
-    entity?: string,
-    category?: string,
+    date: Date = new Date(),
+    entityName?: string,
+    categoryName?: string,
+    receiptReference?: string,
     description?: string,
-    account?: Account | null
+    account: Account | null = null
   ) {
     this._id = uuid;
     this.amount = amount;
     this.type = type;
-    if(date!==undefined)
-      this.date = date;
-    else
-      this.date = new Date();
-    if(entity !== undefined)
-      this.entity = entity;
-    if(category !== undefined)
-      this.category = category;
-    if(description !== undefined)
-      this.description = description;
+    this.date = date;
+    this.entityName = entityName;
+    this.categoryName = categoryName;
+    this.receiptReference = receiptReference;
+    this.description = description;
     if(account != null)
       this.account = account;
   }
@@ -70,11 +52,12 @@ export class Transaction {
     return {
       id: this.id,
       amount: this.amount.toUnit(), //Dinero to value, compacted result
+      type: this.type, 
       date: this.date.toISOString().substring(0, 10),
-      entity: this.entity,
-      category: this.category,
+      entityName: this.entityName,
+      categoryName: this.categoryName,
+      receiptReference: this.receiptReference,
       description: this.description,
-      type: this.type,
     };
   }
 
@@ -84,8 +67,9 @@ export class Transaction {
       Account.toDinero(Account.getCurrency(account), transaction.amount), //value to Dinero, speed
       transaction.type,
       new Date(transaction.date),
-      typeof transaction.entity === 'undefined' ? null : transaction.entity,
-      typeof transaction.category === 'undefined' ? null : transaction.category,
+      transaction.entityName,
+      transaction.categoryName,
+      transaction.receiptReference,
       transaction.description,
       account
     );

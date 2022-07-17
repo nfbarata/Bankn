@@ -4,10 +4,11 @@ import { BanknService } from './bankn.service';
 import { EventsService } from './events.service';
 import { Account } from '../models/account';
 
-import { Transaction, TransactionType } from '../models/transaction';
+import { Transaction } from '../models/transaction';
 
 import Dinero from 'dinero.js';
 import { TransactionService } from './transaction.service';
+import { TransactionType } from '../models/enums';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
