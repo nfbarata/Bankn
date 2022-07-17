@@ -1,7 +1,7 @@
 import { Transaction } from './transaction';
-import Dinero, { Currency } from 'dinero.js';
 import { ColumnSeparator, RowSeparator } from './enums';
 import { Bankn } from './bankn';
+import Dinero, { Currency } from 'dinero.js';
 
 export class Account {
 
