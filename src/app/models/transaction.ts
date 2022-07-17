@@ -1,5 +1,4 @@
 import { Account } from './account';
-import Dinero from 'dinero.js';
 import { TransactionType } from './enums';
 import { Entity } from './entity';
 import { Category } from './category';
