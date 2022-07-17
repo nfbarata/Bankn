@@ -1,6 +1,7 @@
 import { Transaction } from './transaction';
 import Dinero, { Currency } from 'dinero.js';
 import { ColumnSeparator, RowSeparator } from './enums';
+import { Bankn } from './bankn';
 
 export class Account {
 
@@ -81,7 +82,7 @@ export class Account {
     };
   }
 
-  public static fromJson(json: any): Account {
+  public static fromJson(json: any, bankn: Bankn): Account {
     var account = new Account(
       json.id,
       json.name,
@@ -98,7 +99,7 @@ export class Account {
     );
     if (json.transactions)
       json.transactions.forEach((transaction: any) => {
-        account.transactions.push(Transaction.fromJson(transaction, account));
+        account.transactions.push(Transaction.fromJson(transaction, account, bankn));
       });
     return account;
   }

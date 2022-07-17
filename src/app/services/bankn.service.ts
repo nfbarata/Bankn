@@ -10,6 +10,8 @@ import { Account } from '../models/account';
 import { countries } from 'country-data-list';
 
 import { UUID } from 'angular2-uuid';
+import { Entity } from '../models/entity';
+import { Category } from '../models/category';
 
 @Injectable({ providedIn: 'root' })
 export class BanknService {
@@ -145,6 +147,99 @@ export class BanknService {
     if (country != null){
       return this.getCurrencyOfCountry(country);
     }
+    return null;
+  }
+
+  upsertEntity(entityName: string, descriptionPattern: string|null = null, referenceCategory: Category|null=null): Entity{
+    var entity = this.bankn!.getEntity(entityName);
+    if(entity==null){
+      entity = new Entity(entityName);
+      this.bankn!.entities.push(entity);//? event
+    }
+    if(descriptionPattern!=null)
+      //TODO more inteligent
+      if(!this.isDescriptionFromPatterns(descriptionPattern, entity.descriptionPatterns))
+        entity.descriptionPatterns.push(descriptionPattern);
+    if(referenceCategory)
+      entity.referenceCategory = referenceCategory;
+    return entity;
+  }
+
+  upsertCategory(categoryFullName: string, descriptionPattern?: string): Category|null{
+
+    //stop condition
+    if(categoryFullName.trim().length==0)
+      return null;
+
+    var categoryNames = categoryFullName.split(".");
+
+    var parentCategoryName = categoryNames[0];
+    var category = this.bankn!.getCategory(parentCategoryName); 
+    if(category==null){
+      category = new Category(parentCategoryName);
+      this.bankn!.categories.push(category);//? event
+    }
+
+    //recursive category creation
+    if(categoryNames.length>1)
+      category.innerCategory = this.upsertCategory(categoryFullName.substring(parentCategoryName.length), descriptionPattern);
+
+    //pattern only in the inner most category
+    if(category.innerCategory==null && descriptionPattern!==undefined)
+      this.addNewPattern(descriptionPattern, category.descriptionPatterns);
+
+    return category;
+  }
+
+  addNewPattern(descriptionPattern: string,  descriptionPatterns: string[]){
+    //TODO more inteligent
+    if(!this.isDescriptionFromPatterns(descriptionPattern, descriptionPatterns))
+      descriptionPatterns.push(descriptionPattern);
+  }
+
+  private isDescriptionFromPatterns(descriptionPattern: string,  descriptionPatterns: string[]): boolean{
+    for (let d = 0; d < descriptionPatterns.length; d++) {
+      if(this.isDescriptionFromPattern(descriptionPattern, descriptionPatterns[d])){
+        //TOOD optimize other descriptionPatterns?
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private isDescriptionFromPattern(description: string,  descriptionPattern: string): boolean{
+    //TODO more inteligent
+    return description==descriptionPattern;
+  }
+
+  getEntityFromDescriptionPattern(descriptionPattern: string, referenceCategory: Category|null): Entity|null{
+    //TODO parse category
+    for (let e = 0; e < this.bankn!.entities.length; e++) {
+      if(this.isDescriptionFromPatterns(descriptionPattern, this.bankn!.entities[e].descriptionPatterns))
+        return this.bankn!.entities[e];
+    }
+    return null;
+  }
+
+  getCategoryFromDescriptionPattern(descriptionPattern: string): Category|null{
+    //check top most categories
+    for (let c = 0; c < this.bankn!.categories.length; c++) {
+      var result = this.getCategoryFromDescriptionPatternRecursive(descriptionPattern, this.bankn!.categories[c].innerCategory!);
+      if(result!=null)
+        return result;
+    }
+    return null;
+  }
+
+  getCategoryFromDescriptionPatternRecursive(descriptionPattern: string, parentCategory: Category): Category|null{
+    var result = null;
+    //give priority to innerCategories
+    if(parentCategory.innerCategory!=null)
+      result = this.getCategoryFromDescriptionPatternRecursive(descriptionPattern, parentCategory.innerCategory!);
+    if(result!=null)
+      return result;
+    if(this.isDescriptionFromPatterns(descriptionPattern, parentCategory.descriptionPatterns))
+      return parentCategory;
     return null;
   }
 }

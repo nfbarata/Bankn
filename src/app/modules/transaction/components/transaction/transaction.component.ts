@@ -9,6 +9,8 @@ import { TransactionService } from "../../../../services/transaction.service";
 import { Account } from "../../../../models/account";
 import { Transaction } from "../../../../models/transaction";
 import { TransactionType } from "src/app/models/enums";
+import { Entity } from "src/app/models/entity";
+import { Category } from "src/app/models/category";
 
 @Component({
   selector: "transaction",
@@ -32,6 +34,9 @@ export class TransactionComponent implements OnInit {
     description: new FormControl(),
   });
   accounts: Account[] | null = null;
+  entities: Entity[] | null = null;
+  categories: Category[] | null = null;
+  
   transaction: Transaction | null = null;
 
   constructor(
@@ -50,6 +55,9 @@ export class TransactionComponent implements OnInit {
     
     this.refreshAccounts();
     this.eventsService.accountsChange.subscribe(() => this.refreshAccounts());
+
+    this.refreshEntities();
+    this.refreshCategories();
     
     this.route.paramMap.subscribe(params => {
       if(this.accounts!=null){
@@ -80,6 +88,7 @@ export class TransactionComponent implements OnInit {
               type: TransactionType.DEBIT.toString(),
               entity: "",
               category: "",
+              receiptReference: "",
               description: ""
             });
           } else {
@@ -96,8 +105,8 @@ export class TransactionComponent implements OnInit {
                 month: this.transaction.date.getMonth() + 1,
                 year: this.transaction.date.getFullYear(),
                 type: this.transaction.type.toString(),
-                entity: this.transaction.entityName,
-                category: this.transaction.categoryName,
+                entity: this.transaction.entity,
+                category: this.transaction.category,
                 receiptReference: this.transaction.receiptReference,
                 description: this.transaction.description
               });
@@ -116,6 +125,14 @@ export class TransactionComponent implements OnInit {
 
   refreshAccounts() {
     this.accounts = this.accountService.getAccounts();
+  }
+
+  refreshEntities() {
+    this.entities = this.banknService.getBankn()!.entities;
+  }
+
+  refreshCategories() {
+    this.categories = this.banknService.getBankn()!.categories;
   }
 
   onSubmit() {

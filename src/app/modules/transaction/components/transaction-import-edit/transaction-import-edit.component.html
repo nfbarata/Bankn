@@ -24,6 +24,12 @@
                 {{transaction.date| date:'shortDate'}}
               </td>
               <td>
+                {{transaction.entity==undefined?"":transaction.entity.name}}
+              </td>
+              <td>
+                {{transaction.category==undefined?"":transaction.category|category}}
+              </td>
+              <td>
                 {{transaction.description}}
               </td>
               <td>

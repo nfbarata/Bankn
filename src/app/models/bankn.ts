@@ -37,6 +37,38 @@ export class Bankn {
     return this._id;
   }
 
+  getEntity(entityName: string): Entity|null{
+    for (let e = 0; e < this.entities.length; e++) {
+      if(this.entities[e].name==entityName)
+        return this.entities[e];
+    }
+    return null;
+  }
+
+  getCategory(categoryName: string, parentCategory?: Category): Category|null{
+    //check top most categories
+    if(parentCategory===undefined){
+      for (let c = 0; c < this.categories.length; c++) {
+        if (this.categories[c].name == categoryName) {
+          return this.categories[c];
+        }else{
+          var category = this.getCategory(categoryName, this.categories[c]);
+          if(category != null)
+            return category;
+        }
+      }
+    }else{
+      //check inner categories
+      if(parentCategory.name==categoryName){
+        return parentCategory;
+      }else{
+        if(parentCategory.innerCategory!=null)
+          return this.getCategory(categoryName, parentCategory.innerCategory);
+      }
+    }
+    return null;
+  }
+
   public toJson(): any{
     var accountsJson: any[] = [];
     this.accounts.forEach((account) => {
@@ -53,18 +85,30 @@ export class Bankn {
   }
 
   public static fromJson(json: any): Bankn{
-    var accounts: Account[] = [];
-    if(json.accounts)
-      json.accounts.forEach((account: any) => {
-        accounts.push(Account.fromJson(account));
-      });
-    return new Bankn(
+    var bankn = new Bankn(
       json.id,
       json.name,
-      accounts,
+      [],
       json.referenceCountry,
-      json.entities,
-      json.categories
+      [],
+      []
     );
+
+    if(json.categories)
+      json.categories.forEach((category: any) => {
+        bankn.categories.push(Category.fromJson(category));
+      });
+
+    if(json.entities)
+      json.entities.forEach((entity: any) => {
+        bankn.entities.push(Entity.fromJson(entity));
+      });
+
+    if(json.accounts)
+      json.accounts.forEach((account: any) => {
+        bankn.accounts.push(Account.fromJson(account, bankn));
+      });
+    
+    return bankn;
   }
 }

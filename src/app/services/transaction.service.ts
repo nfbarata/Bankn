@@ -9,6 +9,9 @@ import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
 import Dinero from 'dinero.js';
 import { TransactionType } from '../models/enums';
+import { ignoreElements } from 'rxjs';
+import { BanknService } from './bankn.service';
+import { Bankn } from '../models/bankn';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
@@ -21,6 +24,7 @@ export class TransactionService {
   filterActions: any[] = [];
 
   constructor(
+    private banknService: BanknService,
     private eventsService: EventsService,
     private accountService: AccountService
   ) {}
@@ -37,13 +41,25 @@ export class TransactionService {
   ) {
     var clearDate = new Date(0); //clear hours/minutes/seconds
     clearDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+    
+    //create Category if not exist
+    var category = null;
+    if(categoryName !== undefined && categoryName.trim().length!=0)
+      category = this.banknService.upsertCategory(categoryName);
+    
+    //create Entity if not exist
+    var entity = null;
+    if(entityName !== undefined){
+      this.banknService.upsertEntity(entityName, description, category);
+    }
+    
     var transaction = new Transaction(
       UUID.UUID(),
       amount,
       type,
       clearDate,
-      entityName,
-      categoryName,
+      entity==null?undefined:entity,
+      category==null?undefined:category,
       receiptReference,
       description,
       account
@@ -62,21 +78,33 @@ export class TransactionService {
     receiptReference: string,
     description: string,
   ) {
+
+    //create Category if not exist
+    var category = null;
+    if(categoryName !== undefined && categoryName.trim().length!=0)
+      category = this.banknService.upsertCategory(categoryName);
+    
+    //create Entity if not exist
+    var entity = null;
+    if(entityName !== undefined){
+      this.banknService.upsertEntity(entityName, description, category);
+    }
+
     transaction.amount = amount;
     transaction.date = date;
     transaction.type = type;
-    transaction.entityName = entityName;
-    transaction.categoryName = categoryName;
+    transaction.entity = entity==null?undefined: entity;
+    transaction.category = category==null?undefined:category;
     transaction.receiptReference = receiptReference;
     transaction.description = description;
     this.eventsService.transactionChange.emit();
   }
 
-  fromJson(json: any[], currency: string, account: Account): any[] {
+  fromJson(json: any[], currency: string, account: Account, bankn: Bankn): any[] {
     var results: any[] = [];
     if (json != null) {
       json.forEach((transaction) => {
-        results.push(Transaction.fromJson(transaction, account));
+        results.push(Transaction.fromJson(transaction, account, bankn));
       });
     }
     return results;

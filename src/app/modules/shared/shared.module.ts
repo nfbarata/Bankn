@@ -9,24 +9,26 @@ import { FileOpenCardComponent } from './components/file-open-card/file-open-car
 import { BanknCreateCardComponent } from './components/bankn-create-card/bankn-create-card.component';
 import { TransactionsImportCardComponent } from './components/transactions-import-card/transactions-import-card.component';
 import { TransactionCreateCardComponent } from './components/transaction-create-card/transaction-create-card.component';
-import { DineroPipe } from './dinero.pipe';
-import { TransactionPipe } from './transaction.pipe';
-import { TransactionTypePipe } from './transactionType.pipe';
-import { ImportColumnTypePipe } from './importColumnType.pipe';
+import { DineroPipe } from './pipes/dinero.pipe';
+import { TransactionPipe } from './pipes/transaction.pipe';
+import { TransactionTypePipe } from './pipes/transactionType.pipe';
+import { ImportColumnTypePipe } from './pipes/importColumnType.pipe';
+import { CategoryPipe } from './pipes/category.pipe';
 
 @NgModule({
   imports: [
     CommonModule, RouterModule
   ],
   exports: [
-    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent,
-    TransactionCreateCardComponent, DineroPipe, TransactionPipe, TransactionTypePipe, ImportColumnTypePipe
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent, TransactionCreateCardComponent, 
+    DineroPipe, TransactionPipe, TransactionTypePipe, ImportColumnTypePipe, CategoryPipe
   ],
   declarations: [
-    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent, TransactionCreateCardComponent,DineroPipe, TransactionPipe, TransactionTypePipe, ImportColumnTypePipe
+    AccountCreateCardComponent, AccountSelectCardComponent, FileUploadComponent, FileOpenCardComponent, BanknCreateCardComponent, TransactionsImportCardComponent, TransactionCreateCardComponent, 
+    DineroPipe, TransactionPipe, TransactionTypePipe, ImportColumnTypePipe, CategoryPipe
   ],
-  providers:[
-    DineroPipe , TransactionPipe, TransactionTypePipe, ImportColumnTypePipe
+  providers: [
+    DineroPipe, TransactionPipe, TransactionTypePipe, ImportColumnTypePipe, CategoryPipe
   ]
 })
 export class SharedModule { }

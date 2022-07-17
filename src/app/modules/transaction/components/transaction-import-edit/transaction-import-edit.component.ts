@@ -57,11 +57,11 @@ export class TransactionImportEditComponent implements OnInit {
     this.transactions = this.transactionService.filterTransactions;
     this.route.paramMap.subscribe(params => {
       var accountId = params.get("accountId");
-      if(accountId!=null){
+      if (accountId != null) {
         this.account = this.accountService.getAccount(accountId);
         if (this.account == null) {
           this.router.navigate([""]);
-        }else if (this.transactions == null || this.transactions.length == 0) {
+        } else if (this.transactions == null || this.transactions.length == 0) {
           alert("No transactions to edit"); //i18n
           this.router.navigate(["/transactions/import/" + this.account.id]);
         }
@@ -70,17 +70,17 @@ export class TransactionImportEditComponent implements OnInit {
   }
 
   onSubmit(data: any) {
-    if(this.account!=null && this.transactions!=null){
+    if (this.account != null && this.transactions != null) {
       //TODO processar categorias/entities
       this.transactions.forEach(transaction => {
-        if(this.account!=null)
+        if (this.account != null)
           this.transactionService.createTransaction(
             this.account,
             transaction.amount,
             transaction.date,
             transaction.type,
-            transaction.entityName,
-            transaction.categoryName,
+            transaction.entity==undefined?"":transaction.entity.name,
+            transaction.category==undefined?"":transaction.category.name,
             transaction.receiptReference,
             transaction.description
           );
@@ -89,7 +89,7 @@ export class TransactionImportEditComponent implements OnInit {
       this.form.reset();
       this.accountService.selectAccount(this.account);
       this.router.navigate(["/transactions/" + this.account.id]);
-    }else{
+    } else {
       console.error("No account selected")
       this.router.navigate(["/accounts"]);
     }

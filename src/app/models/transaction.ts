@@ -1,6 +1,9 @@
 import { Account } from './account';
 import Dinero from 'dinero.js';
 import { TransactionType } from './enums';
+import { Entity } from './entity';
+import { Category } from './category';
+import { Bankn } from './bankn';
 
 export class Transaction {
   private _id: string; //uuid
@@ -8,8 +11,8 @@ export class Transaction {
   public date: Date;
   public amount: Dinero.Dinero;
 
-  public entityName?: string;
-  public categoryName?: string;
+  public entity?: Entity;
+  public category?: Category;
   public receiptReference?: string;
   public description?: string;
 
@@ -26,8 +29,8 @@ export class Transaction {
     amount: Dinero.Dinero,
     type: TransactionType,
     date: Date = new Date(),
-    entityName?: string,
-    categoryName?: string,
+    entity?: Entity,
+    category?: Category,
     receiptReference?: string,
     description?: string,
     account: Account | null = null
@@ -36,8 +39,8 @@ export class Transaction {
     this.amount = amount;
     this.type = type;
     this.date = date;
-    this.entityName = entityName;
-    this.categoryName = categoryName;
+    this.entity = entity;
+    this.category = category;
     this.receiptReference = receiptReference;
     this.description = description;
     if(account != null)
@@ -54,21 +57,21 @@ export class Transaction {
       amount: this.amount.toUnit(), //Dinero to value, compacted result
       type: this.type, 
       date: this.date.toISOString().substring(0, 10),
-      entityName: this.entityName,
-      categoryName: this.categoryName,
+      entityName: this.entity?.name,
+      categoryName: this.category?.name,
       receiptReference: this.receiptReference,
       description: this.description,
     };
   }
 
-  public static fromJson(transaction: any, account: Account): Transaction {
+  public static fromJson(transaction: any, account: Account, bankn: Bankn): Transaction {
     return new Transaction(
       transaction.id,
       Account.toDinero(Account.getCurrency(account), transaction.amount), //value to Dinero, speed
       transaction.type,
       new Date(transaction.date),
-      transaction.entityName,
-      transaction.categoryName,
+      bankn.getEntity(transaction.entityName)!,
+      bankn.getCategory(transaction.categoryName)!,
       transaction.receiptReference,
       transaction.description,
       account

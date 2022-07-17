@@ -1,5 +1,6 @@
 import Dinero from 'dinero.js';
 import { Account } from './account';
+import { Bankn } from './bankn';
 import { TransactionType } from './enums';
 
 describe('Account', () => {
@@ -23,6 +24,8 @@ describe('Account', () => {
     var referenceDate = "2020-01-01"
     var referenceCountry = "PT";
 
+    var bankn = new Bankn("id", "name", [], "PT");
+
     //no transactions
     var account = Account.fromJson({
       id: id,
@@ -31,7 +34,7 @@ describe('Account', () => {
       referenceAmount: referenceAmount,
       referenceDate: referenceDate,
       referenceCountry: referenceCountry
-    });
+    }, bankn);
     expect(account.id).toBe(id);
     expect(account.name).toBe(name);
     expect(account.description).toBe(description);
@@ -67,7 +70,7 @@ describe('Account', () => {
         type: TransactionType.CREDIT,
       }],
       selected: true
-    });
+    }, bankn);
     expect(account.id).toBe(id);
     expect(account.name).toBe(name);
     expect(account.description).toBe(description);

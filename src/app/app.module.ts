@@ -1,29 +1,13 @@
 //angular dependecies
-import {
-  NgModule,
-  LOCALE_ID,
-  Injector,
-  Inject,
-  InjectionToken,
-} from '@angular/core';
+import { NgModule, LOCALE_ID, InjectionToken} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { APP_BASE_HREF } from '@angular/common';//from erro
 //external dependencies
-import {
-  FontAwesomeModule,
-  FaIconLibrary,
-} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-import {
-  faSquare as farSquare,
-  faCheckSquare as farCheckSquare,
-} from '@fortawesome/free-regular-svg-icons';
-import {
-  faStackOverflow,
-  faGithub,
-  faMedium,
-} from '@fortawesome/free-brands-svg-icons';
+import { faSquare as farSquare, faCheckSquare as farCheckSquare} from '@fortawesome/free-regular-svg-icons';
+import { faStackOverflow,  faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
 //localization
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';

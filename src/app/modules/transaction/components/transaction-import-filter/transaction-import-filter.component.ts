@@ -184,14 +184,18 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
                 'There should be at least a column for amount, date and description'
               );
             }
+
+            var category = this.banknService.getCategoryFromDescriptionPattern(description);
+            var entity = this.banknService.getEntityFromDescriptionPattern(description, category);
+
             this.transactionService.filterTransactions.push(
               new Transaction(
                 UUID.UUID(),
                 Account.toDineroFromAccount(amount, this.account),
                 type,
                 date,
-                "",
-                "",
+                entity==null?undefined:entity,
+                category==null? undefined:category,
                 "",
                 description,
                 this.account
