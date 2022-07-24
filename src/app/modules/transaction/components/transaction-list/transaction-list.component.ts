@@ -6,7 +6,8 @@ import { TransactionService } from '../../../../services/transaction.service';
 import { Account } from '../../../../models/account';
 import { Transaction } from '../../../../models/transaction';
 //import { Dinero } from 'dinero.js';
-//import { TransactionType } from 'src/app/models/enums';
+import { Dinero } from 'dinero.js';
+import { TransactionType } from '../../../../models/enums';
 
 @Component({
   selector: 'app-transaction-list',
@@ -22,8 +23,7 @@ export class TransactionListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private eventsService: EventsService,
-    private accountService: AccountService,
-    private transactionService: TransactionService
+    private accountService: AccountService
   ) {}
 
   ngOnInit() {
@@ -88,7 +88,7 @@ export class TransactionListComponent implements OnInit {
 
   applyBalanceToTransactions(
     transactions: Transaction[],
-    initialValue: any //Dinero
+    initialValue: Dinero
   ): void {
     //update meta sum for all accounts and invert order
     var accumulatedBalance = Account.toDinero(
@@ -99,7 +99,7 @@ export class TransactionListComponent implements OnInit {
     //add meta balance for this account
     for (let i = transactions.length - 1; i >= 0; i--) {
       transactions[i].balanceBefore = accumulatedBalance;
-      /*switch (transactions[i].type) {
+      switch (transactions[i].type) {
         case TransactionType.CREDIT:
           accumulatedBalance = accumulatedBalance.add(transactions[i].amount);
           break;
@@ -108,7 +108,7 @@ export class TransactionListComponent implements OnInit {
             transactions[i].amount
           );
           break;
-      }*/
+      }
       transactions[i].balanceAfter = accumulatedBalance;
     }
   }

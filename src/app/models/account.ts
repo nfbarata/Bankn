@@ -2,6 +2,7 @@ import { Transaction } from './transaction';
 import { ColumnSeparator, RowSeparator } from './enums';
 import { Bankn } from './bankn';
 //import Dinero, { Currency } from 'dinero.js';
+import { Dinero, dinero } from 'dinero.js';
 
 export class Account {
   private _id: string; //uuid
@@ -18,7 +19,7 @@ export class Account {
   //
   // From where balance is calculated
   //
-  referenceAmount: any; //Dinero.Dinero; //currency; inside referenceAmount
+  referenceAmount: Dinero; //currency; inside referenceAmount
   referenceCountry: string; //to select in edit
   referenceDate: Date;
 
@@ -31,7 +32,7 @@ export class Account {
     id: string,
     name: string,
     description: string = '',
-    referenceAmount: any, //Dinero.Dinero,
+    referenceAmount: Dinero,
     referenceDate: Date,
     referenceCountry: string,
     transactions: Transaction[] = [],
@@ -86,7 +87,10 @@ export class Account {
       json.id,
       json.name,
       json.description,
-      null, //Dinero(json.referenceAmount),
+      dinero({
+        amount: json.referenceAmount.amount,
+        currency: json.referenceAmount.currency,
+      }), //Dinero(json.referenceAmount),
       new Date(json.referenceDate),
       json.referenceCountry,
       [],
@@ -107,28 +111,28 @@ export class Account {
 
   private static getPrecision(currency: string): number {
     //TODO guardar este valor em memória
-    return 0;
     //var reference = Dinero({ currency: <Dinero.Currency>currency });
-    //return reference.getPrecision();
+    var reference = dinero({ currency: <Dinero.Currency>currency });
+    return reference.getPrecision();
   }
 
   public static toDinero(
     currency: string,
     amount: number
   ): any /*Dinero.Dinero*/ {
-    return null;
     /*return Dinero({
       amount: amount * Math.pow(10, Account.getPrecision(currency)),
       currency: Account.getCurrencyObject(currency),
     });*/
+    return dinero({
+      amount: amount * Math.pow(10, Account.getPrecision(currency)),
+      currency: Account.getCurrencyObject(currency),
+    });
   }
 
-  public static toDineroFromAccount(
-    amount: number,
-    account: Account
-  ): any /*Dinero.Dinero*/ {
-    return null;
+  public static toDineroFromAccount(amount: number, account: Account): Dinero {
     //return this.toDinero(Account.getCurrency(account), amount);
+    return this.toDinero(Account.getCurrency(account), amount);
   }
 
   public static getCurrency(account: Account): string {
@@ -136,7 +140,7 @@ export class Account {
   }
 
   public static getCurrencyObject(currency: string): any /*Currency*/ {
-    return undefined;
     //return <Dinero.Currency>currency;
+    return <Dinero.Currency>currency;
   }
 }

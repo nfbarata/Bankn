@@ -8,6 +8,7 @@ import { AccountService } from './account.service';
 import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
 //import Dinero from 'dinero.js';
+import { Dinero } from 'dinero.js';
 import { TransactionType } from '../models/enums';
 import { ignoreElements } from 'rxjs';
 import { BanknService } from './bankn.service';
@@ -30,7 +31,7 @@ export class TransactionService {
 
   createTransaction(
     account: Account,
-    amount: any, //Dinero.Dinero,
+    amount: Dinero,
     date: Date,
     type: TransactionType,
     entityName?: string,
@@ -69,7 +70,7 @@ export class TransactionService {
   updateTransaction(
     account: Account,
     transaction: Transaction,
-    amount: any, //Dinero.Dinero,
+    amount: Dinero,
     date: Date,
     type: TransactionType,
     entityName: string,

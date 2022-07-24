@@ -4,12 +4,13 @@ import { Entity } from './entity';
 import { Category } from './category';
 import { Bankn } from './bankn';
 //import Dinero, { Currency } from 'dinero.js';
+import { Dinero } from 'dinero.js';
 
 export class Transaction {
   private _id: string; //uuid
   public type: TransactionType;
   public date: Date;
-  public amount: any; //Dinero.Dinero;
+  public amount: Dinero;
 
   public entity?: Entity;
   public category?: Category;
@@ -21,12 +22,12 @@ export class Transaction {
   //
   public hide: boolean = false;
   public account!: Account;
-  public balanceBefore: any /*Dinero.Dinero*/ | null = null;
-  public balanceAfter: any /*Dinero.Dinero*/ | null = null;
+  public balanceBefore: Dinero | null = null;
+  public balanceAfter: Dinero | null = null;
 
   constructor(
     uuid: string,
-    amount: any, //Dinero.Dinero,
+    amount: Dinero,
     type: TransactionType,
     date: Date = new Date(),
     entity?: Entity,

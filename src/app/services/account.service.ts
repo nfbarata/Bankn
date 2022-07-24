@@ -7,6 +7,7 @@ import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
 
 //import Dinero from 'dinero.js';
+import { Dinero } from 'dinero.js';
 import { TransactionService } from './transaction.service';
 import { TransactionType } from '../models/enums';
 
@@ -22,7 +23,7 @@ export class AccountService {
     description: string,
     referenceDate: Date,
     referenceCountry: string,
-    referenceAmount?: any //Dinero.Dinero
+    referenceAmount?: Dinero
   ): Account {
     var account: Account = new Account(
       this.createId(),
@@ -44,7 +45,7 @@ export class AccountService {
     id: string,
     name: string,
     description: string,
-    referenceAmount: any, //Dinero.Dinero,
+    referenceAmount: Dinero,
     referenceDate: Date,
     referenceCountry: string
   ) {
@@ -157,7 +158,7 @@ export class AccountService {
     this.eventsService.accountTransactionsChange.emit();
   }
 
-  static getInitialValue(account: Account): any /*Dinero.Dinero*/ {
+  static getInitialValue(account: Account): Dinero {
     var initialBalance = Account.toDinero(
       account.referenceAmount.toJSON().currency,
       account.referenceAmount.toUnit()
@@ -186,7 +187,7 @@ export class AccountService {
     return initialBalance;
   }
 
-  static getInitialValueMultiple(accounts: Account[]): any /*Dinero.Dinero*/ {
+  static getInitialValueMultiple(accounts: Account[]): Dinero {
     var initialBalance = Account.toDinero(
       accounts[0].referenceAmount.toJSON().currency, //TODO dif currencies
       0
