@@ -41,7 +41,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { MenuSideComponent } from './components/menu-side/menu-side.component';
 import { HomeComponent } from './components/home/home.component';
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
+//import { initializeApp } from 'firebase/app';
 //import { getAnalytics } from 'firebase/analytics';
 
 //TODO pass to object
@@ -125,7 +125,7 @@ export class AppModule {
     };
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
+    //const app = initializeApp(firebaseConfig);
     //const analytics = getAnalytics(app);
   }
 }
