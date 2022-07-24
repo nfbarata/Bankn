@@ -116,10 +116,7 @@ export class Account {
     return reference.getPrecision();
   }
 
-  public static toDinero(
-    currency: string,
-    amount: number
-  ): any /*Dinero.Dinero*/ {
+  public static toDinero(currency: string, amount: number): Dinero {
     /*return Dinero({
       amount: amount * Math.pow(10, Account.getPrecision(currency)),
       currency: Account.getCurrencyObject(currency),
