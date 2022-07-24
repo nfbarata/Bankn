@@ -3,12 +3,13 @@ import { TransactionType } from './enums';
 import { Entity } from './entity';
 import { Category } from './category';
 import { Bankn } from './bankn';
+//import Dinero, { Currency } from 'dinero.js';
 
 export class Transaction {
   private _id: string; //uuid
   public type: TransactionType;
   public date: Date;
-  public amount: Dinero.Dinero;
+  public amount: any; //Dinero.Dinero;
 
   public entity?: Entity;
   public category?: Category;
@@ -18,14 +19,14 @@ export class Transaction {
   //
   //Volatile:
   //
-  public hide: boolean = false; 
-  public account!: Account; 
-  public balanceBefore: Dinero.Dinero | null = null; 
-  public balanceAfter: Dinero.Dinero | null = null;
+  public hide: boolean = false;
+  public account!: Account;
+  public balanceBefore: any /*Dinero.Dinero*/ | null = null;
+  public balanceAfter: any /*Dinero.Dinero*/ | null = null;
 
   constructor(
     uuid: string,
-    amount: Dinero.Dinero,
+    amount: any, //Dinero.Dinero,
     type: TransactionType,
     date: Date = new Date(),
     entity?: Entity,
@@ -42,8 +43,7 @@ export class Transaction {
     this.category = category;
     this.receiptReference = receiptReference;
     this.description = description;
-    if(account != null)
-      this.account = account;
+    if (account != null) this.account = account;
   }
 
   public get id(): string {
@@ -54,7 +54,7 @@ export class Transaction {
     return {
       id: this.id,
       amount: this.amount.toUnit(), //Dinero to value, compacted result
-      type: this.type, 
+      type: this.type,
       date: this.date.toISOString().substring(0, 10),
       entityName: this.entity?.name,
       categoryName: this.category?.name,
@@ -63,7 +63,11 @@ export class Transaction {
     };
   }
 
-  public static fromJson(transaction: any, account: Account, bankn: Bankn): Transaction {
+  public static fromJson(
+    transaction: any,
+    account: Account,
+    bankn: Bankn
+  ): Transaction {
     return new Transaction(
       transaction.id,
       Account.toDinero(Account.getCurrency(account), transaction.amount), //value to Dinero, speed

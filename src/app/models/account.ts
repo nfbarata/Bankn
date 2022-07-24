@@ -1,10 +1,9 @@
 import { Transaction } from './transaction';
 import { ColumnSeparator, RowSeparator } from './enums';
 import { Bankn } from './bankn';
-import Dinero, { Currency } from 'dinero.js';
+//import Dinero, { Currency } from 'dinero.js';
 
 export class Account {
-
   private _id: string; //uuid
   name: string;
   description: string;
@@ -19,7 +18,7 @@ export class Account {
   //
   // From where balance is calculated
   //
-  referenceAmount: Dinero.Dinero; //currency; inside referenceAmount
+  referenceAmount: any; //Dinero.Dinero; //currency; inside referenceAmount
   referenceCountry: string; //to select in edit
   referenceDate: Date;
 
@@ -32,7 +31,7 @@ export class Account {
     id: string,
     name: string,
     description: string = '',
-    referenceAmount: Dinero.Dinero,
+    referenceAmount: any, //Dinero.Dinero,
     referenceDate: Date,
     referenceCountry: string,
     transactions: Transaction[] = [],
@@ -40,7 +39,7 @@ export class Account {
     columnSeparator: ColumnSeparator = ColumnSeparator.TAB,
     customColumnSeparator: string | null = null,
     rowSeparator: RowSeparator = RowSeparator.NEWLINE,
-    customRowSeparator: string | null = null,
+    customRowSeparator: string | null = null
   ) {
     this._id = id;
     this.name = name;
@@ -87,7 +86,7 @@ export class Account {
       json.id,
       json.name,
       json.description,
-      Dinero(json.referenceAmount),
+      null, //Dinero(json.referenceAmount),
       new Date(json.referenceDate),
       json.referenceCountry,
       [],
@@ -95,40 +94,49 @@ export class Account {
       json.columnSeparator,
       json.customColumnSeparator,
       json.rowSeparator,
-      json.customRowSeparator,
+      json.customRowSeparator
     );
     if (json.transactions)
       json.transactions.forEach((transaction: any) => {
-        account.transactions.push(Transaction.fromJson(transaction, account, bankn));
+        account.transactions.push(
+          Transaction.fromJson(transaction, account, bankn)
+        );
       });
     return account;
   }
 
   private static getPrecision(currency: string): number {
     //TODO guardar este valor em memória
-    var reference = Dinero({ currency: <Dinero.Currency>currency });
-    return reference.getPrecision();
+    return 0;
+    //var reference = Dinero({ currency: <Dinero.Currency>currency });
+    //return reference.getPrecision();
   }
 
-  public static toDinero(currency: string, amount: number): Dinero.Dinero {
-    return Dinero({
+  public static toDinero(
+    currency: string,
+    amount: number
+  ): any /*Dinero.Dinero*/ {
+    return null;
+    /*return Dinero({
       amount: amount * Math.pow(10, Account.getPrecision(currency)),
       currency: Account.getCurrencyObject(currency),
-    });
+    });*/
   }
 
   public static toDineroFromAccount(
     amount: number,
     account: Account
-  ): Dinero.Dinero {
-    return this.toDinero(Account.getCurrency(account), amount);
+  ): any /*Dinero.Dinero*/ {
+    return null;
+    //return this.toDinero(Account.getCurrency(account), amount);
   }
 
   public static getCurrency(account: Account): string {
     return account.referenceAmount.getCurrency();
   }
 
-  public static getCurrencyObject(currency: string): Currency{
-    return <Dinero.Currency>currency;
+  public static getCurrencyObject(currency: string): any /*Currency*/ {
+    return undefined;
+    //return <Dinero.Currency>currency;
   }
 }

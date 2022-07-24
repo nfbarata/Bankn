@@ -1,16 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
 // @ts-ignore
 import coinify from 'coinify';
-import * as Dinero from 'dinero.js'
+//import * as Dinero from 'dinero.js'
 
 @Pipe({
-  name: 'dinero'
+  name: 'dinero',
 })
 export class DineroPipe implements PipeTransform {
-
-  transform(value: Dinero.Dinero|null, args?: any): String {
-    if(value==null)
-      return "";
+  transform(value: any /*Dinero.Dinero*/ | null, args?: any): String {
+    if (value == null) return '';
     return value.toUnit() + coinify.symbol(value.getCurrency());
   }
 }

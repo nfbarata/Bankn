@@ -6,7 +6,7 @@ import { Account } from '../models/account';
 
 import { Transaction } from '../models/transaction';
 
-import Dinero from 'dinero.js';
+//import Dinero from 'dinero.js';
 import { TransactionService } from './transaction.service';
 import { TransactionType } from '../models/enums';
 
@@ -22,13 +22,15 @@ export class AccountService {
     description: string,
     referenceDate: Date,
     referenceCountry: string,
-    referenceAmount?: Dinero.Dinero,
+    referenceAmount?: any //Dinero.Dinero
   ): Account {
     var account: Account = new Account(
       this.createId(),
       name,
       description,
-      referenceAmount === undefined ? Account.toDinero(this.banknService.getReferenceCurrency()!, 0): referenceAmount,
+      referenceAmount === undefined
+        ? Account.toDinero(this.banknService.getReferenceCurrency()!, 0)
+        : referenceAmount,
       referenceDate,
       referenceCountry,
       [],
@@ -42,7 +44,7 @@ export class AccountService {
     id: string,
     name: string,
     description: string,
-    referenceAmount: Dinero.Dinero,
+    referenceAmount: any, //Dinero.Dinero,
     referenceDate: Date,
     referenceCountry: string
   ) {
@@ -155,7 +157,7 @@ export class AccountService {
     this.eventsService.accountTransactionsChange.emit();
   }
 
-  static getInitialValue(account: Account): Dinero.Dinero {
+  static getInitialValue(account: Account): any /*Dinero.Dinero*/ {
     var initialBalance = Account.toDinero(
       account.referenceAmount.toJSON().currency,
       account.referenceAmount.toUnit()
@@ -168,7 +170,9 @@ export class AccountService {
       ) {
         switch (account.transactions[i].type) {
           case TransactionType.CREDIT:
-            initialBalance = initialBalance.subtract(account.transactions[i].amount);
+            initialBalance = initialBalance.subtract(
+              account.transactions[i].amount
+            );
             break;
           case TransactionType.DEBIT:
             initialBalance = initialBalance.add(account.transactions[i].amount);
@@ -182,13 +186,15 @@ export class AccountService {
     return initialBalance;
   }
 
-  static getInitialValueMultiple(accounts: Account[]): Dinero.Dinero {
+  static getInitialValueMultiple(accounts: Account[]): any /*Dinero.Dinero*/ {
     var initialBalance = Account.toDinero(
       accounts[0].referenceAmount.toJSON().currency, //TODO dif currencies
       0
     );
     accounts.forEach((account) => {
-      initialBalance = initialBalance.add(AccountService.getInitialValue(account));
+      initialBalance = initialBalance.add(
+        AccountService.getInitialValue(account)
+      );
     });
     return initialBalance;
   }

@@ -4,9 +4,6 @@ import {
   AfterViewInit,
   ViewChild,
   ElementRef,
-  Input,
-  Directive,
-  ViewEncapsulation,
   Renderer2,
   Inject,
 } from '@angular/core';
@@ -20,7 +17,7 @@ import { TransactionService } from '../../../../services/transaction.service';
 import { Account } from '../../../../models/account';
 import { Transaction } from '../../../../models/transaction';
 import { UUID } from 'angular2-uuid';
-import { ImportColumnType, TransactionType } from 'src/app/models/enums';
+//import { ImportColumnType, TransactionType } from 'src/app/models/enums';
 
 @Component({
   selector: 'app-transaction-import-filter',
@@ -28,7 +25,7 @@ import { ImportColumnType, TransactionType } from 'src/app/models/enums';
   styleUrls: ['./transaction-import-filter.component.css'],
 })
 export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
-  importColumnTypes = Object.values(ImportColumnType);
+  importColumnTypes = []; //Object.values(ImportColumnType);
   form: FormGroup;
   formData;
   account: Account | null = null;
@@ -125,11 +122,11 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
             var amount: number | null = null;
             var date: Date | null = null;
             var description: string | null = null;
-            var type = TransactionType.CREDIT;
+            var type = ''; //TransactionType.CREDIT;
 
             actions.forEach((column: any, j: any) => {
               var value = row[j];
-              switch (this.transactionService.filterActions[j]) {
+              /*switch (this.transactionService.filterActions[j]) {
                 case ImportColumnType.IGNORE:
                   break;
                 case ImportColumnType.DESCRIPTION:
@@ -176,7 +173,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
                 case ImportColumnType.SIGN:
                   if (value.trim() == '-') type = TransactionType.DEBIT;
                   break;
-              }
+              }*/
             });
 
             if (amount == null || date == null || description == null) {
@@ -185,22 +182,27 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
               );
             }
 
-            var category = this.banknService.getCategoryFromDescriptionPattern(description);
-            var entity = this.banknService.getEntityFromDescriptionPattern(description, category);
+            var category =
+              this.banknService.getCategoryFromDescriptionPattern(description);
+            var entity = this.banknService.getEntityFromDescriptionPattern(
+              description,
+              category
+            );
 
-            this.transactionService.filterTransactions.push(
-              new Transaction(
+            this.transactionService.filterTransactions
+              .push
+              /*new Transaction(
                 UUID.UUID(),
                 Account.toDineroFromAccount(amount, this.account),
                 type,
                 date,
-                entity==null?undefined:entity,
-                category==null? undefined:category,
-                "",
+                entity == null ? undefined : entity,
+                category == null ? undefined : category,
+                '',
                 description,
                 this.account
-              )
-            );
+              )*/
+              ();
           }
         });
       } catch (error: any) {
