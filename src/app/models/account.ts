@@ -89,6 +89,7 @@ export class Account {
       json.description,
       dinero({
         amount: json.referenceAmount.amount,
+        scale: json.referenceAmount.scale,
         currency: json.referenceAmount.currency,
       }), //Dinero(json.referenceAmount),
       new Date(json.referenceDate),
@@ -109,12 +110,16 @@ export class Account {
     return account;
   }
 
-  private static getPrecision(currency: string): number {
+  /*private static getPrecision(currency: string): number {
     //TODO guardar este valor em memória
     //var reference = Dinero({ currency: <Dinero.Currency>currency });
-    var reference = dinero({ currency: <Dinero.Currency>currency });
+    var reference = dinero({
+      amount: 0,
+      scale: 1,
+      currency: <Dinero.Currency>currency,
+    });
     return reference.getPrecision();
-  }
+  }*/
 
   public static toDinero(currency: string, amount: number): Dinero {
     /*return Dinero({
@@ -122,7 +127,8 @@ export class Account {
       currency: Account.getCurrencyObject(currency),
     });*/
     return dinero({
-      amount: amount * Math.pow(10, Account.getPrecision(currency)),
+      amount: amount, // * Math.pow(10, Account.getPrecision(currency)),
+      scale: 1,
       currency: Account.getCurrencyObject(currency),
     });
   }
