@@ -134,16 +134,14 @@ export class Account {
   }
 
   public static toDineroFromAccount(amount: number, account: Account): Dinero {
-    //return this.toDinero(Account.getCurrency(account), amount);
     return this.toDinero(Account.getCurrency(account), amount);
   }
 
   public static getCurrency(account: Account): string {
-    return account.referenceAmount.getCurrency();
+    return account.referenceAmount.toJSON().currency;
   }
 
   public static getCurrencyObject(currency: string): any /*Currency*/ {
-    //return <Dinero.Currency>currency;
     return <Dinero.Currency>currency;
   }
 }
