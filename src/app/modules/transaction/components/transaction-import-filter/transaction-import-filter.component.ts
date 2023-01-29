@@ -192,7 +192,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
             this.transactionService.filterTransactions.push(
               new Transaction(
                 UUID.UUID(),
-                Account.toDineroFromAccount(amount, this.account),
+                this.accountService.toDinero(amount, this.account),
                 type,
                 date,
                 entity == null ? undefined : entity,

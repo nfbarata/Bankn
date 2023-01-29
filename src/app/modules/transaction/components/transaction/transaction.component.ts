@@ -67,16 +67,14 @@ export class TransactionComponent implements OnInit {
         } else {
           account = this.accountService.getAccount(accountId);
         }
-
         if (account != null) {
           var transactionId = params.get('transactionId');
-
           if (transactionId == null || transactionId.trim().length == 0) {
             var now = new Date();
             this.form.setValue({
               accountId: account.id,
               id: null,
-              amount: 0,
+              amount: this.banknService.toInputValue(this.accountService.toDinero(0, account)),
               day: now.getDate(),
               month: now.getMonth() + 1,
               year: now.getFullYear(),
@@ -95,7 +93,7 @@ export class TransactionComponent implements OnInit {
               this.form.setValue({
                 accountId: account.id,
                 id: transactionId,
-                amount: this.transaction.amount.toUnit(),
+                amount: this.banknService.toInputValue(this.transaction.amount),
                 day: this.transaction.date.getDate(),
                 month: this.transaction.date.getMonth() + 1,
                 year: this.transaction.date.getFullYear(),
@@ -136,9 +134,9 @@ export class TransactionComponent implements OnInit {
     );
 
     if (account != null) {
-      var amount = Account.toDinero(
-        Account.getCurrency(account),
-        this.form.controls['amount'].value
+      var amount = this.accountService.toDinero(
+        parseFloat(this.form.controls['amount'].value),
+        account
       );
 
       var date = new Date(0); //clear hours/minutes/seconds

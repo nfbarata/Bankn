@@ -3,14 +3,14 @@ import { TransactionType } from './enums';
 import { Entity } from './entity';
 import { Category } from './category';
 import { Bankn } from './bankn';
-//import Dinero, { Currency } from 'dinero.js';
 import { Dinero } from 'dinero.js';
+import { BanknService } from '../services/bankn.service';
 
 export class Transaction {
   private _id: string; //uuid
   public type: TransactionType;
   public date: Date;
-  public amount: Dinero;
+  public amount: Dinero<number>;
 
   public entity?: Entity;
   public category?: Category;
@@ -22,12 +22,12 @@ export class Transaction {
   //
   public hide: boolean = false;
   public account!: Account;
-  public balanceBefore: Dinero | null = null;
-  public balanceAfter: Dinero | null = null;
+  public balanceBefore: Dinero<number> | null = null;
+  public balanceAfter: Dinero<number> | null = null;
 
   constructor(
     uuid: string,
-    amount: Dinero,
+    amount: Dinero<number>,
     type: TransactionType,
     date: Date = new Date(),
     entity?: Entity,
@@ -54,7 +54,7 @@ export class Transaction {
   public toJson() {
     return {
       id: this.id,
-      amount: this.amount.toUnit(), //Dinero to value, compacted result
+      amount: this.amount.toJSON().amount, //Dinero to value, compacted result
       type: this.type,
       date: this.date.toISOString().substring(0, 10),
       entityName: this.entity?.name,
@@ -71,7 +71,10 @@ export class Transaction {
   ): Transaction {
     return new Transaction(
       transaction.id,
-      Account.toDinero(Account.getCurrency(account), transaction.amount), //value to Dinero, speed
+      BanknService.toDinero(
+        parseFloat(transaction.amount),
+        account.referenceAmount.toJSON().currency
+      ),
       transaction.type,
       new Date(transaction.date),
       bankn.getEntity(transaction.entityName)!,

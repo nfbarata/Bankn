@@ -1,8 +1,8 @@
 import { Transaction } from './transaction';
 import { ColumnSeparator, RowSeparator } from './enums';
 import { Bankn } from './bankn';
-//import Dinero, { Currency } from 'dinero.js';
-import { Dinero, dinero } from 'dinero.js';
+import { Dinero, dinero, Currency } from 'dinero.js';
+import { BanknService } from '../services/bankn.service';
 
 export class Account {
   private _id: string; //uuid
@@ -19,7 +19,7 @@ export class Account {
   //
   // From where balance is calculated
   //
-  referenceAmount: Dinero; //currency; inside referenceAmount
+  referenceAmount: Dinero<number>; //currency; inside referenceAmount
   referenceCountry: string; //to select in edit
   referenceDate: Date;
 
@@ -32,7 +32,7 @@ export class Account {
     id: string,
     name: string,
     description: string = '',
-    referenceAmount: Dinero,
+    referenceAmount: Dinero<number>,
     referenceDate: Date,
     referenceCountry: string,
     transactions: Transaction[] = [],
@@ -70,7 +70,7 @@ export class Account {
       id: this.id,
       name: this.name,
       description: this.description,
-      referenceAmount: this.referenceAmount.toObject(),
+      referenceAmount: this.referenceAmount.toJSON().amount,
       referenceDate: this.referenceDate.toISOString().substring(0, 10),
       referenceCountry: this.referenceCountry,
       transactions: transactionsJson,
@@ -87,11 +87,10 @@ export class Account {
       json.id,
       json.name,
       json.description,
-      dinero({
-        amount: json.referenceAmount.amount,
-        scale: json.referenceAmount.scale,
-        currency: json.referenceAmount.currency,
-      }), //Dinero(json.referenceAmount),
+      BanknService.toDinero(
+        parseFloat(json.referenceAmount),
+        BanknService.toCurrency(json.referenceCountry)
+      ),
       new Date(json.referenceDate),
       json.referenceCountry,
       [],
@@ -120,28 +119,4 @@ export class Account {
     });
     return reference.getPrecision();
   }*/
-
-  public static toDinero(currency: string, amount: number): Dinero {
-    /*return Dinero({
-      amount: amount * Math.pow(10, Account.getPrecision(currency)),
-      currency: Account.getCurrencyObject(currency),
-    });*/
-    return dinero({
-      amount: amount, // * Math.pow(10, Account.getPrecision(currency)),
-      scale: 1,
-      currency: Account.getCurrencyObject(currency),
-    });
-  }
-
-  public static toDineroFromAccount(amount: number, account: Account): Dinero {
-    return this.toDinero(Account.getCurrency(account), amount);
-  }
-
-  public static getCurrency(account: Account): string {
-    return account.referenceAmount.toJSON().currency;
-  }
-
-  public static getCurrencyObject(currency: string): any /*Currency*/ {
-    return <Dinero.Currency>currency;
-  }
 }

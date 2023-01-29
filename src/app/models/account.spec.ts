@@ -1,4 +1,5 @@
-import Dinero from 'dinero.js';
+import { dinero, toDecimal } from 'dinero.js';
+import { EUR } from '@dinero.js/currencies';
 import { Account } from './account';
 import { Bankn } from './bankn';
 import { TransactionType } from './enums';
@@ -10,7 +11,7 @@ describe('Account', () => {
       "id",
       "name",
       "des",
-      Dinero({amount:0, currency: 'EUR'}),
+      dinero({amount:0, currency: EUR}),
       new Date(),
       "PT"
       )).toBeTruthy();
@@ -20,7 +21,7 @@ describe('Account', () => {
     var id = "testId";
     var name = "name";
     var description = "desc";
-    var referenceAmount = 0;
+    var referenceAmount = "0.00";
     var referenceDate = "2020-01-01"
     var referenceCountry = "PT";
 
@@ -38,7 +39,7 @@ describe('Account', () => {
     expect(account.id).toBe(id);
     expect(account.name).toBe(name);
     expect(account.description).toBe(description);
-    expect(account.referenceAmount.toUnit()).toEqual(referenceAmount);    
+    expect(toDecimal(account.referenceAmount)).toEqual(referenceAmount);    
     expect(account.referenceDate).toEqual(new Date(referenceDate));
     expect(account.referenceCountry).toBe(referenceCountry);
     expect(account.transactions.length).toBe(0);
@@ -74,7 +75,7 @@ describe('Account', () => {
     expect(account.id).toBe(id);
     expect(account.name).toBe(name);
     expect(account.description).toBe(description);
-    expect(account.referenceAmount.toUnit()).toEqual(referenceAmount);    
+    expect(toDecimal(account.referenceAmount)).toEqual(referenceAmount);    
     expect(account.referenceDate).toEqual(new Date(referenceDate));
     expect(account.referenceCountry).toBe(referenceCountry);
     expect(account.transactions.length).toBe(2);

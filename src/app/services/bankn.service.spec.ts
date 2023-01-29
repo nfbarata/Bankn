@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import Dinero from 'dinero.js';
+import { dinero } from 'dinero.js';
+import { EUR } from '@dinero.js/currencies';
 import { Account } from '../models/account';
 import { Entity } from '../models/entity';
 import { BanknService } from './bankn.service';
@@ -7,7 +8,7 @@ import { BanknService } from './bankn.service';
 describe('BanknService', () => {
 
   let service: BanknService;
-  let account: Account = new Account("teste","teste","desc",Dinero({amount:0,currency:"EUR"}),new Date(),"PT");
+  let account: Account = new Account("teste","teste","desc",dinero({amount:0,currency:EUR}),new Date(),"PT");
 
   beforeEach(() => {
     TestBed.configureTestingModule({

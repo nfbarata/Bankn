@@ -48,7 +48,7 @@ export class AccountComponent implements OnInit {
         this.form.setValue({
           id: null,
           name: 'Main',
-          referenceAmount: 0,
+          referenceAmount: this.banknService.toInputValue(this.accountService.toDinero(0, null)),
           referenceCountry: this.banknService.getReferenceCountry(),
           referenceDay: '1',
           referenceMonth: '1',
@@ -61,7 +61,7 @@ export class AccountComponent implements OnInit {
           this.form.setValue({
             id: account.id,
             name: account.name,
-            referenceAmount: account.referenceAmount.value, //.toUnit(),
+            referenceAmount: this.banknService.toInputValue(account.referenceAmount), 
             referenceCountry: account.referenceCountry,
             referenceDay: account.referenceDate.getDate(),
             referenceMonth: account.referenceDate.getMonth() + 1,
@@ -74,12 +74,9 @@ export class AccountComponent implements OnInit {
   }
 
   onSubmit() {
-    var currency = this.banknService.getCurrencyOfCountry(
+    var amount = this.banknService.fromInputValue(
+      this.form.controls['referenceAmount'].value,
       this.form.controls['referenceCountry'].value
-    );
-    var amount = Account.toDinero(
-      currency,
-      this.form.controls['referenceAmount'].value
     );
 
     var date = new Date(0); //clear hours/minutes/seconds

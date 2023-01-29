@@ -12,6 +12,10 @@ import { countries } from 'country-data-list';
 import { UUID } from 'angular2-uuid';
 import { Entity } from '../models/entity';
 import { Category } from '../models/category';
+import { Dinero, dinero, Currency, toDecimal } from 'dinero.js';
+import { EUR } from '@dinero.js/currencies';
+import { CurrencyPipe } from '@angular/common';
+import { faEur } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({ providedIn: 'root' })
 export class BanknService {
@@ -135,19 +139,54 @@ export class BanknService {
     return country.currencies[0];
   }
 
-  getReferenceCountry(): string | null {
+  getReferenceCountry(): string {
     if (this.bankn != null) {
       return this.bankn.referenceCountry;
     }
-    return null;
+    return this.getDefaultCountryCode();
   }
 
-  getReferenceCurrency(): string|null {
+  getReferenceCurrency(): string {
     var country = this.getReferenceCountry();
-    if (country != null){
-      return this.getCurrencyOfCountry(country);
-    }
-    return null;
+    return this.getCurrencyOfCountry(country);
+  }
+
+  toCurrency(currencyCode?: string): Currency<number> {
+    if(currencyCode == undefined)
+      currencyCode = this.getReferenceCurrency();
+    return BanknService.toCurrency(currencyCode);
+  }
+
+  static toCurrency(currencyCode: string): Currency<number> {
+    //TODO search all currencies by code
+    return EUR;
+    /*return {
+      code: currencyCode,
+      base: 10,
+      exponent: 2
+    };*/
+  }
+
+  toDinero(value: number, currency?:Currency<number> ): Dinero<number>{
+    if(currency == undefined)
+      currency = this.toCurrency();
+    return BanknService.toDinero(value, currency);
+  }
+
+  static toDinero(value: number, currency:Currency<number> ): Dinero<number>{
+    return dinero({
+      amount: value,
+      currency: currency,
+      //scale: 2
+    });
+  }
+
+  toInputValue(value: Dinero<number>): string{
+    return toDecimal(value);  
+  }
+
+  fromInputValue(number: string, currency: string): Dinero<number>{
+    return this.toDinero(parseFloat(number), this.toCurrency(currency));
   }
 
   upsertEntity(entityName: string, descriptionPattern: string|null = null, referenceCategory: Category|null=null): Entity{

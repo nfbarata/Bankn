@@ -5,8 +5,7 @@ import { AccountService } from '../../../../services/account.service';
 import { TransactionService } from '../../../../services/transaction.service';
 import { Account } from '../../../../models/account';
 import { Transaction } from '../../../../models/transaction';
-//import { Dinero } from 'dinero.js';
-import { Dinero } from 'dinero.js';
+import { Dinero, add, subtract } from 'dinero.js';
 import { TransactionType } from '../../../../models/enums';
 
 @Component({
@@ -67,7 +66,7 @@ export class TransactionListComponent implements OnInit {
       });
 
       //get initial value
-      var initialValue = AccountService.getInitialValueMultiple(
+      var initialValue = this.accountService.getInitialValueMultiple(
         this.selectedAccounts
       );
 
@@ -88,25 +87,20 @@ export class TransactionListComponent implements OnInit {
 
   applyBalanceToTransactions(
     transactions: Transaction[],
-    initialValue: Dinero
+    initialValue: Dinero<number>
   ): void {
     //update meta sum for all accounts and invert order
-    var accumulatedBalance = Account.toDinero(
-      initialValue.getCurrency(),
-      initialValue.toUnit()
-    );
+    var accumulatedBalance = initialValue;
 
     //add meta balance for this account
     for (let i = transactions.length - 1; i >= 0; i--) {
       transactions[i].balanceBefore = accumulatedBalance;
       switch (transactions[i].type) {
         case TransactionType.CREDIT:
-          accumulatedBalance = accumulatedBalance.add(transactions[i].amount);
+          accumulatedBalance = add(accumulatedBalance,transactions[i].amount);
           break;
         case TransactionType.DEBIT:
-          accumulatedBalance = accumulatedBalance.subtract(
-            transactions[i].amount
-          );
+          accumulatedBalance = subtract(accumulatedBalance, transactions[i].amount);
           break;
       }
       transactions[i].balanceAfter = accumulatedBalance;
