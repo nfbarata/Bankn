@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import Dinero from 'dinero.js';
+import { dinero, toDecimal } from 'dinero.js';
+import { EUR } from '@dinero.js/currencies';
 import { Account } from '../models/account';
 import { TransactionType } from '../models/enums';
 import { Transaction } from '../models/transaction';
@@ -25,8 +26,15 @@ describe('AccountService', () => {
     banknServiceMock.getAccounts = jasmine.createSpy().and.callFake(function(){
       return [];
     });
-    banknServiceMock.getReferenceCurrency = jasmine.createSpy().and.callFake(function(){
-      return Account.getCurrencyObject("EUR");
+    banknServiceMock.toCurrency = jasmine.createSpy().and.callFake(function(){
+      return EUR;
+    });
+    banknServiceMock.toDinero = jasmine.createSpy().and.callFake(function(value){
+      return dinero({
+        amount: value,
+        currency: EUR,
+        //scale: 2
+      });
     });
     transactionServiceMock = jasmine.createSpyObj("transactionService",["sortTransactions"]);
     var eventsService = TestBed.inject(EventsService);
@@ -45,7 +53,7 @@ describe('AccountService', () => {
 
   it('addTransaction deleteTransactionId works', () => {
     var account = service.createAccount("teste", "teste", new Date(), "PT");
-    var transaction = new Transaction("teste",Dinero({amount:0,currency:"EUR"}), TransactionType.DEBIT);
+    var transaction = new Transaction("teste",dinero({amount:0,currency:EUR}), TransactionType.DEBIT);
     service.addTransaction(account, transaction);
     expect(account.transactions.length).toBe(1);
     expect(transaction.account.id).toBe(account.id);
@@ -56,25 +64,25 @@ describe('AccountService', () => {
   it('getInitialValue works', () => {
     var account = service.createAccount("teste", "teste", new Date(), "PT");
     var balance = AccountService.getInitialValue(account);
-    expect(balance.toUnit()).toBe(0);
-    var transaction = new Transaction("teste", Account.toDineroFromAccount(10,account), TransactionType.CREDIT, new Date(account.referenceDate.getDate()+1));
+    expect(toDecimal(balance)).toBe("0.00");
+    var transaction = new Transaction("teste", dinero({amount:1000,currency:EUR}), TransactionType.CREDIT, new Date(account.referenceDate.getDate()+1));
     service.addTransaction(account, transaction);
     balance = AccountService.getInitialValue(account);
-    expect(balance.toUnit()).toBe(-10);
+    expect(toDecimal(balance)).toBe("-10.00");
     service.deleteTransactionId(account, transaction.id);
     balance = AccountService.getInitialValue(account);
-    expect(balance.toUnit()).toBe(0);
+    expect(toDecimal(balance)).toBe("0.00");
   });
 
   it('getInitialValueMultiple works', () => {
     var accounts: Account[] = [];
     var account = service.createAccount("teste", "teste", new Date(), "PT");
     accounts.push(account);
-    var balance = AccountService.getInitialValueMultiple(accounts);
-    expect(balance.toUnit()).toBe(0);
-    var transaction = new Transaction("teste", Account.toDineroFromAccount(10, account), TransactionType.CREDIT, new Date(account.referenceDate.getDate()+1));
+    var balance = service.getInitialValueMultiple(accounts);
+    expect(toDecimal(balance)).toBe("0.00");
+    var transaction = new Transaction("teste", dinero({amount:1000,currency:EUR}), TransactionType.CREDIT, new Date(account.referenceDate.getDate()+1));
     service.addTransaction(account, transaction);
-    balance = AccountService.getInitialValueMultiple(accounts);
-    expect(balance.toUnit()).toBe(-10);
+    balance = service.getInitialValueMultiple(accounts);
+    expect(toDecimal(balance)).toBe("-10.00");
   });
 });

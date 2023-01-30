@@ -1,29 +1,15 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  Input,
-  Directive,
-  ViewEncapsulation,
-  Renderer2,
-  Inject
-} from "@angular/core";
-import { Location, DOCUMENT } from "@angular/common";
-import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { EventsService } from "../../../../services/events.service";
-import { BanknService } from "../../../../services/bankn.service";
-import { AccountService } from "../../../../services/account.service";
-import { TransactionService } from "../../../../services/transaction.service";
-import { Account } from "../../../../models/account";
-import { Transaction } from "../../../../models/transaction";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AccountService } from '../../../../services/account.service';
+import { TransactionService } from '../../../../services/transaction.service';
+import { Account } from '../../../../models/account';
+import { Transaction } from '../../../../models/transaction';
 
 @Component({
-  selector: "app-transaction-import-edit",
-  templateUrl: "./transaction-import-edit.component.html",
-  styleUrls: ["./transaction-import-edit.component.css"]
+  selector: 'app-transaction-import-edit',
+  templateUrl: './transaction-import-edit.component.html',
+  styleUrls: ['./transaction-import-edit.component.css'],
 })
 export class TransactionImportEditComponent implements OnInit {
   form: FormGroup;
@@ -34,20 +20,14 @@ export class TransactionImportEditComponent implements OnInit {
   submitDisabled: boolean = false;
 
   constructor(
-    private renderer: Renderer2,
-    private eventsService: EventsService,
-    private banknService: BanknService,
     private accountService: AccountService,
     private transactionService: TransactionService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
-    private location: Location,
-    //@Inject(DOCUMENT) document: any
+    private router: Router
   ) {
-    //this.document = document;
     this.formData = {
-      importData: null
+      importData: null,
     };
     this.form = this.formBuilder.group(this.formData);
   }
@@ -55,15 +35,15 @@ export class TransactionImportEditComponent implements OnInit {
   ngOnInit() {
     this.account = null;
     this.transactions = this.transactionService.filterTransactions;
-    this.route.paramMap.subscribe(params => {
-      var accountId = params.get("accountId");
+    this.route.paramMap.subscribe((params) => {
+      var accountId = params.get('accountId');
       if (accountId != null) {
         this.account = this.accountService.getAccount(accountId);
         if (this.account == null) {
-          this.router.navigate([""]);
+          this.router.navigate(['']);
         } else if (this.transactions == null || this.transactions.length == 0) {
-          alert("No transactions to edit"); //i18n
-          this.router.navigate(["/transactions/import/" + this.account.id]);
+          alert('No transactions to edit'); //i18n
+          this.router.navigate(['/transactions/import/' + this.account.id]);
         }
       }
     });
@@ -72,15 +52,15 @@ export class TransactionImportEditComponent implements OnInit {
   onSubmit(data: any) {
     if (this.account != null && this.transactions != null) {
       //TODO processar categorias/entities
-      this.transactions.forEach(transaction => {
+      this.transactions.forEach((transaction) => {
         if (this.account != null)
           this.transactionService.createTransaction(
             this.account,
             transaction.amount,
             transaction.date,
             transaction.type,
-            transaction.entity==undefined?"":transaction.entity.name,
-            transaction.category==undefined?"":transaction.category.name,
+            transaction.entity == undefined ? '' : transaction.entity.name,
+            transaction.category == undefined ? '' : transaction.category.name,
             transaction.receiptReference,
             transaction.description
           );
@@ -88,10 +68,10 @@ export class TransactionImportEditComponent implements OnInit {
 
       this.form.reset();
       this.accountService.selectAccount(this.account);
-      this.router.navigate(["/transactions/" + this.account.id]);
+      this.router.navigate(['/transactions/' + this.account.id]);
     } else {
-      console.error("No account selected")
-      this.router.navigate(["/accounts"]);
+      console.error('No account selected');
+      this.router.navigate(['/accounts']);
     }
   }
 }

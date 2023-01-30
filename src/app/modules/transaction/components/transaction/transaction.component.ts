@@ -1,24 +1,23 @@
-import { Component, OnInit } from "@angular/core";
-import { Location } from "@angular/common";
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { EventsService } from "../../../../services/events.service";
-import { BanknService } from "../../../../services/bankn.service";
-import { AccountService } from "../../../../services/account.service";
-import { TransactionService } from "../../../../services/transaction.service";
-import { Account } from "../../../../models/account";
-import { Transaction } from "../../../../models/transaction";
-import { TransactionType } from "src/app/models/enums";
-import { Entity } from "src/app/models/entity";
-import { Category } from "src/app/models/category";
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventsService } from '../../../../services/events.service';
+import { BanknService } from '../../../../services/bankn.service';
+import { AccountService } from '../../../../services/account.service';
+import { TransactionService } from '../../../../services/transaction.service';
+import { Account } from '../../../../models/account';
+import { Transaction } from '../../../../models/transaction';
+import { TransactionType } from '../../../../models/enums';
+import { Entity } from '../../../../models/entity';
+import { Category } from '../../../../models/category';
 
 @Component({
-  selector: "transaction",
-  templateUrl: "./transaction.component.html",
-  styleUrls: ["./transaction.component.css"]
+  selector: 'transaction',
+  templateUrl: './transaction.component.html',
+  styleUrls: ['./transaction.component.css'],
 })
 export class TransactionComponent implements OnInit {
-  
   transactionTypes = Object.values(TransactionType);
   form = new FormGroup({
     accountId: new FormControl(null),
@@ -36,7 +35,7 @@ export class TransactionComponent implements OnInit {
   accounts: Account[] | null = null;
   entities: Entity[] | null = null;
   categories: Category[] | null = null;
-  
+
   transaction: Transaction | null = null;
 
   constructor(
@@ -48,77 +47,71 @@ export class TransactionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    
     this.refreshAccounts();
     this.eventsService.accountsChange.subscribe(() => this.refreshAccounts());
 
     this.refreshEntities();
     this.refreshCategories();
-    
-    this.route.paramMap.subscribe(params => {
-      if(this.accounts!=null){
-        var account: Account|null;
-        var accountId = params.get("accountId");
+
+    this.route.paramMap.subscribe((params) => {
+      if (this.accounts != null) {
+        var account: Account | null;
+        var accountId = params.get('accountId');
         if (accountId == null || accountId.trim().length == 0) {
           var selected = this.accountService.getSelectedAccounts();
-          if (selected.length > 0) 
-            account = selected[0];
-          else 
-            account = this.accounts[0];
-        }else{
-          account = this.accountService.getAccount(accountId)
+          if (selected.length > 0) account = selected[0];
+          else account = this.accounts[0];
+        } else {
+          account = this.accountService.getAccount(accountId);
         }
-
-        if(account!=null){
-          var transactionId = params.get("transactionId");
-
+        if (account != null) {
+          var transactionId = params.get('transactionId');
           if (transactionId == null || transactionId.trim().length == 0) {
             var now = new Date();
             this.form.setValue({
               accountId: account.id,
               id: null,
-              amount: 0,
+              amount: this.banknService.toInputValue(this.accountService.toDinero(0, account)),
               day: now.getDate(),
               month: now.getMonth() + 1,
               year: now.getFullYear(),
               type: TransactionType.DEBIT.toString(),
-              entity: "",
-              category: "",
-              receiptReference: "",
-              description: ""
+              entity: '',
+              category: '',
+              receiptReference: '',
+              description: '',
             });
           } else {
             this.transaction = this.transactionService.getTransaction(
               account,
               transactionId
             );
-            if(this.transaction!=null){
+            if (this.transaction != null) {
               this.form.setValue({
                 accountId: account.id,
                 id: transactionId,
-                amount: this.transaction.amount.toUnit(),
+                amount: this.banknService.toInputValue(this.transaction.amount),
                 day: this.transaction.date.getDate(),
                 month: this.transaction.date.getMonth() + 1,
                 year: this.transaction.date.getFullYear(),
                 type: this.transaction.type.toString(),
-                entity: this.transaction.entity,
-                category: this.transaction.category,
+                entity: this.transaction.entity == undefined ? '':this.transaction.entity,
+                category: this.transaction.category == undefined ? '':this.transaction.category,
                 receiptReference: this.transaction.receiptReference,
-                description: this.transaction.description
+                description: this.transaction.description,
               });
-            }else{
-              console.error("No transaction with that id");
-              this.router.navigate(["/transactions"]);      
+            } else {
+              console.error('No transaction with that id');
+              this.router.navigate(['/transactions']);
             }
+          }
+        } else {
+          console.error('No account with that id');
+          this.router.navigate(['/accounts']);
         }
-      }else{
-        console.error("No account with that id");
-        this.router.navigate(["/accounts"]);
-      }
       }
     });
   }
@@ -136,55 +129,55 @@ export class TransactionComponent implements OnInit {
   }
 
   onSubmit() {
+    var account = this.accountService.getAccount(
+      this.form.controls['accountId'].value
+    );
 
-    var account = this.accountService.getAccount(this.form.controls["accountId"].value);
-    
-    if(account!=null){
-    
-      var amount = Account.toDinero(
-        Account.getCurrency(account),
-        this.form.controls["amount"].value
+    if (account != null) {
+      var amount = this.accountService.fromInputValue(
+        this.form.controls['amount'].value,
+        account
       );
 
       var date = new Date(0); //clear hours/minutes/seconds
       date.setFullYear(
-        this.form.controls["year"].value, 
-        this.form.controls["month"].value - 1, 
-        this.form.controls["day"].value
+        this.form.controls['year'].value,
+        this.form.controls['month'].value - 1,
+        this.form.controls['day'].value
       );
 
-      if (this.form.controls["id"].value == null) {
+      if (this.form.controls['id'].value == null) {
         //create
         this.transactionService.createTransaction(
           account,
           amount,
           date,
-          this.form.controls["type"].value,
-          this.form.controls["entity"].value,
-          this.form.controls["category"].value,
-          this.form.controls["receiptReference"].value,
-          this.form.controls["description"].value,
+          this.form.controls['type'].value,
+          this.form.controls['entity'].value,
+          this.form.controls['category'].value,
+          this.form.controls['receiptReference'].value,
+          this.form.controls['description'].value
         );
       } else {
         //update
-        if(this.transaction!=null){
+        if (this.transaction != null) {
           this.transactionService.updateTransaction(
             account,
             this.transaction,
             amount,
             date,
-            this.form.controls["type"].value,
-            this.form.controls["entity"].value,
-            this.form.controls["category"].value,
-            this.form.controls["receiptReference"].value,
-            this.form.controls["description"].value,
+            this.form.controls['type'].value,
+            this.form.controls['entity'].value,
+            this.form.controls['category'].value,
+            this.form.controls['receiptReference'].value,
+            this.form.controls['description'].value
           );
         }
       }
       this.form.reset();
-      this.router.navigate(["/transactions"]);
-    }else{
-      alert('Error, try again.');//I18N
+      this.router.navigate(['/transactions']);
+    } else {
+      alert('Error, try again.'); //I18N
     }
   }
 

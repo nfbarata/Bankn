@@ -43,17 +43,17 @@ describe('Bankn', () => {
         id: "1",
         name: "ac1",
         description: "",
-        referenceAmount: "1",
+        referenceAmount: 1,
         referenceDate: "2020-01-01",
-        referenceCountry: "PT",
+        referenceCountry: referenceCountry,
         selected: false,
       }, {
         id: "2",
         name: "ac2",
         description: "",
-        referenceAmount: "2",
+        referenceAmount: 2,
         referenceDate: "2020-01-01",
-        referenceCountry: "PT",
+        referenceCountry: referenceCountry,
         selected: false,
       }]
     });

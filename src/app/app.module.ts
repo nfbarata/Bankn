@@ -1,13 +1,23 @@
 //angular dependecies
-import { NgModule, LOCALE_ID, InjectionToken} from '@angular/core';
+import { NgModule, LOCALE_ID, InjectionToken } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //import { APP_BASE_HREF } from '@angular/common';//from erro
 //external dependencies
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
 import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-import { faSquare as farSquare, faCheckSquare as farCheckSquare} from '@fortawesome/free-regular-svg-icons';
-import { faStackOverflow,  faGithub, faMedium } from '@fortawesome/free-brands-svg-icons';
+import {
+  faSquare as farSquare,
+  faCheckSquare as farCheckSquare,
+} from '@fortawesome/free-regular-svg-icons';
+import {
+  faStackOverflow,
+  faGithub,
+  faMedium,
+} from '@fortawesome/free-brands-svg-icons';
 //localization
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
@@ -31,8 +41,8 @@ import { MenuComponent } from './components/menu/menu.component';
 import { MenuSideComponent } from './components/menu-side/menu-side.component';
 import { HomeComponent } from './components/home/home.component';
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+//import { initializeApp } from 'firebase/app';
+//import { getAnalytics } from 'firebase/analytics';
 
 //TODO pass to object
 const LANG = (function (defaultValue: String) {
@@ -115,7 +125,7 @@ export class AppModule {
     };
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    //const app = initializeApp(firebaseConfig);
+    //const analytics = getAnalytics(app);
   }
 }

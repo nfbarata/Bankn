@@ -5,35 +5,36 @@
     <div class="col-12">
       <div class="table-responsive-xl">
         <table
-          class="table table-sm table-bordered small font-weight-lighter text-truncate"
+          class="
+            table table-sm table-bordered
+            small
+            font-weight-lighter
+            text-truncate
+          "
         >
           <tbody id="parsedData">
             <tr>
-              <th i18n>
-                Date
-              </th>
-              <th i18n>
-                Description
-              </th>
-              <th i18n>
-                Amount
-              </th>
+              <th i18n>Date</th>
+              <th i18n>Description</th>
+              <th i18n>Amount</th>
             </tr>
-            <tr *ngFor="let transaction of transactions; let t = index;">
+            <tr *ngFor="let transaction of transactions; let t = index">
               <td>
-                {{transaction.date| date:'shortDate'}}
+                {{ transaction.date | date: 'shortDate' }}
               </td>
               <td>
-                {{transaction.entity==undefined?"":transaction.entity.name}}
+                {{
+                  transaction.entity == undefined ? '' : transaction.entity.name
+                }}
               </td>
               <td>
-                {{transaction.category==undefined?"":transaction.category|category}}
+                <!--{{transaction.category==undefined?"":transaction.category|category}}-->
               </td>
               <td>
-                {{transaction.description}}
+                {{ transaction.description }}
               </td>
               <td>
-                {{transaction|transaction}}
+                {{ transaction | transaction }}
               </td>
             </tr>
           </tbody>
@@ -44,7 +45,12 @@
   <br />
   <div class="row">
     <div class="col-12">
-      <button class="btn btn-primary" type="submit" i18n [disabled]="submitDisabled">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        i18n
+        [disabled]="submitDisabled"
+      >
         Import
       </button>
     </div>
