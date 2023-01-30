@@ -174,6 +174,7 @@ export class BanknService {
   }
 
   static toDinero(value: number, currency:Currency<number> ): Dinero<number>{
+    //console.log(value);
     return dinero({
       amount: value,
       currency: currency,
@@ -186,7 +187,9 @@ export class BanknService {
   }
 
   fromInputValue(number: string, currency: string): Dinero<number>{
-    return this.toDinero(parseFloat(number), this.toCurrency(currency));
+    var cur = this.toCurrency(currency);
+    var value = Math.round(parseFloat(number) * Math.pow(10, cur.exponent));
+    return this.toDinero(value, cur);
   }
 
   upsertEntity(entityName: string, descriptionPattern: string|null = null, referenceCategory: Category|null=null): Entity{

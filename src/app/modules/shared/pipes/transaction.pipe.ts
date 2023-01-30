@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DineroPipe } from './dinero.pipe';
 import { Transaction } from '../../../models/transaction';
-//import { TransactionType } from '../../../models/enums';
+import { TransactionType } from '../../../models/enums';
+import { dinero, toDecimal, compare  } from 'dinero.js';
 
 @Pipe({
   name: 'transaction',
@@ -12,13 +13,14 @@ export class TransactionPipe implements PipeTransform {
   transform(transaction: Transaction, args?: any): any {
     var amount = transaction.amount;
     var result = '';
-    /*  switch (transaction.type) {
+    switch (transaction.type) {
       case TransactionType.CREDIT:
         break;
       case TransactionType.DEBIT:
-        if (amount.toUnit() != 0) result = result + '-';
+        if (compare(amount, dinero({amount: 0,currency: amount.toJSON().currency}))==1) 
+          result = result + '-';
         break;
-    }*/
+    }
     result = result + this.dinero.transform(amount);
     return result;
   }
