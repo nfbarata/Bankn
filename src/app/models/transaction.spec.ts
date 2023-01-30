@@ -1,4 +1,5 @@
-import Dinero from "dinero.js";
+import { dinero, toDecimal } from 'dinero.js';
+import { EUR } from '@dinero.js/currencies';
 import { Account } from './account';
 import { Bankn } from "./bankn";
 import { Category } from "./category";
@@ -11,7 +12,7 @@ describe('Transaction', () => {
   it('should create an instance', () => {
     expect(new Transaction(
       "id",
-      Dinero({ amount: 0, currency: 'EUR'}),
+      dinero({ amount: 0, currency: EUR}),
       TransactionType.CREDIT, 
       new Date(),
       new Entity("e"), 
@@ -22,7 +23,7 @@ describe('Transaction', () => {
         "id",
         "name",
         "desc",
-        Dinero({ amount: 0, currency: 'EUR' }),
+        dinero({ amount: 0, currency: EUR }),
         new Date(),
         "PT"
       ))).toBeTruthy();
@@ -51,7 +52,7 @@ describe('Transaction', () => {
       "id",
       "name",
       "des",
-      Dinero({ amount: 0, currency: 'EUR' }),
+      dinero({ amount: 0, currency: EUR }),
       new Date(),
       "PT"
     );

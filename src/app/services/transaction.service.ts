@@ -7,7 +7,7 @@ import { AccountService } from './account.service';
 
 import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
-import Dinero from 'dinero.js';
+import { Dinero } from 'dinero.js';
 import { TransactionType } from '../models/enums';
 import { ignoreElements } from 'rxjs';
 import { BanknService } from './bankn.service';
@@ -15,7 +15,6 @@ import { Bankn } from '../models/bankn';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-
   //
   //Volatile - for use between screens
   //
@@ -31,35 +30,35 @@ export class TransactionService {
 
   createTransaction(
     account: Account,
-    amount: Dinero.Dinero,
+    amount: Dinero<number>,
     date: Date,
     type: TransactionType,
     entityName?: string,
     categoryName?: string,
     receiptReference?: string,
-    description?: string,
+    description?: string
   ) {
     var clearDate = new Date(0); //clear hours/minutes/seconds
     clearDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
-    
+
     //create Category if not exist
     var category = null;
-    if(categoryName !== undefined && categoryName.trim().length!=0)
+    if (categoryName !== undefined && categoryName.trim().length != 0)
       category = this.banknService.upsertCategory(categoryName);
-    
+
     //create Entity if not exist
     var entity = null;
-    if(entityName !== undefined){
+    if (entityName !== undefined) {
       this.banknService.upsertEntity(entityName, description, category);
     }
-    
+
     var transaction = new Transaction(
       UUID.UUID(),
       amount,
       type,
       clearDate,
-      entity==null?undefined:entity,
-      category==null?undefined:category,
+      entity == null ? undefined : entity,
+      category == null ? undefined : category,
       receiptReference,
       description,
       account
@@ -70,37 +69,41 @@ export class TransactionService {
   updateTransaction(
     account: Account,
     transaction: Transaction,
-    amount: Dinero.Dinero,
+    amount: Dinero<number>,
     date: Date,
     type: TransactionType,
     entityName: string,
     categoryName: string,
     receiptReference: string,
-    description: string,
+    description: string
   ) {
-
     //create Category if not exist
     var category = null;
-    if(categoryName !== undefined && categoryName.trim().length!=0)
+    if (categoryName !== undefined && categoryName.trim().length != 0)
       category = this.banknService.upsertCategory(categoryName);
-    
+
     //create Entity if not exist
     var entity = null;
-    if(entityName !== undefined){
+    if (entityName !== undefined) {
       this.banknService.upsertEntity(entityName, description, category);
     }
 
     transaction.amount = amount;
     transaction.date = date;
     transaction.type = type;
-    transaction.entity = entity==null?undefined: entity;
-    transaction.category = category==null?undefined:category;
+    transaction.entity = entity == null ? undefined : entity;
+    transaction.category = category == null ? undefined : category;
     transaction.receiptReference = receiptReference;
     transaction.description = description;
     this.eventsService.transactionChange.emit();
   }
 
-  fromJson(json: any[], currency: string, account: Account, bankn: Bankn): any[] {
+  fromJson(
+    json: any[],
+    currency: string,
+    account: Account,
+    bankn: Bankn
+  ): any[] {
     var results: any[] = [];
     if (json != null) {
       json.forEach((transaction) => {

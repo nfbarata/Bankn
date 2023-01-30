@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TransactionType } from 'src/app/models/enums';
+import { TransactionType } from '../../../models/enums';
 
 @Pipe({
   name: 'transactionType',
 })
 export class TransactionTypePipe implements PipeTransform {
-  transform(value: string | TransactionType, args?: any): String {
+  transform(value: string /*| TransactionType*/, args?: any): String {
     var e: TransactionType;
     if (typeof value === 'string') e = value as TransactionType;
     else e = value;

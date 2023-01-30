@@ -1,47 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute,Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventsService } from '../../../../services/events.service';
 import { AccountService } from '../../../../services/account.service';
 import { TransactionService } from '../../../../services/transaction.service';
-import { Account } from "../../../../models/account";
-import { Transaction } from "../../../../models/transaction";
-import { Dinero } from 'dinero.js';
-import { TransactionType } from 'src/app/models/enums';
+import { Account } from '../../../../models/account';
+import { Transaction } from '../../../../models/transaction';
+import { Dinero, add, subtract } from 'dinero.js';
+import { TransactionType } from '../../../../models/enums';
 
 @Component({
   selector: 'app-transaction-list',
   templateUrl: './transaction-list.component.html',
-  styleUrls: ['./transaction-list.component.css']
+  styleUrls: ['./transaction-list.component.css'],
 })
 export class TransactionListComponent implements OnInit {
-
-  hasRealTransactions:boolean = false;
+  hasRealTransactions: boolean = false;
   transactions: Transaction[] = [];
-  selectedAccounts : Account[] = [];
-  accounts : Account[] = [];
+  selectedAccounts: Account[] = [];
+  accounts: Account[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private eventsService: EventsService,
-    private accountService: AccountService,
-    private transactionService: TransactionService,
-  ) { 
-  }
+    private accountService: AccountService
+  ) {}
 
   ngOnInit() {
     this.refreshAccounts();
-    this.eventsService.accountSelectionChange.subscribe(()=>this.refreshData());
-    this.eventsService.accountsChange.subscribe(()=>this.refreshAccounts());
-    this.route.paramMap.subscribe(params => {
+    this.eventsService.accountSelectionChange.subscribe(() =>
+      this.refreshData()
+    );
+    this.eventsService.accountsChange.subscribe(() => this.refreshAccounts());
+    this.route.paramMap.subscribe((params) => {
       var accountId = params.get('accountId');
-      if(accountId==null || accountId.trim().length==0){
+      if (accountId == null || accountId.trim().length == 0) {
         //do nothing
-      }else{
-        this.accounts.forEach(account => {
-          if(account.id==accountId){
+      } else {
+        this.accounts.forEach((account) => {
+          if (account.id == accountId) {
             this.accountService.selectAccount(account);
-          }else{
-            if(account.selected){
+          } else {
+            if (account.selected) {
               this.accountService.toggleAccount(account);
             }
           }
@@ -50,60 +49,59 @@ export class TransactionListComponent implements OnInit {
     });
   }
 
-  refreshData(){
-
+  refreshData() {
     //clear
-    while(this.transactions.length>0)
-      this.transactions.pop();
+    while (this.transactions.length > 0) this.transactions.pop();
     this.hasRealTransactions = false;
 
     var newTransactions: Transaction[] = [];
 
     this.selectedAccounts = this.accountService.getSelectedAccounts();
 
-    if(this.selectedAccounts.length>0){
-
-      this.selectedAccounts.forEach(account => {
+    if (this.selectedAccounts.length > 0) {
+      this.selectedAccounts.forEach((account) => {
         newTransactions = newTransactions.concat(account.transactions);
-        if(!this.hasRealTransactions && account.transactions.length>0)
+        if (!this.hasRealTransactions && account.transactions.length > 0)
           this.hasRealTransactions = true;
       });
 
       //get initial value
-      var initialValue = AccountService.getInitialValueMultiple(this.selectedAccounts);
+      var initialValue = this.accountService.getInitialValueMultiple(
+        this.selectedAccounts
+      );
 
       //sort (from multiple accounts)
       TransactionService.sortTransactions(newTransactions);
 
       //calculate balances
       this.applyBalanceToTransactions(newTransactions, initialValue);
-      
+
       this.transactions = newTransactions;
     }
   }
 
-  refreshAccounts(){
+  refreshAccounts() {
     this.accounts = this.accountService.getAccounts();
     this.refreshData();
   }
 
-  applyBalanceToTransactions(transactions:Transaction[], initialValue:Dinero):void{
+  applyBalanceToTransactions(
+    transactions: Transaction[],
+    initialValue: Dinero<number>
+  ): void {
     //update meta sum for all accounts and invert order
-    var accumulatedBalance = Account.toDinero(
-      initialValue.getCurrency(),
-      initialValue.toUnit()
-    );
+    var accumulatedBalance = initialValue;
 
     //add meta balance for this account
-    for (let i = transactions.length-1; i >=0 ; i--) {
-      transactions[i].balanceBefore=accumulatedBalance;
-      switch(transactions[i].type){
+    for (let i = transactions.length - 1; i >= 0; i--) {
+      transactions[i].balanceBefore = accumulatedBalance;
+      switch (transactions[i].type) {
         case TransactionType.CREDIT:
-          accumulatedBalance = accumulatedBalance.add(transactions[i].amount);
-        break;
+          accumulatedBalance = add(accumulatedBalance,transactions[i].amount);
+          break;
         case TransactionType.DEBIT:
-          accumulatedBalance = accumulatedBalance.subtract(transactions[i].amount);
-        break;
+          accumulatedBalance = subtract(accumulatedBalance, transactions[i].amount);
+          break;
       }
       transactions[i].balanceAfter = accumulatedBalance;
     }
