@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-//import { ImportColumnType } from 'src/app/models/enums';
+import { ImportColumnType } from 'src/app/models/enums';
 
 @Pipe({
   name: 'importColumnType',
 })
 export class ImportColumnTypePipe implements PipeTransform {
   transform(value: string /*| ImportColumnType*/, args?: any): String {
-    /*  var e: ImportColumnType;
+    var e: ImportColumnType;
     if (typeof value === 'string') e = value as ImportColumnType;
     else e = value;
     switch (e) {
@@ -28,6 +28,6 @@ export class ImportColumnTypePipe implements PipeTransform {
         return 'Debit';
       case ImportColumnType.SIGN:
         return 'Sign';
-    }*/ return '';
+    } return '';
   }
 }

@@ -86,8 +86,8 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
     return value;
   }
 
-  private getNumber(value: any): number {
-    return Number(value.replace(',', '.'));
+  private normalize(value: any): string {
+    return value.replace(',', '.');
   }
 
   private getYear(value: any) {
@@ -119,7 +119,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
         this.transactions.forEach((row, i) => {
           var dontIgnore = this.document.getElementById('dontIgnore' + i);
           if (this.account != null && dontIgnore.checked) {
-            var amount: number | null = null;
+            var amount: string | null = null;
             var date: Date | null = null;
             var description: string | null = null;
             var type = TransactionType.CREDIT;
@@ -161,13 +161,13 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
                     value = value.replace('-', '');
                     type = TransactionType.DEBIT;
                   }
-                  amount = this.getNumber(value);
+                  amount = this.normalize(value);
                   break;
                 case ImportColumnType.CREDIT:
-                  amount = this.getNumber(value);
+                  amount = this.normalize(value);
                   break;
                 case ImportColumnType.DEBIT:
-                  amount = this.getNumber(value);
+                  amount = this.normalize(value);
                   type = TransactionType.DEBIT;
                   break;
                 case ImportColumnType.SIGN:
@@ -192,7 +192,7 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
             this.transactionService.filterTransactions.push(
               new Transaction(
                 UUID.UUID(),
-                this.accountService.toDinero(amount, this.account),
+                this.accountService.fromInputValue(amount, this.account),
                 type,
                 date,
                 entity == null ? undefined : entity,
