@@ -160,11 +160,6 @@ export class BanknService {
     return currencies[currencyCode as keyof typeof currencies];
   }
 
-  toCurrencyFromCountry(countryCode: string) {
-    var currencyCode = getCurrencyOfCountry(countryCode);
-    return BanknService.toCurrency(currencyCode);
-  }
-
   toDinero(value: number, currency?: Currency<number>): Dinero<number> {
     if (currency == undefined) currency = this.toCurrency();
     return BanknService.toDinero(value, currency);
@@ -183,10 +178,13 @@ export class BanknService {
     return toDecimal(value);
   }
 
-  fromInputValue(number: string, currency: string): Dinero<number> {
-    var cur = this.toCurrency(currency);
-    var value = Math.round(parseFloat(number) * Math.pow(10, cur.exponent));
-    return this.toDinero(value, cur);
+  fromInputValue(number: string, countryCode: string): Dinero<number> {
+    var currencyCode = this.getCurrencyOfCountry(countryCode);
+    var currency = this.toCurrency(currencyCode);
+    var value = Math.round(
+      parseFloat(number) * Math.pow(10, currency.exponent)
+    );
+    return this.toDinero(value, currency);
   }
 
   upsertEntity(
