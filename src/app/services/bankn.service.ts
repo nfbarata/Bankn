@@ -13,7 +13,7 @@ import { UUID } from 'angular2-uuid';
 import { Entity } from '../models/entity';
 import { Category } from '../models/category';
 import { Dinero, dinero, Currency, toDecimal } from 'dinero.js';
-import { EUR } from '@dinero.js/currencies';
+import * as currencies from '@dinero.js/currencies';
 import { CurrencyPipe } from '@angular/common';
 import { faEur } from '@fortawesome/free-solid-svg-icons';
 
@@ -152,28 +152,25 @@ export class BanknService {
   }
 
   toCurrency(currencyCode?: string): Currency<number> {
-    if(currencyCode == undefined)
-      currencyCode = this.getReferenceCurrency();
+    if (currencyCode == undefined) currencyCode = this.getReferenceCurrency();
     return BanknService.toCurrency(currencyCode);
   }
 
   static toCurrency(currencyCode: string): Currency<number> {
-    //TODO search all currencies by code
-    return EUR;
-    /*return {
-      code: currencyCode,
-      base: 10,
-      exponent: 2
-    };*/
+    return currencies[currencyCode as keyof typeof currencies];
   }
 
-  toDinero(value: number, currency?:Currency<number> ): Dinero<number>{
-    if(currency == undefined)
-      currency = this.toCurrency();
+  toCurrencyFromCountry(countryCode: string) {
+    var currencyCode = getCurrencyOfCountry(countryCode);
+    return BanknService.toCurrency(currencyCode);
+  }
+
+  toDinero(value: number, currency?: Currency<number>): Dinero<number> {
+    if (currency == undefined) currency = this.toCurrency();
     return BanknService.toDinero(value, currency);
   }
 
-  static toDinero(value: number, currency:Currency<number> ): Dinero<number>{
+  static toDinero(value: number, currency: Currency<number>): Dinero<number> {
     //console.log(value);
     return dinero({
       amount: value,
@@ -182,66 +179,88 @@ export class BanknService {
     });
   }
 
-  toInputValue(value: Dinero<number>): string{
-    return toDecimal(value);  
+  toInputValue(value: Dinero<number>): string {
+    return toDecimal(value);
   }
 
-  fromInputValue(number: string, currency: string): Dinero<number>{
+  fromInputValue(number: string, currency: string): Dinero<number> {
     var cur = this.toCurrency(currency);
     var value = Math.round(parseFloat(number) * Math.pow(10, cur.exponent));
     return this.toDinero(value, cur);
   }
 
-  upsertEntity(entityName: string, descriptionPattern: string|null = null, referenceCategory: Category|null=null): Entity{
+  upsertEntity(
+    entityName: string,
+    descriptionPattern: string | null = null,
+    referenceCategory: Category | null = null
+  ): Entity {
     var entity = this.bankn!.getEntity(entityName);
-    if(entity==null){
+    if (entity == null) {
       entity = new Entity(entityName);
-      this.bankn!.entities.push(entity);//? event
+      this.bankn!.entities.push(entity); //? event
     }
-    if(descriptionPattern!=null)
-      //TODO more inteligent
-      if(!this.isDescriptionFromPatterns(descriptionPattern, entity.descriptionPatterns))
+    if (descriptionPattern != null)
+      if (
+        !this.isDescriptionFromPatterns(
+          descriptionPattern,
+          entity.descriptionPatterns
+        )
+      )
+        //TODO more inteligent
         entity.descriptionPatterns.push(descriptionPattern);
-    if(referenceCategory)
-      entity.referenceCategory = referenceCategory;
+    if (referenceCategory) entity.referenceCategory = referenceCategory;
     return entity;
   }
 
-  upsertCategory(categoryFullName: string, descriptionPattern?: string): Category|null{
-
+  upsertCategory(
+    categoryFullName: string,
+    descriptionPattern?: string
+  ): Category | null {
     //stop condition
-    if(categoryFullName.trim().length==0)
-      return null;
+    if (categoryFullName.trim().length == 0) return null;
 
-    var categoryNames = categoryFullName.split(".");
+    var categoryNames = categoryFullName.split('.');
 
     var parentCategoryName = categoryNames[0];
-    var category = this.bankn!.getCategory(parentCategoryName); 
-    if(category==null){
+    var category = this.bankn!.getCategory(parentCategoryName);
+    if (category == null) {
       category = new Category(parentCategoryName);
-      this.bankn!.categories.push(category);//? event
+      this.bankn!.categories.push(category); //? event
     }
 
     //recursive category creation
-    if(categoryNames.length>1)
-      category.innerCategory = this.upsertCategory(categoryFullName.substring(parentCategoryName.length), descriptionPattern);
+    if (categoryNames.length > 1)
+      category.innerCategory = this.upsertCategory(
+        categoryFullName.substring(parentCategoryName.length),
+        descriptionPattern
+      );
 
     //pattern only in the inner most category
-    if(category.innerCategory==null && descriptionPattern!==undefined)
+    if (category.innerCategory == null && descriptionPattern !== undefined)
       this.addNewPattern(descriptionPattern, category.descriptionPatterns);
 
     return category;
   }
 
-  addNewPattern(descriptionPattern: string,  descriptionPatterns: string[]){
+  addNewPattern(descriptionPattern: string, descriptionPatterns: string[]) {
     //TODO more inteligent
-    if(!this.isDescriptionFromPatterns(descriptionPattern, descriptionPatterns))
+    if (
+      !this.isDescriptionFromPatterns(descriptionPattern, descriptionPatterns)
+    )
       descriptionPatterns.push(descriptionPattern);
   }
 
-  private isDescriptionFromPatterns(descriptionPattern: string,  descriptionPatterns: string[]): boolean{
+  private isDescriptionFromPatterns(
+    descriptionPattern: string,
+    descriptionPatterns: string[]
+  ): boolean {
     for (let d = 0; d < descriptionPatterns.length; d++) {
-      if(this.isDescriptionFromPattern(descriptionPattern, descriptionPatterns[d])){
+      if (
+        this.isDescriptionFromPattern(
+          descriptionPattern,
+          descriptionPatterns[d]
+        )
+      ) {
         //TOOD optimize other descriptionPatterns?
         return true;
       }
@@ -249,38 +268,63 @@ export class BanknService {
     return false;
   }
 
-  private isDescriptionFromPattern(description: string,  descriptionPattern: string): boolean{
+  private isDescriptionFromPattern(
+    description: string,
+    descriptionPattern: string
+  ): boolean {
     //TODO more inteligent
-    return description==descriptionPattern;
+    return description == descriptionPattern;
   }
 
-  getEntityFromDescriptionPattern(descriptionPattern: string, referenceCategory: Category|null): Entity|null{
+  getEntityFromDescriptionPattern(
+    descriptionPattern: string,
+    referenceCategory: Category | null
+  ): Entity | null {
     //TODO parse category
     for (let e = 0; e < this.bankn!.entities.length; e++) {
-      if(this.isDescriptionFromPatterns(descriptionPattern, this.bankn!.entities[e].descriptionPatterns))
+      if (
+        this.isDescriptionFromPatterns(
+          descriptionPattern,
+          this.bankn!.entities[e].descriptionPatterns
+        )
+      )
         return this.bankn!.entities[e];
     }
     return null;
   }
 
-  getCategoryFromDescriptionPattern(descriptionPattern: string): Category|null{
+  getCategoryFromDescriptionPattern(
+    descriptionPattern: string
+  ): Category | null {
     //check top most categories
     for (let c = 0; c < this.bankn!.categories.length; c++) {
-      var result = this.getCategoryFromDescriptionPatternRecursive(descriptionPattern, this.bankn!.categories[c].innerCategory!);
-      if(result!=null)
-        return result;
+      var result = this.getCategoryFromDescriptionPatternRecursive(
+        descriptionPattern,
+        this.bankn!.categories[c].innerCategory!
+      );
+      if (result != null) return result;
     }
     return null;
   }
 
-  getCategoryFromDescriptionPatternRecursive(descriptionPattern: string, parentCategory: Category): Category|null{
+  getCategoryFromDescriptionPatternRecursive(
+    descriptionPattern: string,
+    parentCategory: Category
+  ): Category | null {
     var result = null;
     //give priority to innerCategories
-    if(parentCategory.innerCategory!=null)
-      result = this.getCategoryFromDescriptionPatternRecursive(descriptionPattern, parentCategory.innerCategory!);
-    if(result!=null)
-      return result;
-    if(this.isDescriptionFromPatterns(descriptionPattern, parentCategory.descriptionPatterns))
+    if (parentCategory.innerCategory != null)
+      result = this.getCategoryFromDescriptionPatternRecursive(
+        descriptionPattern,
+        parentCategory.innerCategory!
+      );
+    if (result != null) return result;
+    if (
+      this.isDescriptionFromPatterns(
+        descriptionPattern,
+        parentCategory.descriptionPatterns
+      )
+    )
       return parentCategory;
     return null;
   }
