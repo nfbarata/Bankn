@@ -29,9 +29,7 @@ export class AccountService {
       this.createId(),
       name,
       description,
-      referenceAmount === undefined
-        ? this.toDinero(0, null)
-        : referenceAmount,
+      referenceAmount === undefined ? this.toDinero(0, null) : referenceAmount,
       referenceDate,
       referenceCountry,
       [],
@@ -168,10 +166,16 @@ export class AccountService {
       ) {
         switch (account.transactions[i].type) {
           case TransactionType.CREDIT:
-            initialBalance = subtract(initialBalance , account.transactions[i].amount);
+            initialBalance = subtract(
+              initialBalance,
+              account.transactions[i].amount
+            );
             break;
           case TransactionType.DEBIT:
-            initialBalance = add(initialBalance, account.transactions[i].amount);
+            initialBalance = add(
+              initialBalance,
+              account.transactions[i].amount
+            );
             break;
         }
       } else {
@@ -185,23 +189,28 @@ export class AccountService {
   getInitialValueMultiple(accounts: Account[]): Dinero<number> {
     var initialBalance = this.toDinero(
       0,
-      accounts[0], //TODO dif currencies
+      accounts[0] //TODO dif currencies
     );
     accounts.forEach((account) => {
-      initialBalance = add(initialBalance, AccountService.getInitialValue(account));
+      initialBalance = add(
+        initialBalance,
+        AccountService.getInitialValue(account)
+      );
     });
     return initialBalance;
   }
 
-  toDinero(amount: number, account: Account|null): Dinero<number> {
+  toDinero(amount: number, account: Account | null): Dinero<number> {
     return this.banknService.toDinero(amount, this.getCurrency(account));
   }
 
-  getCurrency(account: Account|null = null): Currency<number> {
-    return account!=null? account.referenceAmount.toJSON().currency: this.banknService.toCurrency();
+  getCurrency(account: Account | null = null): Currency<number> {
+    return account != null
+      ? account.referenceAmount.toJSON().currency
+      : this.banknService.toCurrency();
   }
 
-  fromInputValue(number: string, account: Account | null): Dinero<number>{
-    return this.banknService.fromInputValue(number, this.getCurrency(account).code);
+  fromInputValue(number: string, account: Account): Dinero<number> {
+    return this.banknService.fromInputValue(number, account.referenceCountry);
   }
 }
