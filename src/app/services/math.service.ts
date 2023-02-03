@@ -49,12 +49,11 @@ export class MathService {
   }
 
   static toDinero(value: number, currency: Currency<number>): Dinero<number> {
-    console.log(value);
-    console.log(currency);
+    //console.log(value);
+    //console.log(currency);
     return dinero({
       amount: value,
       currency: currency,
-      //scale: 2
     });
   }
 
