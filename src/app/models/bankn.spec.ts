@@ -5,7 +5,7 @@ import { Entity } from './entity';
 describe('Bankn', () => {
 
   it('should create an instance', () => {
-    expect(new Bankn("", "", [], "")).toBeTruthy();
+    expect(new Bankn("", "", "")).toBeTruthy();
   });
 
   it('should process fromJson', () => {
@@ -43,7 +43,7 @@ describe('Bankn', () => {
         id: "1",
         name: "ac1",
         description: "",
-        referenceAmount: 1,
+        referenceAmount: 1.00,
         referenceDate: "2020-01-01",
         referenceCountry: referenceCountry,
         selected: false,
@@ -51,7 +51,7 @@ describe('Bankn', () => {
         id: "2",
         name: "ac2",
         description: "",
-        referenceAmount: 2,
+        referenceAmount: 2.00,
         referenceDate: "2020-01-01",
         referenceCountry: referenceCountry,
         selected: false,
@@ -70,7 +70,7 @@ describe('Bankn', () => {
   });
 
   it('should process getEntity', () => {
-    var bankn = new Bankn("id","name",[],"PT");
+    var bankn = new Bankn("id","name","PT");
     expect(bankn.getEntity("ent")).toBeNull();
     
     var entity = new Entity("ent");
@@ -79,7 +79,7 @@ describe('Bankn', () => {
   });
 
   it('should process getCategory', () => {
-    var bankn = new Bankn("id","name",[],"PT");
+    var bankn = new Bankn("id","name","PT");
     expect(bankn.getCategory("cat")).toBeNull();
     
     var category = new Category("cat");

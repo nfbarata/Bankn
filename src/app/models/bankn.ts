@@ -15,8 +15,8 @@ export class Bankn {
   constructor(
     id: string,
     name: string,
-    accounts: Account[],
     referenceCountry: string,
+    accounts: Account[] = [],
     categories: Category[] = [],
     entities: Entity[] = []
   ) {
@@ -88,10 +88,7 @@ export class Bankn {
     var bankn = new Bankn(
       json.id,
       json.name,
-      [],
       json.referenceCountry,
-      [],
-      []
     );
 
     if (json.categories)

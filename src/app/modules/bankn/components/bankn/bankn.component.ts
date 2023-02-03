@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
+import { UtilsService } from "../../../../services/utils.service";
 import { BanknService } from "../../../../services/bankn.service";
 
 @Component({
@@ -20,9 +21,10 @@ export class BanknComponent implements OnInit {
   constructor(
     private router: Router,
     private banknService: BanknService,
+    private utilsService: UtilsService,
     private route: ActivatedRoute
   ) {
-    this.countries = this.banknService.getCountries();
+    this.countries = this.utilsService.getCountries();
   }
 
   ngOnInit() {

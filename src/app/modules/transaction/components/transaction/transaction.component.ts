@@ -11,6 +11,7 @@ import { Transaction } from '../../../../models/transaction';
 import { TransactionType } from '../../../../models/enums';
 import { Entity } from '../../../../models/entity';
 import { Category } from '../../../../models/category';
+import { MathService } from '../../../../services/math.service';
 
 @Component({
   selector: 'transaction',
@@ -46,7 +47,8 @@ export class TransactionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private mathService: MathService
   ) {}
 
   ngOnInit() {
@@ -74,7 +76,7 @@ export class TransactionComponent implements OnInit {
             this.form.setValue({
               accountId: account.id,
               id: null,
-              amount: this.banknService.toInputValue(this.accountService.toDinero(0, account)),
+              amount: MathService.toInputValue(this.accountService.toDinero(0, account)),
               day: now.getDate(),
               month: now.getMonth() + 1,
               year: now.getFullYear(),
@@ -93,7 +95,7 @@ export class TransactionComponent implements OnInit {
               this.form.setValue({
                 accountId: account.id,
                 id: transactionId,
-                amount: this.banknService.toInputValue(this.transaction.amount),
+                amount: MathService.toInputValue(this.transaction.amount),
                 day: this.transaction.date.getDate(),
                 month: this.transaction.date.getMonth() + 1,
                 year: this.transaction.date.getFullYear(),

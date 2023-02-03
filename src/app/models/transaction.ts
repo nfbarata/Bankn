@@ -4,7 +4,7 @@ import { Entity } from './entity';
 import { Category } from './category';
 import { Bankn } from './bankn';
 import { Dinero } from 'dinero.js';
-import { BanknService } from '../services/bankn.service';
+import { MathService } from '../services/math.service';
 
 export class Transaction {
   private _id: string; //uuid
@@ -71,7 +71,7 @@ export class Transaction {
   ): Transaction {
     return new Transaction(
       transaction.id,
-      BanknService.toDinero(
+      MathService.toDinero(
         parseFloat(transaction.amount),
         account.referenceAmount.toJSON().currency
       ),

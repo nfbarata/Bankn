@@ -8,12 +8,14 @@ import { AccountService } from './account.service';
 import { BanknService } from './bankn.service';
 import { EventsService } from './events.service';
 import { TransactionService } from './transaction.service';
+import { MathService } from './math.service';
 
 describe('AccountService', () => {
 
   let service: AccountService;
   let banknServiceMock: jasmine.SpyObj<BanknService>;
   let transactionServiceMock: jasmine.SpyObj<TransactionService>;
+  let mathServiceMock: jasmine.SpyObj<MathService>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -26,10 +28,11 @@ describe('AccountService', () => {
     banknServiceMock.getAccounts = jasmine.createSpy().and.callFake(function(){
       return [];
     });
-    banknServiceMock.toCurrency = jasmine.createSpy().and.callFake(function(){
+    mathServiceMock = jasmine.createSpyObj("mathService",["toCurrency", "toDinero"]);
+    mathServiceMock.toCurrency = jasmine.createSpy().and.callFake(function(){
       return EUR;
     });
-    banknServiceMock.toDinero = jasmine.createSpy().and.callFake(function(value){
+    mathServiceMock.toDinero = jasmine.createSpy().and.callFake(function(value){
       return dinero({
         amount: value,
         currency: EUR,
@@ -38,7 +41,7 @@ describe('AccountService', () => {
     });
     transactionServiceMock = jasmine.createSpyObj("transactionService",["sortTransactions"]);
     var eventsService = TestBed.inject(EventsService);
-    service = new AccountService(banknServiceMock, eventsService);
+    service = new AccountService(banknServiceMock, eventsService, mathServiceMock);
   });
   
   it('should be created', () => {

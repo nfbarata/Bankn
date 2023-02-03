@@ -1,8 +1,8 @@
 import { Transaction } from './transaction';
 import { ColumnSeparator, RowSeparator } from './enums';
 import { Bankn } from './bankn';
-import { Dinero, dinero, Currency } from 'dinero.js';
-import { BanknService } from '../services/bankn.service';
+import { Dinero } from 'dinero.js';
+import { MathService } from '../services/math.service';
 
 export class Account {
   private _id: string; //uuid
@@ -83,13 +83,14 @@ export class Account {
   }
 
   public static fromJson(json: any, bankn: Bankn): Account {
+    console.log(json);
     var account = new Account(
       json.id,
       json.name,
       json.description,
-      BanknService.toDinero(
-        parseFloat(json.referenceAmount),
-        BanknService.toCurrency(json.referenceCountry)
+      MathService.fromInputValue(
+        json.referenceAmount,
+        json.referenceCountry
       ),
       new Date(json.referenceDate),
       json.referenceCountry,
@@ -108,15 +109,4 @@ export class Account {
       });
     return account;
   }
-
-  /*private static getPrecision(currency: string): number {
-    //TODO guardar este valor em memória
-    //var reference = Dinero({ currency: <Dinero.Currency>currency });
-    var reference = dinero({
-      amount: 0,
-      scale: 1,
-      currency: <Dinero.Currency>currency,
-    });
-    return reference.getPrecision();
-  }*/
 }

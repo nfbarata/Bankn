@@ -7,15 +7,17 @@ import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
 
 //import Dinero from 'dinero.js';
-import { Dinero, Currency, add, subtract, dinero } from 'dinero.js';
+import { Dinero, Currency, add, subtract } from 'dinero.js';
 import { TransactionService } from './transaction.service';
 import { TransactionType } from '../models/enums';
+import { MathService } from './math.service';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
   constructor(
     private banknService: BanknService,
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private mathService: MathService
   ) {}
 
   createAccount(
@@ -201,16 +203,16 @@ export class AccountService {
   }
 
   toDinero(amount: number, account: Account | null): Dinero<number> {
-    return this.banknService.toDinero(amount, this.getCurrency(account));
+    return this.mathService.toDinero(amount, this.getCurrency(account));
   }
 
   getCurrency(account: Account | null = null): Currency<number> {
     return account != null
       ? account.referenceAmount.toJSON().currency
-      : this.banknService.toCurrency();
+      : this.mathService.toCurrency();
   }
 
   fromInputValue(number: string, account: Account): Dinero<number> {
-    return this.banknService.fromInputValue(number, account.referenceCountry);
+    return MathService.fromInputValue(number, account.referenceCountry);
   }
 }

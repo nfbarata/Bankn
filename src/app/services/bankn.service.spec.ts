@@ -45,18 +45,6 @@ describe('BanknService', () => {
     expect(service.getBankn()!.accounts.length).toBe(0);
   });
 
-  it('upsertEntity works', () => {
-    expect(service.initialized()).toBeFalse();
-    let bankn = BanknService.createBankn("test","PT");
-    service.setBankn(bankn);
-    expect(service.getBankn()?.entities.length).toBe(0);
-    service.upsertEntity("ent","entDesc");
-    expect(service.getBankn()?.entities.length).toBe(1);
-    service.upsertEntity("ent","entDesc");
-    expect(service.getBankn()?.entities.length).toBe(1);
-    service.upsertEntity("ent2","entDesc");
-    expect(service.getBankn()?.entities.length).toBe(2);
-  });
 
   it('addNewPattern works', () => {
     expect(service.initialized()).toBeFalse();
@@ -65,21 +53,4 @@ describe('BanknService', () => {
     var ent = new Entity("name");
     service.getBankn()?.entities.push(ent);
   });
-
-  it('upsertCategory works', () => {
-    expect(service.initialized()).toBeFalse();
-    let bankn = BanknService.createBankn("test","PT");
-    service.setBankn(bankn);
-    expect(service.getBankn()?.categories.length).toBe(0);
-    service.upsertCategory("cat","catDesc");
-    expect(service.getBankn()?.categories.length).toBe(1);
-    service.upsertCategory("cat","catDesc");
-    expect(service.getBankn()?.categories.length).toBe(1);
-    service.upsertCategory("cat2","catDesc2");
-    expect(service.getBankn()?.categories.length).toBe(2);
-
-    //service.upsertCategory("cat.cat11","catDesc");
-    //expect(service.getBankn()?.categories.length).toBe(2);
-  });
-
 });

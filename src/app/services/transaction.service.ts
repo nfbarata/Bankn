@@ -9,9 +9,10 @@ import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
 import { Dinero } from 'dinero.js';
 import { TransactionType } from '../models/enums';
-import { ignoreElements } from 'rxjs';
 import { BanknService } from './bankn.service';
 import { Bankn } from '../models/bankn';
+import { CategoryService } from './category.service';
+import { EntityService } from './entity.service';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
@@ -25,7 +26,7 @@ export class TransactionService {
   constructor(
     private banknService: BanknService,
     private eventsService: EventsService,
-    private accountService: AccountService
+    private accountService: AccountService,
   ) {}
 
   createTransaction(
@@ -44,12 +45,12 @@ export class TransactionService {
     //create Category if not exist
     var category = null;
     if (categoryName !== undefined && categoryName.trim().length != 0)
-      category = this.banknService.upsertCategory(categoryName);
+      category = CategoryService.upsertCategory(this.banknService.getBankn()!,categoryName);
 
     //create Entity if not exist
     var entity = null;
     if (entityName !== undefined) {
-      this.banknService.upsertEntity(entityName, description, category);
+      EntityService.upsertEntity(this.banknService.getBankn()!, entityName, description, category);
     }
 
     var transaction = new Transaction(
@@ -80,12 +81,12 @@ export class TransactionService {
     //create Category if not exist
     var category = null;
     if (categoryName !== undefined && categoryName.trim().length != 0)
-      category = this.banknService.upsertCategory(categoryName);
+      category = CategoryService.upsertCategory(this.banknService.getBankn()!,categoryName);
 
     //create Entity if not exist
     var entity = null;
     if (entityName !== undefined) {
-      this.banknService.upsertEntity(entityName, description, category);
+      EntityService.upsertEntity(this.banknService.getBankn()! ,entityName, description, category);
     }
 
     transaction.amount = amount;

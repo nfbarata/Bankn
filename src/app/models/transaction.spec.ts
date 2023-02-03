@@ -39,7 +39,7 @@ describe('Transaction', () => {
     var description = "desc";
     var type = TransactionType.CREDIT;
 
-    var bankn = new Bankn("id","teste",[],"");
+    var bankn = new Bankn("id","teste","");
 
     var category = new Category(categoryName);
     bankn.categories.push(category);

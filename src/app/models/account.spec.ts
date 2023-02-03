@@ -25,7 +25,7 @@ describe('Account', () => {
     var referenceDate = "2020-01-01"
     var referenceCountry = "PT";
 
-    var bankn = new Bankn("id", "name", [], "PT");
+    var bankn = new Bankn("id", "name", "PT");
 
     //no transactions
     var account = Account.fromJson({
