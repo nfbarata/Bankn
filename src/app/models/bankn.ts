@@ -68,44 +68,4 @@ export class Bankn {
     }
     return null;
   }
-
-  public toJson(): any {
-    var accountsJson: any[] = [];
-    this.accounts.forEach((account) => {
-      accountsJson.push(account.toJson());
-    });
-    return {
-      id: this.id,
-      name: this.name,
-      accounts: accountsJson,
-      referenceCountry: this.referenceCountry,
-      entities: this.entities,
-      categories: this.categories,
-    };
-  }
-
-  public static fromJson(json: any): Bankn {
-    var bankn = new Bankn(
-      json.id,
-      json.name,
-      json.referenceCountry,
-    );
-
-    if (json.categories)
-      json.categories.forEach((category: any) => {
-        bankn.categories.push(Category.fromJson(category));
-      });
-
-    if (json.entities)
-      json.entities.forEach((entity: any) => {
-        bankn.entities.push(Entity.fromJson(entity));
-      });
-
-    if (json.accounts)
-      json.accounts.forEach((account: any) => {
-        bankn.accounts.push(Account.fromJson(account, bankn));
-      });
-
-    return bankn;
-  }
 }

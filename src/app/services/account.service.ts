@@ -11,6 +11,7 @@ import { Dinero, Currency, add, subtract } from 'dinero.js';
 import { TransactionService } from './transaction.service';
 import { TransactionType } from '../models/enums';
 import { MathService } from './math.service';
+import { Bankn } from '../models/bankn';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -215,4 +216,54 @@ export class AccountService {
   fromInputValue(number: string, account: Account): Dinero<number> {
     return MathService.fromInputValue(number, account.referenceCountry);
   }
+
+  public static toJson(account: Account): any {
+    var transactionsJson: any[] = [];
+    account.transactions.forEach((transaction) => {
+      transactionsJson.push(transaction.toJson());
+    });
+    return {
+      id: account.id,
+      name: account.name,
+      description: account.description,
+      referenceAmount: account.referenceAmount.toJSON().amount,
+      referenceDate: account.referenceDate.toISOString().substring(0, 10),
+      referenceCountry: account.referenceCountry,
+      transactions: transactionsJson,
+      selected: account.selected,
+      columnSeparator: account.columnSeparator,
+      customColumnSeparator: account.customColumnSeparator,
+      rowSeparator: account.columnSeparator,
+      customRowSeparator: account.customRowSeparator,
+    };
+  }
+
+  public static fromJson(json: any, bankn: Bankn): Account {
+    console.log(json);
+    var account = new Account(
+      json.id,
+      json.name,
+      json.description,
+      MathService.fromInputValue(
+        json.referenceAmount,
+        json.referenceCountry
+      ),
+      new Date(json.referenceDate),
+      json.referenceCountry,
+      [],
+      json.selected,
+      json.columnSeparator,
+      json.customColumnSeparator,
+      json.rowSeparator,
+      json.customRowSeparator
+    );
+    if (json.transactions)
+      json.transactions.forEach((transaction: any) => {
+        account.transactions.push(
+          Transaction.fromJson(transaction, account, bankn)
+        );
+      });
+    return account;
+  }
+
 }

@@ -8,6 +8,9 @@ import { Bankn } from '../models/bankn';
 import { Account } from '../models/account';
 
 import { UUID } from 'angular2-uuid';
+import { Category } from '../models/category';
+import { Entity } from '../models/entity';
+import { AccountService } from './account.service';
 
 @Injectable({ providedIn: 'root' })
 export class BanknService {
@@ -49,7 +52,7 @@ export class BanknService {
   loadFromFile(): void {
     this.fileService.parseJsonFile((bankn: Bankn) => {
       this.clear();
-      this.setBankn(Bankn.fromJson(bankn));
+      this.setBankn(BanknService.fromJson(bankn));
       this.eventsService.emitBanknChange();
       this.eventsService.emitAccountsChange();
       this.eventsService.emitAccountSelectionChange();
@@ -58,7 +61,7 @@ export class BanknService {
 
   saveToFile(): void {
     if (this.bankn != null)
-      this.fileService.downloadJsonFile(this.bankn.toJson());
+      this.fileService.downloadJsonFile(BanknService.toJson(this.bankn));
     else console.error('No bankn');
   }
 
@@ -114,5 +117,45 @@ export class BanknService {
       return this.bankn.referenceCountry;
     }
     return this.getDefaultCountryCode();
+  }
+
+  public static toJson(bankn: Bankn): any {
+    var accountsJson: any[] = [];
+    bankn.accounts.forEach((account) => {
+      accountsJson.push(AccountService.toJson(account));
+    });
+    return {
+      id: bankn.id,
+      name: bankn.name,
+      accounts: accountsJson,
+      referenceCountry: bankn.referenceCountry,
+      entities: bankn.entities,
+      categories: bankn.categories,
+    };
+  }
+
+  public static fromJson(json: any): Bankn {
+    var bankn = new Bankn(
+      json.id,
+      json.name,
+      json.referenceCountry,
+    );
+
+    if (json.categories)
+      json.categories.forEach((category: any) => {
+        bankn.categories.push(Category.fromJson(category));
+      });
+
+    if (json.entities)
+      json.entities.forEach((entity: any) => {
+        bankn.entities.push(Entity.fromJson(entity));
+      });
+
+    if (json.accounts)
+      json.accounts.forEach((account: any) => {
+        bankn.accounts.push(AccountService.fromJson(account, bankn));
+      });
+
+    return bankn;
   }
 }
