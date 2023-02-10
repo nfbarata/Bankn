@@ -13,6 +13,7 @@ import { BanknService } from './bankn.service';
 import { Bankn } from '../models/bankn';
 import { CategoryService } from './category.service';
 import { EntityService } from './entity.service';
+import { MathService } from './math.service';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
@@ -27,6 +28,8 @@ export class TransactionService {
     private banknService: BanknService,
     private eventsService: EventsService,
     private accountService: AccountService,
+    private categoryService: CategoryService,
+    private entityService: EntityService
   ) {}
 
   createTransaction(
@@ -45,12 +48,12 @@ export class TransactionService {
     //create Category if not exist
     var category = null;
     if (categoryName !== undefined && categoryName.trim().length != 0)
-      category = CategoryService.upsertCategory(this.banknService.getBankn()!,categoryName);
+      category = this.categoryService.upsertCategory(categoryName);
 
     //create Entity if not exist
     var entity = null;
-    if (entityName !== undefined) {
-      EntityService.upsertEntity(this.banknService.getBankn()!, entityName, description, category);
+    if (entityName !== undefined && entityName.trim().length != 0) {
+      entity = this.entityService.upsertEntity(entityName, description, category);
     }
 
     var transaction = new Transaction(
@@ -81,12 +84,12 @@ export class TransactionService {
     //create Category if not exist
     var category = null;
     if (categoryName !== undefined && categoryName.trim().length != 0)
-      category = CategoryService.upsertCategory(this.banknService.getBankn()!,categoryName);
+      category = this.categoryService.upsertCategory(categoryName);
 
     //create Entity if not exist
     var entity = null;
-    if (entityName !== undefined) {
-      EntityService.upsertEntity(this.banknService.getBankn()! ,entityName, description, category);
+    if (entityName !== undefined && entityName.trim().length != 0) {
+      entity = this.entityService.upsertEntity(entityName, description, category);
     }
 
     transaction.amount = amount;
@@ -108,7 +111,7 @@ export class TransactionService {
     var results: any[] = [];
     if (json != null) {
       json.forEach((transaction) => {
-        results.push(Transaction.fromJson(transaction, account, bankn));
+        results.push(TransactionService.fromJson(transaction, account, bankn));
       });
     }
     return results;
@@ -195,5 +198,39 @@ export class TransactionService {
     } else {
       throw new Error('Enter some text');
     }
+  }
+
+  public static toJson(transaction: Transaction): any {
+    return {
+      id: transaction.id,
+      amount: transaction.amount.toJSON().amount, //Dinero to value, compacted result
+      type: transaction.type,
+      date: transaction.date.toISOString().substring(0, 10),
+      entityName: transaction.entity?.name,
+      categoryName: transaction.category?.name,
+      receiptReference: transaction.receiptReference,
+      description: transaction.description,
+    };
+  }
+
+  public static fromJson(
+    transaction: any,
+    account: Account,
+    bankn: Bankn
+  ): Transaction {
+    return new Transaction(
+      transaction.id,
+      MathService.toDinero(
+        parseFloat(transaction.amount),
+        account.referenceAmount.toJSON().currency
+      ),
+      transaction.type,
+      new Date(transaction.date),
+      BanknService.getEntity(bankn, transaction.entityName)!,
+      BanknService.getCategory(bankn, transaction.categoryName)!,
+      transaction.receiptReference,
+      transaction.description,
+      account
+    );
   }
 }

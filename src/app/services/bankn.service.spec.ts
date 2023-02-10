@@ -4,6 +4,8 @@ import { EUR } from '@dinero.js/currencies';
 import { Account } from '../models/account';
 import { Entity } from '../models/entity';
 import { BanknService } from './bankn.service';
+import { Bankn } from '../models/bankn';
+import { Category } from '../models/category';
 
 describe('BanknService', () => {
 
@@ -115,4 +117,56 @@ describe('BanknService', () => {
     expect(bankn.categories[0].name).toBe("cat");
   });
 
+  it('should process getEntity', () => {
+    var bankn = new Bankn("id","name","PT");
+    expect(BanknService.getEntity(bankn, "ent")).toBeNull();
+    
+    var entity = new Entity("ent");
+    bankn.entities.push(entity);
+    expect(BanknService.getEntity(bankn, "ent")).toBeTruthy();
+  });
+
+  it('should process getCategory', () => {
+    var bankn = new Bankn("id","name","PT");
+    expect(BanknService.getCategory(bankn, "cat")).toBeNull();
+    
+    var category = new Category("cat");
+    bankn.categories.push(category);
+    expect(BanknService.getCategory(bankn, "cat")).toBeTruthy();
+    
+    var subCategory = new Category("subcat");
+    category.innerCategory=subCategory;
+    expect(BanknService.getCategory(bankn, "cat")).toBeTruthy();
+    expect(BanknService.getCategory(bankn, "subcat")).toBeTruthy();
+
+    var sub2Category = new Category("subcat2");
+    subCategory.innerCategory=sub2Category;
+    expect(BanknService.getCategory(bankn, "cat")).toBeTruthy();
+    expect(BanknService.getCategory(bankn, "subcat")).toBeTruthy();
+    expect(BanknService.getCategory(bankn, "subcat2")).toBeTruthy();
+  });
+
+  it('addCategory works', () => {
+    let bankn = new Bankn("", "", "");
+    service.setBankn(bankn);
+    expect(bankn.categories.length).toBe(0);
+    service.addCategory(new Category("cat"));
+    expect(bankn.categories.length).toBe(1);
+    service.addCategory(new Category("cat"));
+    expect(bankn.categories.length).toBe(2);
+    service.addCategory(new Category("cat2"));
+    expect(bankn.categories.length).toBe(3);
+  });
+
+  it('addEntity works', () => {
+    let bankn = new Bankn("","","");
+    service.setBankn(bankn);
+    expect(bankn.entities.length).toBe(0);
+    service.addEntity(new Entity("ent"));
+    expect(bankn.entities.length).toBe(1);
+    service.addEntity(new Entity("ent"));
+    expect(bankn.entities.length).toBe(2);
+    service.addEntity(new Entity("ent2"));
+    expect(bankn.entities.length).toBe(3);
+  });
 });

@@ -11,6 +11,8 @@ import { UUID } from 'angular2-uuid';
 import { Category } from '../models/category';
 import { Entity } from '../models/entity';
 import { AccountService } from './account.service';
+import { EntityService } from './entity.service';
+import { CategoryService } from './category.service';
 
 @Injectable({ providedIn: 'root' })
 export class BanknService {
@@ -103,6 +105,55 @@ export class BanknService {
     }
   }
 
+  addCategory(category: Category): void {
+    if (this.bankn != null) {
+      this.bankn.categories.push(category);
+      this.eventsService.categoriesChange.emit();
+    }
+  }
+
+  addEntity(entity: Entity): void {
+    if (this.bankn != null) {
+      this.bankn.entities.push(entity);
+      this.eventsService.entitiesChange.emit();
+    }
+  }
+
+  static getEntity(bankn:Bankn, entityName: string): Entity | null {
+    for (let e = 0; e < bankn.entities.length; e++) {
+      if (bankn.entities[e].name == entityName) 
+        return bankn.entities[e];
+    }
+    return null;
+  }
+
+  static getCategory(
+    bankn:Bankn, 
+    categoryName: string,
+    parentCategory?: Category
+  ): Category | null {
+    //check top most categories
+    if (parentCategory === undefined) {
+      for (let c = 0; c < bankn.categories.length; c++) {
+        if (bankn.categories[c].name == categoryName) {
+          return bankn.categories[c];
+        } else {
+          var category = this.getCategory(bankn, categoryName, bankn.categories[c]);
+          if (category != null) return category;
+        }
+      }
+    } else {
+      //check inner categories
+      if (parentCategory.name == categoryName) {
+        return parentCategory;
+      } else {
+        if (parentCategory.innerCategory != null)
+          return this.getCategory(bankn, categoryName, parentCategory.innerCategory);
+      }
+    }
+    return null;
+  }
+
   getAccounts(): Account[] {
     if (this.bankn == null) return [];
     return this.bankn.accounts;
@@ -143,12 +194,12 @@ export class BanknService {
 
     if (json.categories)
       json.categories.forEach((category: any) => {
-        bankn.categories.push(Category.fromJson(category));
+        bankn.categories.push(CategoryService.fromJson(category));
       });
 
     if (json.entities)
       json.entities.forEach((entity: any) => {
-        bankn.entities.push(Entity.fromJson(entity));
+        bankn.entities.push(EntityService.fromJson(entity));
       });
 
     if (json.accounts)

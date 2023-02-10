@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Bankn } from '../models/bankn';
 import { Category } from '../models/category';
+import { BanknService } from './bankn.service';
 import { UtilsService } from './utils.service';
 
 @Injectable({
@@ -9,10 +10,10 @@ import { UtilsService } from './utils.service';
 export class CategoryService {
 
   constructor(
+    private banknService: BanknService,
   ) { }
 
-  static upsertCategory(
-    bankn: Bankn,
+  upsertCategory(
     categoryFullName: string,
     descriptionPattern?: string
   ): Category | null {
@@ -20,17 +21,16 @@ export class CategoryService {
     if (categoryFullName.trim().length == 0) return null;
 
     var categoryNames = categoryFullName.split('.');
-
     var parentCategoryName = categoryNames[0];
-    var category = bankn.getCategory(parentCategoryName);
+    var category = BanknService.getCategory(this.banknService.getBankn()!, parentCategoryName);
     if (category == null) {
       category = new Category(parentCategoryName);
-      bankn.categories.push(category); //? event
+      this.banknService.addCategory(category);
     }
 
     //recursive category creation
     if (categoryNames.length > 1)
-      category.innerCategory = this.upsertCategory(bankn, 
+      category.innerCategory = this.upsertCategory( 
         categoryFullName.substring(parentCategoryName.length),
         descriptionPattern
       );
@@ -77,5 +77,22 @@ export class CategoryService {
     )
       return parentCategory;
     return null;
+  }
+
+  public static toJson(category: Category): any {
+    return {
+      name: category.name,
+      descriptionPatterns: category.descriptionPatterns,
+      innerCategory:
+      category.innerCategory == null ? '' : CategoryService.toJson(category.innerCategory),
+    };
+  }
+
+  public static fromJson(json: any): Category {
+    var category = new Category(json.name);
+    category.descriptionPatterns = json.descriptionPatterns;
+    if (json.innerCategory)
+      category.innerCategory = CategoryService.fromJson(json.innerCategory);
+    return category;
   }
 }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Bankn } from '../models/bankn';
 import { Category } from '../models/category';
 import { Entity } from '../models/entity';
+import { BanknService } from './bankn.service';
+import { CategoryService } from './category.service';
 import { UtilsService } from './utils.service';
 
 @Injectable({
@@ -10,19 +12,19 @@ import { UtilsService } from './utils.service';
 export class EntityService {
 
   constructor(
+    private banknService: BanknService,
     private utilsService: UtilsService
   ) { }
 
-  static upsertEntity(
-    bankn: Bankn,
+  upsertEntity(
     entityName: string,
     descriptionPattern: string | null = null,
     referenceCategory: Category | null = null
   ): Entity {
-    var entity = bankn.getEntity(entityName);
+    var entity = BanknService.getEntity(this.banknService.getBankn()! ,entityName);
     if (entity == null) {
       entity = new Entity(entityName);
-      bankn.entities.push(entity); //? event
+      this.banknService.addEntity(entity);
     }
     if (descriptionPattern != null)
       if (
@@ -53,6 +55,23 @@ export class EntityService {
         return bankn.entities[e];
     }
     return null;
+  }
+
+  public static toJson(entity: Entity): any {
+    return {
+      name: entity.name,
+      descriptionPatterns: entity.descriptionPatterns,
+      referenceCategory:
+      entity.referenceCategory == null ? '' : CategoryService.toJson(entity.referenceCategory),
+    };
+  }
+
+  public static fromJson(json: any): Entity {
+    var entity = new Entity(json.name);
+    entity.descriptionPatterns = json.descriptionPatterns;
+    if (json.referenceCategory)
+      entity.referenceCategory = CategoryService.fromJson(json.referenceCategory);
+    return entity;
   }
 
 }

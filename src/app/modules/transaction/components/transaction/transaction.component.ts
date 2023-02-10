@@ -53,10 +53,11 @@ export class TransactionComponent implements OnInit {
 
   ngOnInit() {
     this.refreshAccounts();
-    this.eventsService.accountsChange.subscribe(() => this.refreshAccounts());
-
-    this.refreshEntities();
     this.refreshCategories();
+    this.refreshEntities();
+    this.eventsService.accountsChange.subscribe(() => this.refreshAccounts());
+    this.eventsService.entitiesChange.subscribe(() => this.refreshEntities());
+    this.eventsService.categoriesChange.subscribe(() => this.refreshCategories());
 
     this.route.paramMap.subscribe((params) => {
       if (this.accounts != null) {
@@ -100,8 +101,8 @@ export class TransactionComponent implements OnInit {
                 month: this.transaction.date.getMonth() + 1,
                 year: this.transaction.date.getFullYear(),
                 type: this.transaction.type.toString(),
-                entity: this.transaction.entity == undefined ? '':this.transaction.entity,
-                category: this.transaction.category == undefined ? '':this.transaction.category,
+                entity: this.transaction.entity == undefined ? '':this.transaction.entity.name,
+                category: this.transaction.category == undefined ? '':this.transaction.category.name,
                 receiptReference: this.transaction.receiptReference,
                 description: this.transaction.description,
               });

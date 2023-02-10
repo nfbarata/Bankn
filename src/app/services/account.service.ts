@@ -220,7 +220,7 @@ export class AccountService {
   public static toJson(account: Account): any {
     var transactionsJson: any[] = [];
     account.transactions.forEach((transaction) => {
-      transactionsJson.push(transaction.toJson());
+      transactionsJson.push(TransactionService.toJson(transaction));
     });
     return {
       id: account.id,
@@ -260,7 +260,7 @@ export class AccountService {
     if (json.transactions)
       json.transactions.forEach((transaction: any) => {
         account.transactions.push(
-          Transaction.fromJson(transaction, account, bankn)
+          TransactionService.fromJson(transaction, account, bankn)
         );
       });
     return account;

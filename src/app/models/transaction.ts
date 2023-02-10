@@ -50,38 +50,4 @@ export class Transaction {
   public get id(): string {
     return this._id;
   }
-
-  public toJson() {
-    return {
-      id: this.id,
-      amount: this.amount.toJSON().amount, //Dinero to value, compacted result
-      type: this.type,
-      date: this.date.toISOString().substring(0, 10),
-      entityName: this.entity?.name,
-      categoryName: this.category?.name,
-      receiptReference: this.receiptReference,
-      description: this.description,
-    };
-  }
-
-  public static fromJson(
-    transaction: any,
-    account: Account,
-    bankn: Bankn
-  ): Transaction {
-    return new Transaction(
-      transaction.id,
-      MathService.toDinero(
-        parseFloat(transaction.amount),
-        account.referenceAmount.toJSON().currency
-      ),
-      transaction.type,
-      new Date(transaction.date),
-      bankn.getEntity(transaction.entityName)!,
-      bankn.getCategory(transaction.categoryName)!,
-      transaction.receiptReference,
-      transaction.description,
-      account
-    );
-  }
 }
