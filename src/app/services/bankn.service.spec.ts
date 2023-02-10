@@ -4,6 +4,8 @@ import { EUR } from '@dinero.js/currencies';
 import { Account } from '../models/account';
 import { Entity } from '../models/entity';
 import { BanknService } from './bankn.service';
+import { Bankn } from '../models/bankn';
+import { Category } from '../models/category';
 
 describe('BanknService', () => {
 
@@ -45,18 +47,6 @@ describe('BanknService', () => {
     expect(service.getBankn()!.accounts.length).toBe(0);
   });
 
-  it('upsertEntity works', () => {
-    expect(service.initialized()).toBeFalse();
-    let bankn = BanknService.createBankn("test","PT");
-    service.setBankn(bankn);
-    expect(service.getBankn()?.entities.length).toBe(0);
-    service.upsertEntity("ent","entDesc");
-    expect(service.getBankn()?.entities.length).toBe(1);
-    service.upsertEntity("ent","entDesc");
-    expect(service.getBankn()?.entities.length).toBe(1);
-    service.upsertEntity("ent2","entDesc");
-    expect(service.getBankn()?.entities.length).toBe(2);
-  });
 
   it('addNewPattern works', () => {
     expect(service.initialized()).toBeFalse();
@@ -66,20 +56,117 @@ describe('BanknService', () => {
     service.getBankn()?.entities.push(ent);
   });
 
-  it('upsertCategory works', () => {
-    expect(service.initialized()).toBeFalse();
-    let bankn = BanknService.createBankn("test","PT");
-    service.setBankn(bankn);
-    expect(service.getBankn()?.categories.length).toBe(0);
-    service.upsertCategory("cat","catDesc");
-    expect(service.getBankn()?.categories.length).toBe(1);
-    service.upsertCategory("cat","catDesc");
-    expect(service.getBankn()?.categories.length).toBe(1);
-    service.upsertCategory("cat2","catDesc2");
-    expect(service.getBankn()?.categories.length).toBe(2);
+  it('should process fromJson', () => {
+    var id = "testId";
+    var name = "name";
+    var referenceCountry = "PT";
 
-    //service.upsertCategory("cat.cat11","catDesc");
-    //expect(service.getBankn()?.categories.length).toBe(2);
+    //no optional fields
+    var bankn = BanknService.fromJson({
+      id: id,
+      name: name,
+      referenceCountry: referenceCountry
+    });
+    expect(bankn.id).toBe(id);
+    expect(bankn.name).toBe(name);
+    expect(bankn.referenceCountry).toBe(referenceCountry);
+    expect(bankn.accounts.length).toBe(0);
+
+    //with optional fields
+    bankn = BanknService.fromJson({
+      id: id,
+      name: name,
+      referenceCountry: referenceCountry,
+      entities: [{
+        name: "ent",
+      }, {
+        name: "ent2",
+      }],
+      categories: [{
+        name: "cat",
+      }, {
+        name: "cat2",
+      }],
+      accounts: [{
+        id: "1",
+        name: "ac1",
+        description: "",
+        referenceAmount: 1.00,
+        referenceDate: "2020-01-01",
+        referenceCountry: referenceCountry,
+        selected: false,
+      }, {
+        id: "2",
+        name: "ac2",
+        description: "",
+        referenceAmount: 2.00,
+        referenceDate: "2020-01-01",
+        referenceCountry: referenceCountry,
+        selected: false,
+      }]
+    });
+    expect(bankn.id).toBe(id);
+    expect(bankn.name).toBe(name);
+    expect(bankn.referenceCountry).toBe(referenceCountry);
+    expect(bankn.accounts.length).toBe(2);
+    expect(bankn.accounts[0].id).toBe("1");
+    expect(bankn.accounts[1].id).toBe("2");
+    expect(bankn.entities.length).toBe(2);
+    expect(bankn.entities[0].name).toBe("ent");
+    expect(bankn.categories.length).toBe(2);
+    expect(bankn.categories[0].name).toBe("cat");
   });
 
+  it('should process getEntity', () => {
+    var bankn = new Bankn("id","name","PT");
+    expect(BanknService.getEntity(bankn, "ent")).toBeNull();
+    
+    var entity = new Entity("ent");
+    bankn.entities.push(entity);
+    expect(BanknService.getEntity(bankn, "ent")).toBeTruthy();
+  });
+
+  it('should process getCategory', () => {
+    var bankn = new Bankn("id","name","PT");
+    expect(BanknService.getCategory(bankn, "cat")).toBeNull();
+    
+    var category = new Category("cat");
+    bankn.categories.push(category);
+    expect(BanknService.getCategory(bankn, "cat")).toBeTruthy();
+    
+    var subCategory = new Category("subcat");
+    category.innerCategory=subCategory;
+    expect(BanknService.getCategory(bankn, "cat")).toBeTruthy();
+    expect(BanknService.getCategory(bankn, "subcat")).toBeTruthy();
+
+    var sub2Category = new Category("subcat2");
+    subCategory.innerCategory=sub2Category;
+    expect(BanknService.getCategory(bankn, "cat")).toBeTruthy();
+    expect(BanknService.getCategory(bankn, "subcat")).toBeTruthy();
+    expect(BanknService.getCategory(bankn, "subcat2")).toBeTruthy();
+  });
+
+  it('addCategory works', () => {
+    let bankn = new Bankn("", "", "");
+    service.setBankn(bankn);
+    expect(bankn.categories.length).toBe(0);
+    service.addCategory(new Category("cat"));
+    expect(bankn.categories.length).toBe(1);
+    service.addCategory(new Category("cat"));
+    expect(bankn.categories.length).toBe(2);
+    service.addCategory(new Category("cat2"));
+    expect(bankn.categories.length).toBe(3);
+  });
+
+  it('addEntity works', () => {
+    let bankn = new Bankn("","","");
+    service.setBankn(bankn);
+    expect(bankn.entities.length).toBe(0);
+    service.addEntity(new Entity("ent"));
+    expect(bankn.entities.length).toBe(1);
+    service.addEntity(new Entity("ent"));
+    expect(bankn.entities.length).toBe(2);
+    service.addEntity(new Entity("ent2"));
+    expect(bankn.entities.length).toBe(3);
+  });
 });

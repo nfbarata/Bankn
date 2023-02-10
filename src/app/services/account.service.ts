@@ -7,15 +7,18 @@ import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
 
 //import Dinero from 'dinero.js';
-import { Dinero, Currency, add, subtract, dinero } from 'dinero.js';
+import { Dinero, Currency, add, subtract } from 'dinero.js';
 import { TransactionService } from './transaction.service';
 import { TransactionType } from '../models/enums';
+import { MathService } from './math.service';
+import { Bankn } from '../models/bankn';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
   constructor(
     private banknService: BanknService,
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private mathService: MathService
   ) {}
 
   createAccount(
@@ -29,9 +32,7 @@ export class AccountService {
       this.createId(),
       name,
       description,
-      referenceAmount === undefined
-        ? this.toDinero(0, null)
-        : referenceAmount,
+      referenceAmount === undefined ? this.toDinero(0, null) : referenceAmount,
       referenceDate,
       referenceCountry,
       [],
@@ -168,10 +169,16 @@ export class AccountService {
       ) {
         switch (account.transactions[i].type) {
           case TransactionType.CREDIT:
-            initialBalance = subtract(initialBalance , account.transactions[i].amount);
+            initialBalance = subtract(
+              initialBalance,
+              account.transactions[i].amount
+            );
             break;
           case TransactionType.DEBIT:
-            initialBalance = add(initialBalance, account.transactions[i].amount);
+            initialBalance = add(
+              initialBalance,
+              account.transactions[i].amount
+            );
             break;
         }
       } else {
@@ -185,23 +192,78 @@ export class AccountService {
   getInitialValueMultiple(accounts: Account[]): Dinero<number> {
     var initialBalance = this.toDinero(
       0,
-      accounts[0], //TODO dif currencies
+      accounts[0] //TODO dif currencies
     );
     accounts.forEach((account) => {
-      initialBalance = add(initialBalance, AccountService.getInitialValue(account));
+      initialBalance = add(
+        initialBalance,
+        AccountService.getInitialValue(account)
+      );
     });
     return initialBalance;
   }
 
-  toDinero(amount: number, account: Account|null): Dinero<number> {
-    return this.banknService.toDinero(amount, this.getCurrency(account));
+  toDinero(amount: number, account: Account | null): Dinero<number> {
+    return this.mathService.toDinero(amount, this.getCurrency(account));
   }
 
-  getCurrency(account: Account|null = null): Currency<number> {
-    return account!=null? account.referenceAmount.toJSON().currency: this.banknService.toCurrency();
+  getCurrency(account: Account | null = null): Currency<number> {
+    return account != null
+      ? account.referenceAmount.toJSON().currency
+      : this.mathService.toCurrency();
   }
 
-  fromInputValue(number: string, account: Account | null): Dinero<number>{
-    return this.banknService.fromInputValue(number, this.getCurrency(account).code);
+  fromInputValue(number: string, account: Account): Dinero<number> {
+    return MathService.fromInputValue(number, account.referenceCountry);
   }
+
+  public static toJson(account: Account): any {
+    var transactionsJson: any[] = [];
+    account.transactions.forEach((transaction) => {
+      transactionsJson.push(TransactionService.toJson(transaction));
+    });
+    return {
+      id: account.id,
+      name: account.name,
+      description: account.description,
+      referenceAmount: account.referenceAmount.toJSON().amount,
+      referenceDate: account.referenceDate.toISOString().substring(0, 10),
+      referenceCountry: account.referenceCountry,
+      transactions: transactionsJson,
+      selected: account.selected,
+      columnSeparator: account.columnSeparator,
+      customColumnSeparator: account.customColumnSeparator,
+      rowSeparator: account.columnSeparator,
+      customRowSeparator: account.customRowSeparator,
+    };
+  }
+
+  public static fromJson(json: any, bankn: Bankn): Account {
+    console.log(json);
+    var account = new Account(
+      json.id,
+      json.name,
+      json.description,
+      MathService.fromInputValue(
+        json.referenceAmount,
+        json.referenceCountry
+      ),
+      new Date(json.referenceDate),
+      json.referenceCountry,
+      [],
+      json.selected,
+      json.columnSeparator,
+      json.customColumnSeparator,
+      json.rowSeparator,
+      json.customRowSeparator
+    );
+    if (json.transactions)
+      json.transactions.forEach((transaction: any) => {
+        account.transactions.push(
+          TransactionService.fromJson(transaction, account, bankn)
+        );
+      });
+    return account;
+  }
+
 }

@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BanknService } from '../../../../services/bankn.service';
 import { AccountService } from '../../../../services/account.service';
 import { Account } from '../../../../models/account';
+import { UtilsService } from '../../../../services/utils.service';
+import { MathService } from '../../../../services/math.service';
 
 @Component({
   selector: 'account',
@@ -36,11 +38,12 @@ export class AccountComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private utilsService: UtilsService,
   ) {}
 
   ngOnInit() {
-    this.countries = this.banknService.getCountries();
+    this.countries = this.utilsService.getCountries();
     this.route.paramMap.subscribe((params) => {
       var accountId = params.get('accountId');
 
@@ -48,7 +51,7 @@ export class AccountComponent implements OnInit {
         this.form.setValue({
           id: null,
           name: 'Main',
-          referenceAmount: this.banknService.toInputValue(this.accountService.toDinero(0, null)),
+          referenceAmount: MathService.toInputValue(this.accountService.toDinero(0, null)),
           referenceCountry: this.banknService.getReferenceCountry(),
           referenceDay: '1',
           referenceMonth: '1',
@@ -61,7 +64,7 @@ export class AccountComponent implements OnInit {
           this.form.setValue({
             id: account.id,
             name: account.name,
-            referenceAmount: this.banknService.toInputValue(account.referenceAmount), 
+            referenceAmount: MathService.toInputValue(account.referenceAmount), 
             referenceCountry: account.referenceCountry,
             referenceDay: account.referenceDate.getDate(),
             referenceMonth: account.referenceDate.getMonth() + 1,
@@ -74,7 +77,7 @@ export class AccountComponent implements OnInit {
   }
 
   onSubmit() {
-    var amount = this.banknService.fromInputValue(
+    var amount = MathService.fromInputValue(
       this.form.controls['referenceAmount'].value,
       this.form.controls['referenceCountry'].value
     );

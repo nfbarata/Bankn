@@ -8,12 +8,15 @@ import { AccountService } from './account.service';
 import { BanknService } from './bankn.service';
 import { EventsService } from './events.service';
 import { TransactionService } from './transaction.service';
+import { MathService } from './math.service';
+import { Bankn } from '../models/bankn';
 
 describe('AccountService', () => {
 
   let service: AccountService;
   let banknServiceMock: jasmine.SpyObj<BanknService>;
   let transactionServiceMock: jasmine.SpyObj<TransactionService>;
+  let mathServiceMock: jasmine.SpyObj<MathService>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -26,10 +29,11 @@ describe('AccountService', () => {
     banknServiceMock.getAccounts = jasmine.createSpy().and.callFake(function(){
       return [];
     });
-    banknServiceMock.toCurrency = jasmine.createSpy().and.callFake(function(){
+    mathServiceMock = jasmine.createSpyObj("mathService",["toCurrency", "toDinero"]);
+    mathServiceMock.toCurrency = jasmine.createSpy().and.callFake(function(){
       return EUR;
     });
-    banknServiceMock.toDinero = jasmine.createSpy().and.callFake(function(value){
+    mathServiceMock.toDinero = jasmine.createSpy().and.callFake(function(value){
       return dinero({
         amount: value,
         currency: EUR,
@@ -38,7 +42,7 @@ describe('AccountService', () => {
     });
     transactionServiceMock = jasmine.createSpyObj("transactionService",["sortTransactions"]);
     var eventsService = TestBed.inject(EventsService);
-    service = new AccountService(banknServiceMock, eventsService);
+    service = new AccountService(banknServiceMock, eventsService, mathServiceMock);
   });
   
   it('should be created', () => {
@@ -84,5 +88,72 @@ describe('AccountService', () => {
     service.addTransaction(account, transaction);
     balance = service.getInitialValueMultiple(accounts);
     expect(toDecimal(balance)).toBe("-10.00");
+  });
+
+  it('should process fromJson', () => {
+    var id = "testId";
+    var name = "name";
+    var description = "desc";
+    var referenceAmount = "0.00";
+    var referenceDate = "2020-01-01"
+    var referenceCountry = "PT";
+
+    var bankn = new Bankn("id", "name", "PT");
+
+    //no transactions
+    var account = AccountService.fromJson({
+      id: id,
+      name: name,
+      description: description,
+      referenceAmount: referenceAmount,
+      referenceDate: referenceDate,
+      referenceCountry: referenceCountry
+    }, bankn);
+    expect(account.id).toBe(id);
+    expect(account.name).toBe(name);
+    expect(account.description).toBe(description);
+    expect(toDecimal(account.referenceAmount)).toEqual(referenceAmount);    
+    expect(account.referenceDate).toEqual(new Date(referenceDate));
+    expect(account.referenceCountry).toBe(referenceCountry);
+    expect(account.transactions.length).toBe(0);
+    expect(account.selected).toBeFalse();
+
+    //with transactions
+    account = AccountService.fromJson({
+      id: id,
+      name: name,
+      description: description,
+      referenceAmount: referenceAmount,
+      referenceDate: referenceDate,
+      referenceCountry: referenceCountry,
+      transactions: [{
+        id: "1",
+        amount: "0",
+        date: "2022-01-01",
+        entity: "",
+        category: "",
+        description: "",
+        type: TransactionType.CREDIT,
+      },{
+        id: "2",
+        amount: "0",
+        date: "2022-01-01",
+        entity: "",
+        category: "",
+        description: "",
+        type: TransactionType.CREDIT,
+      }],
+      selected: true
+    }, bankn);
+    expect(account.id).toBe(id);
+    expect(account.name).toBe(name);
+    expect(account.description).toBe(description);
+    expect(toDecimal(account.referenceAmount)).toEqual(referenceAmount);    
+    expect(account.referenceDate).toEqual(new Date(referenceDate));
+    expect(account.referenceCountry).toBe(referenceCountry);
+    expect(account.transactions.length).toBe(2);
+    expect(account.transactions[0].id).toBe("1");
+    expect(account.transactions[1].id).toBe("2");
+    expect(account.selected).toBeTrue();
   });
 });

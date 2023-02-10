@@ -11,6 +11,7 @@ import { Transaction } from '../../../../models/transaction';
 import { TransactionType } from '../../../../models/enums';
 import { Entity } from '../../../../models/entity';
 import { Category } from '../../../../models/category';
+import { MathService } from '../../../../services/math.service';
 
 @Component({
   selector: 'transaction',
@@ -46,15 +47,17 @@ export class TransactionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private mathService: MathService
   ) {}
 
   ngOnInit() {
     this.refreshAccounts();
-    this.eventsService.accountsChange.subscribe(() => this.refreshAccounts());
-
-    this.refreshEntities();
     this.refreshCategories();
+    this.refreshEntities();
+    this.eventsService.accountsChange.subscribe(() => this.refreshAccounts());
+    this.eventsService.entitiesChange.subscribe(() => this.refreshEntities());
+    this.eventsService.categoriesChange.subscribe(() => this.refreshCategories());
 
     this.route.paramMap.subscribe((params) => {
       if (this.accounts != null) {
@@ -74,7 +77,7 @@ export class TransactionComponent implements OnInit {
             this.form.setValue({
               accountId: account.id,
               id: null,
-              amount: this.banknService.toInputValue(this.accountService.toDinero(0, account)),
+              amount: MathService.toInputValue(this.accountService.toDinero(0, account)),
               day: now.getDate(),
               month: now.getMonth() + 1,
               year: now.getFullYear(),
@@ -93,13 +96,13 @@ export class TransactionComponent implements OnInit {
               this.form.setValue({
                 accountId: account.id,
                 id: transactionId,
-                amount: this.banknService.toInputValue(this.transaction.amount),
+                amount: MathService.toInputValue(this.transaction.amount),
                 day: this.transaction.date.getDate(),
                 month: this.transaction.date.getMonth() + 1,
                 year: this.transaction.date.getFullYear(),
                 type: this.transaction.type.toString(),
-                entity: this.transaction.entity == undefined ? '':this.transaction.entity,
-                category: this.transaction.category == undefined ? '':this.transaction.category,
+                entity: this.transaction.entity == undefined ? '':this.transaction.entity.name,
+                category: this.transaction.category == undefined ? '':this.transaction.category.name,
                 receiptReference: this.transaction.receiptReference,
                 description: this.transaction.description,
               });

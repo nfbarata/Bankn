@@ -8,7 +8,9 @@ export class EventsService {
   @Output() accountSelectionChange: EventEmitter<void> = new EventEmitter();
   @Output() accountTransactionsChange: EventEmitter<void> = new EventEmitter();
   @Output() transactionChange: EventEmitter<void> = new EventEmitter();
-
+  @Output() categoriesChange: EventEmitter<void> = new EventEmitter();
+  @Output() entitiesChange: EventEmitter<void> = new EventEmitter();
+  
   constructor() { }
 
   public subscribeBanknChange(callback:Function):void{

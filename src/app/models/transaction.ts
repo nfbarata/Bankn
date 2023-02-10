@@ -4,7 +4,7 @@ import { Entity } from './entity';
 import { Category } from './category';
 import { Bankn } from './bankn';
 import { Dinero } from 'dinero.js';
-import { BanknService } from '../services/bankn.service';
+import { MathService } from '../services/math.service';
 
 export class Transaction {
   private _id: string; //uuid
@@ -49,39 +49,5 @@ export class Transaction {
 
   public get id(): string {
     return this._id;
-  }
-
-  public toJson() {
-    return {
-      id: this.id,
-      amount: this.amount.toJSON().amount, //Dinero to value, compacted result
-      type: this.type,
-      date: this.date.toISOString().substring(0, 10),
-      entityName: this.entity?.name,
-      categoryName: this.category?.name,
-      receiptReference: this.receiptReference,
-      description: this.description,
-    };
-  }
-
-  public static fromJson(
-    transaction: any,
-    account: Account,
-    bankn: Bankn
-  ): Transaction {
-    return new Transaction(
-      transaction.id,
-      BanknService.toDinero(
-        parseFloat(transaction.amount),
-        account.referenceAmount.toJSON().currency
-      ),
-      transaction.type,
-      new Date(transaction.date),
-      bankn.getEntity(transaction.entityName)!,
-      bankn.getCategory(transaction.categoryName)!,
-      transaction.receiptReference,
-      transaction.description,
-      account
-    );
   }
 }

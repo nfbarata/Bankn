@@ -18,6 +18,8 @@ import { Account } from '../../../../models/account';
 import { Transaction } from '../../../../models/transaction';
 import { UUID } from 'angular2-uuid';
 import { ImportColumnType, TransactionType } from '../../../../models/enums';
+import { CategoryService } from '../../../../services/category.service';
+import { EntityService } from '../../../../services/entity.service';
 
 @Component({
   selector: 'app-transaction-import-filter',
@@ -182,9 +184,8 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
               );
             }
 
-            var category =
-              this.banknService.getCategoryFromDescriptionPattern(description);
-            var entity = this.banknService.getEntityFromDescriptionPattern(
+            var category = CategoryService.getCategoryFromDescriptionPattern(this.banknService.getBankn()!, description);
+            var entity = EntityService.getEntityFromDescriptionPattern(this.banknService.getBankn()!,
               description,
               category
             );
