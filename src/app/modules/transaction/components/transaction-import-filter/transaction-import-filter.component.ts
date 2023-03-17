@@ -184,8 +184,8 @@ export class TransactionImportFilterComponent implements OnInit, AfterViewInit {
               );
             }
 
-            var category = CategoryService.getCategoryFromDescriptionPattern(this.banknService.getBankn()!, description);
-            var entity = EntityService.getEntityFromDescriptionPattern(this.banknService.getBankn()!,
+            var category = CategoryService.getCategoryFromDescription(this.banknService.getBankn()!, description);
+            var entity = EntityService.getEntityFromDescription(this.banknService.getBankn()!,
               description,
               category
             );

@@ -47,7 +47,7 @@ export class TransactionService {
     clearDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
 
     //create Category if not exist
-    var category = this.categoryService.upsertCategory(categoryName);
+    var category = this.categoryService.upsertCategory(categoryName, description);
     //create Entity if not exist
     var entity =  this.entityService.upsertEntity(entityName, description, category);
 
@@ -78,7 +78,7 @@ export class TransactionService {
   ) {
 
     //create Category if not exist
-    var category = this.categoryService.upsertCategory(categoryName);
+    var category = this.categoryService.upsertCategory(categoryName, description);
     //create Entity if not exist
     var entity = this.entityService.upsertEntity(entityName, description, category);
 
@@ -216,8 +216,8 @@ export class TransactionService {
       ),
       transaction.type,
       new Date(transaction.date),
-      BanknService.getEntity(bankn, transaction.entityName)!,
-      BanknService.getCategory(bankn, transaction.categoryName)!,
+      EntityService.getEntity(bankn, transaction.entityName)!,
+      CategoryService.getCategory(bankn, transaction.categoryName)!,
       transaction.receiptReference,
       transaction.description,
       account

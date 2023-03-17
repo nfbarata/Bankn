@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 //@ts-ignore
 import { countries } from 'country-data-list';
+import {compareTwoStrings, findBestMatch} from 'string-similarity';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
 
+  static minRating = 0.6;
   private countries: any;
 
   constructor() { 
@@ -23,42 +25,13 @@ export class UtilsService {
     });
   }
 
-  static addNewPattern(descriptionPattern: string, descriptionPatterns: string[]) {
-    //TODO more inteligent
-    if (!UtilsService.isDescriptionFromPatterns(descriptionPattern, descriptionPatterns))
-      descriptionPatterns.push(descriptionPattern);
-  }
-
-  static isDescriptionFromPatterns(
-    description: string|null,
-    descriptionPatterns: string[],
-    referenceSimilarityRating?: number|null
-  ): boolean {
-
-    //Guard
-    if(description==null)
-      return false;
-
-    //if(referenceSimilarityRating==null)
-    //  for (let d = 0; d < descriptionPatterns.length; d++)
-
-    for (let d = 0; d < descriptionPatterns.length; d++) {
-      if (UtilsService.isDescriptionFromPattern(
-          description,
-          descriptionPatterns[d]
-        )) {
-        //TOOD optimize other descriptionPatterns?
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private static isDescriptionFromPattern(
+  static calculateSimilarityRating(
     description: string,
-    descriptionPattern: string
-  ): boolean {
-    //TODO more inteligent
-    return description == descriptionPattern;
+    descriptionPatterns: string[]
+  ): number {
+    if(descriptionPatterns.length==0)
+      return 0;
+    var matches = findBestMatch(description, descriptionPatterns);
+    return matches.bestMatch.rating;
   }
 }

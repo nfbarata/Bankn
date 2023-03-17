@@ -1,15 +1,11 @@
 export class Category {
   name: string;
-  descriptionPatterns: string[];
-  innerCategory: Category | null;
+  descriptionPatterns: string[] = [];
+  innerCategories: Category[] = [];
 
   constructor(
-    name: string,
-    descriptionPatterns: string[] = [],
-    innerCategory: Category | null = null
+    name: string
   ) {
     this.name = name;
-    this.descriptionPatterns = descriptionPatterns;
-    this.innerCategory = innerCategory;
   }
 }

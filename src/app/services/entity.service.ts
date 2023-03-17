@@ -18,7 +18,7 @@ export class EntityService {
 
   upsertEntity(
     entityName?: string,
-    description: string | null = null,
+    description?: string,
     referenceCategory: Category | null = null
   ): Entity | null {
     
@@ -26,14 +26,13 @@ export class EntityService {
     if (entityName == null || entityName == undefined || entityName.trim().length == 0) 
       return null;
 
-    var entity = BanknService.getEntity(this.banknService.getBankn()! ,entityName);
+    var entity = EntityService.getEntity(this.banknService.getBankn()! ,entityName);
     if (entity == null) {
       entity = new Entity(entityName);
       this.banknService.addEntity(entity);
     }
 
-    if (!UtilsService.isDescriptionFromPatterns(description, entity.descriptionPatterns))
-      EntityService.addDescriptionToPattern(entity, description!);
+    EntityService.upsertDescriptionPatterns(entity, description);
 
     if (referenceCategory) 
       entity.referenceCategory = referenceCategory;
@@ -41,27 +40,41 @@ export class EntityService {
       return entity;
   }
 
-  static addDescriptionToPattern(entity: Entity, description: string){
-    //TODO more inteligent
-    entity.descriptionPatterns.push(description);
+  static upsertDescriptionPatterns(entity: Entity, description?: string){
+    if(description){
+      entity.descriptionPatterns.push(description);
+    }
   }
 
-  static getEntityFromDescriptionPattern(
-    bankn: Bankn,
-    descriptionPattern: string,
-    referenceCategory: Category | null
-  ): Entity | null {
-    //TODO parse category
+  static getEntity(bankn:Bankn, entityName: string): Entity | null {
     for (let e = 0; e < bankn.entities.length; e++) {
-      if (
-        UtilsService.isDescriptionFromPatterns(
-          descriptionPattern,
-          bankn.entities[e].descriptionPatterns
-        )
-      )
+      if (bankn.entities[e].name == entityName) 
         return bankn.entities[e];
     }
     return null;
+  }
+
+  static getEntityFromDescription(
+    bankn: Bankn,
+    description: string,
+    referenceCategory: Category | null
+  ): Entity | null {
+    //TODO check also category
+    var biggestEntityRating = 0;
+    var entity = null;
+    for (let e = 0; e < bankn.entities.length; e++) {
+      if(bankn.entities[e].descriptionPatterns.length>0){
+        var entityRating = UtilsService.calculateSimilarityRating(description, bankn.entities[e].descriptionPatterns);
+        if (entityRating > biggestEntityRating){
+          biggestEntityRating = entityRating;
+          entity = bankn.entities[e];
+        }
+      }
+    }
+    if(biggestEntityRating > UtilsService.minRating)
+      return entity;
+    else
+      return null;
   }
 
   public static toJson(entity: Entity): any {
