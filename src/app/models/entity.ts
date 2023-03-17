@@ -5,6 +5,9 @@ export class Entity {
   descriptionPatterns: string[];
   referenceCategory: Category | null;
 
+  //Volatile
+  referenceSimilarityRating: number|null = null;
+
   constructor(
     name: string,
     descriptionPatterns: string[] = [],

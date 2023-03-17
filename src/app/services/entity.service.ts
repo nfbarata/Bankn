@@ -17,26 +17,33 @@ export class EntityService {
   ) { }
 
   upsertEntity(
-    entityName: string,
-    descriptionPattern: string | null = null,
+    entityName?: string,
+    description: string | null = null,
     referenceCategory: Category | null = null
-  ): Entity {
+  ): Entity | null {
+    
+    //Guard
+    if (entityName == null || entityName == undefined || entityName.trim().length == 0) 
+      return null;
+
     var entity = BanknService.getEntity(this.banknService.getBankn()! ,entityName);
     if (entity == null) {
       entity = new Entity(entityName);
       this.banknService.addEntity(entity);
     }
-    if (descriptionPattern != null)
-      if (
-        !UtilsService.isDescriptionFromPatterns(
-          descriptionPattern,
-          entity.descriptionPatterns
-        )
-      )
-        //TODO more inteligent
-        entity.descriptionPatterns.push(descriptionPattern);
-    if (referenceCategory) entity.referenceCategory = referenceCategory;
-    return entity;
+
+    if (!UtilsService.isDescriptionFromPatterns(description, entity.descriptionPatterns))
+      EntityService.addDescriptionToPattern(entity, description!);
+
+    if (referenceCategory) 
+      entity.referenceCategory = referenceCategory;
+    
+      return entity;
+  }
+
+  static addDescriptionToPattern(entity: Entity, description: string){
+    //TODO more inteligent
+    entity.descriptionPatterns.push(description);
   }
 
   static getEntityFromDescriptionPattern(

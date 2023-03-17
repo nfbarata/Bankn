@@ -17,6 +17,7 @@ import { MathService } from './math.service';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
+  
   //
   //Volatile - for use between screens
   //
@@ -46,15 +47,9 @@ export class TransactionService {
     clearDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
 
     //create Category if not exist
-    var category = null;
-    if (categoryName !== undefined && categoryName.trim().length != 0)
-      category = this.categoryService.upsertCategory(categoryName);
-
+    var category = this.categoryService.upsertCategory(categoryName);
     //create Entity if not exist
-    var entity = null;
-    if (entityName !== undefined && entityName.trim().length != 0) {
-      entity = this.entityService.upsertEntity(entityName, description, category);
-    }
+    var entity =  this.entityService.upsertEntity(entityName, description, category);
 
     var transaction = new Transaction(
       UUID.UUID(),
@@ -81,16 +76,11 @@ export class TransactionService {
     receiptReference: string,
     description: string
   ) {
-    //create Category if not exist
-    var category = null;
-    if (categoryName !== undefined && categoryName.trim().length != 0)
-      category = this.categoryService.upsertCategory(categoryName);
 
+    //create Category if not exist
+    var category = this.categoryService.upsertCategory(categoryName);
     //create Entity if not exist
-    var entity = null;
-    if (entityName !== undefined && entityName.trim().length != 0) {
-      entity = this.entityService.upsertEntity(entityName, description, category);
-    }
+    var entity = this.entityService.upsertEntity(entityName, description, category);
 
     transaction.amount = amount;
     transaction.date = date;

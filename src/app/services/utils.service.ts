@@ -25,23 +25,28 @@ export class UtilsService {
 
   static addNewPattern(descriptionPattern: string, descriptionPatterns: string[]) {
     //TODO more inteligent
-    if (
-      !UtilsService.isDescriptionFromPatterns(descriptionPattern, descriptionPatterns)
-    )
+    if (!UtilsService.isDescriptionFromPatterns(descriptionPattern, descriptionPatterns))
       descriptionPatterns.push(descriptionPattern);
   }
 
   static isDescriptionFromPatterns(
-    descriptionPattern: string,
-    descriptionPatterns: string[]
+    description: string|null,
+    descriptionPatterns: string[],
+    referenceSimilarityRating?: number|null
   ): boolean {
+
+    //Guard
+    if(description==null)
+      return false;
+
+    //if(referenceSimilarityRating==null)
+    //  for (let d = 0; d < descriptionPatterns.length; d++)
+
     for (let d = 0; d < descriptionPatterns.length; d++) {
-      if (
-        UtilsService.isDescriptionFromPattern(
-          descriptionPattern,
+      if (UtilsService.isDescriptionFromPattern(
+          description,
           descriptionPatterns[d]
-        )
-      ) {
+        )) {
         //TOOD optimize other descriptionPatterns?
         return true;
       }

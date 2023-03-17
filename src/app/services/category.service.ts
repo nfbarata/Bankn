@@ -14,11 +14,12 @@ export class CategoryService {
   ) { }
 
   upsertCategory(
-    categoryFullName: string,
+    categoryFullName?: string,
     descriptionPattern?: string
   ): Category | null {
-    //stop condition
-    if (categoryFullName.trim().length == 0) return null;
+    //stop&guard condition
+    if (categoryFullName == null || categoryFullName == undefined || categoryFullName.trim().length == 0) 
+      return null;
 
     var categoryNames = categoryFullName.split('.');
     var parentCategoryName = categoryNames[0];
