@@ -40,6 +40,8 @@ import { MainComponent } from './components/main/main.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { MenuSideComponent } from './components/menu-side/menu-side.component';
 import { HomeComponent } from './components/home/home.component';
+//Angular Material
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Import the functions you need from the SDKs you need
 //import { initializeApp } from 'firebase/app';
 //import { getAnalytics } from 'firebase/analytics';
@@ -73,6 +75,7 @@ export const TRANSACTION_SERVICE = new InjectionToken('TransactionService');
     FontAwesomeModule,
     AppRoutingModule,
     SharedModule,
+    BrowserAnimationsModule,
   ],
   exports: [],
   declarations: [

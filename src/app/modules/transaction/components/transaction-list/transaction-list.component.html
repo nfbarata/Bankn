@@ -40,39 +40,27 @@
   </div>
 </div>
 
-<div *ngIf="hasRealTransactions" class="container">
-  <div *ngFor="let transaction of transactions; let i = index;">
-    <div
-      class="row bg-secondary text-white"
-      *ngIf="transaction.hide!=true && (i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime())"
-    >
-      <label class="col-2">
-        {{transaction.date | date:'shortDate'}}
-      </label>
-      <label class="col-10 text-right">
-        {{transaction.balanceAfter | dinero}}
-      </label>
-    </div>
-    <div
-      class="row overflow-hidden"
-      *ngIf="transaction.hide!=true"
-      style="height:30px"
-      [routerLink]="['/transactions/transaction/'+transaction.account.id+'/'+transaction.id]"
-    >
-      <label class="col-7">
-        {{ transaction.description }}
-      </label>
-      <label class="col-5 text-right">
-        {{transaction | transaction}}
-      </label>
-    </div>
-    <div class="row bg-secondary text-white" *ngIf="i==transactions.length-1">
-      <label class="col-7 text-right" i18n>
-        Initial value
-      </label>
-      <label class="col-5 text-right">
-        {{transaction.balanceBefore | dinero}}
-      </label>
-    </div>
-  </div>
+<div class="table-responsive">
+<table *ngIf="hasRealTransactions" class="table table-hover">
+	<tbody>
+		<ng-container *ngFor="let transaction of transactions; let i = index;">
+		<!-- header group -->
+		<tr *ngIf="transaction.hide!=true && (i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime())">
+			<th>{{transaction.date | date:'shortDate'}}&nbsp;</th>
+			<th class="w-75">&nbsp;</th>
+			<th>{{transaction.balanceAfter | dinero}}&nbsp;</th>
+		</tr>
+		<!-- detail group -->
+		<tr *ngIf="transaction.hide!=true" [routerLink]="['/transactions/transaction/'+transaction.account.id+'/'+transaction.id]">
+			<td>{{ transaction.category | category }}&nbsp;</td>
+			<td>{{ transaction.description }}&nbsp;</td>
+			<td>{{transaction | transaction}}&nbsp;</td>
+		</tr>
+	 	</ng-container>
+	</tbody>
+	<!-- footer group -->
+    <caption>
+    	Initial value {{ initialBalance | dinero}}
+  	</caption>
+</table>
 </div>
