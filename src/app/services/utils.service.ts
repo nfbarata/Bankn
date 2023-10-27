@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 //@ts-ignore
 import { countries } from 'country-data-list';
-import { levenshtein } from 'string-comparison';
+import comparison from 'string-comparison';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +29,7 @@ export class UtilsService {
     descriptionPatterns: string[]
   ): number {
     if (descriptionPatterns.length == 0) return 0;
-    return levenshtein.similarity(description, descriptionPatterns);
+    var results = comparison.levenshtein.sortMatch(description, descriptionPatterns);
+    return results[results.length-1].rating;
   }
 }
