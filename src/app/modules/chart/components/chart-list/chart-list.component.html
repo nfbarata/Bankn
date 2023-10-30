@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-6">
+    <h2 i18n>Charts</h2>
+  </div>
+</div>
+
+<div *ngIf="accounts.length == 0" class="row">
+  <div class="col-sm-5">
+    <account-create-card></account-create-card>
+  </div>
+</div>
+<div *ngIf="accounts.length > 0 && selectedAccounts.length == 0" class="row">
+  <div class="col-sm-5">
+    <account-select-card></account-select-card>
+  </div>
+</div>
+<div
+  *ngIf="
+    accounts.length > 0 &&
+    selectedAccounts.length > 0 &&
+    transactions.length == 0
+  "
+  class="row"
+>
+  <div class="col-sm-5">
+    <transaction-create-card></transaction-create-card>
+  </div>
+  <div class="col-sm-2">&nbsp;</div>
+  <div class="col-sm-5">
+    <transactions-import-card></transactions-import-card>
+  </div>
+</div>

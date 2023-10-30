@@ -31,7 +31,9 @@
               </td>
               <td>
                 {{
-                  transaction.category==undefined ? '' : transaction.category|category
+                  transaction.category == undefined
+                    ? ''
+                    : (transaction.category | category)
                 }}
               </td>
               <td>
