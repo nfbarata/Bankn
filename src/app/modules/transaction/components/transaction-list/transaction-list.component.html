@@ -48,20 +48,20 @@
       <tr class="table-active" *ngIf="transaction.hide!=true && (i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime())">
         <th scope="col" width="20%">{{transaction.date | date:'shortDate'}}&nbsp;</th>
         <th scope="col" width="80%"></th>
-        <th class="" scope="col" width="10%">{{transaction.balanceAfter | dinero}}&nbsp;</th>
+        <th class="text-end" scope="col" width="10%">{{transaction.balanceAfter | dinero}}&nbsp;</th>
       </tr>
       <!-- detail group -->
       <tr *ngIf="transaction.hide!=true" [routerLink]="['/transactions/transaction/'+transaction.account.id+'/'+transaction.id]">
         <td>{{ transaction.category | category }}&nbsp;</td>
         <td>{{ transaction.description }}&nbsp;</td>
-        <td class="" scope="row">{{transaction | transaction}}&nbsp;</td>
+        <td class="text-end" scope="row">{{transaction | transaction}}</td>
       </tr>
 	 	</ng-container>
 	</tbody>
   <tfoot class="table-group-divider">
     <tr class="table-active">
       <td class="" colspan="2">Initial value</td>
-      <td class="" scope="row">{{ initialBalance | dinero}}</td>
+      <td class="text-end" scope="row">{{ initialBalance | dinero}}</td>
     </tr>
   </tfoot>
 </table>
