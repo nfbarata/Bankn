@@ -47,7 +47,7 @@
       <!-- header group -->
       <tr class="table-active" *ngIf="transaction.hide!=true && (i==0 || i>0 && transaction.date.getTime()!=transactions[i-1].date.getTime())">
         <th scope="col" width="20%">{{transaction.date | date:'shortDate'}}&nbsp;</th>
-        <th scope="col" width="80%"></th>
+        <th scope="col" width="70%"></th>
         <th class="text-end" scope="col" width="10%">{{transaction.balanceAfter | dinero}}&nbsp;</th>
       </tr>
       <!-- detail group -->
